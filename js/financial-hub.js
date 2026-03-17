@@ -66,6 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const budgetForm = document.getElementById('budgetForm');
     const refreshDataBtn = document.getElementById('refreshDataBtn');
     const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const navDropdown = document.getElementById('navDropdown');
     const logoutBtn = document.getElementById('logoutBtn');
     
     // Current period
@@ -501,23 +502,34 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Hamburger menu
+    // Hamburger menu functions
     function toggleHamburger() {
-        const btn = document.getElementById('hamburgerBtn');
-        const dropdown = document.getElementById('navDropdown');
-        if (btn && dropdown) {
-            btn.classList.toggle('active');
-            dropdown.classList.toggle('active');
+        if (hamburgerBtn && navDropdown) {
+            hamburgerBtn.classList.toggle('active');
+            navDropdown.classList.toggle('active');
+        }
+    }
+    
+    function closeHamburger() {
+        if (hamburgerBtn && navDropdown) {
+            hamburgerBtn.classList.remove('active');
+            navDropdown.classList.remove('active');
         }
     }
     
     // Close dropdown when clicking outside
     document.addEventListener('click', function(event) {
-        const btn = document.getElementById('hamburgerBtn');
-        const dropdown = document.getElementById('navDropdown');
-        if (btn && dropdown && !btn.contains(event.target) && !dropdown.contains(event.target)) {
-            btn.classList.remove('active');
-            dropdown.classList.remove('active');
+        if (hamburgerBtn && navDropdown) {
+            if (!hamburgerBtn.contains(event.target) && !navDropdown.contains(event.target)) {
+                closeHamburger();
+            }
+        }
+        
+        // Close export menu when clicking outside
+        if (exportBtn && exportOptions) {
+            if (!exportBtn.contains(event.target) && !exportOptions.contains(event.target)) {
+                exportOptions.classList.remove('show');
+            }
         }
     });
     
@@ -596,15 +608,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     if (exportBtn && exportOptions) {
-        exportBtn.addEventListener('click', function() {
+        exportBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
             exportOptions.classList.toggle('show');
-        });
-        
-        // Close export menu when clicking outside
-        document.addEventListener('click', function(event) {
-            if (!exportBtn.contains(event.target) && !exportOptions.contains(event.target)) {
-                exportOptions.classList.remove('show');
-            }
         });
         
         // Export options
@@ -641,17 +647,32 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     if (hamburgerBtn) {
-        hamburgerBtn.addEventListener('click', toggleHamburger);
+        hamburgerBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            toggleHamburger();
+        });
     }
     
     if (logoutBtn) {
         logoutBtn.addEventListener('click', logout);
     }
     
+    // Close modal when clicking outside
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal(modal.id);
+            }
+        });
+    });
+    
     // Keyboard events
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && activeModal) {
-            closeModal(activeModal);
+        if (e.key === 'Escape') {
+            if (activeModal) {
+                closeModal(activeModal);
+            }
+            closeHamburger();
         }
     });
     
