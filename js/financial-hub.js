@@ -52,7 +52,11 @@ const financialData = {
 let budgetVsExpenseChart, quarterlyTrendChart;
 let activeModal = null;
 
-// DOM Elements
+// Make functions globally available
+window.showNotification = showNotification;
+window.openModal = openModal;
+window.closeModal = closeModal;
+
 document.addEventListener('DOMContentLoaded', function() {
     // Get DOM elements
     const periodSelect = document.getElementById('periodSelect');
@@ -68,6 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const hamburgerBtn = document.getElementById('hamburgerBtn');
     const navDropdown = document.getElementById('navDropdown');
     const logoutBtn = document.getElementById('logoutBtn');
+    const notificationsBtn = document.getElementById('notificationsBtn');
     
     // Current period
     let currentPeriod = 'q4';
@@ -103,17 +108,17 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('utilizationRate').textContent = utilizationRate + '%';
         
         // Update progress bar
-        const progressFill = document.querySelector('#utilizationRate').closest('.card').querySelector('.progress-fill');
+        const progressFill = document.querySelector('.card:last-child .progress-fill');
         if (progressFill) {
             progressFill.style.width = utilizationRate + '%';
             
             // Update color based on utilization
             if (parseFloat(utilizationRate) > 95) {
-                progressFill.style.backgroundColor = 'var(--danger)';
+                progressFill.style.backgroundColor = '#ef4444';
             } else if (parseFloat(utilizationRate) > 85) {
-                progressFill.style.backgroundColor = 'var(--warning)';
+                progressFill.style.backgroundColor = '#f59e0b';
             } else {
-                progressFill.style.backgroundColor = 'var(--primary-blue)';
+                progressFill.style.backgroundColor = '#1e40af';
             }
         }
     }
@@ -562,10 +567,19 @@ document.addEventListener('DOMContentLoaded', function() {
         const container = document.getElementById('notificationContainer');
         if (!container) return;
         
+        // Remove existing notifications
+        const existingNotifications = container.querySelectorAll('.notification');
+        existingNotifications.forEach(notif => notif.remove());
+        
         const notification = document.createElement('div');
         notification.className = `notification ${type}`;
+        
+        let icon = 'info-circle';
+        if (type === 'success') icon = 'check-circle';
+        if (type === 'error') icon = 'exclamation-circle';
+        
         notification.innerHTML = `
-            <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+            <i class="fas fa-${icon}"></i>
             <span>${message}</span>
         `;
         
@@ -657,6 +671,12 @@ document.addEventListener('DOMContentLoaded', function() {
         logoutBtn.addEventListener('click', logout);
     }
     
+    if (notificationsBtn) {
+        notificationsBtn.addEventListener('click', function() {
+            showNotification('No new notifications', 'info');
+        });
+    }
+    
     // Close modal when clicking outside
     document.querySelectorAll('.modal').forEach(modal => {
         modal.addEventListener('click', function(e) {
@@ -679,3 +699,22 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize
     initDashboard();
 });
+
+// Export functions for global use (if needed by other scripts)
+window.toggleHamburger = function() {
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const navDropdown = document.getElementById('navDropdown');
+    if (hamburgerBtn && navDropdown) {
+        hamburgerBtn.classList.toggle('active');
+        navDropdown.classList.toggle('active');
+    }
+};
+
+window.logout = function() {
+    if (confirm('Are you sure you want to logout?')) {
+        showNotification('Logging out...', 'info');
+        setTimeout(() => {
+            window.location.href = 'login.html';
+        }, 1000);
+    }
+};
