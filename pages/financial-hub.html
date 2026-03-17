@@ -372,14 +372,14 @@
             box-shadow: var(--shadow-md);
         }
 
-        .btn-secondary {
-            background: var(--pure-white);
-            color: var(--primary-blue);
-            border: 1px solid var(--primary-blue);
+        .btn-success {
+            background: var(--success);
+            color: white;
+            border: none;
         }
 
-        .btn-secondary:hover {
-            background: var(--light-blue);
+        .btn-success:hover {
+            background: #0b8e5e;
             transform: translateY(-2px);
         }
 
@@ -391,22 +391,6 @@
         .btn-outline:hover {
             background: var(--off-white);
             border-color: var(--medium-gray);
-        }
-
-        .btn-sm {
-            padding: 0.5rem 1rem;
-            font-size: 0.85rem;
-        }
-
-        .btn-success {
-            background: var(--success);
-            color: white;
-            border: none;
-        }
-
-        .btn-success:hover {
-            background: #0b8e5e;
-            transform: translateY(-2px);
         }
 
         /* Period Selector */
@@ -801,11 +785,6 @@
             background-size: 1rem;
         }
 
-        textarea.form-control {
-            resize: vertical;
-            min-height: 100px;
-        }
-
         /* Notification */
         .notification {
             position: fixed;
@@ -939,30 +918,8 @@
                 justify-content: center;
             }
             
-            .header-actions {
-                gap: 0.5rem;
-            }
-            
             .btn {
                 padding: 0.5rem 1rem;
-                font-size: 0.85rem;
-            }
-            
-            .period-selector {
-                padding: 0.5rem 0.8rem;
-            }
-            
-            .chart-card {
-                padding: 1rem;
-            }
-            
-            .chart-container {
-                height: 250px;
-            }
-            
-            th, td {
-                padding: 0.8rem;
-                font-size: 0.85rem;
             }
         }
     </style>
@@ -1209,7 +1166,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title"><i class="fas fa-plus-circle"></i> Add New Budget</h3>
-                <button class="modal-close" id="closeModal">&times;</button>
+                <button class="modal-close" id="closeModalBtn">&times;</button>
             </div>
             <div class="modal-body">
                 <form id="budgetForm">
@@ -1263,33 +1220,9 @@
         // Financial Data
         const financialData = {
             q4: {
-                training: {
-                    budget: 250000,
-                    expenses: 230500,
-                    programs: [
-                        { name: "Leadership Training", budget: 80000, expenses: 72000 },
-                        { name: "Technical Skills", budget: 90000, expenses: 88000 },
-                        { name: "Onboarding Program", budget: 80000, expenses: 70500 }
-                    ]
-                },
-                events: {
-                    budget: 185000,
-                    expenses: 172000,
-                    programs: [
-                        { name: "Annual Conference", budget: 100000, expenses: 95000 },
-                        { name: "Team Building", budget: 40000, expenses: 38000 },
-                        { name: "Client Meetings", budget: 45000, expenses: 39000 }
-                    ]
-                },
-                extra: {
-                    budget: 107800,
-                    expenses: 84920,
-                    programs: [
-                        { name: "Software Licenses", budget: 45000, expenses: 42000 },
-                        { name: "Equipment", budget: 38000, expenses: 28920 },
-                        { name: "Miscellaneous", budget: 24800, expenses: 14000 }
-                    ]
-                }
+                training: { budget: 250000, expenses: 230500 },
+                events: { budget: 185000, expenses: 172000 },
+                extra: { budget: 107800, expenses: 84920 }
             },
             q3: {
                 training: { budget: 220000, expenses: 205000 },
@@ -1319,7 +1252,7 @@
             const exportOptions = document.getElementById('exportOptions');
             const addBudgetBtn = document.getElementById('addBudgetBtn');
             const addBudgetModal = document.getElementById('addBudgetModal');
-            const closeModal = document.getElementById('closeModal');
+            const closeModalBtn = document.getElementById('closeModalBtn');
             const cancelBudgetBtn = document.getElementById('cancelBudgetBtn');
             const saveBudgetBtn = document.getElementById('saveBudgetBtn');
             const budgetForm = document.getElementById('budgetForm');
@@ -1356,18 +1289,15 @@
                 const remainingBalance = totalBudget - totalExpenses;
                 const utilizationRate = ((totalExpenses / totalBudget) * 100).toFixed(1);
                 
-                // Update DOM elements
                 document.getElementById('totalBudget').textContent = 'Ksh ' + numberWithCommas(totalBudget);
                 document.getElementById('totalExpenses').textContent = 'Ksh ' + numberWithCommas(totalExpenses);
                 document.getElementById('remainingBalance').textContent = 'Ksh ' + numberWithCommas(remainingBalance);
                 document.getElementById('utilizationRate').textContent = utilizationRate + '%';
                 
-                // Update progress bar
                 const progressFill = document.querySelector('.card:last-child .progress-fill');
                 if (progressFill) {
                     progressFill.style.width = utilizationRate + '%';
                     
-                    // Update color based on utilization
                     if (parseFloat(utilizationRate) > 95) {
                         progressFill.style.backgroundColor = '#ef4444';
                     } else if (parseFloat(utilizationRate) > 85) {
@@ -1406,7 +1336,6 @@
                         statusClass = 'status-success';
                     }
                     
-                    // Format program name
                     const programName = program.charAt(0).toUpperCase() + program.slice(1) + ' Program';
                     
                     const row = document.createElement('tr');
@@ -1430,16 +1359,13 @@
                 }
             }
             
-            // Get status color
             function getStatusColor(utilization) {
                 if (parseFloat(utilization) > 95) return '#ef4444';
                 if (parseFloat(utilization) > 85) return '#f59e0b';
                 return '#1e40af';
             }
             
-            // Initialize charts
             function initializeCharts() {
-                // Budget vs Expense Chart
                 const budgetCtx = document.getElementById('budgetVsExpenseChart')?.getContext('2d');
                 if (budgetCtx) {
                     budgetVsExpenseChart = new Chart(budgetCtx, {
@@ -1484,14 +1410,10 @@
                                     },
                                     grid: { color: 'rgba(0,0,0,0.05)' }
                                 },
-                                x: {
-                                    grid: { display: false }
-                                }
+                                x: { grid: { display: false } }
                             },
                             plugins: {
-                                legend: {
-                                    labels: { color: '#475569' }
-                                },
+                                legend: { labels: { color: '#475569' } },
                                 tooltip: {
                                     callbacks: {
                                         label: function(context) {
@@ -1504,7 +1426,6 @@
                     });
                 }
                 
-                // Quarterly Trend Chart
                 const trendCtx = document.getElementById('quarterlyTrendChart')?.getContext('2d');
                 if (trendCtx) {
                     quarterlyTrendChart = new Chart(trendCtx, {
@@ -1569,14 +1490,10 @@
                                     },
                                     grid: { color: 'rgba(0,0,0,0.05)' }
                                 },
-                                x: {
-                                    grid: { display: false }
-                                }
+                                x: { grid: { display: false } }
                             },
                             plugins: {
-                                legend: {
-                                    labels: { color: '#475569' }
-                                },
+                                legend: { labels: { color: '#475569' } },
                                 tooltip: {
                                     callbacks: {
                                         label: function(context) {
@@ -1590,7 +1507,6 @@
                 }
             }
             
-            // Update charts when period changes
             function updateCharts(period) {
                 if (budgetVsExpenseChart) {
                     budgetVsExpenseChart.data.datasets[0].data = [
@@ -1607,12 +1523,10 @@
                 }
             }
             
-            // Save new budget
             function saveBudget() {
                 const programType = document.getElementById('programType')?.value;
                 const budgetName = document.getElementById('budgetName')?.value;
                 const budgetAmount = document.getElementById('budgetAmount')?.value;
-                const budgetQuarter = document.getElementById('budgetQuarter')?.value;
                 
                 if (!programType || !budgetName || !budgetAmount) {
                     showNotification('Please fill in all required fields', 'error');
@@ -1620,25 +1534,16 @@
                 }
                 
                 showNotification(`Budget "${budgetName}" added successfully!`, 'success');
-                
-                // Close modal and reset form
                 closeModal('addBudgetModal');
                 if (budgetForm) budgetForm.reset();
-                
-                // Update last updated time
                 updateLastUpdated();
             }
             
-            // Refresh data
             function refreshData() {
                 const refreshBtn = document.getElementById('refreshDataBtn');
-                if (!refreshBtn) return;
-                
-                // Show loading state
                 refreshBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Refreshing...';
                 refreshBtn.disabled = true;
                 
-                // Simulate API call delay
                 setTimeout(() => {
                     updateLastUpdated();
                     refreshBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh Data';
@@ -1647,32 +1552,18 @@
                 }, 1500);
             }
             
-            // Export report
             function exportReport(format) {
                 switch(format) {
-                    case 'pdf':
-                        generatePDF();
-                        break;
-                    case 'ppt':
-                        generatePPT();
-                        break;
-                    case 'excel':
-                        generateExcel();
-                        break;
-                    case 'csv':
-                        generateCSV();
-                        break;
+                    case 'excel': generateExcel(); break;
+                    case 'csv': generateCSV(); break;
+                    default: showNotification(`${format.toUpperCase()} export started!`, 'info');
                 }
-                
-                showNotification(`${format.toUpperCase()} export started!`, 'info');
             }
             
-            // Generate Excel
             function generateExcel() {
                 const currentPeriod = document.getElementById('periodSelect')?.value || 'q4';
                 const data = financialData[currentPeriod];
                 
-                // Create worksheet data
                 const wsData = [
                     ['Program', 'Budget (Ksh)', 'Expenses (Ksh)', 'Variance (Ksh)', 'Utilization %', 'Status'],
                 ];
@@ -1693,18 +1584,12 @@
                     ]);
                 }
                 
-                // Create worksheet
                 const ws = XLSX.utils.aoa_to_sheet(wsData);
-                
-                // Create workbook
                 const wb = XLSX.utils.book_new();
                 XLSX.utils.book_append_sheet(wb, ws, "Budget Analysis");
-                
-                // Generate and download file
                 XLSX.writeFile(wb, `budget_analysis_${currentPeriod}.xlsx`);
             }
             
-            // Generate CSV
             function generateCSV() {
                 const currentPeriod = document.getElementById('periodSelect')?.value || 'q4';
                 const data = financialData[currentPeriod];
@@ -1720,7 +1605,6 @@
                     csvContent += `"${program.charAt(0).toUpperCase() + program.slice(1)} Program",${programData.budget},${programData.expenses},${variance},${utilization},"${status}"\n`;
                 }
                 
-                // Create download link
                 const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
                 const url = URL.createObjectURL(blob);
                 const link = document.createElement('a');
@@ -1731,20 +1615,7 @@
                 document.body.removeChild(link);
             }
             
-            // Generate PDF
-            function generatePDF() {
-                showNotification('PDF generation would be implemented here', 'info');
-            }
-            
-            // Generate PowerPoint
-            function generatePPT() {
-                showNotification('PowerPoint generation would be implemented here', 'info');
-            }
-            
-            // Modal functions
             function openModal(modalId) {
-                if (activeModal) closeModal(activeModal);
-                
                 const modal = document.getElementById(modalId);
                 if (modal) {
                     modal.classList.add('active');
@@ -1762,7 +1633,6 @@
                 }
             }
             
-            // Hamburger menu functions
             function toggleHamburger() {
                 if (hamburgerBtn && navDropdown) {
                     hamburgerBtn.classList.toggle('active');
@@ -1777,23 +1647,6 @@
                 }
             }
             
-            // Close dropdown when clicking outside
-            document.addEventListener('click', function(event) {
-                if (hamburgerBtn && navDropdown) {
-                    if (!hamburgerBtn.contains(event.target) && !navDropdown.contains(event.target)) {
-                        closeHamburger();
-                    }
-                }
-                
-                // Close export menu when clicking outside
-                if (exportBtn && exportOptions) {
-                    if (!exportBtn.contains(event.target) && !exportOptions.contains(event.target)) {
-                        exportOptions.classList.remove('show');
-                    }
-                }
-            });
-            
-            // Logout
             function logout() {
                 if (confirm('Are you sure you want to logout?')) {
                     showNotification('Logging out...', 'info');
@@ -1803,26 +1656,22 @@
                 }
             }
             
-            // Update last updated timestamp
             function updateLastUpdated() {
                 const lastUpdatedEl = document.getElementById('lastUpdated');
                 if (lastUpdatedEl) {
                     const now = new Date();
-                    const options = { 
+                    lastUpdatedEl.textContent = now.toLocaleDateString('en-US', { 
                         weekday: 'long', 
                         hour: '2-digit', 
                         minute: '2-digit'
-                    };
-                    lastUpdatedEl.textContent = now.toLocaleDateString('en-US', options);
+                    });
                 }
             }
             
-            // Show notification
             function showNotification(message, type = 'info') {
                 const container = document.getElementById('notificationContainer');
                 if (!container) return;
                 
-                // Remove existing notifications
                 const existingNotifications = container.querySelectorAll('.notification');
                 existingNotifications.forEach(notif => notif.remove());
                 
@@ -1833,20 +1682,14 @@
                 if (type === 'success') icon = 'check-circle';
                 if (type === 'error') icon = 'exclamation-circle';
                 
-                notification.innerHTML = `
-                    <i class="fas fa-${icon}"></i>
-                    <span>${message}</span>
-                `;
-                
+                notification.innerHTML = `<i class="fas fa-${icon}"></i><span>${message}</span>`;
                 container.appendChild(notification);
                 
                 setTimeout(() => {
-                    notification.style.animation = 'notificationSlideIn 0.3s ease reverse';
-                    setTimeout(() => notification.remove(), 300);
+                    notification.remove();
                 }, 3000);
             }
             
-            // Animate cards on load
             function animateCards() {
                 const cards = document.querySelectorAll('.card');
                 cards.forEach((card, index) => {
@@ -1861,7 +1704,6 @@
                 });
             }
             
-            // Helper function to format numbers with commas
             function numberWithCommas(x) {
                 return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             }
@@ -1882,7 +1724,6 @@
                     exportOptions.classList.toggle('show');
                 });
                 
-                // Export options
                 document.querySelectorAll('.export-option').forEach(option => {
                     option.addEventListener('click', function() {
                         const format = this.getAttribute('data-format');
@@ -1892,12 +1733,12 @@
                 });
             }
             
-            if (addBudgetBtn && addBudgetModal) {
+            if (addBudgetBtn) {
                 addBudgetBtn.addEventListener('click', () => openModal('addBudgetModal'));
             }
             
-            if (closeModal) {
-                closeModal.addEventListener('click', () => closeModal('addBudgetModal'));
+            if (closeModalBtn) {
+                closeModalBtn.addEventListener('click', () => closeModal('addBudgetModal'));
             }
             
             if (cancelBudgetBtn) {
@@ -1931,6 +1772,21 @@
                     showNotification('No new notifications', 'info');
                 });
             }
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(event) {
+                if (hamburgerBtn && navDropdown) {
+                    if (!hamburgerBtn.contains(event.target) && !navDropdown.contains(event.target)) {
+                        closeHamburger();
+                    }
+                }
+                
+                if (exportBtn && exportOptions) {
+                    if (!exportBtn.contains(event.target) && !exportOptions.contains(event.target)) {
+                        exportOptions.classList.remove('show');
+                    }
+                }
+            });
             
             // Close modal when clicking outside
             document.querySelectorAll('.modal').forEach(modal => {
