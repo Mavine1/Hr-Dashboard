@@ -1,0 +1,1646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR & Admin Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Enhanced Dashboard Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+            color: #fff;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Modern Fixed Header */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 65px;
+            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 2000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 10;
+        }
+
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(59, 130, 246, 0.3);
+        }
+
+        .logo-icon i {
+            color: white;
+            font-size: 18px;
+        }
+
+        .logo h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, #e0f2fe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 0.5px;
+        }
+
+        /* Animated Title - Fixed to not overlay */
+        .animated-title-container {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .animated-title {
+            position: absolute;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffffff 0%, #c7d2fe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            white-space: nowrap;
+            animation: slideTitle 25s linear infinite;
+            animation-delay: 1s;
+            opacity: 0.9;
+            width: max-content;
+        }
+
+        @keyframes slideTitle {
+            0% {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            5% {
+                opacity: 0.9;
+            }
+            90% {
+                opacity: 0.9;
+            }
+            95% {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 10;
+        }
+
+        /* Modern Navigation - Hamburger Menu */
+        .hamburger-menu {
+            position: relative;
+            z-index: 1001;
+        }
+
+        .hamburger-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .hamburger-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .hamburger-btn span {
+            display: block;
+            width: 18px;
+            height: 2px;
+            background: white;
+            border-radius: 1px;
+            transition: all 0.3s;
+        }
+
+        .hamburger-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(4px, 4px);
+        }
+
+        .hamburger-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(4px, -4px);
+        }
+
+        /* Navigation Dropdown */
+        .nav-dropdown {
+            position: fixed;
+            top: 75px;
+            right: 20px;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 15px;
+            min-width: 240px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            z-index: 1000;
+        }
+
+        .nav-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .nav-dropdown::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            right: 18px;
+            width: 14px;
+            height: 14px;
+            background: #1e293b;
+            transform: rotate(45deg);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .nav-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 14px 10px;
+            text-align: center;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .nav-item:hover {
+            background: rgba(59, 130, 246, 0.2);
+            transform: translateY(-2px);
+            border-color: rgba(59, 130, 246, 0.4);
+        }
+
+        .nav-item i {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #60a5fa;
+            display: block;
+        }
+
+        .nav-item span {
+            display: block;
+            font-size: 10px;
+            font-weight: 500;
+            color: #e2e8f0;
+            line-height: 1.3;
+        }
+
+        /* Notifications */
+        .notifications {
+            position: relative;
+            background: rgba(255, 255, 255, 0.05);
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .notifications:hover {
+            background: rgba(59, 130, 246, 0.15);
+        }
+
+        .notifications i {
+            color: #60a5fa;
+            font-size: 18px;
+        }
+
+        .badge {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 600;
+            border: 2px solid #1e293b;
+        }
+
+        /* Logout Button */
+        .logout-btn {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 75px;
+            padding: 20px;
+            flex: 1;
+        }
+
+        /* Dashboard Header */
+        .dashboard-header {
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .dashboard-header h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #ffffff 0%, #c7d2fe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .dashboard-header p {
+            color: #94a3b8;
+            font-size: 13px;
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.4;
+        }
+
+        /* Animated Data Grid */
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        /* Flipping Cards */
+        .data-card {
+            perspective: 1200px;
+            height: 160px;
+            cursor: pointer;
+        }
+
+        .data-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+            border-radius: 14px;
+        }
+
+        .data-card:hover .data-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .data-card-front, .data-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 14px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .data-card-front {
+            background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .data-card-back {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            transform: rotateY(180deg);
+            color: white;
+        }
+
+        .data-icon {
+            font-size: 28px;
+            margin-bottom: 12px;
+            color: #60a5fa;
+        }
+
+        .data-value {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .data-label {
+            font-size: 11px;
+            color: #cbd5e1;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-weight: 500;
+        }
+
+        .data-trend {
+            font-size: 10px;
+            margin-top: 8px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            width: fit-content;
+            margin: 6px auto 0;
+            font-weight: 500;
+        }
+
+        .trend-up {
+            background: rgba(34, 197, 94, 0.15);
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .trend-down {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        /* Statistics Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-item {
+            background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 18px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.2s;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-2px);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(59, 130, 246, 0.1);
+            flex-shrink: 0;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .stat-icon i {
+            font-size: 20px;
+            color: #60a5fa;
+        }
+
+        .stat-content {
+            flex: 1;
+        }
+
+        .stat-content h3 {
+            font-size: 10px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+
+        .stat-content h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 3px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .stat-content p {
+            font-size: 10px;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        /* Chart Container */
+        .chart-container {
+            background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .chart-header h3 {
+            font-size: 15px;
+            font-weight: 600;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .chart-wrapper {
+            height: 300px;
+            position: relative;
+        }
+
+        /* Modern Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 18px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            animation: modalSlideIn 0.3s;
+            overflow: hidden;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .modal-header {
+            padding: 18px 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            color: white;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .close-modal {
+            font-size: 24px;
+            cursor: pointer;
+            color: #94a3b8;
+            background: none;
+            border: none;
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s;
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .modal-body {
+            padding: 24px;
+            max-height: 50vh;
+            overflow-y: auto;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 18px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 4000;
+            animation: toastSlideIn 0.3s;
+            max-width: 300px;
+        }
+
+        @keyframes toastSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .toast i {
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .toast-success {
+            border-left: 4px solid #22c55e;
+        }
+
+        .toast-success i {
+            color: #22c55e;
+        }
+
+        .toast-info {
+            border-left: 4px solid #3b82f6;
+        }
+
+        .toast-info i {
+            color: #3b82f6;
+        }
+
+        .toast span {
+            font-size: 12px;
+            color: #e2e8f0;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        .main-footer {
+            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+            padding: 15px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .copyright {
+            font-size: 11px;
+            color: #c7d2fe;
+        }
+
+        .proprietors {
+            font-size: 11px;
+            color: #c7d2fe;
+            font-weight: 500;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .data-grid {
+                gap: 15px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .chart-wrapper {
+                height: 280px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-header {
+                padding: 0 15px;
+                height: 60px;
+            }
+            
+            .main-content {
+                padding: 15px;
+                margin-top: 70px;
+            }
+            
+            .data-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .data-card {
+                height: 150px;
+            }
+            
+            .data-value {
+                font-size: 28px;
+            }
+            
+            .animated-title {
+                font-size: 14px;
+            }
+            
+            .nav-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-dropdown {
+                right: 15px;
+                left: 15px;
+                width: calc(100% - 30px);
+            }
+            
+            .nav-dropdown::before {
+                right: 25px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .stat-item {
+                padding: 15px;
+            }
+            
+            .stat-content h2 {
+                font-size: 20px;
+            }
+            
+            .chart-wrapper {
+                height: 250px;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .dashboard-header h1 {
+                font-size: 20px;
+            }
+            
+            .dashboard-header p {
+                font-size: 12px;
+            }
+            
+            .data-value {
+                font-size: 26px;
+            }
+            
+            .animated-title {
+                font-size: 12px;
+            }
+            
+            .logout-btn span {
+                display: none;
+            }
+            
+            .logout-btn {
+                padding: 10px;
+                width: 44px;
+                height: 44px;
+                justify-content: center;
+            }
+            
+            .header-right {
+                gap: 10px;
+            }
+            
+            .notifications {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .hamburger-btn {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .chart-header h3 {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Modern Fixed Header -->
+    <header class="main-header">
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-briefcase"></i>
+            </div>
+            <h2>HR-Admin Pro</h2>
+        </div>
+        
+        <!-- Animated Title Container -->
+        <div class="animated-title-container">
+            <div class="animated-title">Secure HR & Admin Management System | Data Protected | Real-time Analytics</div>
+        </div>
+        
+        <div class="header-right">
+            <!-- Notifications -->
+            <div class="notifications" id="notificationsBtn">
+                <i class="fas fa-bell"></i>
+                <span class="badge">3</span>
+            </div>
+            
+            <!-- Logout Button -->
+            <button class="logout-btn" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </button>
+            
+            <!-- Modern Hamburger Menu -->
+            <div class="hamburger-menu">
+                <div class="hamburger-btn" id="hamburgerBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                
+                <!-- Navigation Dropdown -->
+                <div class="nav-dropdown" id="navDropdown">
+                    <div class="nav-grid">
+                        <div class="nav-item" data-page="task-centre">
+                            <i class="fas fa-tasks"></i>
+                            <span>Task Centre</span>
+                        </div>
+                        <div class="nav-item" data-page="training">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span>Training</span>
+                        </div>
+                        <div class="nav-item" data-page="contracts">
+                            <i class="fas fa-file-contract"></i>
+                            <span>Contracts</span>
+                        </div>
+                        <div class="nav-item" data-page="hr-letters">
+                            <i class="fas fa-envelope"></i>
+                            <span>HR Letters</span>
+                        </div>
+                        <div class="nav-item" data-page="events">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Events</span>
+                        </div>
+                        <div class="nav-item" data-page="cost-analyzer">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Cost Analyzer</span>
+                        </div>
+                        <div class="nav-item" data-page="financial-hub">
+                            <i class="fas fa-star"></i>
+                            <span>Financial Hub</span>
+                        </div>
+                        <div class="nav-item" data-page="reports">
+                            <i class="fas fa-chart-pie"></i>
+                            <span>Reports</span>
+                        </div>
+                        <div class="nav-item" data-page="employees">
+                            <i class="fas fa-users"></i>
+                            <span>Employees</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Header -->
+        <div class="dashboard-header">
+            <h1>Analytics Dashboard</h1>
+            <p>Real-time insights and comprehensive data analysis across all departments</p>
+        </div>
+
+        <!-- Animated Data Grid -->
+        <div class="data-grid">
+            <!-- Total Projects -->
+            <div class="data-card">
+                <div class="data-card-inner">
+                    <div class="data-card-front">
+                        <div class="data-icon">
+                            <i class="fas fa-project-diagram"></i>
+                        </div>
+                        <div class="data-value" id="totalProjects">24</div>
+                        <div class="data-label">Total Projects</div>
+                        <div class="data-trend trend-up">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>12% increase</span>
+                        </div>
+                    </div>
+                    <div class="data-card-back">
+                        <div class="data-value">24</div>
+                        <div class="data-label">Active Projects</div>
+                        <p style="font-size: 10px; opacity: 0.95; margin-top: 6px;">Across 5 departments</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active Employees -->
+            <div class="data-card">
+                <div class="data-card-inner">
+                    <div class="data-card-front">
+                        <div class="data-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="data-value" id="activeEmployees">156</div>
+                        <div class="data-label">Active Employees</div>
+                        <div class="data-trend trend-up">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>5% growth</span>
+                        </div>
+                    </div>
+                    <div class="data-card-back">
+                        <div class="data-value">156</div>
+                        <div class="data-label">Employees Active</div>
+                        <p style="font-size: 10px; opacity: 0.95; margin-top: 6px;">38 departments</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Monthly Cost -->
+            <div class="data-card">
+                <div class="data-card-inner">
+                    <div class="data-card-front">
+                        <div class="data-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="data-value" id="monthlyCost">Ksh 1.2M</div>
+                        <div class="data-label">Monthly Cost</div>
+                        <div class="data-trend trend-down">
+                            <i class="fas fa-arrow-down"></i>
+                            <span>8% saving</span>
+                        </div>
+                    </div>
+                    <div class="data-card-back">
+                        <div class="data-value">Ksh 1.2M</div>
+                        <div class="data-label">Monthly Expenses</div>
+                        <p style="font-size: 10px; opacity: 0.95; margin-top: 6px;">18% under budget</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Completion Rate -->
+            <div class="data-card">
+                <div class="data-card-inner">
+                    <div class="data-card-front">
+                        <div class="data-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="data-value" id="completionRate">94%</div>
+                        <div class="data-label">Completion Rate</div>
+                        <div class="data-trend trend-up">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>6% improvement</span>
+                        </div>
+                    </div>
+                    <div class="data-card-back">
+                        <div class="data-value">94%</div>
+                        <div class="data-label">Success Rate</div>
+                        <p style="font-size: 10px; opacity: 0.95; margin-top: 6px;">Across all projects</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics Grid -->
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-icon">
+                    <i class="fas fa-file-contract"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Pending Contracts</h3>
+                    <h2>8</h2>
+                    <p style="color: #fbbf24;">3 require immediate attention</p>
+                </div>
+            </div>
+
+            <div class="stat-item">
+                <div class="stat-icon">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Upcoming Events</h3>
+                    <h2>12</h2>
+                    <p style="color: #22c55e;">4 events this week</p>
+                </div>
+            </div>
+
+            <div class="stat-item">
+                <div class="stat-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Training Sessions</h3>
+                    <h2>18</h2>
+                    <p style="color: #60a5fa;">6 scheduled this month</p>
+                </div>
+            </div>
+
+            <div class="stat-item">
+                <div class="stat-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>HR Letters Sent</h3>
+                    <h2>42</h2>
+                    <p style="color: #a78bfa;">This month</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chart Container -->
+        <div class="chart-container">
+            <div class="chart-header">
+                <h3>Cost Analysis Overview</h3>
+                <button class="logout-btn" id="exportChartBtn" style="padding: 8px 14px; font-size: 11px;">
+                    <i class="fas fa-download"></i>
+                    <span>Export Data</span>
+                </button>
+            </div>
+            <div class="chart-wrapper">
+                <canvas id="costChart"></canvas>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="copyright">© 2024 HR-Admin Pro. All rights reserved.</div>
+            <div class="proprietors">Sole Proprietors: Manuel and TBC HR & ADMIN</div>
+        </div>
+    </footer>
+
+    <!-- Notifications Modal -->
+    <div id="notificationsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-bell"></i> Notifications</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="notification-list">
+                    <div class="notification-item">
+                        <div class="notification-icon">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </div>
+                        <div class="notification-content">
+                            <p>Project "HR System Upgrade" deadline approaching</p>
+                            <small>2 hours ago</small>
+                        </div>
+                    </div>
+                    <div class="notification-item">
+                        <div class="notification-icon">
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                        <div class="notification-content">
+                            <p>3 new employee registrations pending approval</p>
+                            <small>5 hours ago</small>
+                        </div>
+                    </div>
+                    <div class="notification-item">
+                        <div class="notification-icon">
+                            <i class="fas fa-file-contract"></i>
+                        </div>
+                        <div class="notification-content">
+                            <p>Vendor contract expires in 7 days</p>
+                            <small>1 day ago</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Chart
+            initCostChart();
+            
+            // Initialize event listeners
+            setupEventListeners();
+            
+            // Initialize animated counters
+            animateCounters();
+            
+            // Auto-flip cards every 10 seconds
+            startAutoFlip();
+        });
+
+        // Cost Analysis Chart
+        function initCostChart() {
+            const ctx = document.getElementById('costChart').getContext('2d');
+            const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+            gradient.addColorStop(0, 'rgba(59, 130, 246, 0.3)');
+            gradient.addColorStop(1, 'rgba(59, 130, 246, 0.05)');
+
+            const gradient2 = ctx.createLinearGradient(0, 0, 0, 300);
+            gradient2.addColorStop(0, 'rgba(34, 197, 94, 0.3)');
+            gradient2.addColorStop(1, 'rgba(34, 197, 94, 0.05)');
+
+            const costChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    datasets: [{
+                        label: 'HR Costs',
+                        data: [850000, 920000, 1050000, 980000, 1100000, 1250000, 1200000, 1350000, 1300000, 1400000, 1380000, 1420000],
+                        borderColor: '#3b82f6',
+                        backgroundColor: gradient,
+                        fill: true,
+                        tension: 0.4,
+                        borderWidth: 2,
+                        pointRadius: 4,
+                        pointBackgroundColor: '#3b82f6',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 1.5,
+                        pointHoverRadius: 6
+                    }, {
+                        label: 'Admin Costs',
+                        data: [450000, 480000, 520000, 500000, 550000, 580000, 560000, 600000, 590000, 620000, 610000, 630000],
+                        borderColor: '#22c55e',
+                        backgroundColor: gradient2,
+                        fill: true,
+                        tension: 0.4,
+                        borderWidth: 2,
+                        pointRadius: 4,
+                        pointBackgroundColor: '#22c55e',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 1.5,
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                color: '#e2e8f0',
+                                font: {
+                                    size: 11,
+                                    family: 'Poppins',
+                                    weight: '500'
+                                },
+                                padding: 15,
+                                usePointStyle: true,
+                                boxWidth: 6,
+                                boxHeight: 6
+                            }
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            backgroundColor: 'rgba(30, 41, 59, 0.95)',
+                            titleColor: '#fff',
+                            bodyColor: '#cbd5e1',
+                            borderColor: 'rgba(255, 255, 255, 0.1)',
+                            borderWidth: 1,
+                            cornerRadius: 8,
+                            padding: 12,
+                            titleFont: {
+                                size: 11,
+                                family: 'Poppins'
+                            },
+                            bodyFont: {
+                                size: 10,
+                                family: 'Poppins'
+                            },
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: Ksh ${context.parsed.y.toLocaleString()}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return 'Ksh ' + (value / 1000).toFixed(0) + 'K';
+                                },
+                                color: '#94a3b8',
+                                font: {
+                                    size: 10,
+                                    family: 'Poppins'
+                                },
+                                padding: 6
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.05)',
+                                drawBorder: false
+                            },
+                            border: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.05)',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: '#94a3b8',
+                                font: {
+                                    size: 10,
+                                    family: 'Poppins'
+                                },
+                                padding: 6
+                            },
+                            border: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        }
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: 'index'
+                    }
+                }
+            });
+        }
+
+        // Setup all event listeners
+        function setupEventListeners() {
+            // Hamburger Menu
+            document.getElementById('hamburgerBtn').addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleHamburger();
+            });
+
+            // Navigation Items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const page = this.getAttribute('data-page');
+                    navigateToPage(page);
+                });
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', (e) => {
+                const dropdown = document.getElementById('navDropdown');
+                const hamburger = document.getElementById('hamburgerBtn');
+                
+                if (!dropdown.contains(e.target) && !hamburger.contains(e.target)) {
+                    closeHamburger();
+                }
+            });
+
+            // Notifications Button
+            document.getElementById('notificationsBtn').addEventListener('click', () => {
+                openModal('notificationsModal');
+            });
+
+            // Export Chart Button
+            document.getElementById('exportChartBtn').addEventListener('click', () => {
+                exportChartData();
+            });
+
+            // Logout Button
+            document.getElementById('logoutBtn').addEventListener('click', (e) => {
+                e.preventDefault();
+                performLogout();
+            });
+
+            // Close modal buttons
+            document.querySelectorAll('.close-modal').forEach(button => {
+                button.addEventListener('click', function() {
+                    closeAllModals();
+                });
+            });
+
+            // Close modals when clicking outside
+            document.addEventListener('click', function(event) {
+                const modals = document.querySelectorAll('.modal');
+                modals.forEach(modal => {
+                    if (event.target === modal) {
+                        closeAllModals();
+                    }
+                });
+            });
+
+            // Data Cards click for manual flip
+            document.querySelectorAll('.data-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    this.querySelector('.data-card-inner').style.transform = 
+                        this.querySelector('.data-card-inner').style.transform === 'rotateY(180deg)' 
+                            ? 'rotateY(0deg)' 
+                            : 'rotateY(180deg)';
+                });
+            });
+        }
+
+        // Hamburger Menu Functions
+        function toggleHamburger() {
+            const btn = document.getElementById('hamburgerBtn');
+            const dropdown = document.getElementById('navDropdown');
+            
+            btn.classList.toggle('active');
+            dropdown.classList.toggle('active');
+            
+            if (dropdown.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function closeHamburger() {
+            const btn = document.getElementById('hamburgerBtn');
+            const dropdown = document.getElementById('navDropdown');
+            
+            btn.classList.remove('active');
+            dropdown.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Navigation Function
+        function navigateToPage(page) {
+            const pageMap = {
+                'task-centre': 'pages/task-centre.html',
+                'training': 'pages/training.html',
+                'contracts': 'pages/vendor-contracts.html',
+                'hr-letters': 'pages/hr-letters.html',
+                'events': 'pages/upcoming-events.html',
+                'cost-analyzer': 'pages/cost-analyzer.html',
+                'financial-hub': 'pages/financial-hub.html',
+                'reports': 'reports.html',
+                'employees': 'pages/employees.html'
+            };
+
+            showToast(`Loading ${page.replace('-', ' ')}...`, 'info');
+            closeHamburger();
+            
+            setTimeout(() => {
+                if (pageMap[page]) {
+                    window.location.href = pageMap[page];
+                } else {
+                    showToast('Page under development', 'info');
+                }
+            }, 800);
+        }
+
+        // Modal Functions
+        function openModal(modalId) {
+            closeAllModals();
+            closeHamburger();
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeAllModals() {
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.style.display = 'none';
+            });
+            document.body.style.overflow = 'auto';
+        }
+
+        // Toast Notification
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.innerHTML = `
+                <i class="fas fa-${getToastIcon(type)}"></i>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100%)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        function getToastIcon(type) {
+            const icons = {
+                success: 'check-circle',
+                info: 'info-circle',
+                warning: 'exclamation-triangle',
+                error: 'times-circle'
+            };
+            return icons[type] || 'info-circle';
+        }
+
+        // Animated Counters
+        function animateCounters() {
+            const counters = [
+                { element: document.getElementById('totalProjects'), target: 24, prefix: '' },
+                { element: document.getElementById('activeEmployees'), target: 156, prefix: '' },
+                { element: document.getElementById('monthlyCost'), target: 1200000, prefix: 'Ksh ' },
+                { element: document.getElementById('completionRate'), target: 94, prefix: '', suffix: '%' }
+            ];
+
+            counters.forEach(counter => {
+                if (counter.element) {
+                    animateCounter(counter.element, counter.target, counter.prefix, counter.suffix || '');
+                }
+            });
+        }
+
+        function animateCounter(element, target, prefix = '', suffix = '') {
+            let current = 0;
+            const increment = target / 80;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    if (target >= 1000000) {
+                        element.textContent = `${prefix}${(target/1000000).toFixed(1)}M`;
+                    } else if (target >= 1000 && suffix !== '%') {
+                        element.textContent = `${prefix}${(target/1000).toFixed(0)}K`;
+                    } else {
+                        element.textContent = `${prefix}${target}${suffix}`;
+                    }
+                    clearInterval(timer);
+                } else {
+                    if (target >= 1000000) {
+                        element.textContent = `${prefix}${(current/1000000).toFixed(1)}M`;
+                    } else if (target >= 1000 && suffix !== '%') {
+                        element.textContent = `${prefix}${Math.floor(current/1000)}K`;
+                    } else {
+                        element.textContent = `${prefix}${Math.floor(current)}${suffix}`;
+                    }
+                }
+            }, 20);
+        }
+
+        // Auto-flip cards
+        function startAutoFlip() {
+            setInterval(() => {
+                const cards = document.querySelectorAll('.data-card');
+                const randomCard = cards[Math.floor(Math.random() * cards.length)];
+                const inner = randomCard.querySelector('.data-card-inner');
+                
+                if (inner.style.transform === 'rotateY(180deg)') {
+                    inner.style.transform = 'rotateY(0deg)';
+                } else {
+                    inner.style.transform = 'rotateY(180deg)';
+                }
+                
+                // Reset after 2 seconds
+                setTimeout(() => {
+                    inner.style.transform = 'rotateY(0deg)';
+                }, 2000);
+            }, 10000);
+        }
+
+        // Export Chart Data
+        function exportChartData() {
+            showToast('Exporting chart data...', 'info');
+            
+            setTimeout(() => {
+                const chart = document.getElementById('costChart');
+                const link = document.createElement('a');
+                link.download = `Cost_Analysis_${new Date().toISOString().split('T')[0]}.png`;
+                link.href = chart.toDataURL('image/png', 1.0);
+                link.click();
+                showToast('Chart exported successfully!', 'success');
+            }, 1500);
+        }
+
+        // Logout Function
+        function performLogout() {
+            showToast('Logging out...', 'info');
+            
+            setTimeout(() => {
+                // Clear stored data
+                localStorage.clear();
+                sessionStorage.clear();
+                
+                // Redirect to login page
+                window.location.href = 'pages/login.html';
+            }, 1000);
+        }
+
+        // Add CSS for notifications and scrollbars
+        const notificationStyle = document.createElement('style');
+        notificationStyle.textContent = `
+            .notification-list {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .notification-item {
+                display: flex;
+                align-items: flex-start;
+                gap: 12px;
+                padding: 12px;
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 10px;
+                transition: all 0.2s;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .notification-item:hover {
+                background: rgba(59, 130, 246, 0.1);
+                transform: translateX(3px);
+            }
+            
+            .notification-icon {
+                width: 34px;
+                height: 34px;
+                background: rgba(255, 255, 255, 0.08);
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+            }
+            
+            .notification-icon i {
+                font-size: 15px;
+                color: #60a5fa;
+            }
+            
+            .notification-content {
+                flex: 1;
+            }
+            
+            .notification-content p {
+                font-size: 12px;
+                color: #e2e8f0;
+                margin-bottom: 4px;
+                line-height: 1.4;
+                font-weight: 500;
+            }
+            
+            .notification-content small {
+                font-size: 10px;
+                color: #94a3b8;
+            }
+            
+            /* Custom Scrollbar */
+            ::-webkit-scrollbar {
+                width: 6px;
+                height: 6px;
+            }
+            
+            ::-webkit-scrollbar-track {
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 3px;
+            }
+            
+            ::-webkit-scrollbar-thumb {
+                background: rgba(59, 130, 246, 0.5);
+                border-radius: 3px;
+            }
+            
+            ::-webkit-scrollbar-thumb:hover {
+                background: rgba(59, 130, 246, 0.7);
+            }
+            
+            /* Selection Styling */
+            ::selection {
+                background: rgba(59, 130, 246, 0.3);
+                color: white;
+            }
+            
+            /* Print styles */
+            @media print {
+                .main-header,
+                .logout-btn,
+                .hamburger-menu,
+                .notifications,
+                .main-footer {
+                    display: none !important;
+                }
+                
+                .main-content {
+                    margin-top: 0;
+                }
+                
+                body {
+                    background: white !important;
+                    color: black !important;
+                }
+            }
+        `;
+        document.head.appendChild(notificationStyle);
+    </script>
+</body>
+</html>

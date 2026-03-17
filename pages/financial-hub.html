@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR ADMIN Financial Budget Hub | Cost Analysis Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pptxgenjs/3.10.0/pptxgen.bundle.js"></script>
+    
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --success: #4cc9f0;
+            --warning: #f72585;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --card-glow: rgba(67, 97, 238, 0.3);
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #0f172a;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+        
+        /* Fixed Header */
+        .fixed-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(67, 97, 238, 0.3);
+            z-index: 1000;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .header-left h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(90deg, #4361ee, #4cc9f0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .header-right {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .period-selector {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(67, 97, 238, 0.4);
+            color: #e2e8f0;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        
+        .export-btn {
+            background: linear-gradient(90deg, #4361ee, #3a0ca3);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        .export-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
+        }
+        
+        .main-content {
+            margin-top: 90px;
+            padding: 20px;
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+        
+        /* Cards Section */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: rgba(30, 41, 59, 0.7);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(67, 97, 238, 0.2);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, #4361ee, #4cc9f0, #f72585, #3a0ca3);
+            z-index: -1;
+            filter: blur(20px);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        
+        .card:hover::before {
+            opacity: 0.6;
+        }
+        
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px var(--card-glow);
+            border-color: rgba(67, 97, 238, 0.5);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #cbd5e1;
+        }
+        
+        .card-icon {
+            font-size: 1.5rem;
+            background: rgba(67, 97, 238, 0.2);
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .card-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .card-change {
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .positive {
+            color: #4ade80;
+        }
+        
+        .negative {
+            color: #f87171;
+        }
+        
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .chart-card {
+            background: rgba(30, 41, 59, 0.7);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(67, 97, 238, 0.2);
+        }
+        
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .chart-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+        
+        /* Data Table */
+        .data-table-container {
+            background: rgba(30, 41, 59, 0.7);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(67, 97, 238, 0.2);
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+        
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        
+        th {
+            text-align: left;
+            padding: 12px 15px;
+            background-color: rgba(67, 97, 238, 0.2);
+            border-bottom: 2px solid rgba(67, 97, 238, 0.5);
+        }
+        
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+        }
+        
+        tr:hover {
+            background-color: rgba(67, 97, 238, 0.1);
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background-color: rgba(148, 163, 184, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #94a3b8;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(67, 97, 238, 0.2);
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            border: 1px solid rgba(67, 97, 238, 0.5);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            animation: modalFadeIn 0.4s;
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid rgba(67, 97, 238, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(30, 41, 59, 0.9);
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .close-modal:hover {
+            color: #f87171;
+        }
+        
+        .modal-body {
+            padding: 20px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(67, 97, 238, 0.4);
+            border-radius: 8px;
+            color: #e2e8f0;
+            font-size: 1rem;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #4361ee;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+        
+        .modal-footer {
+            padding: 20px;
+            border-top: 1px solid rgba(67, 97, 238, 0.3);
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            background: rgba(30, 41, 59, 0.9);
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, #4361ee, #3a0ca3);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: rgba(71, 85, 105, 0.8);
+            color: #e2e8f0;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Export Menu */
+        .export-menu {
+            position: relative;
+        }
+        
+        .export-options {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: rgba(30, 41, 59, 0.95);
+            border: 1px solid rgba(67, 97, 238, 0.5);
+            border-radius: 8px;
+            padding: 10px;
+            min-width: 200px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+        }
+        
+        .export-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+        
+        .export-option:hover {
+            background-color: rgba(67, 97, 238, 0.2);
+        }
+        
+        .show {
+            display: block;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .fixed-header {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+            
+            .main-content {
+                margin-top: 140px;
+                padding: 15px;
+            }
+            
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .chart-card {
+                padding: 15px;
+            }
+            
+            .card-value {
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .header-right {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .chart-container {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Fixed Header -->
+    <header class="fixed-header">
+        <div class="header-left">
+            <h1><i class="fas fa-chart-pie"></i> Financial Budget Hub</h1>
+        </div>
+        <div class="header-right">
+            <select class="period-selector" id="periodSelect">
+                <option value="q1">Q1 - Jan to Mar</option>
+                <option value="q2">Q2 - Apr to Jun</option>
+                <option value="q3">Q3 - Jul to Sep</option>
+                <option value="q4" selected>Q4 - Oct to Dec</option>
+                <option value="fy">Full Financial Year</option>
+            </select>
+            
+            <div class="export-menu">
+                <button class="export-btn" id="exportBtn">
+                    <i class="fas fa-download"></i> Export Reports
+                </button>
+                <div class="export-options" id="exportOptions">
+                    <div class="export-option" data-format="pdf">
+                        <i class="fas fa-file-pdf"></i> PDF Document
+                    </div>
+                    <div class="export-option" data-format="ppt">
+                        <i class="fas fa-file-powerpoint"></i> PowerPoint
+                    </div>
+                    <div class="export-option" data-format="excel">
+                        <i class="fas fa-file-excel"></i> Excel Spreadsheet
+                    </div>
+                    <div class="export-option" data-format="csv">
+                        <i class="fas fa-file-csv"></i> CSV Data
+                    </div>
+                </div>
+            </div>
+            
+            <button class="export-btn" id="addBudgetBtn">
+                <i class="fas fa-plus-circle"></i> Add Budget
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Summary Cards -->
+        <section class="cards-container">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Total Budget</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-wallet" style="color: #4361ee;"></i>
+                    </div>
+                </div>
+                <div class="card-value" id="totalBudget">Ksh 542,800</div>
+                <div class="card-change positive">
+                    <i class="fas fa-arrow-up"></i> 12% vs last period
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Total Expenses</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-receipt" style="color: #f72585;"></i>
+                    </div>
+                </div>
+                <div class="card-value" id="totalExpenses">Ksh 487,420</div>
+                <div class="card-change negative">
+                    <i class="fas fa-arrow-up"></i> 8% vs last period
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Remaining Balance</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-piggy-bank" style="color: #4cc9f0;"></i>
+                    </div>
+                </div>
+                <div class="card-value" id="remainingBalance">Ksh 55,380</div>
+                <div class="card-change positive">
+                    <i class="fas fa-check-circle"></i> 10.2% of total budget
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Utilization Rate</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-chart-line" style="color: #3a0ca3;"></i>
+                    </div>
+                </div>
+                <div class="card-value" id="utilizationRate">89.8%</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 89.8%; background-color: #4361ee;"></div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Charts Section -->
+        <section class="charts-container">
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3 class="chart-title">Budget vs Expenses by Program</h3>
+                    <div class="period-selector">
+                        <select id="chartProgramSelect">
+                            <option value="all">All Programs</option>
+                            <option value="training">Training</option>
+                            <option value="events">Events</option>
+                            <option value="extra">Extra</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="budgetVsExpenseChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3 class="chart-title">Quarterly Trend Analysis</h3>
+                    <div class="period-selector">
+                        <select id="chartQuarterSelect">
+                            <option value="current">Current Quarter</option>
+                            <option value="year">Full Year</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="quarterlyTrendChart"></canvas>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Data Table -->
+        <section class="data-table-container">
+            <div class="table-header">
+                <h3 class="chart-title">Program-wise Financial Analysis</h3>
+                <button class="btn btn-primary" id="refreshDataBtn">
+                    <i class="fas fa-sync-alt"></i> Refresh Data
+                </button>
+            </div>
+            
+            <div style="overflow-x: auto;">
+                <table id="financialTable">
+                    <thead>
+                        <tr>
+                            <th>Program</th>
+                            <th>Budget</th>
+                            <th>Expenses</th>
+                            <th>Variance</th>
+                            <th>Utilization</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- Table rows will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Manuel-Financial Budget Hub &copy; 2026 | Cost tracking across Training, Events, and Extra Programs</p>
+        <p>Data synchronized across all system pages | Last updated: <span id="lastUpdated">Today, 10:45 AM</span></p>
+    </footer>
+    
+    <!-- Add Budget Modal -->
+    <div class="modal" id="addBudgetModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add New Budget</h3>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="budgetForm">
+                    <div class="form-group">
+                        <label class="form-label">Program Type</label>
+                        <select class="form-control" id="programType" required>
+                            <option value="">Select Program</option>
+                            <option value="training">Training Program</option>
+                            <option value="events">Events Program</option>
+                            <option value="extra">Extra Program</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Budget Name</label>
+                        <input type="text" class="form-control" id="budgetName" placeholder="Enter budget name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Budget Amount (Ksh)</label>
+                        <input type="number" class="form-control" id="budgetAmount" placeholder="Enter budget amount in Kenyan Shillings" required min="0" step="100">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Quarter</label>
+                        <select class="form-control" id="budgetQuarter" required>
+                            <option value="q1">Q1 (Jan - Mar)</option>
+                            <option value="q2">Q2 (Apr - Jun)</option>
+                            <option value="q3">Q3 (Jul - Sep)</option>
+                            <option value="q4" selected>Q4 (Oct - Dec)</option>
+                            <option value="fy">Full Year</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" id="budgetDescription" rows="3" placeholder="Enter budget description"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelBudgetBtn">Cancel</button>
+                <button class="btn btn-primary" id="saveBudgetBtn">Save Budget</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Financial Data
+        const financialData = {
+            q4: {
+                training: {
+                    budget: 250000,
+                    expenses: 230500,
+                    programs: [
+                        { name: "Leadership Training", budget: 80000, expenses: 72000 },
+                        { name: "Technical Skills", budget: 90000, expenses: 88000 },
+                        { name: "Onboarding Program", budget: 80000, expenses: 70500 }
+                    ]
+                },
+                events: {
+                    budget: 185000,
+                    expenses: 172000,
+                    programs: [
+                        { name: "Annual Conference", budget: 100000, expenses: 95000 },
+                        { name: "Team Building", budget: 40000, expenses: 38000 },
+                        { name: "Client Meetings", budget: 45000, expenses: 39000 }
+                    ]
+                },
+                extra: {
+                    budget: 107800,
+                    expenses: 84920,
+                    programs: [
+                        { name: "Software Licenses", budget: 45000, expenses: 42000 },
+                        { name: "Equipment", budget: 38000, expenses: 28920 },
+                        { name: "Miscellaneous", budget: 24800, expenses: 14000 }
+                    ]
+                }
+            },
+            q3: {
+                training: { budget: 220000, expenses: 205000 },
+                events: { budget: 160000, expenses: 155000 },
+                extra: { budget: 90000, expenses: 82000 }
+            },
+            q2: {
+                training: { budget: 210000, expenses: 195000 },
+                events: { budget: 150000, expenses: 148000 },
+                extra: { budget: 85000, expenses: 79000 }
+            },
+            q1: {
+                training: { budget: 200000, expenses: 185000 },
+                events: { budget: 140000, expenses: 135000 },
+                extra: { budget: 80000, expenses: 72000 }
+            }
+        };
+
+        // Initialize Charts
+        let budgetVsExpenseChart, quarterlyTrendChart;
+        
+        // DOM Elements
+        const periodSelect = document.getElementById('periodSelect');
+        const exportBtn = document.getElementById('exportBtn');
+        const exportOptions = document.getElementById('exportOptions');
+        const addBudgetBtn = document.getElementById('addBudgetBtn');
+        const addBudgetModal = document.getElementById('addBudgetModal');
+        const closeModal = document.getElementById('closeModal');
+        const cancelBudgetBtn = document.getElementById('cancelBudgetBtn');
+        const saveBudgetBtn = document.getElementById('saveBudgetBtn');
+        const budgetForm = document.getElementById('budgetForm');
+        const refreshDataBtn = document.getElementById('refreshDataBtn');
+        const tableBody = document.getElementById('tableBody');
+        const totalBudgetEl = document.getElementById('totalBudget');
+        const totalExpensesEl = document.getElementById('totalExpenses');
+        const remainingBalanceEl = document.getElementById('remainingBalance');
+        const utilizationRateEl = document.getElementById('utilizationRate');
+        const lastUpdatedEl = document.getElementById('lastUpdated');
+        
+        // Current period
+        let currentPeriod = 'q4';
+        
+        // Initialize the dashboard
+        function initDashboard() {
+            updateSummaryCards();
+            updateFinancialTable();
+            initializeCharts();
+            updateLastUpdated();
+            
+            // Event Listeners
+            periodSelect.addEventListener('change', function() {
+                currentPeriod = this.value;
+                updateSummaryCards();
+                updateFinancialTable();
+                updateCharts();
+            });
+            
+            exportBtn.addEventListener('click', function() {
+                exportOptions.classList.toggle('show');
+            });
+            
+            // Close export menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!exportBtn.contains(event.target) && !exportOptions.contains(event.target)) {
+                    exportOptions.classList.remove('show');
+                }
+            });
+            
+            // Export options
+            document.querySelectorAll('.export-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const format = this.getAttribute('data-format');
+                    exportReport(format);
+                    exportOptions.classList.remove('show');
+                });
+            });
+            
+            // Modal events
+            addBudgetBtn.addEventListener('click', () => {
+                addBudgetModal.style.display = 'flex';
+            });
+            
+            closeModal.addEventListener('click', () => {
+                addBudgetModal.style.display = 'none';
+            });
+            
+            cancelBudgetBtn.addEventListener('click', () => {
+                addBudgetModal.style.display = 'none';
+                budgetForm.reset();
+            });
+            
+            saveBudgetBtn.addEventListener('click', saveBudget);
+            
+            refreshDataBtn.addEventListener('click', refreshData);
+            
+            // Initialize with animation
+            animateCards();
+        }
+        
+        // Update summary cards
+        function updateSummaryCards() {
+            const data = financialData[currentPeriod];
+            
+            let totalBudget = 0;
+            let totalExpenses = 0;
+            
+            for (const program in data) {
+                totalBudget += data[program].budget;
+                totalExpenses += data[program].expenses;
+            }
+            
+            const remainingBalance = totalBudget - totalExpenses;
+            const utilizationRate = ((totalExpenses / totalBudget) * 100).toFixed(1);
+            
+            // Format with commas and Kenyan Shillings
+            totalBudgetEl.textContent = 'Ksh ' + numberWithCommas(totalBudget);
+            totalExpensesEl.textContent = 'Ksh ' + numberWithCommas(totalExpenses);
+            remainingBalanceEl.textContent = 'Ksh ' + numberWithCommas(remainingBalance);
+            utilizationRateEl.textContent = utilizationRate + '%';
+            
+            // Update progress bar
+            const progressFill = utilizationRateEl.parentElement.querySelector('.progress-fill');
+            progressFill.style.width = utilizationRate + '%';
+            
+            // Update colors based on utilization
+            if (parseFloat(utilizationRate) > 95) {
+                progressFill.style.backgroundColor = '#f72585';
+            } else if (parseFloat(utilizationRate) > 85) {
+                progressFill.style.backgroundColor = '#fbbf24';
+            } else {
+                progressFill.style.backgroundColor = '#4361ee';
+            }
+        }
+        
+        // Update financial table
+        function updateFinancialTable() {
+            const data = financialData[currentPeriod];
+            tableBody.innerHTML = '';
+            
+            for (const program in data) {
+                const programData = data[program];
+                const variance = programData.budget - programData.expenses;
+                const utilization = ((programData.expenses / programData.budget) * 100).toFixed(1);
+                
+                let status = '';
+                let statusColor = '';
+                
+                if (utilization > 95) {
+                    status = 'Over Budget';
+                    statusColor = '#f72585';
+                } else if (utilization > 85) {
+                    status = 'Watch';
+                    statusColor = '#fbbf24';
+                } else {
+                    status = 'On Track';
+                    statusColor = '#4ade80';
+                }
+                
+                // Format program name
+                const programName = program.charAt(0).toUpperCase() + program.slice(1) + ' Program';
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${programName}</td>
+                    <td>Ksh ${numberWithCommas(programData.budget)}</td>
+                    <td>Ksh ${numberWithCommas(programData.expenses)}</td>
+                    <td>Ksh ${numberWithCommas(variance)}</td>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span>${utilization}%</span>
+                            <div class="progress-bar" style="flex-grow: 1;">
+                                <div class="progress-fill" style="width: ${utilization}%; background-color: ${statusColor};"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td><span style="color: ${statusColor}">${status}</span></td>
+                `;
+                
+                tableBody.appendChild(row);
+            }
+        }
+        
+        // Initialize charts
+        function initializeCharts() {
+            // Budget vs Expense Chart
+            const budgetCtx = document.getElementById('budgetVsExpenseChart').getContext('2d');
+            budgetVsExpenseChart = new Chart(budgetCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Training', 'Events', 'Extra'],
+                    datasets: [
+                        {
+                            label: 'Budget',
+                            data: [
+                                financialData[currentPeriod].training.budget,
+                                financialData[currentPeriod].events.budget,
+                                financialData[currentPeriod].extra.budget
+                            ],
+                            backgroundColor: 'rgba(67, 97, 238, 0.7)',
+                            borderColor: 'rgba(67, 97, 238, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Expenses',
+                            data: [
+                                financialData[currentPeriod].training.expenses,
+                                financialData[currentPeriod].events.expenses,
+                                financialData[currentPeriod].extra.expenses
+                            ],
+                            backgroundColor: 'rgba(247, 37, 133, 0.7)',
+                            borderColor: 'rgba(247, 37, 133, 1)',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return 'Ksh ' + numberWithCommas(value);
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(148, 163, 184, 0.1)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(148, 163, 184, 0.1)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#e2e8f0'
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    label += 'Ksh ' + numberWithCommas(context.parsed.y);
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Quarterly Trend Chart
+            const trendCtx = document.getElementById('quarterlyTrendChart').getContext('2d');
+            quarterlyTrendChart = new Chart(trendCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+                    datasets: [
+                        {
+                            label: 'Training',
+                            data: [
+                                financialData.q1.training.expenses,
+                                financialData.q2.training.expenses,
+                                financialData.q3.training.expenses,
+                                financialData.q4.training.expenses
+                            ],
+                            borderColor: 'rgba(67, 97, 238, 1)',
+                            backgroundColor: 'rgba(67, 97, 238, 0.1)',
+                            borderWidth: 3,
+                            tension: 0.3,
+                            fill: true
+                        },
+                        {
+                            label: 'Events',
+                            data: [
+                                financialData.q1.events.expenses,
+                                financialData.q2.events.expenses,
+                                financialData.q3.events.expenses,
+                                financialData.q4.events.expenses
+                            ],
+                            borderColor: 'rgba(247, 37, 133, 1)',
+                            backgroundColor: 'rgba(247, 37, 133, 0.1)',
+                            borderWidth: 3,
+                            tension: 0.3,
+                            fill: true
+                        },
+                        {
+                            label: 'Extra',
+                            data: [
+                                financialData.q1.extra.expenses,
+                                financialData.q2.extra.expenses,
+                                financialData.q3.extra.expenses,
+                                financialData.q4.extra.expenses
+                            ],
+                            borderColor: 'rgba(76, 201, 240, 1)',
+                            backgroundColor: 'rgba(76, 201, 240, 0.1)',
+                            borderWidth: 3,
+                            tension: 0.3,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return 'Ksh ' + numberWithCommas(value);
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(148, 163, 184, 0.1)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(148, 163, 184, 0.1)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#e2e8f0'
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    label += 'Ksh ' + numberWithCommas(context.parsed.y);
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Update charts when period changes
+        function updateCharts() {
+            // Update Budget vs Expense chart
+            budgetVsExpenseChart.data.datasets[0].data = [
+                financialData[currentPeriod].training.budget,
+                financialData[currentPeriod].events.budget,
+                financialData[currentPeriod].extra.budget
+            ];
+            budgetVsExpenseChart.data.datasets[1].data = [
+                financialData[currentPeriod].training.expenses,
+                financialData[currentPeriod].events.expenses,
+                financialData[currentPeriod].extra.expenses
+            ];
+            budgetVsExpenseChart.update();
+        }
+        
+        // Save new budget
+        function saveBudget() {
+            const programType = document.getElementById('programType').value;
+            const budgetName = document.getElementById('budgetName').value;
+            const budgetAmount = parseFloat(document.getElementById('budgetAmount').value);
+            const budgetQuarter = document.getElementById('budgetQuarter').value;
+            
+            if (!programType || !budgetName || !budgetAmount) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            // In a real app, this would send data to a server
+            // For now, we'll just show a confirmation
+            alert(`Budget "${budgetName}" for ${programType} program added successfully!\nAmount: Ksh ${numberWithCommas(budgetAmount)}\nQuarter: ${budgetQuarter}`);
+            
+            // Close modal and reset form
+            addBudgetModal.style.display = 'none';
+            budgetForm.reset();
+            
+            // Update last updated time
+            updateLastUpdated();
+        }
+        
+        // Refresh data
+        function refreshData() {
+            // Show loading state
+            refreshDataBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Refreshing...';
+            refreshDataBtn.disabled = true;
+            
+            // Simulate API call delay
+            setTimeout(() => {
+                // In a real app, this would fetch new data from the server
+                // For demonstration, we'll just update the timestamp
+                updateLastUpdated();
+                
+                // Restore button
+                refreshDataBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh Data';
+                refreshDataBtn.disabled = false;
+                
+                // Show notification
+                showNotification('Data refreshed successfully!');
+            }, 1500);
+        }
+        
+        // Export report
+        function exportReport(format) {
+            let message = '';
+            
+            switch(format) {
+                case 'pdf':
+                    message = 'PDF report generation started. Download will begin shortly.';
+                    generatePDF();
+                    break;
+                case 'ppt':
+                    message = 'PowerPoint presentation is being prepared.';
+                    generatePPT();
+                    break;
+                case 'excel':
+                    message = 'Excel spreadsheet export initiated.';
+                    generateExcel();
+                    break;
+                case 'csv':
+                    message = 'CSV data export complete.';
+                    generateCSV();
+                    break;
+            }
+            
+            showNotification(message);
+        }
+        
+        // Generate PDF
+        function generatePDF() {
+            // In a real implementation, use jsPDF to generate PDF
+            showNotification('PDF export would be generated here with actual data.');
+        }
+        
+        // Generate PowerPoint
+        function generatePPT() {
+            // In a real implementation, use pptxgenjs to create PowerPoint
+            showNotification('PowerPoint export would be generated here with actual data.');
+        }
+        
+        // Generate Excel
+        function generateExcel() {
+            // Create worksheet data
+            const wsData = [
+                ['Program', 'Budget (Ksh)', 'Expenses (Ksh)', 'Variance (Ksh)', 'Utilization %', 'Status'],
+            ];
+            
+            const data = financialData[currentPeriod];
+            for (const program in data) {
+                const programData = data[program];
+                const variance = programData.budget - programData.expenses;
+                const utilization = ((programData.expenses / programData.budget) * 100).toFixed(1);
+                let status = utilization > 95 ? 'Over Budget' : (utilization > 85 ? 'Watch' : 'On Track');
+                
+                wsData.push([
+                    program.charAt(0).toUpperCase() + program.slice(1) + ' Program',
+                    programData.budget,
+                    programData.expenses,
+                    variance,
+                    utilization,
+                    status
+                ]);
+            }
+            
+            // Create worksheet
+            const ws = XLSX.utils.aoa_to_sheet(wsData);
+            
+            // Create workbook
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Budget Analysis");
+            
+            // Generate and download file
+            XLSX.writeFile(wb, `budget_analysis_${currentPeriod}.xlsx`);
+        }
+        
+        // Generate CSV
+        function generateCSV() {
+            let csvContent = "Program,Budget (Ksh),Expenses (Ksh),Variance (Ksh),Utilization %,Status\n";
+            
+            const data = financialData[currentPeriod];
+            for (const program in data) {
+                const programData = data[program];
+                const variance = programData.budget - programData.expenses;
+                const utilization = ((programData.expenses / programData.budget) * 100).toFixed(1);
+                let status = utilization > 95 ? 'Over Budget' : (utilization > 85 ? 'Watch' : 'On Track');
+                
+                csvContent += `"${program.charAt(0).toUpperCase() + program.slice(1)} Program",${programData.budget},${programData.expenses},${variance},${utilization},"${status}"\n`;
+            }
+            
+            // Create download link
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', `budget_analysis_${currentPeriod}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+        
+        // Show notification
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: linear-gradient(90deg, #4361ee, #3a0ca3);
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+                z-index: 3000;
+                animation: slideIn 0.3s, fadeOut 0.3s 2.7s;
+                max-width: 300px;
+            `;
+            
+            notification.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-check-circle"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 3000);
+            
+            // Add CSS for animations
+            if (!document.getElementById('notification-styles')) {
+                const style = document.createElement('style');
+                style.id = 'notification-styles';
+                style.textContent = `
+                    @keyframes slideIn {
+                        from { transform: translateX(100%); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                    
+                    @keyframes fadeOut {
+                        from { opacity: 1; }
+                        to { opacity: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+        }
+        
+        // Update last updated timestamp
+        function updateLastUpdated() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                hour: '2-digit', 
+                minute: '2-digit',
+                hour12: false
+            };
+            lastUpdatedEl.textContent = now.toLocaleDateString('en-US', options) + ' | ' + now.toLocaleTimeString('en-US', {hour12: false});
+        }
+        
+        // Animate cards on load
+        function animateCards() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.5s, transform 0.5s';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100 * index);
+            });
+        }
+        
+        // Helper function to format numbers with commas
+        function numberWithCommas(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', initDashboard);
+    </script>
+</body>
+</html>

@@ -1,0 +1,1663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Letters | HR System</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Modern Modal Styles */
+        .modern-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal-container {
+            position: relative;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 50px auto;
+            width: 90%;
+            max-width: 900px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: slideUp 0.4s ease;
+            overflow: hidden;
+        }
+        
+        .modal-header {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 25px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .modal-header h3 {
+            color: white;
+            font-size: 1.8rem;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .modal-body {
+            background: white;
+            padding: 30px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        
+        .close-modal-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .close-modal-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: rotate(90deg);
+        }
+        
+        /* Fixed Header */
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: white;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            padding: 15px 20px;
+            margin: -20px -20px 20px -20px;
+            animation: slideDown 0.3s ease;
+        }
+        
+        /* Enhanced Template Gallery */
+        .templates-carousel {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+        
+        .template-card-enhanced {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            border: 2px solid transparent;
+        }
+        
+        .template-card-enhanced:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            border-color: #667eea;
+        }
+        
+        .template-card-enhanced::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+        
+        .template-header {
+            padding: 25px 25px 15px;
+            text-align: center;
+        }
+        
+        .template-icon-enhanced {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 32px;
+            transform: rotate(-5deg);
+            transition: transform 0.3s ease;
+        }
+        
+        .template-card-enhanced:hover .template-icon-enhanced {
+            transform: rotate(0deg) scale(1.1);
+        }
+        
+        .template-stats {
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 25px;
+            background: #f8f9fe;
+            border-top: 1px solid #e0e6ef;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-item .number {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+        
+        .stat-item .label {
+            font-size: 0.8rem;
+            color: #7b8793;
+        }
+        
+        /* Interactive Form Elements */
+        .form-group label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .editor-toolbar-enhanced {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 15px;
+            background: linear-gradient(135deg, #f8f9fe 0%, #eef1ff 100%);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #e0e6ef;
+        }
+        
+        .tool-btn {
+            background: white;
+            border: 2px solid #e0e6ef;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+        
+        .tool-btn:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+        
+        .template-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideDown {
+            from { 
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 1000;
+            animation: slideUp 0.3s ease;
+            border-left: 5px solid #667eea;
+        }
+        
+        .toast.success {
+            border-left-color: #1cc88a;
+        }
+        
+        .toast.error {
+            border-left-color: #e74a3b;
+        }
+        
+        .toast.warning {
+            border-left-color: #f6c23e;
+        }
+        
+        /* Action Button Animations */
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+        
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+        
+        .btn-primary:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+        
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
+        }
+        
+        /* Letter Status Animation */
+        .status-badge {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Enhanced Table */
+        .data-table tbody tr {
+            transition: all 0.3s ease;
+        }
+        
+        .data-table tbody tr:hover {
+            background: linear-gradient(90deg, #f8f9fe 0%, #f0f2ff 100%);
+            transform: translateX(5px);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .modal-container {
+                width: 95%;
+                margin: 20px auto;
+            }
+            
+            .templates-carousel {
+                grid-template-columns: 1fr;
+            }
+            
+            .sticky-header {
+                padding: 10px;
+            }
+            
+            .editor-toolbar-enhanced {
+                flex-direction: column;
+            }
+            
+            .tool-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="logo">
+                <h2><i class="fas fa-briefcase"></i> HR-Admin Pro</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../index.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="training.html"><i class="fas fa-graduation-cap"></i> Training</a></li>
+                <li><a href="vendor-contracts.html"><i class="fas fa-file-contract"></i> Vendor Contracts</a></li>
+                <li class="active"><a href="hr-letters.html"><i class="fas fa-envelope"></i> HR Letters</a></li>
+                <li><a href="upcoming-events.html"><i class="fas fa-calendar-alt"></i> Upcoming Events</a></li>
+            </ul>
+            <div class="user-profile">
+                <img src="https://ui-avatars.com/api/?name=Admin+User" alt="User">
+                <div>
+                    <h4>Admin User</h4>
+                    <p>HR Manager</p>
+                </div>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <!-- Fixed Header -->
+            <div class="sticky-header">
+                <div class="header">
+                    <div class="header-left">
+                        <h1>HR Letters & Templates</h1>
+                        <p>Manage HR letters, templates, and communications</p>
+                    </div>
+                    <div class="header-right">
+                        <button class="btn-primary" onclick="showLetterModal()">
+                            <i class="fas fa-plus"></i> Create Letter
+                        </button>
+                        <button class="btn-secondary" onclick="showTemplateModal()">
+                            <i class="fas fa-layer-group"></i> Templates
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Letter Form Modal -->
+            <div id="letterModal" class="modern-modal">
+                <div class="modal-container">
+                    <div class="modal-header">
+                        <h3><i class="fas fa-envelope-open-text"></i> Create New HR Letter</h3>
+                        <button class="close-modal-btn" onclick="hideLetterModal()">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="newLetterForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label><i class="fas fa-file-alt"></i> Letter Type *</label>
+                                    <select class="form-control" id="letterType" onchange="loadTemplate()" required>
+                                        <option value="">Select Letter Type</option>
+                                        <option value="appointment">Appointment Letter</option>
+                                        <option value="promotion">Promotion Letter</option>
+                                        <option value="warning">Warning Letter</option>
+                                        <option value="termination">Termination Letter</option>
+                                        <option value="experience">Experience Letter</option>
+                                        <option value="salary">Salary Revision Letter</option>
+                                        <option value="custom">Custom Letter</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label><i class="fas fa-user"></i> Employee *</label>
+                                    <select class="form-control" id="employeeSelect" required>
+                                        <option value="">Select Employee</option>
+                                        <option value="emp001">John Doe (EMP001)</option>
+                                        <option value="emp002">Jane Smith (EMP002)</option>
+                                        <option value="emp003">Mike Johnson (EMP003)</option>
+                                        <option value="emp004">Sarah Williams (EMP004)</option>
+                                        <option value="emp005">Robert Brown (EMP005)</option>
+                                        <option value="emp006">Lisa Wong (EMP006)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label><i class="fas fa-calendar-alt"></i> Letter Date *</label>
+                                    <input type="date" class="form-control" id="letterDate" required>
+                                </div>
+                                <div class="form-group">
+                                    <label><i class="fas fa-hashtag"></i> Reference Number</label>
+                                    <input type="text" class="form-control" id="refNumber" placeholder="e.g., HR/LTR/2024/001">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label><i class="fas fa-heading"></i> Letter Subject *</label>
+                                <input type="text" class="form-control" id="letterSubject" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label><i class="fas fa-edit"></i> Letter Content *</label>
+                                <div class="editor-toolbar-enhanced">
+                                    <button type="button" class="tool-btn" onclick="formatText('bold')">
+                                        <i class="fas fa-bold"></i> Bold
+                                    </button>
+                                    <button type="button" class="tool-btn" onclick="formatText('italic')">
+                                        <i class="fas fa-italic"></i> Italic
+                                    </button>
+                                    <button type="button" class="tool-btn" onclick="formatText('underline')">
+                                        <i class="fas fa-underline"></i> Underline
+                                    </button>
+                                    <button type="button" class="tool-btn" onclick="insertTemplateVariable('{employee_name}')">
+                                        <i class="fas fa-user-tag"></i> Insert Name
+                                    </button>
+                                    <button type="button" class="tool-btn" onclick="insertTemplateVariable('{date}')">
+                                        <i class="fas fa-calendar"></i> Insert Date
+                                    </button>
+                                    <button type="button" class="tool-btn" onclick="insertTemplateVariable('{position}')">
+                                        <i class="fas fa-briefcase"></i> Insert Position
+                                    </button>
+                                    <button type="button" class="tool-btn" onclick="insertTemplateVariable('{salary}')">
+                                        <i class="fas fa-money-bill-wave"></i> Insert Salary
+                                    </button>
+                                    <button type="button" class="tool-btn" onclick="insertTemplateVariable('{department}')">
+                                        <i class="fas fa-building"></i> Insert Department
+                                    </button>
+                                </div>
+                                <textarea class="form-control" id="letterContent" rows="12" required></textarea>
+                                <div style="display: flex; justify-content: space-between; margin-top: 10px;">
+                                    <small><i class="fas fa-lightbulb"></i> Use variables like {employee_name} to auto-fill information</small>
+                                    <small id="charCount">0 characters</small>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label><i class="fas fa-paperclip"></i> Additional Attachments</label>
+                                    <div class="file-upload" onclick="triggerFileUpload('letterAttachment')" style="cursor: pointer;">
+                                        <div style="text-align: center; padding: 20px; border: 2px dashed #667eea; border-radius: 10px; background: #f8f9fe;">
+                                            <i class="fas fa-cloud-upload-alt" style="font-size: 2rem; color: #667eea; margin-bottom: 10px;"></i>
+                                            <p style="margin: 0; font-weight: 600;">Click to upload files</p>
+                                            <small style="color: #7b8793;">PDF, DOC, JPG up to 10MB each</small>
+                                        </div>
+                                    </div>
+                                    <input type="file" id="letterAttachment" style="display: none;" multiple>
+                                    <div id="attachmentList" style="margin-top: 15px;"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label><i class="fas fa-paper-plane"></i> Delivery Method</label>
+                                    <div style="display: flex; flex-direction: column; gap: 15px; padding: 15px; background: #f8f9fe; border-radius: 10px;">
+                                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                            <input type="checkbox" id="emailCheck" checked style="width: 18px; height: 18px;">
+                                            <span><i class="fas fa-envelope"></i> Email to Employee</span>
+                                        </label>
+                                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                            <input type="checkbox" id="printCheck" style="width: 18px; height: 18px;">
+                                            <span><i class="fas fa-print"></i> Print Copy</span>
+                                        </label>
+                                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                            <input type="checkbox" id="signatureCheck" style="width: 18px; height: 18px;">
+                                            <span><i class="fas fa-signature"></i> Digital Signature</span>
+                                        </label>
+                                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                            <input type="checkbox" id="ccCheck" style="width: 18px; height: 18px;">
+                                            <span><i class="fas fa-copy"></i> CC to Manager</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="action-buttons-row" style="margin-top: 30px;">
+                                <button type="button" class="btn-primary" onclick="previewLetter()" id="previewBtn">
+                                    <i class="fas fa-eye"></i> Preview
+                                </button>
+                                <button type="submit" class="btn-success" id="sendBtn">
+                                    <i class="fas fa-paper-plane"></i> Send Letter
+                                </button>
+                                <button type="button" class="btn-secondary" onclick="saveAsDraft()" id="draftBtn">
+                                    <i class="fas fa-save"></i> Save Draft
+                                </button>
+                                <button type="button" class="btn-secondary" onclick="hideLetterModal()">
+                                    <i class="fas fa-times"></i> Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Template Gallery Modal -->
+            <div id="templateModal" class="modern-modal">
+                <div class="modal-container">
+                    <div class="modal-header">
+                        <h3><i class="fas fa-layer-group"></i> Letter Templates Gallery</h3>
+                        <button class="close-modal-btn" onclick="hideTemplateModal()">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div style="text-align: center; margin-bottom: 25px;">
+                            <input type="text" class="form-control" id="templateSearch" placeholder="🔍 Search templates..." style="max-width: 400px; margin: 0 auto;" onkeyup="searchTemplates()">
+                        </div>
+                        <div class="templates-carousel" id="templatesContainer">
+                            <!-- Templates will be loaded here by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="stats-overview" style="margin-bottom: 30px;">
+                <div class="stat-card" onclick="filterLetters('sent')" style="cursor: pointer;">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Letters Sent</h3>
+                        <h2>156</h2>
+                        <p><span class="positive">+12%</span> this month</p>
+                    </div>
+                </div>
+                <div class="stat-card" onclick="filterLetters('delivered')" style="cursor: pointer;">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #1cc88a 0%, #13855c 100%);">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Delivered</h3>
+                        <h2>142</h2>
+                        <p>91% success rate</p>
+                    </div>
+                </div>
+                <div class="stat-card" onclick="filterLetters('pending')" style="cursor: pointer;">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #f6c23e 0%, #dda20a 100%);">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Pending</h3>
+                        <h2>8</h2>
+                        <p>Requires action</p>
+                    </div>
+                </div>
+                <div class="stat-card" onclick="filterLetters('failed')" style="cursor: pointer;">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #e74a3b 0%, #be2617 100%);">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Failed</h3>
+                        <h2>6</h2>
+                        <p>Needs resending</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Letters Table -->
+            <div class="content-card">
+                <div class="card-header">
+                    <h3>Recent HR Letters</h3>
+                    <div class="chart-actions">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Search letters..." onkeyup="searchLetters()" id="letterSearch">
+                        </div>
+                        <button class="btn-icon" onclick="exportToExcel()" id="exportBtn">
+                            <i class="fas fa-download"></i> Export
+                        </button>
+                        <select onchange="filterLetters(this.value)" id="statusFilter">
+                            <option value="all">All Letters</option>
+                            <option value="sent">Sent</option>
+                            <option value="draft">Drafts</option>
+                            <option value="pending">Pending</option>
+                            <option value="failed">Failed</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <table class="data-table" id="lettersTable">
+                    <thead>
+                        <tr>
+                            <th>Ref No.</th>
+                            <th>Employee</th>
+                            <th>Letter Type</th>
+                            <th>Subject</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="lettersTableBody">
+                        <!-- Letters will be loaded dynamically -->
+                    </tbody>
+                </table>
+                
+                <div class="action-buttons-row" style="border-top: none; margin-top: 20px;">
+                    <button class="btn-secondary" onclick="showArchivedLetters()" id="archiveBtn">
+                        <i class="fas fa-archive"></i> View Archive
+                    </button>
+                    <button class="btn-primary" onclick="generateReport()" id="reportBtn">
+                        <i class="fas fa-chart-bar"></i> Generate Report
+                    </button>
+                </div>
+            </div>
+
+            <!-- Letter Categories -->
+            <div class="content-card" style="margin-top: 20px;">
+                <div class="card-header">
+                    <h3>Letter Categories</h3>
+                </div>
+                <div class="categories-grid">
+                    <div class="category-item" onclick="useTemplate('appointment')" style="cursor: pointer;">
+                        <div class="category-count">45</div>
+                        <h4>Appointment Letters</h4>
+                        <p>New hires and appointments</p>
+                    </div>
+                    <div class="category-item" onclick="useTemplate('promotion')" style="cursor: pointer;">
+                        <div class="category-count">28</div>
+                        <h4>Promotion Letters</h4>
+                        <p>Employee promotions</p>
+                    </div>
+                    <div class="category-item" onclick="useTemplate('warning')" style="cursor: pointer;">
+                        <div class="category-count">15</div>
+                        <h4>Warning Letters</h4>
+                        <p>Disciplinary actions</p>
+                    </div>
+                    <div class="category-item" onclick="useTemplate('termination')" style="cursor: pointer;">
+                        <div class="category-count">8</div>
+                        <h4>Termination Letters</h4>
+                        <p>Employment termination</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Preview Modal -->
+    <div id="previewModal" class="modern-modal">
+        <div class="modal-container" style="max-width: 800px;">
+            <div class="modal-header">
+                <h3><i class="fas fa-eye"></i> Letter Preview</h3>
+                <button class="close-modal-btn" onclick="closePreviewModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="letter-preview" id="letterPreviewContent">
+                    <!-- Preview content will be loaded here -->
+                </div>
+            </div>
+            <div class="modal-footer" style="padding: 20px; border-top: 1px solid #e0e6ef; display: flex; gap: 10px; justify-content: center;">
+                <button class="btn-primary" onclick="printLetter()" id="printBtn">
+                    <i class="fas fa-print"></i> Print
+                </button>
+                <button class="btn-success" onclick="sendLetterNow()" id="sendNowBtn">
+                    <i class="fas fa-paper-plane"></i> Send Now
+                </button>
+                <button class="btn-secondary" onclick="closePreviewModal()">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toastContainer"></div>
+
+    <script src="../script.js"></script>
+    <script>
+        // Sample data for letters
+        const lettersData = [
+            {
+                id: 156,
+                ref: 'HR/LTR/2024/156',
+                employee: 'John Doe',
+                type: 'Promotion Letter',
+                subject: 'Promotion to Senior Manager',
+                date: '2024-12-01',
+                status: 'sent',
+                content: 'Dear John,\n\nWe are pleased to inform you that based on your exceptional performance and dedication to the company, you have been promoted to the position of Senior Manager effective from January 1, 2025.\n\nYour new responsibilities and compensation package will be detailed in a separate document. Please schedule a meeting with your department head to discuss the transition.\n\nWe congratulate you on this achievement and look forward to your continued contributions to our organization.\n\nSincerely,\n\nJane Smith\nHR Manager\nHR-Admin Pro'
+            },
+            {
+                id: 157,
+                ref: 'HR/LTR/2024/157',
+                employee: 'Jane Smith',
+                type: 'Appointment Letter',
+                subject: 'Appointment as Project Lead',
+                date: '2024-12-03',
+                status: 'draft',
+                content: 'Dear Jane,\n\nWe are pleased to offer you the position of Project Lead at our company, effective December 15, 2024.\n\nYour appointment details and compensation package will be provided separately. Please review and sign the attached documents.\n\nWe look forward to your valuable contributions.\n\nSincerely,\nHR Department'
+            },
+            {
+                id: 158,
+                ref: 'HR/LTR/2024/158',
+                employee: 'Mike Johnson',
+                type: 'Warning Letter',
+                subject: 'Attendance Warning Notice',
+                date: '2024-12-04',
+                status: 'pending',
+                content: 'Dear Mike,\n\nThis letter serves as an official warning regarding your recent attendance record.\n\nSpecific concerns:\n• Multiple late arrivals in the past month\n• Unexplained absences on December 1 and December 3\n\nYou are expected to improve immediately. Further incidents may result in disciplinary action.\n\nSincerely,\nHR Department'
+            },
+            {
+                id: 155,
+                ref: 'HR/LTR/2024/155',
+                employee: 'Sarah Williams',
+                type: 'Experience Letter',
+                subject: 'Work Experience Certificate',
+                date: '2024-11-28',
+                status: 'sent',
+                content: 'To Whom It May Concern,\n\nThis is to certify that Ms. Sarah Williams worked with our organization from January 15, 2020 to November 28, 2024 in the capacity of Senior Developer.\n\nDuring her tenure, she demonstrated exceptional skills and dedication. Her performance was consistently rated as excellent.\n\nWe wish her all the best in her future endeavors.\n\nSincerely,\nHR Department'
+            },
+            {
+                id: 159,
+                ref: 'HR/LTR/2024/159',
+                employee: 'Robert Brown',
+                type: 'Salary Revision Letter',
+                subject: 'Salary Increment Confirmation',
+                date: '2024-12-05',
+                status: 'sent',
+                content: 'Dear Robert,\n\nWe are pleased to inform you that your salary has been revised effective from January 1, 2025.\n\nYour new monthly salary will be $7,500. This increment is in recognition of your outstanding performance and contributions to the company.\n\nPlease sign the attached acknowledgment and return it to the HR department.\n\nSincerely,\nHR Department'
+            },
+            {
+                id: 160,
+                ref: 'HR/LTR/2024/160',
+                employee: 'Lisa Wong',
+                type: 'Termination Letter',
+                subject: 'Employment Termination Notice',
+                date: '2024-12-06',
+                status: 'pending',
+                content: 'Dear Lisa,\n\nThis letter is to inform you that your employment with our company will be terminated effective December 31, 2024.\n\nThe reason for termination is company restructuring. You will receive all due benefits and compensation as per company policy.\n\nPlease complete the exit formalities by December 20, 2024.\n\nSincerely,\nHR Department'
+            }
+        ];
+
+        // Templates data
+        const templatesData = [
+            {
+                id: 'appointment',
+                name: 'Appointment Letter',
+                icon: 'fas fa-user-plus',
+                color: '#4e73df',
+                description: 'New employee appointment',
+                usage: 45,
+                lastUsed: '2 days ago',
+                popular: true
+            },
+            {
+                id: 'promotion',
+                name: 'Promotion Letter',
+                icon: 'fas fa-chart-line',
+                color: '#1cc88a',
+                description: 'Employee promotion',
+                usage: 28,
+                lastUsed: '1 week ago',
+                popular: true
+            },
+            {
+                id: 'warning',
+                name: 'Warning Letter',
+                icon: 'fas fa-exclamation-triangle',
+                color: '#f6c23e',
+                description: 'Employee warning',
+                usage: 15,
+                lastUsed: '3 days ago',
+                popular: false
+            },
+            {
+                id: 'termination',
+                name: 'Termination Letter',
+                icon: 'fas fa-user-minus',
+                color: '#e74a3b',
+                description: 'Employment termination',
+                usage: 8,
+                lastUsed: '2 weeks ago',
+                popular: false
+            },
+            {
+                id: 'experience',
+                name: 'Experience Letter',
+                icon: 'fas fa-award',
+                color: '#6f42c1',
+                description: 'Work experience certificate',
+                usage: 32,
+                lastUsed: 'Yesterday',
+                popular: true
+            },
+            {
+                id: 'salary',
+                name: 'Salary Revision',
+                icon: 'fas fa-money-bill-wave',
+                color: '#20c997',
+                description: 'Salary increment letter',
+                usage: 24,
+                lastUsed: '5 days ago',
+                popular: true
+            },
+            {
+                id: 'offer',
+                name: 'Job Offer Letter',
+                icon: 'fas fa-handshake',
+                color: '#36b9cc',
+                description: 'Job offer and terms',
+                usage: 38,
+                lastUsed: 'Today',
+                popular: true
+            },
+            {
+                id: 'custom',
+                name: 'Custom Template',
+                icon: 'fas fa-plus',
+                color: '#858796',
+                description: 'Start from scratch',
+                usage: 12,
+                lastUsed: '1 month ago',
+                popular: false
+            }
+        ];
+
+        // Template content
+        const templateContent = {
+            'appointment': {
+                subject: 'Appointment Letter',
+                content: `Dear {employee_name},
+
+We are pleased to offer you the position of {position} at our company, effective {date}.
+
+Your appointment details and compensation package will be provided separately. Please review and sign the attached documents.
+
+We look forward to your valuable contributions.
+
+Sincerely,
+HR Department`
+            },
+            'promotion': {
+                subject: 'Promotion Letter',
+                content: `Dear {employee_name},
+
+Congratulations! We are pleased to promote you to the position of {position}, effective {date}.
+
+This promotion is in recognition of your exceptional performance and dedication. Your new responsibilities and compensation will be detailed separately.
+
+Please schedule a meeting with your manager to discuss the transition.
+
+Best regards,
+HR Department`
+            },
+            'warning': {
+                subject: 'Warning Letter',
+                content: `Dear {employee_name},
+
+This letter serves as an official warning regarding your recent conduct/performance.
+
+Specific concerns:
+• [Issue 1]
+• [Issue 2]
+
+You are expected to improve immediately. Further incidents may result in disciplinary action.
+
+Sincerely,
+HR Department`
+            },
+            'termination': {
+                subject: 'Termination Letter',
+                content: `Dear {employee_name},
+
+This letter is to inform you that your employment with our company will be terminated effective {date}.
+
+The reason for termination is [reason]. You will receive all due benefits and compensation as per company policy.
+
+Please complete the exit formalities by [date].
+
+Sincerely,
+HR Department`
+            },
+            'experience': {
+                subject: 'Experience Letter',
+                content: `To Whom It May Concern,
+
+This is to certify that {employee_name} worked with our organization from [start date] to [end date] in the capacity of {position}.
+
+During {his/her} tenure, {he/she} demonstrated exceptional skills and dedication. {His/Her} performance was consistently rated as excellent.
+
+We wish {him/her} all the best in {his/her} future endeavors.
+
+Sincerely,
+HR Department`
+            },
+            'salary': {
+                subject: 'Salary Revision Letter',
+                content: `Dear {employee_name},
+
+We are pleased to inform you that your salary has been revised effective {date}.
+
+Your new monthly salary will be {salary}. This increment is in recognition of your outstanding performance and contributions to the company.
+
+Please sign the attached acknowledgment and return it to the HR department.
+
+Sincerely,
+HR Department`
+            },
+            'offer': {
+                subject: 'Job Offer Letter',
+                content: `Dear {employee_name},
+
+We are delighted to offer you the position of {position} at our company, starting {date}.
+
+Package Details:
+• Annual Salary: {salary}
+• Benefits: Health insurance, paid leave, retirement plan
+• Work Location: [Location]
+
+Please sign and return this letter by [date] to accept the offer.
+
+Sincerely,
+HR Department`
+            }
+        };
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadLettersTable();
+            loadTemplatesGallery();
+            setupEventListeners();
+            setCurrentDate();
+            
+            // Set up character counter
+            const textarea = document.getElementById('letterContent');
+            if (textarea) {
+                textarea.addEventListener('input', updateCharCount);
+            }
+        });
+
+        // Modal Functions
+        function showLetterModal() {
+            document.getElementById('letterModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function hideLetterModal() {
+            document.getElementById('letterModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            resetLetterForm();
+        }
+        
+        function showTemplateModal() {
+            document.getElementById('templateModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function hideTemplateModal() {
+            document.getElementById('templateModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        function closePreviewModal() {
+            document.getElementById('previewModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Load letters table
+        function loadLettersTable() {
+            const tbody = document.getElementById('lettersTableBody');
+            tbody.innerHTML = '';
+            
+            lettersData.forEach(letter => {
+                const row = document.createElement('tr');
+                row.dataset.id = letter.id;
+                row.dataset.status = letter.status;
+                
+                let statusClass = '';
+                let statusText = '';
+                switch(letter.status) {
+                    case 'sent': 
+                        statusClass = 'status-sent';
+                        statusText = 'Sent';
+                        break;
+                    case 'draft': 
+                        statusClass = 'status-draft';
+                        statusText = 'Draft';
+                        break;
+                    case 'pending': 
+                        statusClass = 'status-pending';
+                        statusText = 'Pending';
+                        break;
+                    case 'failed': 
+                        statusClass = 'status-failed';
+                        statusText = 'Failed';
+                        break;
+                }
+                
+                row.innerHTML = `
+                    <td>${letter.ref}</td>
+                    <td>${letter.employee}</td>
+                    <td>${letter.type}</td>
+                    <td>${letter.subject}</td>
+                    <td>${letter.date}</td>
+                    <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                    <td>
+                        <div class="table-actions">
+                            <button class="btn-sm btn-primary" onclick="viewLetter(${letter.id})">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn-sm btn-secondary" onclick="downloadLetter(${letter.id})">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            ${letter.status === 'sent' ? 
+                                `<button class="btn-sm" style="background: #20c997; color: white;" onclick="resendLetter(${letter.id})">
+                                    <i class="fas fa-redo"></i>
+                                </button>` : 
+                                letter.status === 'draft' ?
+                                `<button class="btn-sm btn-danger" onclick="deleteLetter(${letter.id})">
+                                    <i class="fas fa-trash"></i>
+                                </button>` :
+                                `<button class="btn-sm btn-success" onclick="sendLetter(${letter.id})">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>`
+                            }
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Load templates gallery
+        function loadTemplatesGallery() {
+            const container = document.getElementById('templatesContainer');
+            container.innerHTML = '';
+            
+            templatesData.forEach(template => {
+                const card = document.createElement('div');
+                card.className = 'template-card-enhanced';
+                card.onclick = () => useTemplate(template.id);
+                
+                card.innerHTML = `
+                    ${template.popular ? '<div class="template-badge"><i class="fas fa-star"></i> Popular</div>' : ''}
+                    <div class="template-header">
+                        <div class="template-icon-enhanced" style="background: linear-gradient(135deg, ${template.color} 0%, ${darkenColor(template.color, 20)} 100%);">
+                            <i class="${template.icon}"></i>
+                        </div>
+                        <h4>${template.name}</h4>
+                        <p>${template.description}</p>
+                    </div>
+                    <div class="template-stats">
+                        <div class="stat-item">
+                            <div class="number">${template.usage}</div>
+                            <div class="label">Used</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="number">${getRandomInt(85, 99)}%</div>
+                            <div class="label">Success</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="label">Last: ${template.lastUsed}</div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Template functions
+        function useTemplate(templateId) {
+            showLetterModal();
+            hideTemplateModal();
+            
+            if (templateContent[templateId]) {
+                document.getElementById('letterType').value = templateId;
+                document.getElementById('letterSubject').value = templateContent[templateId].subject;
+                document.getElementById('letterContent').value = templateContent[templateId].content;
+                updateCharCount();
+                
+                // Auto-fill date
+                const today = new Date();
+                document.getElementById('letterDate').value = today.toISOString().split('T')[0];
+                
+                // Auto-generate reference number
+                const randomNum = Math.floor(Math.random() * 1000);
+                document.getElementById('refNumber').value = `HR/LTR/2024/${randomNum}`;
+                
+                showToast(`Template "${templatesData.find(t => t.id === templateId)?.name}" loaded successfully!`, 'success');
+            }
+        }
+
+        // Letter functions
+        function previewLetter() {
+            const employee = document.getElementById('employeeSelect').value;
+            const subject = document.getElementById('letterSubject').value;
+            const content = document.getElementById('letterContent').value;
+            
+            if (!employee || !subject || !content) {
+                showToast('Please fill in all required fields', 'warning');
+                return;
+            }
+            
+            const employeeName = document.getElementById('employeeSelect').options[document.getElementById('employeeSelect').selectedIndex].text.split(' (')[0];
+            
+            const previewHTML = `
+                <div class="letter-header">
+                    <div class="company-logo">
+                        <h2>HR-Admin Pro</h2>
+                        <p>Human Resources Department</p>
+                    </div>
+                    <div class="letter-info">
+                        <p><strong>Ref No:</strong> ${document.getElementById('refNumber').value || 'HR/LTR/2024/001'}</p>
+                        <p><strong>Date:</strong> ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                    </div>
+                </div>
+                <div class="letter-content">
+                    <p><strong>To:</strong> ${employeeName}</p>
+                    <p><strong>Subject:</strong> ${subject}</p>
+                    <br>
+                    <div style="white-space: pre-line;">${content.replace(/\n/g, '<br>')}</div>
+                </div>
+            `;
+            
+            document.getElementById('letterPreviewContent').innerHTML = previewHTML;
+            document.getElementById('previewModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function sendLetterNow() {
+            const sendBtn = document.getElementById('sendNowBtn');
+            const originalHTML = sendBtn.innerHTML;
+            
+            sendBtn.innerHTML = '<div class="loading"></div> Sending...';
+            sendBtn.disabled = true;
+            
+            // Simulate sending delay
+            setTimeout(() => {
+                showToast('Letter sent successfully!', 'success');
+                closePreviewModal();
+                hideLetterModal();
+                sendBtn.innerHTML = originalHTML;
+                sendBtn.disabled = false;
+                
+                // Update stats
+                updateStats();
+            }, 1500);
+        }
+
+        function saveAsDraft() {
+            const draftBtn = document.getElementById('draftBtn');
+            const originalHTML = draftBtn.innerHTML;
+            
+            draftBtn.innerHTML = '<i class="fas fa-save"></i> Saving...';
+            
+            setTimeout(() => {
+                showToast('Letter saved as draft', 'info');
+                hideLetterModal();
+                draftBtn.innerHTML = originalHTML;
+            }, 1000);
+        }
+
+        // Search and filter functions
+        function searchLetters() {
+            const searchTerm = document.getElementById('letterSearch').value.toLowerCase();
+            const rows = document.querySelectorAll('#lettersTableBody tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        }
+
+        function filterLetters(status) {
+            const rows = document.querySelectorAll('#lettersTableBody tr');
+            
+            rows.forEach(row => {
+                if (status === 'all') {
+                    row.style.display = '';
+                } else {
+                    row.style.display = row.dataset.status === status ? '' : 'none';
+                }
+            });
+            
+            showToast(`Filtered by: ${status === 'all' ? 'All Letters' : status}`, 'info');
+        }
+
+        function searchTemplates() {
+            const searchTerm = document.getElementById('templateSearch').value.toLowerCase();
+            const cards = document.querySelectorAll('.template-card-enhanced');
+            
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                card.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        }
+
+        // Action functions for table buttons
+        function viewLetter(id) {
+            const letter = lettersData.find(l => l.id === id);
+            if (letter) {
+                const previewHTML = `
+                    <div class="letter-header">
+                        <div class="company-logo">
+                            <h2>HR-Admin Pro</h2>
+                            <p>Human Resources Department</p>
+                        </div>
+                        <div class="letter-info">
+                            <p><strong>Ref No:</strong> ${letter.ref}</p>
+                            <p><strong>Date:</strong> ${letter.date}</p>
+                        </div>
+                    </div>
+                    <div class="letter-content">
+                        <p><strong>To:</strong> ${letter.employee}</p>
+                        <p><strong>Subject:</strong> ${letter.subject}</p>
+                        <br>
+                        <div style="white-space: pre-line;">${letter.content.replace(/\n/g, '<br>')}</div>
+                    </div>
+                `;
+                
+                document.getElementById('letterPreviewContent').innerHTML = previewHTML;
+                document.getElementById('previewModal').style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function editLetter(id) {
+            const letter = lettersData.find(l => l.id === id);
+            if (letter) {
+                showLetterModal();
+                
+                document.getElementById('letterType').value = letter.type.toLowerCase().replace(' letter', '');
+                document.getElementById('letterSubject').value = letter.subject;
+                document.getElementById('letterContent').value = letter.content;
+                
+                // Set employee
+                const select = document.getElementById('employeeSelect');
+                for (let i = 0; i < select.options.length; i++) {
+                    if (select.options[i].text.includes(letter.employee)) {
+                        select.selectedIndex = i;
+                        break;
+                    }
+                }
+                
+                document.getElementById('letterDate').value = letter.date;
+                document.getElementById('refNumber').value = letter.ref;
+                
+                updateCharCount();
+                showToast(`Editing letter: ${letter.ref}`, 'info');
+            }
+        }
+
+        function deleteLetter(id) {
+            if (confirm('Are you sure you want to delete this letter?')) {
+                // Find and remove from table
+                const row = document.querySelector(`tr[data-id="${id}"]`);
+                if (row) {
+                    row.style.opacity = '0.5';
+                    setTimeout(() => {
+                        row.remove();
+                        showToast('Letter deleted successfully!', 'success');
+                    }, 500);
+                }
+            }
+        }
+
+        function downloadLetter(id) {
+            showToast('Download started...', 'info');
+            
+            // Simulate download delay
+            setTimeout(() => {
+                showToast('Letter downloaded successfully!', 'success');
+            }, 1500);
+        }
+
+        function sendLetter(id) {
+            const row = document.querySelector(`tr[data-id="${id}"]`);
+            if (row) {
+                const statusBadge = row.querySelector('.status-badge');
+                if (statusBadge) {
+                    statusBadge.textContent = 'Sending...';
+                    statusBadge.className = 'status-badge status-pending';
+                    
+                    setTimeout(() => {
+                        statusBadge.textContent = 'Sent';
+                        statusBadge.className = 'status-badge status-sent';
+                        showToast('Letter sent successfully!', 'success');
+                    }, 2000);
+                }
+            }
+        }
+
+        function resendLetter(id) {
+            if (confirm('Resend this letter?')) {
+                showToast('Letter resent successfully!', 'success');
+            }
+        }
+
+        // Utility functions
+        function formatText(format) {
+            const textarea = document.getElementById('letterContent');
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const selectedText = textarea.value.substring(start, end);
+            
+            let formattedText = selectedText;
+            switch(format) {
+                case 'bold':
+                    formattedText = `<strong>${selectedText}</strong>`;
+                    break;
+                case 'italic':
+                    formattedText = `<em>${selectedText}</em>`;
+                    break;
+                case 'underline':
+                    formattedText = `<u>${selectedText}</u>`;
+                    break;
+            }
+            
+            textarea.value = textarea.value.substring(0, start) + 
+                           formattedText + 
+                           textarea.value.substring(end);
+            
+            // Move cursor to end of inserted text
+            textarea.selectionStart = textarea.selectionEnd = start + formattedText.length;
+            textarea.focus();
+            updateCharCount();
+        }
+
+        function insertTemplateVariable(variable) {
+            const textarea = document.getElementById('letterContent');
+            const start = textarea.selectionStart;
+            
+            textarea.value = textarea.value.substring(0, start) + 
+                           variable + 
+                           textarea.value.substring(start);
+            
+            // Move cursor after the inserted variable
+            textarea.selectionStart = textarea.selectionEnd = start + variable.length;
+            textarea.focus();
+            updateCharCount();
+            
+            showToast(`Variable ${variable} inserted`, 'info');
+        }
+
+        function updateCharCount() {
+            const textarea = document.getElementById('letterContent');
+            const charCount = document.getElementById('charCount');
+            if (textarea && charCount) {
+                const count = textarea.value.length;
+                charCount.textContent = `${count} characters`;
+                
+                // Change color based on length
+                if (count < 50) {
+                    charCount.style.color = '#e74a3b';
+                } else if (count < 200) {
+                    charCount.style.color = '#f6c23e';
+                } else {
+                    charCount.style.color = '#1cc88a';
+                }
+            }
+        }
+
+        function resetLetterForm() {
+            document.getElementById('newLetterForm').reset();
+            document.getElementById('attachmentList').innerHTML = '';
+            document.getElementById('letterDate').value = new Date().toISOString().split('T')[0];
+            updateCharCount();
+        }
+
+        function setCurrentDate() {
+            const today = new Date();
+            const dateInput = document.getElementById('letterDate');
+            if (dateInput) {
+                dateInput.value = today.toISOString().split('T')[0];
+            }
+        }
+
+        function showArchivedLetters() {
+            showToast('Showing archived letters...', 'info');
+        }
+
+        function generateReport() {
+            const reportBtn = document.getElementById('reportBtn');
+            const originalHTML = reportBtn.innerHTML;
+            
+            reportBtn.innerHTML = '<div class="loading"></div> Generating...';
+            
+            setTimeout(() => {
+                showToast('Report generated successfully! Download started.', 'success');
+                reportBtn.innerHTML = originalHTML;
+            }, 2000);
+        }
+
+        function exportToExcel() {
+            const exportBtn = document.getElementById('exportBtn');
+            const originalHTML = exportBtn.innerHTML;
+            
+            exportBtn.innerHTML = '<div class="loading"></div> Exporting...';
+            
+            setTimeout(() => {
+                showToast('Data exported to Excel successfully!', 'success');
+                exportBtn.innerHTML = originalHTML;
+            }, 1500);
+        }
+
+        function printLetter() {
+            window.print();
+        }
+
+        // Toast notification system
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            
+            let icon = 'fas fa-info-circle';
+            switch(type) {
+                case 'success': icon = 'fas fa-check-circle'; break;
+                case 'error': icon = 'fas fa-exclamation-circle'; break;
+                case 'warning': icon = 'fas fa-exclamation-triangle'; break;
+            }
+            
+            toast.innerHTML = `
+                <i class="${icon}" style="font-size: 1.5rem;"></i>
+                <span>${message}</span>
+                <button onclick="this.parentElement.remove()" style="background: none; border: none; color: #7b8793; cursor: pointer; margin-left: auto;">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            container.appendChild(toast);
+            
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateX(100%)';
+                    setTimeout(() => toast.remove(), 300);
+                }
+            }, 5000);
+        }
+
+        function updateStats() {
+            // In a real app, this would update from server
+            // For demo, we'll just show a toast
+            showToast('Statistics updated!', 'info');
+        }
+
+        // Helper functions
+        function darkenColor(color, percent) {
+            const num = parseInt(color.replace("#", ""), 16);
+            const amt = Math.round(2.55 * percent);
+            const R = (num >> 16) - amt;
+            const G = (num >> 8 & 0x00FF) - amt;
+            const B = (num & 0x0000FF) - amt;
+            return "#" + (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 +
+                         (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 +
+                         (B < 255 ? B < 1 ? 0 : B : 255)).toString(16).slice(1);
+        }
+
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Form submission
+            const form = document.getElementById('newLetterForm');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    sendLetterNow();
+                });
+            }
+            
+            // File upload
+            const fileInput = document.getElementById('letterAttachment');
+            if (fileInput) {
+                fileInput.addEventListener('change', handleFileUpload);
+            }
+            
+            // Close modals with ESC key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    hideLetterModal();
+                    hideTemplateModal();
+                    closePreviewModal();
+                }
+            });
+            
+            // Click outside modal to close
+            window.onclick = function(event) {
+                const modals = ['letterModal', 'templateModal', 'previewModal'];
+                modals.forEach(modalId => {
+                    const modal = document.getElementById(modalId);
+                    if (event.target === modal) {
+                        if (modalId === 'letterModal') hideLetterModal();
+                        if (modalId === 'templateModal') hideTemplateModal();
+                        if (modalId === 'previewModal') closePreviewModal();
+                    }
+                });
+            };
+        }
+
+        function handleFileUpload(e) {
+            const files = e.target.files;
+            const attachmentList = document.getElementById('attachmentList');
+            attachmentList.innerHTML = '';
+            
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.innerHTML = `
+                    <div style="display: flex; align-items: center; background: #f8f9fe; padding: 12px; border-radius: 8px; margin-bottom: 8px; border-left: 4px solid #667eea;">
+                        <i class="fas fa-file-pdf" style="color: #e74a3b; font-size: 20px; margin-right: 12px;"></i>
+                        <div style="flex: 1;">
+                            <p style="margin: 0; font-weight: 600; font-size: 0.9rem;">${file.name}</p>
+                            <small style="color: #7b8793;">${(file.size / 1024).toFixed(1)} KB • ${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</small>
+                        </div>
+                        <button type="button" onclick="this.parentElement.parentElement.remove()" style="background: none; border: none; color: #e74a3b; cursor: pointer; font-size: 1.2rem;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                `;
+                attachmentList.appendChild(fileItem);
+            }
+            
+            if (files.length > 0) {
+                showToast(`${files.length} file(s) uploaded successfully!`, 'success');
+            }
+        }
+
+        // Add CSS for status badges
+        const statusStyles = `
+            .status-badge {
+                padding: 6px 12px;
+                border-radius: 20px;
+                font-size: 0.85rem;
+                font-weight: 600;
+                display: inline-block;
+                min-width: 80px;
+                text-align: center;
+                transition: all 0.3s ease;
+            }
+            
+            .status-sent {
+                background: linear-gradient(135deg, #e8f4ff 0%, #d4e7ff 100%);
+                color: #4e73df;
+                border: 1px solid #4e73df;
+            }
+            
+            .status-draft {
+                background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+                color: #856404;
+                border: 1px solid #f6c23e;
+            }
+            
+            .status-pending {
+                background: linear-gradient(135deg, #f8f0e3 0%, #f5e6d3 100%);
+                color: #e74a3b;
+                border: 1px solid #e74a3b;
+            }
+            
+            .status-failed {
+                background: linear-gradient(135deg, #f8e6e6 0%, #f5d6d6 100%);
+                color: #be2617;
+                border: 1px solid #e74a3b;
+            }
+            
+            .positive {
+                color: #1cc88a;
+                font-weight: 600;
+            }
+            
+            .negative {
+                color: #e74a3b;
+                font-weight: 600;
+            }
+        `;
+        
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = statusStyles;
+        document.head.appendChild(styleSheet);
+    </script>
+</body>
+</html>

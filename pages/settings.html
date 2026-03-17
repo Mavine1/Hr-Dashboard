@@ -1,0 +1,1825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings & Permissions | HR System</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* Modern Header */
+        .settings-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px 40px;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 40px;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .header-top h1 {
+            font-size: 28px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-top h1 i {
+            background: rgba(255,255,255,0.2);
+            padding: 12px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .user-badge {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(255,255,255,0.15);
+            padding: 12px 20px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 3px solid white;
+            object-fit: cover;
+        }
+
+        .role-badge {
+            background: rgba(255,255,255,0.3);
+            color: white;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(255,255,255,0.4);
+        }
+
+        .header-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .quick-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .quick-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .quick-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Main Container */
+        .settings-container {
+            max-width: 1400px;
+            margin: 0 auto 40px;
+            padding: 0 20px;
+        }
+
+        /* Dashboard Grid */
+        .settings-dashboard {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* Navigation Sidebar */
+        .settings-nav {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            height: fit-content;
+            position: sticky;
+            top: 30px;
+        }
+
+        .nav-header {
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f2f5;
+            margin-bottom: 20px;
+        }
+
+        .nav-header h3 {
+            color: #2c3e50;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 8px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px;
+            color: #5a6c7d;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            background: #f8f9fe;
+            color: #667eea;
+            transform: translateX(5px);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .nav-link i {
+            font-size: 18px;
+            width: 24px;
+            text-align: center;
+        }
+
+        /* Settings Content */
+        .settings-content {
+            min-height: 600px;
+        }
+
+        .settings-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            animation: slideUp 0.4s ease-out;
+            display: none;
+        }
+
+        .settings-section.active {
+            display: block;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f2f5;
+        }
+
+        .section-header h2 {
+            color: #2c3e50;
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #f8f9fe;
+            color: #5a6c7d;
+            border: 1px solid #e0e6ef;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .setting-card {
+            background: #f8f9fe;
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .setting-card:hover {
+            transform: translateY(-5px);
+            border-color: #667eea;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: white;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .card-desc {
+            color: #6c757d;
+            font-size: 13px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .card-status {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+
+        /* Permissions Table */
+        .permissions-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .permissions-table th {
+            background: #f8f9fe;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #5a6c7d;
+            border-bottom: 2px solid #e0e6ef;
+        }
+
+        .permissions-table td {
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .permissions-table tr:hover {
+            background: #f8f9fe;
+        }
+
+        .permission-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge-warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .badge-danger {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Modern Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.4s ease;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .modal-header {
+            padding: 25px 30px;
+            border-bottom: 1px solid #e0e6ef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .modal-header h3 {
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .close-modal {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 24px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .close-modal:hover {
+            background: rgba(255,255,255,0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #5a6c7d;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e6ef;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .modal-footer {
+            padding: 20px 30px;
+            border-top: 1px solid #e0e6ef;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+        }
+
+        .toast {
+            background: white;
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            animation: slideInRight 0.3s ease;
+            border-left: 5px solid;
+            max-width: 350px;
+        }
+
+        .toast.success {
+            border-left-color: #43e97b;
+        }
+
+        .toast.error {
+            border-left-color: #ff6b6b;
+        }
+
+        .toast.info {
+            border-left-color: #667eea;
+        }
+
+        .toast.warning {
+            border-left-color: #f6c23e;
+        }
+
+        /* Animations */
+        @keyframes slideDown {
+            from { transform: translateY(-100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .settings-dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .settings-nav {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .settings-header {
+                padding: 20px;
+            }
+            
+            .header-top {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .permissions-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Progress Bars */
+        .progress-bar {
+            height: 8px;
+            background: #e0e6ef;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 1s ease-in-out;
+        }
+
+        /* Statistics Cards */
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #6c757d;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Toast Notifications Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Settings Header -->
+    <header class="settings-header">
+        <div class="header-top">
+            <h1><i class="fas fa-cogs"></i> Settings & Permissions</h1>
+            <div class="user-badge">
+                <img src="https://ui-avatars.com/api/?name=Admin+User&background=667eea&color=fff" alt="User" class="user-avatar">
+                <div>
+                    <div style="font-weight: 600;">Admin User</div>
+                    <div style="font-size: 12px; opacity: 0.9;">admin@company.com</div>
+                </div>
+                <span class="role-badge">HR Manager</span>
+            </div>
+        </div>
+        <div class="header-bottom">
+            <div class="quick-actions">
+                <button class="quick-btn" onclick="showModal('profileModal')">
+                    <i class="fas fa-user-edit"></i> Edit Profile
+                </button>
+                <button class="quick-btn" onclick="showModal('passwordModal')">
+                    <i class="fas fa-key"></i> Change Password
+                </button>
+                <button class="quick-btn" onclick="showModal('notificationModal')">
+                    <i class="fas fa-bell"></i> Notifications
+                </button>
+                <button class="quick-btn" onclick="exportSettings()">
+                    <i class="fas fa-download"></i> Export Settings
+                </button>
+            </div>
+            <div style="font-size: 13px; opacity: 0.9;">
+                <i class="fas fa-shield-alt"></i> Last login: Today, 09:42 AM
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Settings Container -->
+    <main class="settings-container">
+        <div class="settings-dashboard">
+            <!-- Navigation Sidebar -->
+            <nav class="settings-nav">
+                <div class="nav-header">
+                    <h3><i class="fas fa-sliders-h"></i> Settings Menu</h3>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active" data-section="general">
+                            <i class="fas fa-cog"></i> General Settings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-section="users">
+                            <i class="fas fa-users-cog"></i> User Management
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-section="permissions">
+                            <i class="fas fa-user-shield"></i> Permissions
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-section="security">
+                            <i class="fas fa-shield-alt"></i> Security
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-section="notifications">
+                            <i class="fas fa-bell"></i> Notifications
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-section="integrations">
+                            <i class="fas fa-puzzle-piece"></i> Integrations
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-section="backup">
+                            <i class="fas fa-database"></i> Backup & Restore
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-section="about">
+                            <i class="fas fa-info-circle"></i> About & Help
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Settings Content -->
+            <div class="settings-content">
+                <!-- General Settings -->
+                <section class="settings-section active" id="general">
+                    <div class="section-header">
+                        <h2><i class="fas fa-cog"></i> General Settings</h2>
+                        <div class="section-actions">
+                            <button class="btn btn-secondary" onclick="resetGeneralSettings()">
+                                <i class="fas fa-undo"></i> Reset
+                            </button>
+                            <button class="btn btn-primary" onclick="saveGeneralSettings()">
+                                <i class="fas fa-save"></i> Save Changes
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="cards-grid">
+                        <div class="setting-card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                    <i class="fas fa-globe"></i>
+                                </div>
+                                <div>
+                                    <div class="card-title">System Language</div>
+                                    <small>Select default language</small>
+                                </div>
+                            </div>
+                            <div class="card-desc">
+                                Choose the default language for the entire system interface.
+                            </div>
+                            <select class="form-control">
+                                <option>English (US)</option>
+                                <option>Spanish</option>
+                                <option>French</option>
+                                <option>German</option>
+                                <option>Chinese</option>
+                            </select>
+                        </div>
+
+                        <div class="setting-card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div>
+                                    <div class="card-title">Time Zone</div>
+                                    <small>Set system time zone</small>
+                                </div>
+                            </div>
+                            <div class="card-desc">
+                                Configure the time zone for all date and time displays.
+                            </div>
+                            <select class="form-control">
+                                <option>UTC-05:00 Eastern Time</option>
+                                <option>UTC-08:00 Pacific Time</option>
+                                <option>UTC+00:00 GMT</option>
+                                <option>UTC+01:00 Central European</option>
+                            </select>
+                        </div>
+
+                        <div class="setting-card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </div>
+                                <div>
+                                    <div class="card-title">Date Format</div>
+                                    <small>Customize date display</small>
+                                </div>
+                            </div>
+                            <div class="card-desc">
+                                Choose how dates are displayed throughout the application.
+                            </div>
+                            <select class="form-control">
+                                <option>MM/DD/YYYY (US)</option>
+                                <option>DD/MM/YYYY (EU)</option>
+                                <option>YYYY-MM-DD (ISO)</option>
+                            </select>
+                        </div>
+
+                        <div class="setting-card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                                    <i class="fas fa-palette"></i>
+                                </div>
+                                <div>
+                                    <div class="card-title">Theme</div>
+                                    <small>Dark/Light mode</small>
+                                </div>
+                            </div>
+                            <div class="card-desc">
+                                Switch between light and dark themes for the interface.
+                            </div>
+                            <div class="card-status">
+                                <span>Dark Mode</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stats-cards">
+                        <div class="stat-card">
+                            <div class="stat-number">24</div>
+                            <div class="stat-label">Active Users</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">98%</div>
+                            <div class="stat-label">System Uptime</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">12.5 GB</div>
+                            <div class="stat-label">Storage Used</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">156</div>
+                            <div class="stat-label">Settings Changed</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- User Management -->
+                <section class="settings-section" id="users">
+                    <div class="section-header">
+                        <h2><i class="fas fa-users-cog"></i> User Management</h2>
+                        <div class="section-actions">
+                            <button class="btn btn-danger" onclick="bulkDeleteUsers()">
+                                <i class="fas fa-trash"></i> Bulk Delete
+                            </button>
+                            <button class="btn btn-success" onclick="showModal('addUserModal')">
+                                <i class="fas fa-user-plus"></i> Add User
+                            </button>
+                        </div>
+                    </div>
+
+                    <table class="permissions-table">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" id="selectAllUsers"></th>
+                                <th>User</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Last Active</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <!-- Users will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- Permissions -->
+                <section class="settings-section" id="permissions">
+                    <div class="section-header">
+                        <h2><i class="fas fa-user-shield"></i> Permissions Management</h2>
+                        <div class="section-actions">
+                            <button class="btn btn-secondary" onclick="exportPermissions()">
+                                <i class="fas fa-download"></i> Export
+                            </button>
+                            <button class="btn btn-primary" onclick="savePermissions()">
+                                <i class="fas fa-save"></i> Save All
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="cards-grid">
+                        <div class="setting-card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                    <i class="fas fa-user-tie"></i>
+                                </div>
+                                <div>
+                                    <div class="card-title">HR Manager</div>
+                                    <small>Full system access</small>
+                                </div>
+                            </div>
+                            <div class="card-desc">
+                                Can manage all employees, view reports, and configure system settings.
+                            </div>
+                            <div class="permissions-list">
+                                <div style="margin-bottom: 10px;">
+                                    <span class="permission-badge badge-success">Dashboard Access</span>
+                                    <span class="permission-badge badge-success">Employee Management</span>
+                                </div>
+                                <div>
+                                    <span class="permission-badge badge-success">Reports View</span>
+                                    <span class="permission-badge badge-success">Settings Edit</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="setting-card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div>
+                                    <div class="card-title">Manager</div>
+                                    <small>Department level access</small>
+                                </div>
+                            </div>
+                            <div class="card-desc">
+                                Can manage team members, approve requests, and view department reports.
+                            </div>
+                            <div class="permissions-list">
+                                <div style="margin-bottom: 10px;">
+                                    <span class="permission-badge badge-success">Team Management</span>
+                                    <span class="permission-badge badge-warning">Limited Reports</span>
+                                </div>
+                                <div>
+                                    <span class="permission-badge badge-success">Request Approval</span>
+                                    <span class="permission-badge badge-danger">No Settings</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="setting-card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);">
+                                    <i class="fas fa-user-circle"></i>
+                                </div>
+                                <div>
+                                    <div class="card-title">Employee</div>
+                                    <small>Basic access only</small>
+                                </div>
+                            </div>
+                            <div class="card-desc">
+                                Can view personal information, submit requests, and access training materials.
+                            </div>
+                            <div class="permissions-list">
+                                <div style="margin-bottom: 10px;">
+                                    <span class="permission-badge badge-success">Personal View</span>
+                                    <span class="permission-badge badge-success">Request Submission</span>
+                                </div>
+                                <div>
+                                    <span class="permission-badge badge-warning">Training Access</span>
+                                    <span class="permission-badge badge-danger">No Management</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="setting-card" onclick="showModal('roleModal')" style="cursor: pointer; text-align: center; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white;">
+                            <div style="padding: 40px 20px;">
+                                <i class="fas fa-plus-circle" style="font-size: 48px; margin-bottom: 15px;"></i>
+                                <div class="card-title">Add New Role</div>
+                                <div class="card-desc" style="color: rgba(255,255,255,0.9);">
+                                    Create custom role with specific permissions
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Security Settings -->
+                <section class="settings-section" id="security">
+                    <div class="section-header">
+                        <h2><i class="fas fa-shield-alt"></i> Security Settings</h2>
+                        <div class="section-actions">
+                            <button class="btn btn-danger" onclick="runSecurityScan()">
+                                <i class="fas fa-shield-check"></i> Run Security Scan
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="cards-grid">
+                        <div class="setting-card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+                                <div>
+                                    <div class="card-title">Password Policy</div>
+                                    <small>Require strong passwords</small>
+                                </div>
+                            </div>
+                            <div class="card-desc">
+                                Configure password requirements and expiration rules.
+                            </div>
+                            <div class="card-status">
+                                <span>Enabled</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="setting-card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                                    <i class="fas fa-fingerprint"></i>
+                                </div>
+                                <div>
+                                    <div class="card-title">Two-Factor Auth</div>
+                                    <small>Add extra security layer</small>
+                                </div>
+                            </div>
+                            <div class="card-desc">
+                                Require users to verify identity with a second factor.
+                            </div>
+                            <div class="card-status">
+                                <span>Enabled</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="setting-card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);">
+                                    <i class="fas fa-history"></i>
+                                </div>
+                                <div>
+                                    <div class="card-title">Session Timeout</div>
+                                    <small>Auto-logout inactive users</small>
+                                </div>
+                            </div>
+                            <div class="card-desc">
+                                Automatically log out users after period of inactivity.
+                            </div>
+                            <select class="form-control">
+                                <option>15 minutes</option>
+                                <option>30 minutes</option>
+                                <option>1 hour</option>
+                                <option>2 hours</option>
+                            </select>
+                        </div>
+
+                        <div class="setting-card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                                    <i class="fas fa-eye"></i>
+                                </div>
+                                <div>
+                                    <div class="card-title">Login Attempts</div>
+                                    <small>Limit failed login attempts</small>
+                                </div>
+                            </div>
+                            <div class="card-desc">
+                                Lock accounts after too many failed login attempts.
+                            </div>
+                            <select class="form-control">
+                                <option>3 attempts</option>
+                                <option>5 attempts</option>
+                                <option>10 attempts</option>
+                                <option>Unlimited</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 30px; background: #f8f9fe; padding: 20px; border-radius: 12px;">
+                        <h3 style="margin-bottom: 15px; color: #2c3e50;"><i class="fas fa-chart-line"></i> Security Audit Log</h3>
+                        <div id="securityLogs" style="max-height: 200px; overflow-y: auto;">
+                            <!-- Security logs will be populated here -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Notifications -->
+                <section class="settings-section" id="notifications">
+                    <div class="section-header">
+                        <h2><i class="fas fa-bell"></i> Notification Settings</h2>
+                        <div class="section-actions">
+                            <button class="btn btn-secondary" onclick="testNotifications()">
+                                <i class="fas fa-bell"></i> Test Notifications
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="cards-grid">
+                        <div class="setting-card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <div class="card-title">Email Notifications</div>
+                                    <small>Receive emails for updates</small>
+                                </div>
+                            </div>
+                            <div class="card-desc">
+                                Get notified via email for important system events.
+                            </div>
+                            <div class="card-status">
+                                <span>Enabled</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="setting-card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                                <div>
+                                    <div class="card-title">Push Notifications</div>
+                                    <small>Mobile push notifications</small>
+                                </div>
+                            </div>
+                            <div class="card-desc">
+                                Receive push notifications on your mobile device.
+                            </div>
+                            <div class="card-status">
+                                <span>Enabled</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="setting-card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);">
+                                    <i class="fas fa-comment-dots"></i>
+                                </div>
+                                <div>
+                                    <div class="card-title">SMS Alerts</div>
+                                    <small>Critical alerts via SMS</small>
+                                </div>
+                            </div>
+                            <div class="card-desc">
+                                Get critical alerts sent directly to your phone via SMS.
+                            </div>
+                            <div class="card-status">
+                                <span>Disabled</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="setting-card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                                    <i class="fas fa-desktop"></i>
+                                </div>
+                                <div>
+                                    <div class="card-title">Desktop Notifications</div>
+                                    <small>Browser notifications</small>
+                                </div>
+                            </div>
+                            <div class="card-desc">
+                                Show desktop notifications when using the web app.
+                            </div>
+                            <div class="card-status">
+                                <span>Enabled</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 30px; background: #f8f9fe; padding: 20px; border-radius: 12px;">
+                        <h3 style="margin-bottom: 15px; color: #2c3e50;"><i class="fas fa-sliders-h"></i> Notification Preferences</h3>
+                        <div id="notificationPreferences">
+                            <!-- Preferences will be populated here -->
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modern Modals -->
+    <!-- Add User Modal -->
+    <div class="modal-overlay" id="addUserModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-user-plus"></i> Add New User</h3>
+                <button class="close-modal" onclick="hideModal('addUserModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="addUserForm">
+                    <div class="form-group">
+                        <label>Full Name *</label>
+                        <input type="text" class="form-control" placeholder="John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address *</label>
+                        <input type="email" class="form-control" placeholder="john@company.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Role *</label>
+                        <select class="form-control" required>
+                            <option value="">Select Role</option>
+                            <option value="hr_manager">HR Manager</option>
+                            <option value="manager">Manager</option>
+                            <option value="employee">Employee</option>
+                            <option value="viewer">Viewer</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Department</label>
+                        <select class="form-control">
+                            <option value="">Select Department</option>
+                            <option value="hr">Human Resources</option>
+                            <option value="it">IT</option>
+                            <option value="sales">Sales</option>
+                            <option value="marketing">Marketing</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Send Welcome Email</label>
+                        <label class="toggle-switch" style="margin-left: 10px;">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="hideModal('addUserModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="addNewUser()">Add User</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal-overlay" id="profileModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-user-edit"></i> Edit Profile</h3>
+                <button class="close-modal" onclick="hideModal('profileModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="profileForm">
+                    <div class="form-group">
+                        <label>Profile Picture</label>
+                        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                            <img src="https://ui-avatars.com/api/?name=Admin+User&background=667eea&color=fff" alt="User" style="width: 80px; height: 80px; border-radius: 50%;">
+                            <button type="button" class="btn btn-secondary">Upload New</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Full Name *</label>
+                        <input type="text" class="form-control" value="Admin User" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address *</label>
+                        <input type="email" class="form-control" value="admin@company.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" class="form-control" placeholder="+1 (555) 123-4567">
+                    </div>
+                    <div class="form-group">
+                        <label>Job Title</label>
+                        <input type="text" class="form-control" value="HR Manager">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="hideModal('profileModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="updateProfile()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Role Management Modal -->
+    <div class="modal-overlay" id="roleModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-user-tag"></i> Create New Role</h3>
+                <button class="close-modal" onclick="hideModal('roleModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="roleForm">
+                    <div class="form-group">
+                        <label>Role Name *</label>
+                        <input type="text" class="form-control" placeholder="e.g., Team Lead" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea class="form-control" rows="3" placeholder="Describe this role's responsibilities..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Permissions</label>
+                        <div style="max-height: 200px; overflow-y: auto; border: 1px solid #e0e6ef; border-radius: 8px; padding: 15px;">
+                            <label style="display: block; margin-bottom: 8px;">
+                                <input type="checkbox"> Dashboard Access
+                            </label>
+                            <label style="display: block; margin-bottom: 8px;">
+                                <input type="checkbox"> Employee Management
+                            </label>
+                            <label style="display: block; margin-bottom: 8px;">
+                                <input type="checkbox"> Report Viewing
+                            </label>
+                            <label style="display: block; margin-bottom: 8px;">
+                                <input type="checkbox"> Request Approval
+                            </label>
+                            <label style="display: block; margin-bottom: 8px;">
+                                <input type="checkbox"> Training Management
+                            </label>
+                            <label style="display: block; margin-bottom: 8px;">
+                                <input type="checkbox"> Settings Access
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="hideModal('roleModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="createNewRole()">Create Role</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Security Scan Modal -->
+    <div class="modal-overlay" id="securityModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-shield-check"></i> Security Scan</h3>
+                <button class="close-modal" onclick="hideModal('securityModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="scanProgress" style="text-align: center; padding: 30px 20px;">
+                    <div class="loading" style="margin: 0 auto 20px;"></div>
+                    <h4>Running Security Scan...</h4>
+                    <p>Checking system security and vulnerabilities</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <div id="scanStatus" style="margin-top: 10px; font-size: 12px; color: #6c757d;"></div>
+                </div>
+                <div id="scanResults" style="display: none;">
+                    <!-- Results will be shown here -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="hideModal('securityModal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Sample Data
+        const usersData = [
+            { id: 1, name: "John Doe", email: "john@company.com", role: "HR Manager", status: "active", lastActive: "Today, 09:30 AM" },
+            { id: 2, name: "Jane Smith", email: "jane@company.com", role: "Manager", status: "active", lastActive: "Yesterday, 4:15 PM" },
+            { id: 3, name: "Mike Johnson", email: "mike@company.com", role: "Employee", status: "inactive", lastActive: "3 days ago" },
+            { id: 4, name: "Sarah Williams", email: "sarah@company.com", role: "Manager", status: "active", lastActive: "Today, 08:45 AM" },
+            { id: 5, name: "Robert Brown", email: "robert@company.com", role: "Employee", status: "active", lastActive: "Today, 10:20 AM" }
+        ];
+
+        const securityLogs = [
+            "12:30 PM - Login from new device (IP: 192.168.1.100)",
+            "11:45 AM - Password changed successfully",
+            "10:15 AM - Failed login attempt (IP: 203.0.113.5)",
+            "Yesterday, 9:30 PM - System backup completed",
+            "Yesterday, 3:15 PM - New user added: Robert Brown"
+        ];
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeSettingsPage();
+        });
+
+        function initializeSettingsPage() {
+            // Setup navigation
+            setupNavigation();
+            
+            // Load users table
+            loadUsersTable();
+            
+            // Load security logs
+            loadSecurityLogs();
+            
+            // Load notification preferences
+            loadNotificationPreferences();
+            
+            // Setup event listeners
+            setupEventListeners();
+            
+            // Show welcome toast
+            setTimeout(() => {
+                showToast('Settings page loaded successfully!', 'success');
+            }, 1000);
+        }
+
+        function setupNavigation() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('.settings-section');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all links
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    
+                    // Add active class to clicked link
+                    this.classList.add('active');
+                    
+                    // Hide all sections
+                    sections.forEach(section => section.classList.remove('active'));
+                    
+                    // Show selected section
+                    const sectionId = this.dataset.section;
+                    document.getElementById(sectionId).classList.add('active');
+                    
+                    // Animate the section
+                    document.getElementById(sectionId).style.animation = 'none';
+                    setTimeout(() => {
+                        document.getElementById(sectionId).style.animation = 'slideUp 0.4s ease-out';
+                    }, 10);
+                    
+                    // Show toast
+                    showToast(`Switched to ${this.textContent.trim()}`, 'info');
+                });
+            });
+        }
+
+        function loadUsersTable() {
+            const tableBody = document.getElementById('usersTableBody');
+            tableBody.innerHTML = '';
+            
+            usersData.forEach(user => {
+                const statusClass = user.status === 'active' ? 'badge-success' : 'badge-danger';
+                const statusText = user.status === 'active' ? 'Active' : 'Inactive';
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><input type="checkbox" class="user-checkbox" value="${user.id}"></td>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=667eea&color=fff" 
+                                 style="width: 30px; height: 30px; border-radius: 50%;">
+                            ${user.name}
+                        </div>
+                    </td>
+                    <td>${user.email}</td>
+                    <td><span class="permission-badge badge-warning">${user.role}</span></td>
+                    <td><span class="permission-badge ${statusClass}">${statusText}</span></td>
+                    <td>${user.lastActive}</td>
+                    <td>
+                        <div style="display: flex; gap: 5px;">
+                            <button class="btn btn-secondary" style="padding: 5px 10px; font-size: 12px;" onclick="editUser(${user.id})">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-danger" style="padding: 5px 10px; font-size: 12px;" onclick="deleteUser(${user.id})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+            
+            // Setup select all checkbox
+            document.getElementById('selectAllUsers').addEventListener('change', function() {
+                const checkboxes = document.querySelectorAll('.user-checkbox');
+                checkboxes.forEach(cb => cb.checked = this.checked);
+            });
+        }
+
+        function loadSecurityLogs() {
+            const logsContainer = document.getElementById('securityLogs');
+            logsContainer.innerHTML = '';
+            
+            securityLogs.forEach(log => {
+                const logItem = document.createElement('div');
+                logItem.style.padding = '8px 12px';
+                logItem.style.borderBottom = '1px solid #e0e6ef';
+                logItem.style.fontSize = '12px';
+                logItem.style.color = '#5a6c7d';
+                logItem.innerHTML = `<i class="fas fa-circle" style="color: #43e97b; font-size: 6px; margin-right: 10px;"></i> ${log}`;
+                logsContainer.appendChild(logItem);
+            });
+        }
+
+        function loadNotificationPreferences() {
+            const container = document.getElementById('notificationPreferences');
+            const preferences = [
+                { name: 'New User Registration', email: true, push: true, sms: false },
+                { name: 'Password Changes', email: true, push: false, sms: false },
+                { name: 'System Updates', email: true, push: true, sms: false },
+                { name: 'Security Alerts', email: true, push: true, sms: true },
+                { name: 'Report Generation', email: false, push: true, sms: false }
+            ];
+            
+            container.innerHTML = preferences.map(pref => `
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; border-bottom: 1px solid #e0e6ef;">
+                    <div style="font-weight: 500; color: #2c3e50;">${pref.name}</div>
+                    <div style="display: flex; gap: 15px;">
+                        <label style="display: flex; align-items: center; gap: 5px; font-size: 12px;">
+                            <input type="checkbox" ${pref.email ? 'checked' : ''}>
+                            <i class="fas fa-envelope"></i>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 5px; font-size: 12px;">
+                            <input type="checkbox" ${pref.push ? 'checked' : ''}>
+                            <i class="fas fa-bell"></i>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 5px; font-size: 12px;">
+                            <input type="checkbox" ${pref.sms ? 'checked' : ''}>
+                            <i class="fas fa-comment"></i>
+                        </label>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function setupEventListeners() {
+            // Close modals when clicking outside
+            document.querySelectorAll('.modal-overlay').forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Close modals with ESC key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    document.querySelectorAll('.modal-overlay').forEach(modal => {
+                        modal.style.display = 'none';
+                    });
+                }
+            });
+        }
+
+        // Modal Functions
+        function showModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.style.display = 'flex';
+            
+            // Special handling for security modal
+            if (modalId === 'securityModal') {
+                runSecurityScan();
+            }
+        }
+
+        function hideModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // User Management Functions
+        function addNewUser() {
+            showToast('New user added successfully!', 'success');
+            hideModal('addUserModal');
+            
+            // Refresh users table
+            setTimeout(() => {
+                loadUsersTable();
+            }, 500);
+        }
+
+        function editUser(userId) {
+            const user = usersData.find(u => u.id === userId);
+            if (user) {
+                showToast(`Editing user: ${user.name}`, 'info');
+                // In a real app, you would open an edit modal here
+            }
+        }
+
+        function deleteUser(userId) {
+            if (confirm('Are you sure you want to delete this user?')) {
+                showToast('User deleted successfully!', 'success');
+                // In a real app, you would remove from array and refresh table
+            }
+        }
+
+        function bulkDeleteUsers() {
+            const selectedUsers = document.querySelectorAll('.user-checkbox:checked');
+            if (selectedUsers.length === 0) {
+                showToast('Please select users to delete', 'warning');
+                return;
+            }
+            
+            if (confirm(`Delete ${selectedUsers.length} selected user(s)?`)) {
+                showToast(`${selectedUsers.length} user(s) deleted successfully!`, 'success');
+            }
+        }
+
+        // Settings Functions
+        function saveGeneralSettings() {
+            showToast('General settings saved successfully!', 'success');
+        }
+
+        function resetGeneralSettings() {
+            if (confirm('Reset all general settings to default?')) {
+                showToast('Settings reset to default values', 'info');
+            }
+        }
+
+        function savePermissions() {
+            showToast('Permission changes saved successfully!', 'success');
+        }
+
+        function exportPermissions() {
+            showToast('Permissions exported successfully!', 'info');
+        }
+
+        function createNewRole() {
+            showToast('New role created successfully!', 'success');
+            hideModal('roleModal');
+        }
+
+        // Security Functions
+        function runSecurityScan() {
+            const scanProgress = document.getElementById('scanProgress');
+            const progressFill = scanProgress.querySelector('.progress-fill');
+            const scanStatus = document.getElementById('scanStatus');
+            
+            // Reset progress
+            progressFill.style.width = '0%';
+            scanStatus.textContent = 'Starting security scan...';
+            
+            // Simulate scan progress
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 10;
+                progressFill.style.width = `${progress}%`;
+                
+                if (progress <= 30) {
+                    scanStatus.textContent = 'Checking user accounts...';
+                } else if (progress <= 60) {
+                    scanStatus.textContent = 'Scanning system logs...';
+                } else if (progress <= 90) {
+                    scanStatus.textContent = 'Verifying security policies...';
+                }
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    scanStatus.textContent = 'Scan completed successfully!';
+                    
+                    // Show results
+                    setTimeout(() => {
+                        scanProgress.style.display = 'none';
+                        document.getElementById('scanResults').style.display = 'block';
+                        document.getElementById('scanResults').innerHTML = `
+                            <div style="text-align: center; padding: 20px;">
+                                <i class="fas fa-shield-check" style="font-size: 48px; color: #43e97b; margin-bottom: 15px;"></i>
+                                <h4 style="color: #2c3e50; margin-bottom: 10px;">Security Scan Complete</h4>
+                                <p style="color: #6c757d; margin-bottom: 20px;">No critical issues found</p>
+                                <div style="background: #f8f9fe; padding: 15px; border-radius: 8px; text-align: left;">
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                        <span>User Accounts:</span>
+                                        <span style="color: #43e97b; font-weight: 600;">Secure</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                        <span>Password Policies:</span>
+                                        <span style="color: #43e97b; font-weight: 600;">Strong</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <span>System Logs:</span>
+                                        <span style="color: #f6c23e; font-weight: 600;">Review Recommended</span>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }, 500);
+                }
+            }, 300);
+        }
+
+        // Notification Functions
+        function testNotifications() {
+            showToast('Test notification sent successfully!', 'info');
+            
+            // Simulate different notification types
+            setTimeout(() => {
+                showToast('📧 Email notification sent', 'info');
+            }, 1000);
+            
+            setTimeout(() => {
+                showToast('📱 Push notification sent', 'info');
+            }, 2000);
+        }
+
+        // Export Function
+        function exportSettings() {
+            showToast('Settings exported successfully! Download started.', 'success');
+        }
+
+        // Profile Functions
+        function updateProfile() {
+            showToast('Profile updated successfully!', 'success');
+            hideModal('profileModal');
+        }
+
+        // Toast Notification System
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <i class="fas fa-${getToastIcon(type)}"></i>
+                <span>${message}</span>
+                <button onclick="this.parentElement.remove()" style="background: none; border: none; color: inherit; margin-left: auto; cursor: pointer;">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            container.appendChild(toast);
+            
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateX(100%)';
+                    setTimeout(() => toast.remove(), 300);
+                }
+            }, 5000);
+        }
+
+        function getToastIcon(type) {
+            switch(type) {
+                case 'success': return 'check-circle';
+                case 'error': return 'exclamation-circle';
+                case 'warning': return 'exclamation-triangle';
+                default: return 'info-circle';
+            }
+        }
+
+        // Initialize the page
+        window.addEventListener('load', initializeSettingsPage);
+    </script>
+</body>
+</html>

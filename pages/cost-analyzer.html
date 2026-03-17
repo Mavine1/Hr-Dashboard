@@ -1,0 +1,1826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Cost Analyzer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pptxgenjs/3.10.0/pptxgen.bundle.js"></script>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #7209b7;
+            --success: #4cc9f0;
+            --warning: #f8961e;
+            --danger: #f72585;
+            --dark: #212529;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --card-bg: #ffffff;
+            --shadow: rgba(0, 0, 0, 0.08);
+            --shadow-hover: rgba(0, 0, 0, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            color: var(--dark);
+            min-height: 100vh;
+            padding-top: 70px;
+        }
+
+        /* Fixed Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            z-index: 1000;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .logo-text h1 {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .logo-text p {
+            font-size: 13px;
+            color: var(--gray);
+            margin-top: -2px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 25px;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 6px 20px var(--shadow);
+            padding: 25px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            margin-bottom: 25px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px var(--shadow-hover);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-title i {
+            color: var(--primary);
+        }
+
+        /* Glowing and Animated Cards */
+        .glowing-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glowing-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(67, 97, 238, 0.1), transparent);
+            transform: rotate(45deg);
+            animation: glowing 3s infinite linear;
+            z-index: 0;
+        }
+
+        .glowing-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .dancing-card {
+            animation: dance 2s infinite ease-in-out;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: none;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(45deg, var(--primary-dark), var(--primary));
+            box-shadow: 0 6px 15px rgba(67, 97, 238, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, var(--secondary), #5a0a9c);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: linear-gradient(45deg, #5a0a9c, var(--secondary));
+            box-shadow: 0 6px 15px rgba(114, 9, 183, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: linear-gradient(45deg, var(--success), #2db2d4);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(45deg, #2db2d4, var(--success));
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: linear-gradient(45deg, var(--danger), #d4145a);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: linear-gradient(45deg, #d4145a, var(--danger));
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 13px;
+        }
+
+        /* Table */
+        .table-container {
+            overflow-x: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        thead {
+            background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+            color: white;
+            position: sticky;
+            top: 70px;
+            z-index: 10;
+        }
+
+        th {
+            padding: 18px 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        th:last-child {
+            border-right: none;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            transition: background 0.2s;
+        }
+
+        tbody tr:hover {
+            background: rgba(67, 97, 238, 0.03);
+        }
+
+        td {
+            padding: 16px 15px;
+            color: var(--dark);
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-plumbing {
+            background: rgba(76, 201, 240, 0.15);
+            color: #2db2d4;
+        }
+
+        .badge-electricals {
+            background: rgba(248, 150, 30, 0.15);
+            color: #e68500;
+        }
+
+        .badge-metalwork {
+            background: rgba(108, 117, 125, 0.15);
+            color: var(--gray);
+        }
+
+        .badge-building {
+            background: rgba(220, 53, 69, 0.15);
+            color: #c82333;
+        }
+
+        .badge-seats {
+            background: rgba(40, 167, 69, 0.15);
+            color: #218838;
+        }
+
+        .badge-woodwork {
+            background: rgba(111, 66, 193, 0.15);
+            color: #6f42c1;
+        }
+
+        .badge-others {
+            background: rgba(23, 162, 184, 0.15);
+            color: #138496;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.4s ease;
+        }
+
+        .modal-header {
+            padding: 25px 30px 15px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--gray);
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .modal-close:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .modal-body {
+            padding: 25px 30px;
+        }
+
+        /* Form */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 18px;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            font-size: 14px;
+            transition: all 0.3s;
+            background: #f9fafb;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 16px;
+            padding-right: 45px;
+        }
+
+        .file-upload {
+            border: 2px dashed rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .file-upload:hover {
+            border-color: var(--primary);
+            background: rgba(67, 97, 238, 0.03);
+        }
+
+        .file-upload i {
+            font-size: 32px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        /* Chart Board */
+        .chart-board {
+            display: none;
+        }
+
+        .chart-board.active {
+            display: block;
+        }
+
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .chart-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 6px 20px var(--shadow);
+        }
+
+        .chart-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Export Dropdown */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background: white;
+            min-width: 180px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            border-radius: 12px;
+            z-index: 100;
+            padding: 10px 0;
+            margin-top: 10px;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .dropdown-item {
+            padding: 12px 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background 0.2s;
+            font-size: 14px;
+            color: var(--dark);
+        }
+
+        .dropdown-item:hover {
+            background: rgba(67, 97, 238, 0.05);
+        }
+
+        /* Actions Dropdown in Table */
+        .actions-dropdown {
+            position: relative;
+        }
+
+        .actions-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            background: white;
+            min-width: 180px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            border-radius: 12px;
+            z-index: 100;
+            padding: 10px 0;
+            margin-top: 5px;
+        }
+
+        .actions-dropdown.active .actions-menu {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes glowing {
+            0% { transform: rotate(45deg) translateX(-100%); }
+            100% { transform: rotate(45deg) translateX(100%); }
+        }
+
+        @keyframes dance {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            
+            .header-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            th, td {
+                padding: 12px 10px;
+                font-size: 13px;
+            }
+            
+            .btn {
+                padding: 10px 18px;
+                font-size: 13px;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Fixed Header -->
+    <header class="header">
+        <div class="logo-container">
+            <div class="logo">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="logo-text">
+                <h1>Service Cost Analyzer</h1>
+                <p>Track and analyze service provider costs</p>
+            </div>
+        </div>
+        <div class="header-actions">
+            <button class="btn btn-primary" id="addServiceProviderBtn">
+                <i class="fas fa-plus-circle"></i> Add Service Provider
+            </button>
+            <button class="btn btn-secondary" id="analysisBtn">
+                <i class="fas fa-chart-bar"></i> Cost Analysis
+            </button>
+            <button class="btn btn-outline" id="servicesListBtn">
+                <i class="fas fa-list"></i> Services List
+            </button>
+            <div class="dropdown">
+                <button class="btn btn-success" id="generalExportBtn">
+                    <i class="fas fa-download"></i> Export All Data
+                </button>
+                <div class="dropdown-content" id="generalExportDropdown">
+                    <div class="dropdown-item" data-export="pdf">
+                        <i class="fas fa-file-pdf"></i> PDF
+                    </div>
+                    <div class="dropdown-item" data-export="excel">
+                        <i class="fas fa-file-excel"></i> Excel
+                    </div>
+                    <div class="dropdown-item" data-export="csv">
+                        <i class="fas fa-file-csv"></i> CSV
+                    </div>
+                    <div class="dropdown-item" data-export="ppt">
+                        <i class="fas fa-file-powerpoint"></i> PowerPoint
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Services List View -->
+        <div id="servicesListView">
+            <div class="card glowing-card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fas fa-tools"></i> Service Providers
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table id="servicesTable">
+                        <thead>
+                            <tr>
+                                <th>Service Provider</th>
+                                <th>Category</th>
+                                <th>Branch</th>
+                                <th>Date</th>
+                                <th>Quoted Amount</th>
+                                <th>Approved Amount</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="servicesTableBody">
+                            <!-- Service rows will be added here by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="card dancing-card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fas fa-info-circle"></i> Quick Stats
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group" style="text-align: center;">
+                        <h3 id="totalProviders">0</h3>
+                        <p>Total Providers</p>
+                    </div>
+                    <div class="form-group" style="text-align: center;">
+                        <h3 id="totalQuoted">Ksh 0</h3>
+                        <p>Total Quoted</p>
+                    </div>
+                    <div class="form-group" style="text-align: center;">
+                        <h3 id="totalApproved">Ksh 0</h3>
+                        <p>Total Approved</p>
+                    </div>
+                    <div class="form-group" style="text-align: center;">
+                        <h3 id="avgSavings">0%</h3>
+                        <p>Average Savings</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chart Board View -->
+        <div id="chartBoard" class="chart-board">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fas fa-chart-pie"></i> Cost Analysis Dashboard
+                    </div>
+                    <button class="btn btn-primary" id="exportChartsBtn">
+                        <i class="fas fa-download"></i> Export Charts
+                    </button>
+                </div>
+                
+                <div class="charts-container">
+                    <div class="chart-card">
+                        <div class="chart-title">
+                            <i class="fas fa-chart-bar"></i> Costs by Service Category
+                        </div>
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                    
+                    <div class="chart-card">
+                        <div class="chart-title">
+                            <i class="fas fa-chart-line"></i> Monthly Cost Trends
+                        </div>
+                        <canvas id="trendChart"></canvas>
+                    </div>
+                    
+                    <div class="chart-card">
+                        <div class="chart-title">
+                            <i class="fas fa-balance-scale"></i> Quoted vs Approved
+                        </div>
+                        <canvas id="comparisonChart"></canvas>
+                    </div>
+                    
+                    <div class="chart-card">
+                        <div class="chart-title">
+                            <i class="fas fa-building"></i> Costs by Branch
+                        </div>
+                        <canvas id="branchChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Service Provider Modal -->
+    <div class="modal" id="addServiceModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="modalTitle">Add New Service Provider</div>
+                <button class="modal-close" id="closeModalBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="serviceProviderForm">
+                    <input type="hidden" id="providerId" value="">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="providerName">Service Provider Name *</label>
+                            <input type="text" id="providerName" class="form-control" placeholder="Enter provider name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="serviceCategory">Service Category *</label>
+                            <select id="serviceCategory" class="form-control" required>
+                                <option value="">Select category</option>
+                                <option value="plumbing">Plumbing</option>
+                                <option value="electricals">Electricals</option>
+                                <option value="metalwork">Metalwork & Building</option>
+                                <option value="seats">Seats Upholstery</option>
+                                <option value="woodwork">Woodwork</option>
+                                <option value="others">Others</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="branch">Branch *</label>
+                            <input type="text" id="branch" class="form-control" placeholder="Enter branch name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="date">Date *</label>
+                            <input type="date" id="date" class="form-control" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description">Project Description</label>
+                        <textarea id="description" class="form-control" rows="3" placeholder="Enter project description"></textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="quotationAmount">Quotation Amount (Ksh) *</label>
+                            <input type="number" id="quotationAmount" class="form-control" min="0" step="0.01" placeholder="0.00" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="approvedAmount">Approved Amount (Ksh) *</label>
+                            <input type="number" id="approvedAmount" class="form-control" min="0" step="0.01" placeholder="0.00" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Upload Quotation Document</label>
+                        <div class="file-upload" id="fileUploadArea">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Drag & drop or click to upload</p>
+                            <p style="font-size: 12px; color: var(--gray); margin-top: 5px;">PDF, DOC, DOCX, JPG, PNG (Max 5MB)</p>
+                            <input type="file" id="quotationFile" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" style="display: none;">
+                        </div>
+                        <div id="fileName" style="margin-top: 10px; font-size: 14px; color: var(--primary);"></div>
+                    </div>
+                    
+                    <div class="form-row" style="margin-top: 30px;">
+                        <button type="submit" class="btn btn-primary" style="flex: 1;" id="saveProviderBtn">
+                            <i class="fas fa-save"></i> Save Service Provider
+                        </button>
+                        <button type="button" class="btn btn-outline" id="cancelFormBtn" style="flex: 1;">
+                            <i class="fas fa-times"></i> Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Export Options Modal -->
+    <div class="modal" id="exportModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="exportModalTitle">Export Report</div>
+                <button class="modal-close" id="closeExportModalBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Select Export Format</label>
+                    <div class="form-row" style="margin-top: 20px; gap: 10px;">
+                        <button class="btn btn-outline" style="flex: 1;" id="exportPdfBtn">
+                            <i class="fas fa-file-pdf"></i> PDF
+                        </button>
+                        <button class="btn btn-outline" style="flex: 1;" id="exportExcelBtn">
+                            <i class="fas fa-file-excel"></i> Excel
+                        </button>
+                    </div>
+                    <div class="form-row" style="margin-top: 10px; gap: 10px;">
+                        <button class="btn btn-outline" style="flex: 1;" id="exportCsvBtn">
+                            <i class="fas fa-file-csv"></i> CSV
+                        </button>
+                        <button class="btn btn-outline" style="flex: 1;" id="exportPptBtn">
+                            <i class="fas fa-file-powerpoint"></i> PowerPoint
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group" id="exportProviderInfo" style="margin-top: 20px; padding: 15px; background: rgba(67, 97, 238, 0.05); border-radius: 10px; display: none;">
+                    <p style="font-weight: 600; color: var(--primary); margin-bottom: 5px;">Exporting for:</p>
+                    <p id="exportProviderName" style="margin: 0;"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample data for service providers
+        let serviceProviders = [
+            {
+                id: 1,
+                name: "PlumbPro Services",
+                category: "plumbing",
+                branch: "Nairobi West",
+                date: "2023-10-15",
+                description: "Fix leaking pipes in the main building restrooms",
+                quotation: 125000.00,
+                approved: 115000.00,
+                document: "quotation_plumbpro.pdf",
+                status: "approved"
+            },
+            {
+                id: 2,
+                name: "ElectroFix Inc.",
+                category: "electricals",
+                branch: "Mombasa Road",
+                date: "2023-10-20",
+                description: "Install new lighting in warehouse area",
+                quotation: 320000.00,
+                approved: 280000.00,
+                document: "electrofix_quote.pdf",
+                status: "approved"
+            },
+            {
+                id: 3,
+                name: "MetalCraft Builders",
+                category: "metalwork",
+                branch: "Thika Branch",
+                date: "2023-10-25",
+                description: "Construct metal staircase for second floor",
+                quotation: 540000.00,
+                approved: 520000.00,
+                document: "metalcraft_proposal.pdf",
+                status: "pending"
+            },
+            {
+                id: 4,
+                name: "Comfort Seats Ltd",
+                category: "seats",
+                branch: "Kisumu Branch",
+                date: "2023-11-01",
+                description: "Reupholster conference room chairs",
+                quotation: 180000.00,
+                approved: 165000.00,
+                document: "comfort_seats_quote.docx",
+                status: "approved"
+            },
+            {
+                id: 5,
+                name: "WoodArt Studios",
+                category: "woodwork",
+                branch: "Eldoret Branch",
+                date: "2023-11-05",
+                description: "Custom wooden desks for new office",
+                quotation: 420000.00,
+                approved: 420000.00,
+                document: "woodart_proposal.pdf",
+                status: "approved"
+            },
+            {
+                id: 6,
+                name: "General Contractors Co",
+                category: "others",
+                branch: "Nakuru Branch",
+                date: "2023-11-10",
+                description: "General building maintenance and repairs",
+                quotation: 310000.00,
+                approved: 290000.00,
+                document: "general_contractors.pdf",
+                status: "approved"
+            }
+        ];
+
+        // DOM Elements
+        const servicesListView = document.getElementById('servicesListView');
+        const chartBoard = document.getElementById('chartBoard');
+        const servicesTableBody = document.getElementById('servicesTableBody');
+        const addServiceModal = document.getElementById('addServiceModal');
+        const exportModal = document.getElementById('exportModal');
+        const addServiceProviderBtn = document.getElementById('addServiceProviderBtn');
+        const analysisBtn = document.getElementById('analysisBtn');
+        const servicesListBtn = document.getElementById('servicesListBtn');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const closeExportModalBtn = document.getElementById('closeExportModalBtn');
+        const cancelFormBtn = document.getElementById('cancelFormBtn');
+        const serviceProviderForm = document.getElementById('serviceProviderForm');
+        const fileUploadArea = document.getElementById('fileUploadArea');
+        const quotationFile = document.getElementById('quotationFile');
+        const fileName = document.getElementById('fileName');
+        const exportChartsBtn = document.getElementById('exportChartsBtn');
+        const generalExportBtn = document.getElementById('generalExportBtn');
+        const generalExportDropdown = document.getElementById('generalExportDropdown');
+        const modalTitle = document.getElementById('modalTitle');
+        const saveProviderBtn = document.getElementById('saveProviderBtn');
+        const providerIdInput = document.getElementById('providerId');
+        
+        // Export modal buttons
+        const exportPdfBtn = document.getElementById('exportPdfBtn');
+        const exportExcelBtn = document.getElementById('exportExcelBtn');
+        const exportCsvBtn = document.getElementById('exportCsvBtn');
+        const exportPptBtn = document.getElementById('exportPptBtn');
+        const exportProviderInfo = document.getElementById('exportProviderInfo');
+        const exportProviderName = document.getElementById('exportProviderName');
+        const exportModalTitle = document.getElementById('exportModalTitle');
+        
+        // Variables for tracking export
+        let exportAllData = false;
+        let exportProviderId = null;
+        
+        // Chart instances
+        let categoryChart, trendChart, comparisonChart, branchChart;
+        
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set today's date as default
+            document.getElementById('date').valueAsDate = new Date();
+            
+            // Render initial data
+            renderServicesTable();
+            updateStats();
+            
+            // Setup event listeners
+            setupEventListeners();
+        });
+        
+        // Setup all event listeners
+        function setupEventListeners() {
+            // Navigation buttons
+            analysisBtn.addEventListener('click', function() {
+                servicesListView.style.display = 'none';
+                chartBoard.classList.add('active');
+                renderCharts();
+                analysisBtn.classList.add('btn-secondary');
+                servicesListBtn.classList.remove('btn-secondary');
+            });
+            
+            servicesListBtn.addEventListener('click', function() {
+                chartBoard.classList.remove('active');
+                servicesListView.style.display = 'block';
+                servicesListBtn.classList.add('btn-secondary');
+                analysisBtn.classList.remove('btn-secondary');
+            });
+            
+            // Modal controls
+            addServiceProviderBtn.addEventListener('click', function() {
+                modalTitle.textContent = "Add New Service Provider";
+                saveProviderBtn.innerHTML = '<i class="fas fa-save"></i> Save Service Provider';
+                providerIdInput.value = '';
+                serviceProviderForm.reset();
+                fileName.textContent = '';
+                document.getElementById('date').valueAsDate = new Date();
+                addServiceModal.classList.add('active');
+            });
+            
+            closeModalBtn.addEventListener('click', function() {
+                addServiceModal.classList.remove('active');
+                serviceProviderForm.reset();
+                fileName.textContent = '';
+            });
+            
+            closeExportModalBtn.addEventListener('click', function() {
+                exportModal.classList.remove('active');
+                exportProviderInfo.style.display = 'none';
+            });
+            
+            cancelFormBtn.addEventListener('click', function() {
+                addServiceModal.classList.remove('active');
+                serviceProviderForm.reset();
+                fileName.textContent = '';
+            });
+            
+            // File upload
+            fileUploadArea.addEventListener('click', function() {
+                quotationFile.click();
+            });
+            
+            quotationFile.addEventListener('change', function() {
+                if (quotationFile.files.length > 0) {
+                    fileName.textContent = `Selected file: ${quotationFile.files[0].name}`;
+                } else {
+                    fileName.textContent = '';
+                }
+            });
+            
+            // Form submission
+            serviceProviderForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveServiceProvider();
+                addServiceModal.classList.remove('active');
+                serviceProviderForm.reset();
+                fileName.textContent = '';
+            });
+            
+            // General export dropdown items
+            document.querySelectorAll('#generalExportDropdown .dropdown-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const format = this.getAttribute('data-export');
+                    exportAllData = true;
+                    exportProviderId = null;
+                    exportProviderInfo.style.display = 'none';
+                    exportModalTitle.textContent = "Export All Data";
+                    exportModal.classList.add('active');
+                });
+            });
+            
+            // Export modal buttons
+            exportPdfBtn.addEventListener('click', function() {
+                if (exportAllData) {
+                    exportAllReport('pdf');
+                } else if (exportProviderId) {
+                    exportProviderReport(exportProviderId, 'pdf');
+                }
+                exportModal.classList.remove('active');
+            });
+            
+            exportExcelBtn.addEventListener('click', function() {
+                if (exportAllData) {
+                    exportAllReport('excel');
+                } else if (exportProviderId) {
+                    exportProviderReport(exportProviderId, 'excel');
+                }
+                exportModal.classList.remove('active');
+            });
+            
+            exportCsvBtn.addEventListener('click', function() {
+                if (exportAllData) {
+                    exportAllReport('csv');
+                } else if (exportProviderId) {
+                    exportProviderReport(exportProviderId, 'csv');
+                }
+                exportModal.classList.remove('active');
+            });
+            
+            exportPptBtn.addEventListener('click', function() {
+                if (exportAllData) {
+                    exportAllReport('ppt');
+                } else if (exportProviderId) {
+                    exportProviderReport(exportProviderId, 'ppt');
+                }
+                exportModal.classList.remove('active');
+            });
+            
+            exportChartsBtn.addEventListener('click', exportCharts);
+        }
+        
+        // Render services table
+        function renderServicesTable() {
+            servicesTableBody.innerHTML = '';
+            
+            serviceProviders.forEach(provider => {
+                const row = document.createElement('tr');
+                
+                // Determine badge class based on category
+                let badgeClass = '';
+                switch(provider.category) {
+                    case 'plumbing': badgeClass = 'badge-plumbing'; break;
+                    case 'electricals': badgeClass = 'badge-electricals'; break;
+                    case 'metalwork': badgeClass = 'badge-metalwork'; break;
+                    case 'seats': badgeClass = 'badge-seats'; break;
+                    case 'woodwork': badgeClass = 'badge-woodwork'; break;
+                    case 'others': badgeClass = 'badge-others'; break;
+                }
+                
+                // Format category name
+                const categoryNames = {
+                    plumbing: 'Plumbing',
+                    electricals: 'Electricals',
+                    metalwork: 'Metalwork & Building',
+                    seats: 'Seats Upholstery',
+                    woodwork: 'Woodwork',
+                    others: 'Others'
+                };
+                
+                // Format date
+                const dateObj = new Date(provider.date);
+                const formattedDate = dateObj.toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'short', 
+                    day: 'numeric' 
+                });
+                
+                // Calculate savings
+                const savings = provider.quotation - provider.approved;
+                const savingsPercent = provider.quotation > 0 ? ((savings / provider.quotation) * 100).toFixed(1) : 0;
+                
+                // Status indicator
+                let statusHTML = '';
+                if (provider.status === 'approved') {
+                    statusHTML = `<span style="color: #28a745; font-weight: 600;">Approved</span><br>
+                                  <small style="color: #6c757d;">Saved: Ksh ${savings.toFixed(2)} (${savingsPercent}%)</small>`;
+                } else if (provider.status === 'pending') {
+                    statusHTML = `<span style="color: #ffc107; font-weight: 600;">Pending</span>`;
+                }
+                
+                // Format currency with commas for thousands
+                const formatCurrency = (amount) => {
+                    return 'Ksh ' + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                };
+                
+                row.innerHTML = `
+                    <td><strong>${provider.name}</strong></td>
+                    <td><span class="badge ${badgeClass}">${categoryNames[provider.category]}</span></td>
+                    <td>${provider.branch}</td>
+                    <td>${formattedDate}</td>
+                    <td>${formatCurrency(provider.quotation)}</td>
+                    <td>${formatCurrency(provider.approved)}</td>
+                    <td>${statusHTML}</td>
+                    <td>
+                        <div class="actions-dropdown" id="actions-${provider.id}">
+                            <button class="btn btn-sm btn-outline" onclick="toggleActionsDropdown(${provider.id})">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                            <div class="actions-menu">
+                                <div class="dropdown-item" onclick="openEditModal(${provider.id})">
+                                    <i class="fas fa-edit"></i> Edit
+                                </div>
+                                <div class="dropdown-item" onclick="openExportModal(${provider.id}, '${provider.name}')">
+                                    <i class="fas fa-download"></i> Export
+                                </div>
+                                <div class="dropdown-item" onclick="deleteProvider(${provider.id})" style="color: var(--danger);">
+                                    <i class="fas fa-trash"></i> Delete
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                `;
+                
+                servicesTableBody.appendChild(row);
+            });
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!event.target.closest('.actions-dropdown')) {
+                    document.querySelectorAll('.actions-dropdown').forEach(dropdown => {
+                        dropdown.classList.remove('active');
+                    });
+                }
+            });
+        }
+        
+        // Toggle actions dropdown
+        function toggleActionsDropdown(providerId) {
+            const dropdown = document.getElementById(`actions-${providerId}`);
+            const isActive = dropdown.classList.contains('active');
+            
+            // Close all other dropdowns
+            document.querySelectorAll('.actions-dropdown').forEach(d => {
+                d.classList.remove('active');
+            });
+            
+            // Toggle current dropdown
+            if (!isActive) {
+                dropdown.classList.add('active');
+            }
+        }
+        
+        // Open export modal for specific provider
+        function openExportModal(providerId, providerName) {
+            exportAllData = false;
+            exportProviderId = providerId;
+            exportProviderInfo.style.display = 'block';
+            exportProviderName.textContent = providerName;
+            exportModalTitle.textContent = `Export Report for ${providerName}`;
+            exportModal.classList.add('active');
+        }
+        
+        // Update stats
+        function updateStats() {
+            const totalProviders = serviceProviders.length;
+            const totalQuoted = serviceProviders.reduce((sum, provider) => sum + provider.quotation, 0);
+            const totalApproved = serviceProviders.reduce((sum, provider) => sum + provider.approved, 0);
+            const totalSavings = totalQuoted - totalApproved;
+            const avgSavings = totalQuoted > 0 ? ((totalSavings / totalQuoted) * 100).toFixed(1) : 0;
+            
+            // Format currency with commas for thousands
+            const formatCurrency = (amount) => {
+                return 'Ksh ' + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            };
+            
+            document.getElementById('totalProviders').textContent = totalProviders;
+            document.getElementById('totalQuoted').textContent = formatCurrency(totalQuoted);
+            document.getElementById('totalApproved').textContent = formatCurrency(totalApproved);
+            document.getElementById('avgSavings').textContent = `${avgSavings}%`;
+        }
+        
+        // Save service provider (add or edit)
+        function saveServiceProvider() {
+            const providerId = providerIdInput.value;
+            const providerName = document.getElementById('providerName').value;
+            const serviceCategory = document.getElementById('serviceCategory').value;
+            const branch = document.getElementById('branch').value;
+            const date = document.getElementById('date').value;
+            const description = document.getElementById('description').value;
+            const quotationAmount = parseFloat(document.getElementById('quotationAmount').value);
+            const approvedAmount = parseFloat(document.getElementById('approvedAmount').value);
+            const file = quotationFile.files[0];
+            
+            if (providerId) {
+                // Edit existing provider
+                const index = serviceProviders.findIndex(p => p.id == providerId);
+                if (index !== -1) {
+                    serviceProviders[index] = {
+                        ...serviceProviders[index],
+                        name: providerName,
+                        category: serviceCategory,
+                        branch: branch,
+                        date: date,
+                        description: description,
+                        quotation: quotationAmount,
+                        approved: approvedAmount,
+                        document: file ? file.name : serviceProviders[index].document,
+                        status: approvedAmount > 0 ? 'approved' : 'pending'
+                    };
+                    
+                    showNotification('Service provider updated successfully!', 'success');
+                }
+            } else {
+                // Add new provider
+                const newProvider = {
+                    id: serviceProviders.length > 0 ? Math.max(...serviceProviders.map(p => p.id)) + 1 : 1,
+                    name: providerName,
+                    category: serviceCategory,
+                    branch: branch,
+                    date: date,
+                    description: description,
+                    quotation: quotationAmount,
+                    approved: approvedAmount,
+                    document: file ? file.name : 'No document',
+                    status: approvedAmount > 0 ? 'approved' : 'pending'
+                };
+                
+                serviceProviders.push(newProvider);
+                showNotification('Service provider added successfully!', 'success');
+            }
+            
+            renderServicesTable();
+            updateStats();
+        }
+        
+        // Open edit modal
+        function openEditModal(id) {
+            const provider = serviceProviders.find(p => p.id === id);
+            if (provider) {
+                modalTitle.textContent = "Edit Service Provider";
+                saveProviderBtn.innerHTML = '<i class="fas fa-save"></i> Update Service Provider';
+                providerIdInput.value = provider.id;
+                document.getElementById('providerName').value = provider.name;
+                document.getElementById('serviceCategory').value = provider.category;
+                document.getElementById('branch').value = provider.branch;
+                document.getElementById('date').value = provider.date;
+                document.getElementById('description').value = provider.description;
+                document.getElementById('quotationAmount').value = provider.quotation;
+                document.getElementById('approvedAmount').value = provider.approved;
+                fileName.textContent = provider.document && provider.document !== 'No document' ? `Current file: ${provider.document}` : '';
+                
+                addServiceModal.classList.add('active');
+            }
+        }
+        
+        // Delete provider
+        function deleteProvider(id) {
+            if (confirm('Are you sure you want to delete this service provider?')) {
+                serviceProviders = serviceProviders.filter(p => p.id !== id);
+                renderServicesTable();
+                updateStats();
+                showNotification('Service provider deleted successfully!', 'danger');
+            }
+        }
+        
+        // Render charts
+        function renderCharts() {
+            // Destroy existing charts if they exist
+            if (categoryChart) categoryChart.destroy();
+            if (trendChart) trendChart.destroy();
+            if (comparisonChart) comparisonChart.destroy();
+            if (branchChart) branchChart.destroy();
+            
+            // Prepare data for charts
+            const categories = ['Plumbing', 'Electricals', 'Metalwork', 'Seats', 'Woodwork', 'Others'];
+            const categoryData = categories.map(cat => {
+                const providersInCat = serviceProviders.filter(p => {
+                    const catNames = {
+                        plumbing: 'Plumbing',
+                        electricals: 'Electricals',
+                        metalwork: 'Metalwork',
+                        seats: 'Seats',
+                        woodwork: 'Woodwork',
+                        others: 'Others'
+                    };
+                    return catNames[p.category] === cat;
+                });
+                return providersInCat.reduce((sum, p) => sum + p.approved, 0);
+            });
+            
+            // Chart 1: Costs by Service Category
+            const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+            categoryChart = new Chart(categoryCtx, {
+                type: 'bar',
+                data: {
+                    labels: categories,
+                    datasets: [{
+                        label: 'Approved Amount (Ksh)',
+                        data: categoryData,
+                        backgroundColor: [
+                            'rgba(67, 97, 238, 0.7)',
+                            'rgba(114, 9, 183, 0.7)',
+                            'rgba(76, 201, 240, 0.7)',
+                            'rgba(248, 150, 30, 0.7)',
+                            'rgba(220, 53, 69, 0.7)',
+                            'rgba(40, 167, 69, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgb(67, 97, 238)',
+                            'rgb(114, 9, 183)',
+                            'rgb(76, 201, 240)',
+                            'rgb(248, 150, 30)',
+                            'rgb(220, 53, 69)',
+                            'rgb(40, 167, 69)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return 'Ksh ' + value;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Chart 2: Monthly Cost Trends
+            const trendCtx = document.getElementById('trendChart').getContext('2d');
+            
+            // Group by month for trend data
+            const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const monthlyData = new Array(12).fill(0);
+            
+            serviceProviders.forEach(provider => {
+                const month = new Date(provider.date).getMonth();
+                monthlyData[month] += provider.approved;
+            });
+            
+            trendChart = new Chart(trendCtx, {
+                type: 'line',
+                data: {
+                    labels: monthNames,
+                    datasets: [{
+                        label: 'Approved Costs (Ksh)',
+                        data: monthlyData,
+                        backgroundColor: 'rgba(76, 201, 240, 0.2)',
+                        borderColor: 'rgb(76, 201, 240)',
+                        borderWidth: 3,
+                        tension: 0.3,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return 'Ksh ' + value;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Chart 3: Quoted vs Approved
+            const comparisonCtx = document.getElementById('comparisonChart').getContext('2d');
+            
+            const providerNames = serviceProviders.map(p => p.name);
+            const quotedAmounts = serviceProviders.map(p => p.quotation);
+            const approvedAmounts = serviceProviders.map(p => p.approved);
+            
+            comparisonChart = new Chart(comparisonCtx, {
+                type: 'bar',
+                data: {
+                    labels: providerNames,
+                    datasets: [
+                        {
+                            label: 'Quoted Amount (Ksh)',
+                            data: quotedAmounts,
+                            backgroundColor: 'rgba(248, 150, 30, 0.7)',
+                            borderColor: 'rgb(248, 150, 30)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Approved Amount (Ksh)',
+                            data: approvedAmounts,
+                            backgroundColor: 'rgba(67, 97, 238, 0.7)',
+                            borderColor: 'rgb(67, 97, 238)',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return 'Ksh ' + value;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Chart 4: Costs by Branch
+            const branchCtx = document.getElementById('branchChart').getContext('2d');
+            
+            // Get unique branches
+            const branches = [...new Set(serviceProviders.map(p => p.branch))];
+            const branchData = branches.map(branch => {
+                const providersInBranch = serviceProviders.filter(p => p.branch === branch);
+                return providersInBranch.reduce((sum, p) => sum + p.approved, 0);
+            });
+            
+            branchChart = new Chart(branchCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: branches,
+                    datasets: [{
+                        label: 'Approved Amount (Ksh)',
+                        data: branchData,
+                        backgroundColor: [
+                            'rgba(67, 97, 238, 0.8)',
+                            'rgba(114, 9, 183, 0.8)',
+                            'rgba(76, 201, 240, 0.8)',
+                            'rgba(248, 150, 30, 0.8)',
+                            'rgba(40, 167, 69, 0.8)',
+                            'rgba(220, 53, 69, 0.8)',
+                            'rgba(111, 66, 193, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgb(67, 97, 238)',
+                            'rgb(114, 9, 183)',
+                            'rgb(76, 201, 240)',
+                            'rgb(248, 150, 30)',
+                            'rgb(40, 167, 69)',
+                            'rgb(220, 53, 69)',
+                            'rgb(111, 66, 193)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Export all data report
+        function exportAllReport(format) {
+            switch(format) {
+                case 'pdf':
+                    generatePDFReport(serviceProviders, 'All Service Providers');
+                    break;
+                case 'excel':
+                    generateExcelReport(serviceProviders, 'All Service Providers');
+                    break;
+                case 'csv':
+                    generateCSVReport(serviceProviders, 'All Service Providers');
+                    break;
+                case 'ppt':
+                    generatePPTReport(serviceProviders, 'All Service Providers');
+                    break;
+            }
+            
+            showNotification(`${format.toUpperCase()} report for all providers generated successfully!`, 'success');
+        }
+        
+        // Export provider-specific report
+        function exportProviderReport(providerId, format) {
+            const provider = serviceProviders.find(p => p.id === providerId);
+            if (!provider) return;
+            
+            const providerData = [provider];
+            
+            switch(format) {
+                case 'pdf':
+                    generatePDFReport(providerData, provider.name);
+                    break;
+                case 'excel':
+                    generateExcelReport(providerData, provider.name);
+                    break;
+                case 'csv':
+                    generateCSVReport(providerData, provider.name);
+                    break;
+                case 'ppt':
+                    generatePPTReport(providerData, provider.name);
+                    break;
+            }
+            
+            showNotification(`${format.toUpperCase()} report for ${provider.name} generated successfully!`, 'success');
+        }
+        
+        // Generate PDF report
+        function generatePDFReport(data, title) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Add title
+            doc.setFontSize(20);
+            doc.text('Service Providers Cost Report', 20, 20);
+            
+            doc.setFontSize(12);
+            doc.text(`Report: ${title}`, 20, 30);
+            doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 20, 40);
+            doc.text(`Total Providers: ${data.length}`, 20, 50);
+            
+            // Add table
+            const tableData = data.map(provider => [
+                provider.name,
+                provider.category,
+                provider.branch,
+                new Date(provider.date).toLocaleDateString(),
+                `Ksh ${provider.quotation.toFixed(2)}`,
+                `Ksh ${provider.approved.toFixed(2)}`,
+                provider.status
+            ]);
+            
+            doc.autoTable({
+                head: [['Provider', 'Category', 'Branch', 'Date', 'Quoted', 'Approved', 'Status']],
+                body: tableData,
+                startY: 60,
+                theme: 'grid',
+                headStyles: { fillColor: [67, 97, 238] }
+            });
+            
+            // Save the PDF
+            doc.save(`service-providers-report-${title.replace(/\s+/g, '-')}.pdf`);
+        }
+        
+        // Generate Excel report
+        function generateExcelReport(data, title) {
+            // Prepare data for Excel
+            const wsData = [
+                ['Service Provider', 'Category', 'Branch', 'Date', 'Quoted Amount (Ksh)', 'Approved Amount (Ksh)', 'Status', 'Savings (Ksh)'],
+                ...data.map(provider => [
+                    provider.name,
+                    provider.category,
+                    provider.branch,
+                    new Date(provider.date).toLocaleDateString(),
+                    provider.quotation,
+                    provider.approved,
+                    provider.status,
+                    provider.quotation - provider.approved
+                ])
+            ];
+            
+            const ws = XLSX.utils.aoa_to_sheet(wsData);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Service Providers');
+            
+            // Save the Excel file
+            XLSX.writeFile(wb, `service-providers-report-${title.replace(/\s+/g, '-')}.xlsx`);
+        }
+        
+        // Generate CSV report
+        function generateCSVReport(data, title) {
+            const csvData = [
+                ['Service Provider', 'Category', 'Branch', 'Date', 'Quoted Amount (Ksh)', 'Approved Amount (Ksh)', 'Status', 'Savings (Ksh)'],
+                ...data.map(provider => [
+                    provider.name,
+                    provider.category,
+                    provider.branch,
+                    new Date(provider.date).toLocaleDateString(),
+                    provider.quotation,
+                    provider.approved,
+                    provider.status,
+                    provider.quotation - provider.approved
+                ])
+            ];
+            
+            const csvContent = csvData.map(row => row.join(',')).join('\n');
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `service-providers-report-${title.replace(/\s+/g, '-')}.csv`;
+            link.click();
+        }
+        
+        // Generate PowerPoint report
+        function generatePPTReport(data, title) {
+            const pptx = new PptxGenJS();
+            const slide = pptx.addSlide();
+            
+            // Add title
+            slide.addText('Service Providers Cost Report', {
+                x: 0.5,
+                y: 0.5,
+                w: '90%',
+                fontSize: 24,
+                bold: true,
+                color: '4361EE'
+            });
+            
+            slide.addText(`Report: ${title}`, {
+                x: 0.5,
+                y: 1.2,
+                w: '90%',
+                fontSize: 14,
+                color: '666666'
+            });
+            
+            slide.addText(`Generated on: ${new Date().toLocaleDateString()}`, {
+                x: 0.5,
+                y: 1.6,
+                w: '90%',
+                fontSize: 12,
+                color: '666666'
+            });
+            
+            // Add summary
+            const totalQuoted = data.reduce((sum, p) => sum + p.quotation, 0);
+            const totalApproved = data.reduce((sum, p) => sum + p.approved, 0);
+            const totalSavings = totalQuoted - totalApproved;
+            
+            slide.addText(
+                `Summary:\n\n` +
+                `Total Providers: ${data.length}\n` +
+                `Total Quoted: Ksh ${totalQuoted.toFixed(2)}\n` +
+                `Total Approved: Ksh ${totalApproved.toFixed(2)}\n` +
+                `Total Savings: Ksh ${totalSavings.toFixed(2)}`,
+                {
+                    x: 0.5,
+                    y: 2.5,
+                    w: '45%',
+                    fontSize: 14,
+                    bullet: true
+                }
+            );
+            
+            // Save the PowerPoint
+            pptx.writeFile({ fileName: `service-providers-report-${title.replace(/\s+/g, '-')}.pptx` });
+        }
+        
+        // Export charts
+        function exportCharts() {
+            // In a real implementation, you would export the charts as images
+            // For this demo, we'll create a PDF with the charts
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF('landscape');
+            
+            doc.setFontSize(24);
+            doc.text('Cost Analysis Charts Report', 20, 20);
+            
+            doc.setFontSize(12);
+            doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 20, 30);
+            
+            // In a real app, you would add the chart images here
+            // For now, we'll just add text placeholders
+            doc.setFontSize(16);
+            doc.text('Chart 1: Costs by Service Category', 20, 50);
+            doc.text('Chart 2: Monthly Cost Trends', 20, 100);
+            doc.text('Chart 3: Quoted vs Approved', 20, 150);
+            doc.text('Chart 4: Costs by Branch', 20, 200);
+            
+            doc.save('cost-analysis-charts.pdf');
+            
+            showNotification('Charts exported as PDF!', 'success');
+        }
+        
+        // Show notification
+        function showNotification(message, type) {
+            // Remove any existing notification
+            const existingNotification = document.querySelector('.notification');
+            if (existingNotification) {
+                existingNotification.remove();
+            }
+            
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <div style="position: fixed; top: 100px; right: 20px; background: ${type === 'success' ? '#28a745' : type === 'danger' ? '#dc3545' : '#17a2b8'}; color: white; padding: 15px 25px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); z-index: 10000; display: flex; align-items: center; gap: 10px; font-weight: 600;">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'danger' ? 'exclamation-circle' : 'info-circle'}"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Remove notification after 3 seconds
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
