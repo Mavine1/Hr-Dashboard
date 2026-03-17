@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | HR Admin Pro</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-blue: #1e40af;
+            --secondary-blue: #3b82f6;
+            --light-blue: #dbeafe;
+            --sky-blue: #eff6ff;
+            --dark-blue: #1e3a8a;
+            --primary-red: #b91c1c;
+            --light-red: #fee2e2;
+            --soft-red: #fef2f2;
+            --pure-white: #ffffff;
+            --off-white: #f8fafc;
+            --light-gray: #e2e8f0;
+            --medium-gray: #94a3b8;
+            --dark-gray: #334155;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--off-white);
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+
+        /* Modern Fixed Header */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: var(--pure-white);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-blue);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(30, 64, 175, 0.2);
+        }
+
+        .logo-icon i {
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .logo h2 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+        }
+
+        .animated-title-container {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--light-blue);
+            padding: 0.4rem 1.5rem;
+            border-radius: 40px;
+            border: 1px solid var(--primary-blue);
+        }
+
+        .animated-title {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--primary-blue);
+            white-space: nowrap;
+            animation: slideText 20s linear infinite;
+        }
+
+        @keyframes slideText {
+            0% { transform: translateX(100%); opacity: 0; }
+            5% { transform: translateX(0); opacity: 1; }
+            95% { transform: translateX(0); opacity: 1; }
+            100% { transform: translateX(-100%); opacity: 0; }
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .notifications {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--off-white);
+            border-radius: 10px;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+        }
+
+        .notifications:hover {
+            background: var(--light-blue);
+            border-color: var(--primary-blue);
+        }
+
+        .notifications i {
+            color: var(--primary-blue);
+            font-size: 1.1rem;
+        }
+
+        .badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: var(--primary-red);
+            color: white;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+            border: 2px solid white;
+        }
+
+        .logout-btn {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .logout-btn:hover {
+            background: var(--dark-blue);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .hamburger-menu {
+            position: relative;
+        }
+
+        .hamburger-btn {
+            width: 40px;
+            height: 40px;
+            background: var(--off-white);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .hamburger-btn:hover {
+            background: var(--light-blue);
+            border-color: var(--primary-blue);
+        }
+
+        .hamburger-btn span {
+            width: 18px;
+            height: 2px;
+            background: var(--primary-blue);
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        .hamburger-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(4px, 4px);
+        }
+
+        .hamburger-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(4px, -4px);
+        }
+
+        /* Navigation Dropdown */
+        .nav-dropdown {
+            position: absolute;
+            top: 50px;
+            right: 0;
+            width: 280px;
+            background: white;
+            border-radius: 16px;
+            padding: 1rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .nav-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+        }
+
+        .nav-item {
+            background: var(--off-white);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1rem 0.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            color: var(--text-secondary);
+        }
+
+        .nav-item:hover {
+            background: var(--light-blue);
+            border-color: var(--primary-blue);
+            transform: translateY(-2px);
+        }
+
+        .nav-item i {
+            font-size: 1.2rem;
+            color: var(--primary-blue);
+            margin-bottom: 0.3rem;
+            display: block;
+        }
+
+        .nav-item span {
+            font-size: 0.75rem;
+            font-weight: 500;
+            display: block;
+            line-height: 1.3;
+        }
+
+        .nav-item.active {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        .nav-item.active i {
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 90px;
+            padding: 2rem;
+        }
+
+        /* Welcome Banner */
+        .welcome-banner {
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .welcome-text h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .welcome-text p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .date-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--pure-white);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-blue);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+        }
+
+        .stat-icon.blue {
+            background: var(--primary-blue);
+        }
+
+        .stat-icon.red {
+            background: var(--primary-red);
+        }
+
+        .stat-icon.green {
+            background: #10b981;
+        }
+
+        .stat-icon.orange {
+            background: #f59e0b;
+        }
+
+        .stat-info h3 {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-info .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.2rem;
+        }
+
+        .stat-info .stat-trend {
+            font-size: 0.8rem;
+            color: #10b981;
+        }
+
+        .stat-info .stat-trend.down {
+            color: var(--primary-red);
+        }
+
+        /* Charts Row */
+        .charts-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-card {
+            background: var(--pure-white);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-header h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .chart-header h3 i {
+            color: var(--primary-blue);
+        }
+
+        .chart-period {
+            padding: 0.4rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            background: var(--off-white);
+        }
+
+        .chart-container {
+            height: 300px;
+            position: relative;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .action-card {
+            background: var(--pure-white);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .action-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-blue);
+        }
+
+        .action-card i {
+            font-size: 2rem;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+
+        .action-card h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+
+        .action-card p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Recent Activity */
+        .recent-activity {
+            background: var(--pure-white);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .activity-header h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .activity-header h3 i {
+            color: var(--primary-blue);
+        }
+
+        .view-all {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--off-white);
+            border-radius: 10px;
+            transition: all 0.2s;
+        }
+
+        .activity-item:hover {
+            background: var(--light-blue);
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .activity-icon.blue {
+            background: var(--primary-blue);
+        }
+
+        .activity-icon.red {
+            background: var(--primary-red);
+        }
+
+        .activity-icon.green {
+            background: #10b981;
+        }
+
+        .activity-details {
+            flex: 1;
+        }
+
+        .activity-details h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+
+        .activity-details p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .activity-time {
+            font-size: 0.75rem;
+            color: var(--medium-gray);
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background: var(--pure-white);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .project-header h4 {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .project-status {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: var(--light-blue);
+            color: var(--primary-blue);
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-completed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--light-gray);
+            border-radius: 4px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-blue);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+
+        .project-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border-radius: 10px;
+            border: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--dark-blue);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-outline:hover {
+            background: var(--off-white);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--pure-white);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 500px;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            animation: modalSlideUp 0.3s ease;
+        }
+
+        @keyframes modalSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--medium-gray);
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            background: white;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 2000;
+            animation: slideIn 0.3s ease;
+            border-left: 4px solid;
+        }
+
+        .notification.success {
+            border-left-color: #10b981;
+        }
+
+        .notification.error {
+            border-left-color: var(--primary-red);
+        }
+
+        .notification.info {
+            border-left-color: var(--primary-blue);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .charts-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .animated-title-container {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-header {
+                padding: 0 1rem;
+            }
+            
+            .logo h2 {
+                display: none;
+            }
+            
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .welcome-banner {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-dropdown {
+                width: 260px;
+                right: 10px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .logout-btn span {
+                display: none;
+            }
+            
+            .logout-btn {
+                padding: 0.6rem;
+                width: 40px;
+                height: 40px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Modern Fixed Header -->
+    <header class="main-header">
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-briefcase"></i>
+            </div>
+            <h2>HR-Admin Pro</h2>
+        </div>
+        
+        <div class="animated-title-container">
+            <div class="animated-title">Dashboard Overview | Real-time Analytics | Employee Management | Cost Tracking</div>
+        </div>
+        
+        <div class="header-right">
+            <!-- Notifications -->
+            <div class="notifications" onclick="showNotification('No new notifications', 'info')">
+                <i class="fas fa-bell"></i>
+                <span class="badge">5</span>
+            </div>
+            
+            <!-- Logout Button -->
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </button>
+            
+            <!-- Hamburger Menu -->
+            <div class="hamburger-menu">
+                <div class="hamburger-btn" id="hamburgerBtn" onclick="toggleHamburger()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                
+                <!-- Navigation Dropdown -->
+                <div class="nav-dropdown" id="navDropdown">
+                    <div class="nav-grid">
+                        <a href="index.html" class="nav-item active">
+                            <i class="fas fa-home"></i>
+                            <span>Dashboard</span>
+                        </a>
+                        <a href="task-centre.html" class="nav-item">
+                            <i class="fas fa-tasks"></i>
+                            <span>Task Centre</span>
+                        </a>
+                        <a href="training.html" class="nav-item">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span>Training</span>
+                        </a>
+                        <a href="vendor-contracts.html" class="nav-item">
+                            <i class="fas fa-file-contract"></i>
+                            <span>Contracts</span>
+                        </a>
+                        <a href="hr-letters.html" class="nav-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>HR Letters</span>
+                        </a>
+                        <a href="upcoming-events.html" class="nav-item">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Events</span>
+                        </a>
+                        <a href="cost-analyzer.html" class="nav-item">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Cost Analyzer</span>
+                        </a>
+                        <a href="financial-hub.html" class="nav-item">
+                            <i class="fas fa-star"></i>
+                            <span>Financial Hub</span>
+                        </a>
+                        <a href="employees.html" class="nav-item">
+                            <i class="fas fa-users"></i>
+                            <span>Employees</span>
+                        </a>
+                        <a href="settings.html" class="nav-item">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Welcome Banner -->
+        <div class="welcome-banner">
+            <div class="welcome-text">
+                <h1>Welcome back, Admin! 👋</h1>
+                <p>Here's what's happening with your HR dashboard today</p>
+            </div>
+            <div class="date-badge">
+                <i class="fas fa-calendar-alt"></i>
+                <span id="currentDate"></span>
+            </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon blue">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Total Employees</h3>
+                    <div class="stat-value" id="totalEmployees">248</div>
+                    <div class="stat-trend">
+                        <i class="fas fa-arrow-up"></i> +12 this month
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon green">
+                    <i class="fas fa-user-check"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Active Now</h3>
+                    <div class="stat-value" id="activeNow">186</div>
+                    <div class="stat-trend">
+                        <i class="fas fa-clock"></i> 75% online
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon orange">
+                    <i class="fas fa-file-contract"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Active Contracts</h3>
+                    <div class="stat-value" id="activeContracts">32</div>
+                    <div class="stat-trend down">
+                        <i class="fas fa-arrow-down"></i> 3 expiring soon
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon red">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Events Today</h3>
+                    <div class="stat-value" id="eventsToday">4</div>
+                    <div class="stat-trend">
+                        <i class="fas fa-arrow-up"></i> 2 upcoming
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="charts-row">
+            <!-- Employee Growth Chart -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3><i class="fas fa-chart-line"></i> Employee Growth</h3>
+                    <select class="chart-period" id="growthPeriod">
+                        <option value="6">Last 6 Months</option>
+                        <option value="12" selected>Last 12 Months</option>
+                        <option value="24">Last 2 Years</option>
+                    </select>
+                </div>
+                <div class="chart-container">
+                    <canvas id="growthChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Department Distribution -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3><i class="fas fa-chart-pie"></i> Department Distribution</h3>
+                </div>
+                <div class="chart-container">
+                    <canvas id="deptChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <div class="action-card" onclick="showModal('taskModal')">
+                <i class="fas fa-plus-circle"></i>
+                <h4>New Task</h4>
+                <p>Create a new task</p>
+            </div>
+            <div class="action-card" onclick="window.location.href='employees.html'">
+                <i class="fas fa-user-plus"></i>
+                <h4>Add Employee</h4>
+                <p>Add new employee</p>
+            </div>
+            <div class="action-card" onclick="window.location.href='training.html'">
+                <i class="fas fa-graduation-cap"></i>
+                <h4>Schedule Training</h4>
+                <p>Plan training session</p>
+            </div>
+            <div class="action-card" onclick="showModal('reportModal')">
+                <i class="fas fa-file-pdf"></i>
+                <h4>Generate Report</h4>
+                <p>Monthly report</p>
+            </div>
+        </div>
+
+        <!-- Recent Activity & Projects -->
+        <div class="charts-row">
+            <!-- Recent Activity -->
+            <div class="recent-activity">
+                <div class="activity-header">
+                    <h3><i class="fas fa-history"></i> Recent Activity</h3>
+                    <a href="#" class="view-all">View All</a>
+                </div>
+                <div class="activity-list" id="activityList">
+                    <!-- Activity items will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Active Projects -->
+            <div class="recent-activity">
+                <div class="activity-header">
+                    <h3><i class="fas fa-project-diagram"></i> Active Projects</h3>
+                    <a href="#" class="view-all">View All</a>
+                </div>
+                <div class="activity-list" id="projectList">
+                    <!-- Projects will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Projects Grid -->
+        <div class="projects-grid" id="projectsGrid">
+            <!-- Project cards will be loaded here -->
+        </div>
+    </main>
+
+    <!-- Task Modal -->
+    <div id="taskModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Create New Task</h3>
+                <button class="modal-close" onclick="closeModal('taskModal')">&times;</button>
+            </div>
+            <form id="taskForm">
+                <div class="form-group">
+                    <label class="form-label">Task Title</label>
+                    <input type="text" class="form-control" placeholder="Enter task title" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-control" rows="3" placeholder="Task description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Due Date</label>
+                    <input type="date" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Priority</label>
+                    <select class="form-control">
+                        <option>High</option>
+                        <option>Medium</option>
+                        <option>Low</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Create Task</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Report Modal -->
+    <div id="reportModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Generate Report</h3>
+                <button class="modal-close" onclick="closeModal('reportModal')">&times;</button>
+            </div>
+            <form id="reportForm">
+                <div class="form-group">
+                    <label class="form-label">Report Type</label>
+                    <select class="form-control">
+                        <option>Monthly Summary</option>
+                        <option>Employee Report</option>
+                        <option>Financial Report</option>
+                        <option>Training Report</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Period</label>
+                    <select class="form-control">
+                        <option>This Month</option>
+                        <option>Last Month</option>
+                        <option>This Quarter</option>
+                        <option>This Year</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Format</label>
+                    <select class="form-control">
+                        <option>PDF</option>
+                        <option>Excel</option>
+                        <option>CSV</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Generate</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notificationContainer"></div>
+
+    <script>
+        // Sample data
+        const activities = [
+            { icon: "user-plus", iconColor: "blue", title: "New Employee Added", description: "John Doe joined IT department", time: "5 minutes ago" },
+            { icon: "file-contract", iconColor: "green", title: "Contract Updated", description: "Vendor contract renewed", time: "1 hour ago" },
+            { icon: "calendar-check", iconColor: "red", title: "Event Created", description: "Team building scheduled", time: "3 hours ago" },
+            { icon: "graduation-cap", iconColor: "blue", title: "Training Completed", description: "JavaScript workshop finished", time: "5 hours ago" }
+        ];
+
+        const projects = [
+            { name: "HR System Upgrade", progress: 75, status: "active", team: "IT Team", due: "2 days left" },
+            { name: "Employee Training", progress: 45, status: "pending", team: "HR Dept", due: "1 week left" },
+            { name: "Office Relocation", progress: 90, status: "active", team: "Admin", due: "Tomorrow" },
+            { name: "New Hiring Drive", progress: 30, status: "active", team: "HR", due: "2 weeks left" }
+        ];
+
+        let growthChart, deptChart;
+        let activeModal = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDate();
+            loadActivities();
+            loadProjects();
+            initCharts();
+        });
+
+        // Update date
+        function updateDate() {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', options);
+        }
+
+        // Load activities
+        function loadActivities() {
+            const container = document.getElementById('activityList');
+            container.innerHTML = activities.map(a => `
+                <div class="activity-item">
+                    <div class="activity-icon ${a.iconColor}">
+                        <i class="fas fa-${a.icon}"></i>
+                    </div>
+                    <div class="activity-details">
+                        <h4>${a.title}</h4>
+                        <p>${a.description}</p>
+                    </div>
+                    <div class="activity-time">${a.time}</div>
+                </div>
+            `).join('');
+        }
+
+        // Load projects
+        function loadProjects() {
+            const container = document.getElementById('projectList');
+            container.innerHTML = projects.slice(0, 3).map(p => `
+                <div class="activity-item">
+                    <div class="activity-icon ${p.status === 'active' ? 'blue' : 'orange'}">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <div class="activity-details">
+                        <h4>${p.name}</h4>
+                        <p>${p.team} • ${p.due}</p>
+                    </div>
+                    <div class="progress-bar" style="width: 100px; height: 6px;">
+                        <div class="progress-fill" style="width: ${p.progress}%;"></div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Load projects grid
+            const grid = document.getElementById('projectsGrid');
+            grid.innerHTML = projects.map(p => `
+                <div class="project-card">
+                    <div class="project-header">
+                        <h4>${p.name}</h4>
+                        <span class="project-status status-${p.status}">${p.status}</span>
+                    </div>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">${p.team}</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${p.progress}%;"></div>
+                    </div>
+                    <div class="project-meta">
+                        <span><i class="far fa-clock"></i> ${p.due}</span>
+                        <span>${p.progress}% complete</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Initialize charts
+        function initCharts() {
+            // Growth Chart
+            const growthCtx = document.getElementById('growthChart').getContext('2d');
+            growthChart = new Chart(growthCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    datasets: [{
+                        label: 'Employees',
+                        data: [210, 218, 225, 232, 238, 245, 248, 252, 258, 265, 272, 280],
+                        borderColor: '#1e40af',
+                        backgroundColor: 'rgba(30, 64, 175, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: 'rgba(0,0,0,0.05)' }
+                        }
+                    }
+                }
+            });
+
+            // Department Chart
+            const deptCtx = document.getElementById('deptChart').getContext('2d');
+            deptChart = new Chart(deptCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['IT', 'HR', 'Sales', 'Marketing', 'Finance'],
+                    datasets: [{
+                        data: [85, 42, 63, 38, 52],
+                        backgroundColor: [
+                            '#1e40af',
+                            '#3b82f6',
+                            '#60a5fa',
+                            '#93c5fd',
+                            '#bfdbfe'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { boxWidth: 12, padding: 15 }
+                        }
+                    },
+                    cutout: '65%'
+                }
+            });
+        }
+
+        // Hamburger menu
+        function toggleHamburger() {
+            const btn = document.getElementById('hamburgerBtn');
+            const dropdown = document.getElementById('navDropdown');
+            btn.classList.toggle('active');
+            dropdown.classList.toggle('active');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const btn = document.getElementById('hamburgerBtn');
+            const dropdown = document.getElementById('navDropdown');
+            if (!btn.contains(event.target) && !dropdown.contains(event.target)) {
+                btn.classList.remove('active');
+                dropdown.classList.remove('active');
+            }
+        });
+
+        // Modal functions
+        function showModal(modalId) {
+            if (activeModal) closeModal(activeModal);
+            
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('active');
+                activeModal = modalId;
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('active');
+                activeModal = null;
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Form submissions
+        document.getElementById('taskForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            showNotification('Task created successfully!', 'success');
+            closeModal('taskModal');
+            this.reset();
+        });
+
+        document.getElementById('reportForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            showNotification('Report generation started!', 'info');
+            closeModal('reportModal');
+        });
+
+        // Logout
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                showNotification('Logging out...', 'info');
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1000);
+            }
+        }
+
+        // Notification
+        function showNotification(message, type = 'info') {
+            const container = document.getElementById('notificationContainer');
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i>
+                <span>${message}</span>
+            `;
+            
+            container.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideIn 0.3s ease reverse';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Keyboard events
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && activeModal) {
+                closeModal(activeModal);
+            }
+        });
+
+        // Make functions global
+        window.toggleHamburger = toggleHamburger;
+        window.logout = logout;
+        window.showModal = showModal;
+        window.closeModal = closeModal;
+        window.showNotification = showNotification;
+    </script>
+</body>
+</html>
