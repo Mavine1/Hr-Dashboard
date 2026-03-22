@@ -3,548 +3,782 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vendor Contracts | HR System</title>
-    <link rel="stylesheet" href="../style.css">
+    <title>Vendor Contracts | HR Admin Pro</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* Base Styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        :root {
+            --primary-blue: #1e40af;
+            --secondary-blue: #3b82f6;
+            --light-blue: #dbeafe;
+            --sky-blue: #eff6ff;
+            --dark-blue: #1e3a8a;
+            --primary-red: #b91c1c;
+            --light-red: #fee2e2;
+            --pure-white: #ffffff;
+            --off-white: #f8fafc;
+            --light-gray: #e2e8f0;
+            --medium-gray: #94a3b8;
+            --dark-gray: #334155;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #f5f7fb 0%, #f0f2f5 100%);
-            color: #333;
-            font-size: 13px;
-            line-height: 1.4;
+            font-family: 'Inter', sans-serif;
+            background: var(--off-white);
+            color: var(--text-primary);
+            line-height: 1.5;
+            overflow-x: hidden;
         }
 
-        .container {
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            width: 240px;
-            background: linear-gradient(180deg, #2c3e50 0%, #1a2530 100%);
-            box-shadow: 5px 0 20px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
+        /* Modern Fixed Header */
+        .main-header {
             position: fixed;
-            height: 100vh;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: var(--pure-white);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
             z-index: 1000;
-            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
         }
 
         .logo {
-            padding: 20px 15px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .logo h2 {
-            color: white;
-            font-size: 16px;
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-weight: 600;
+            gap: 1rem;
         }
 
-        .nav-menu {
-            list-style: none;
-            padding: 15px 0;
-            flex: 1;
-        }
-
-        .nav-menu li {
-            margin: 3px 0;
-        }
-
-        .nav-menu a {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 15px;
-            color: rgba(255,255,255,0.8);
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 500;
-            transition: all 0.3s;
-            border-left: 3px solid transparent;
-        }
-
-        .nav-menu a:hover {
-            background: rgba(255,255,255,0.1);
-            color: white;
-            border-left-color: #4e73df;
-        }
-
-        .nav-menu li.active a {
-            background: rgba(78, 115, 223, 0.2);
-            color: white;
-            border-left: 3px solid #4e73df;
-        }
-
-        .user-profile {
-            padding: 15px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .user-profile img {
+        .logo-icon {
             width: 40px;
             height: 40px;
-            border-radius: 50%;
-            border: 2px solid #4e73df;
-        }
-
-        .user-profile h4 {
-            font-size: 13px;
-            margin-bottom: 2px;
-            color: white;
-        }
-
-        .user-profile p {
-            font-size: 11px;
-            color: rgba(255,255,255,0.7);
-        }
-
-        /* Main Content */
-        .main-content {
-            flex: 1;
-            margin-left: 240px;
-            padding: 20px;
-            background: #f5f7fb;
-            min-height: 100vh;
-        }
-
-        /* Header */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            background: white;
-            padding: 15px 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        .header-left h1 {
-            font-size: 22px;
-            color: #2c3e50;
-            margin-bottom: 3px;
-            font-weight: 600;
-        }
-
-        .header-left p {
-            color: #6c757d;
-            font-size: 12px;
-        }
-
-        .header-right {
-            display: flex;
-            gap: 10px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #4e73df 0%, #3a56c4 100%);
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.3s;
-            box-shadow: 0 2px 5px rgba(78, 115, 223, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(78, 115, 223, 0.4);
-        }
-
-        .btn-primary::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
-            transform: rotate(45deg);
-            transition: all 0.5s;
-        }
-
-        .btn-primary:hover::after {
-            transform: rotate(45deg) translate(50%, 50%);
-        }
-
-        /* Animated Stats Cards */
-        .stats-overview {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .stat-card {
-            background: white;
-            border-radius: 10px;
-            padding: 15px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .stat-card:nth-child(1) { animation-delay: 0s; }
-        .stat-card:nth-child(2) { animation-delay: 0.2s; }
-        .stat-card:nth-child(3) { animation-delay: 0.4s; }
-        .stat-card:nth-child(4) { animation-delay: 0.6s; }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
-
-        .stat-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-        }
-
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-        }
-
-        .stat-card:nth-child(1)::before { background: linear-gradient(90deg, #4e73df 0%, #667eea 100%); }
-        .stat-card:nth-child(2)::before { background: linear-gradient(90deg, #1cc88a 0%, #38f9d7 100%); }
-        .stat-card:nth-child(3)::before { background: linear-gradient(90deg, #f6c23e 0%, #f6ad55 100%); }
-        .stat-card:nth-child(4)::before { background: linear-gradient(90deg, #e74a3b 0%, #f5576c 100%); }
-
-        .stat-icon {
-            width: 45px;
-            height: 45px;
+            background: var(--primary-blue);
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            box-shadow: 0 4px 10px rgba(30, 64, 175, 0.2);
+        }
+
+        .logo-icon i {
             color: white;
-            flex-shrink: 0;
-            animation: pulse 2s infinite;
+            font-size: 1.2rem;
         }
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+        .logo h2 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
         }
 
-        .stat-card:nth-child(1) .stat-icon { 
-            background: linear-gradient(135deg, #4e73df 0%, #667eea 100%);
-            box-shadow: 0 4px 10px rgba(78, 115, 223, 0.3);
-        }
-        .stat-card:nth-child(2) .stat-icon { 
-            background: linear-gradient(135deg, #1cc88a 0%, #38f9d7 100%);
-            box-shadow: 0 4px 10px rgba(28, 200, 138, 0.3);
-        }
-        .stat-card:nth-child(3) .stat-icon { 
-            background: linear-gradient(135deg, #f6c23e 0%, #f6ad55 100%);
-            box-shadow: 0 4px 10px rgba(246, 194, 62, 0.3);
-        }
-        .stat-card:nth-child(4) .stat-icon { 
-            background: linear-gradient(135deg, #e74a3b 0%, #f5576c 100%);
-            box-shadow: 0 4px 10px rgba(231, 74, 59, 0.3);
+        .animated-title-container {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--light-blue);
+            padding: 0.4rem 1.5rem;
+            border-radius: 40px;
+            border: 1px solid var(--primary-blue);
         }
 
-        .stat-info {
-            flex: 1;
+        .animated-title {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--primary-blue);
+            white-space: nowrap;
+            animation: slideText 20s linear infinite;
+        }
+
+        @keyframes slideText {
+            0% { transform: translateX(100%); opacity: 0; }
+            5% { transform: translateX(0); opacity: 1; }
+            95% { transform: translateX(0); opacity: 1; }
+            100% { transform: translateX(-100%); opacity: 0; }
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .notifications {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--off-white);
+            border-radius: 10px;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+        }
+
+        .notifications:hover {
+            background: var(--light-blue);
+            border-color: var(--primary-blue);
+        }
+
+        .notifications i {
+            color: var(--primary-blue);
+            font-size: 1.1rem;
+        }
+
+        .badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: var(--primary-red);
+            color: white;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+            border: 2px solid white;
+        }
+
+        .logout-btn {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .logout-btn:hover {
+            background: var(--dark-blue);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .hamburger-menu {
+            position: relative;
+        }
+
+        .hamburger-btn {
+            width: 40px;
+            height: 40px;
+            background: var(--off-white);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .hamburger-btn:hover {
+            background: var(--light-blue);
+            border-color: var(--primary-blue);
+        }
+
+        .hamburger-btn span {
+            width: 18px;
+            height: 2px;
+            background: var(--primary-blue);
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        .hamburger-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(4px, 4px);
+        }
+
+        .hamburger-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(4px, -4px);
+        }
+
+        /* Navigation Dropdown */
+        .nav-dropdown {
+            position: absolute;
+            top: 50px;
+            right: 0;
+            width: 280px;
+            background: white;
+            border-radius: 16px;
+            padding: 1rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .nav-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+        }
+
+        .nav-item {
+            background: var(--off-white);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1rem 0.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            color: var(--text-secondary);
+        }
+
+        .nav-item:hover {
+            background: var(--light-blue);
+            border-color: var(--primary-blue);
+            transform: translateY(-2px);
+        }
+
+        .nav-item i {
+            font-size: 1.2rem;
+            color: var(--primary-blue);
+            margin-bottom: 0.3rem;
+            display: block;
+        }
+
+        .nav-item span {
+            font-size: 0.75rem;
+            font-weight: 500;
+            display: block;
+            line-height: 1.3;
+        }
+
+        .nav-item.active {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        .nav-item.active i {
+            color: white;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 70px;
+            left: -280px;
+            width: 280px;
+            height: calc(100vh - 70px);
+            background: var(--pure-white);
+            border-right: 1px solid var(--border-color);
+            box-shadow: var(--shadow-lg);
+            transition: left 0.3s ease;
+            z-index: 999;
+            overflow-y: auto;
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        .sidebar-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--light-blue);
+        }
+
+        .sidebar-header h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 1rem;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 0.3rem;
+        }
+
+        .sidebar-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem 1rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.2s;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .sidebar-menu li a:hover {
+            background: var(--light-blue);
+            color: var(--primary-blue);
+        }
+
+        .sidebar-menu li a.active {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        .sidebar-menu li a i {
+            width: 20px;
+            font-size: 1rem;
+        }
+
+        .sidebar-footer {
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            right: 1rem;
+            padding: 1rem;
+            background: var(--light-blue);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .sidebar-footer img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--primary-blue);
+        }
+
+        .sidebar-footer h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .sidebar-footer p {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        /* Overlay */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 100%;
+            height: calc(100vh - 70px);
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 90px;
+            padding: 2rem;
+            transition: margin-left 0.3s ease;
+        }
+
+        /* Page Header */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 1.5rem 2rem;
+            background: var(--pure-white);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-content h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+
+        .header-content p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border-radius: 10px;
+            border: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--dark-blue);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background: var(--pure-white);
+            color: var(--primary-blue);
+            border: 1px solid var(--primary-blue);
+        }
+
+        .btn-secondary:hover {
+            background: var(--light-blue);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-outline:hover {
+            background: var(--off-white);
+        }
+
+        .btn-sm {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.8rem;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #0b8e5e;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--pure-white);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-blue);
+        }
+
+        .stat-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .stat-icon.blue {
+            background: var(--primary-blue);
+        }
+
+        .stat-icon.green {
+            background: var(--success);
+        }
+
+        .stat-icon.yellow {
+            background: var(--warning);
+        }
+
+        .stat-icon.red {
+            background: var(--danger);
         }
 
         .stat-info h3 {
-            margin: 0;
-            font-size: 11px;
-            color: #6c757d;
+            font-size: 0.85rem;
             font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            margin-bottom: 0.3rem;
         }
 
-        .stat-info h2 {
-            margin: 5px 0 0 0;
-            font-size: 22px;
+        .stat-info .stat-value {
+            font-size: 1.8rem;
             font-weight: 700;
-            color: #2c3e50;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            color: var(--text-primary);
+            margin-bottom: 0.2rem;
         }
 
-        .stat-trend {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            margin-top: 5px;
-            font-size: 10px;
-            font-weight: 600;
+        .stat-info .stat-trend {
+            font-size: 0.75rem;
         }
 
-        .positive {
-            color: #1cc88a;
-            animation: glow 2s infinite alternate;
+        .trend-up {
+            color: var(--success);
         }
 
-        @keyframes glow {
-            from { text-shadow: 0 0 5px rgba(28, 200, 138, 0.5); }
-            to { text-shadow: 0 0 10px rgba(28, 200, 138, 0.8); }
-        }
-
-        /* Content Cards */
+        /* Content Card */
         .content-card {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
+            background: var(--pure-white);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 2rem;
         }
 
         .card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #e0e6ef;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--light-blue);
         }
 
         .card-header h3 {
-            color: #2c3e50;
-            font-size: 15px;
+            font-size: 1.1rem;
             font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 0.5rem;
         }
 
-        /* Search and Filter */
-        .chart-actions {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .search-box {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .search-box i {
-            position: absolute;
-            left: 12px;
-            color: #6c757d;
-            font-size: 14px;
-        }
-
-        .search-box input {
-            padding: 8px 12px 8px 35px;
-            border: 1px solid #e0e6ef;
-            border-radius: 6px;
-            font-size: 12px;
-            width: 200px;
-            transition: all 0.3s;
-        }
-
-        .search-box input:focus {
-            outline: none;
-            border-color: #4e73df;
-            box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.1);
-        }
-
-        .btn-icon {
-            background: white;
-            border: 1px solid #e0e6ef;
-            padding: 8px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            color: #5a6c7d;
-            font-size: 12px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            transition: all 0.3s;
-        }
-
-        .btn-icon:hover {
-            border-color: #4e73df;
-            color: #4e73df;
-            transform: translateY(-1px);
+        .card-header h3 i {
+            color: var(--primary-blue);
         }
 
         /* Filter Tabs */
         .filter-tabs {
             display: flex;
-            gap: 5px;
-            margin-bottom: 15px;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
             flex-wrap: wrap;
         }
 
         .filter-btn {
-            padding: 6px 12px;
-            background: #f8f9fc;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            color: #5a6c7d;
-            font-size: 11px;
+            padding: 0.5rem 1rem;
+            background: var(--off-white);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.8rem;
             font-weight: 500;
-            transition: all 0.3s;
+            cursor: pointer;
+            transition: all 0.2s;
         }
 
         .filter-btn:hover {
-            background: #e9ecef;
-            color: #4e73df;
+            background: var(--light-blue);
+            border-color: var(--primary-blue);
         }
 
         .filter-btn.active {
-            background: #4e73df;
+            background: var(--primary-blue);
             color: white;
-            box-shadow: 0 2px 5px rgba(78, 115, 223, 0.3);
+            border-color: var(--primary-blue);
+        }
+
+        /* Search Box */
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--off-white);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 0.5rem 1rem;
+        }
+
+        .search-box input {
+            border: none;
+            background: transparent;
+            outline: none;
+            min-width: 200px;
+            font-size: 0.9rem;
+        }
+
+        .search-box i {
+            color: var(--medium-gray);
         }
 
         /* Data Table */
         .data-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 12px;
-        }
-
-        .data-table thead {
-            background: #f8f9fe;
-            border-bottom: 2px solid #e0e6ef;
         }
 
         .data-table th {
-            padding: 12px;
             text-align: left;
+            padding: 1rem;
+            background: var(--light-blue);
+            color: var(--primary-blue);
             font-weight: 600;
-            color: #5a6c7d;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-size: 11px;
+            border-bottom: 2px solid var(--primary-blue);
         }
 
         .data-table td {
-            padding: 12px;
-            border-bottom: 1px solid #f0f0f0;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-secondary);
         }
 
-        .data-table tr:hover {
-            background: #f8f9fe;
+        .data-table tbody tr:hover {
+            background: var(--off-white);
         }
 
+        /* Status Badges */
         .status-badge {
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 10px;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
             font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            display: inline-block;
         }
 
         .status-active {
-            background: #e8f4ff;
-            color: #4e73df;
-            border: 1px solid #4e73df;
-            animation: pulseActive 2s infinite;
-        }
-
-        @keyframes pulseActive {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
+            background: #d4edda;
+            color: #155724;
         }
 
         .status-pending {
             background: #fff3cd;
             color: #856404;
-            border: 1px solid #f6c23e;
         }
 
         .status-expiring {
-            background: #f8f0e3;
-            color: #e74a3b;
-            border: 1px solid #e74a3b;
-            animation: pulseWarning 1s infinite;
-        }
-
-        @keyframes pulseWarning {
-            0%, 100% { box-shadow: 0 0 0 rgba(231, 74, 59, 0.4); }
-            50% { box-shadow: 0 0 10px rgba(231, 74, 59, 0.6); }
+            background: #fee2e2;
+            color: #b91c1c;
+            animation: pulseWarning 1.5s infinite;
         }
 
         .status-terminated {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #e74a3b;
+            background: #e2e3e5;
+            color: #383d41;
         }
 
+        @keyframes pulseWarning {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        /* Table Actions */
         .table-actions {
             display: flex;
-            gap: 5px;
+            gap: 0.5rem;
         }
 
-        .btn-sm {
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 11px;
-            border: none;
-            cursor: pointer;
+        /* Activity List */
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--off-white);
+            border-radius: 10px;
+            transition: all 0.2s;
+        }
+
+        .activity-item:hover {
+            background: var(--light-blue);
+        }
+
+        .activity-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
-            gap: 4px;
-            font-weight: 500;
-            transition: all 0.3s;
-            min-width: 30px;
             justify-content: center;
+            background: var(--light-blue);
         }
 
-        .btn-sm:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        .activity-content p {
+            font-size: 0.85rem;
+            margin-bottom: 0.2rem;
         }
 
-        .btn-success {
-            background: linear-gradient(135deg, #1cc88a 0%, #17a673 100%);
-            color: white;
+        .activity-content small {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
         }
 
-        .btn-danger {
-            background: linear-gradient(135deg, #e74a3b 0%, #d62c1a 100%);
-            color: white;
-        }
-
-        /* Modal Styles */
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -552,754 +786,568 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
             z-index: 2000;
             align-items: center;
             justify-content: center;
-            animation: fadeIn 0.3s ease;
+            padding: 1.5rem;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .modal.active {
+            display: flex;
         }
 
         .modal-content {
-            background: white;
-            border-radius: 12px;
-            width: 90%;
-            max-width: 600px;
+            background: var(--pure-white);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 700px;
             max-height: 90vh;
             overflow-y: auto;
-            animation: slideUp 0.3s ease;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            box-shadow: var(--shadow-lg);
+            animation: modalSlideUp 0.3s ease;
         }
 
-        @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        @keyframes modalSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .modal-header {
-            padding: 20px;
-            border-bottom: 1px solid #e0e6ef;
+            padding: 1.5rem 2rem;
+            background: var(--light-blue);
+            border-bottom: 1px solid var(--border-color);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 12px 12px 0 0;
         }
 
         .modal-header h3 {
-            font-size: 16px;
+            font-size: 1.2rem;
             font-weight: 600;
+            color: var(--primary-blue);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 0.8rem;
         }
 
-        .close-modal {
-            background: rgba(255,255,255,0.2);
+        .modal-close {
+            background: none;
             border: none;
-            color: white;
+            font-size: 1.5rem;
+            color: var(--primary-blue);
             cursor: pointer;
-            font-size: 20px;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s;
+            transition: all 0.2s;
         }
 
-        .close-modal:hover {
-            background: rgba(255,255,255,0.3);
-            transform: rotate(90deg);
+        .modal-close:hover {
+            background: var(--primary-red);
+            color: white;
         }
 
         .modal-body {
-            padding: 20px;
+            padding: 2rem;
+        }
+
+        .modal-footer {
+            padding: 1.5rem 2rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            background: var(--off-white);
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 1.2rem;
         }
 
         .form-row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 15px;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
         }
 
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
+        label {
             display: block;
-            margin-bottom: 6px;
+            margin-bottom: 0.4rem;
             font-weight: 500;
-            color: #5a6c7d;
-            font-size: 12px;
+            font-size: 0.85rem;
+            color: var(--text-primary);
         }
 
         .form-control {
             width: 100%;
-            padding: 10px 12px;
-            border: 1px solid #e0e6ef;
-            border-radius: 6px;
-            font-size: 12px;
-            transition: all 0.3s;
-            background: white;
+            padding: 0.7rem 1rem;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            background: var(--off-white);
         }
 
         .form-control:focus {
             outline: none;
-            border-color: #4e73df;
-            box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.1);
+            border-color: var(--primary-blue);
+            background: var(--pure-white);
+            box-shadow: 0 0 0 3px var(--light-blue);
         }
 
         select.form-control {
             appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236c757d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%231e40af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
             background-repeat: no-repeat;
-            background-position: right 12px center;
-            background-size: 12px;
-            padding-right: 35px;
+            background-position: right 1rem center;
         }
 
         textarea.form-control {
-            min-height: 80px;
             resize: vertical;
-        }
-
-        .modal-footer {
-            padding: 15px 20px;
-            border-top: 1px solid #e0e6ef;
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-        }
-
-        .btn-secondary {
-            background: #6c757d;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.3s;
-        }
-
-        .btn-secondary:hover {
-            background: #5a6268;
+            min-height: 80px;
         }
 
         /* File Upload */
         .file-upload {
-            border: 2px dashed #e0e6ef;
-            border-radius: 8px;
-            padding: 30px;
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s;
-            background: #f8f9fe;
+            transition: all 0.2s;
+            background: var(--off-white);
         }
 
         .file-upload:hover {
-            border-color: #4e73df;
-            background: #f0f3ff;
+            border-color: var(--primary-blue);
+            background: var(--light-blue);
         }
 
         .file-upload i {
-            font-size: 32px;
-            color: #6c757d;
-            margin-bottom: 10px;
+            font-size: 2rem;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
         }
 
-        .file-upload p {
-            margin: 0 0 5px 0;
-            color: #5a6c7d;
-            font-weight: 500;
-        }
-
-        .file-upload small {
-            color: #6c757d;
-            font-size: 11px;
-        }
-
-        /* File Preview */
         .file-preview {
-            margin-top: 15px;
+            margin-top: 1rem;
         }
 
         .file-item {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 10px;
-            background: #f8f9fe;
-            border-radius: 6px;
-            margin-bottom: 5px;
-        }
-
-        .file-item i {
-            font-size: 20px;
-            color: #e74a3b;
-        }
-
-        .file-info {
-            flex: 1;
-        }
-
-        .file-info p {
-            margin: 0;
-            font-size: 12px;
-            font-weight: 500;
-        }
-
-        .file-info small {
-            color: #6c757d;
-            font-size: 10px;
-        }
-
-        /* Activity List */
-        .activity-list {
-            padding: 10px 0;
-        }
-
-        .activity-item {
-            display: flex;
-            align-items: flex-start;
-            padding: 12px 0;
-            border-bottom: 1px solid #f0f0f0;
-            gap: 12px;
-        }
-
-        .activity-item:last-child {
-            border-bottom: none;
-        }
-
-        .activity-icon {
-            width: 32px;
-            height: 32px;
-            background: #f8f9fe;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .activity-content p {
-            margin: 0 0 4px 0;
-            font-size: 12px;
-        }
-
-        .activity-content small {
-            color: #7b8793;
-            font-size: 10px;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            background: var(--off-white);
+            border-radius: 8px;
+            border-left: 3px solid var(--primary-blue);
         }
 
         /* Alert List */
         .alert-list {
-            padding: 10px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
         }
 
         .alert-item {
             display: flex;
             align-items: center;
-            gap: 15px;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            animation: slideInRight 0.3s ease;
-        }
-
-        @keyframes slideInRight {
-            from { transform: translateX(20px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        .alert-item i {
-            font-size: 20px;
-        }
-
-        .alert-info {
-            flex: 1;
-        }
-
-        .alert-info h4 {
-            font-size: 12px;
-            margin-bottom: 3px;
-            font-weight: 600;
-        }
-
-        .alert-info p {
-            font-size: 11px;
-            color: #5a6c7d;
-            margin-bottom: 3px;
-        }
-
-        .alert-info small {
-            font-size: 10px;
-            color: #7b8793;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--off-white);
+            border-radius: 10px;
+            border-left: 4px solid;
         }
 
         .alert-warning {
-            background: #fff3cd;
-            border-left: 4px solid #f6c23e;
-            animation: shake 0.5s ease;
+            border-left-color: var(--warning);
         }
 
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
+        .alert-info {
+            border-left-color: var(--primary-blue);
         }
 
-        .alert-info-type {
-            background: #e8f4ff;
-            border-left: 4px solid #4e73df;
-        }
-
-        /* Badge */
-        .badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: #e74a3b;
-            color: white;
-            font-size: 10px;
-            font-weight: 700;
-            min-width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2px;
-            box-shadow: 0 2px 5px rgba(231, 74, 59, 0.3);
-            animation: pulse 1s infinite;
-        }
-
-        /* Toast Notification */
+        /* Toast */
         .toast {
             position: fixed;
-            top: 20px;
+            top: 100px;
             right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
             background: white;
-            border-radius: 8px;
-            padding: 12px 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            z-index: 3000;
+            box-shadow: var(--shadow-lg);
             display: flex;
             align-items: center;
-            gap: 10px;
-            transform: translateX(150%);
-            transition: transform 0.3s ease;
-            border-left: 4px solid #4e73df;
+            gap: 1rem;
+            z-index: 3000;
+            animation: slideIn 0.3s ease;
+            border-left: 4px solid;
         }
 
-        .toast.show {
-            transform: translateX(0);
+        .toast.success { border-left-color: var(--success); }
+        .toast.error { border-left-color: var(--danger); }
+        .toast.info { border-left-color: var(--primary-blue); }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
 
-        .toast i {
-            font-size: 18px;
-        }
-
-        .toast-success i { color: #1cc88a; }
-        .toast-error i { color: #e74a3b; }
-        .toast-info i { color: #4e73df; }
-        .toast-warning i { color: #f6c23e; }
-
-        .toast-content {
-            font-size: 12px;
-            font-weight: 500;
-        }
-
-        /* Loading Animation */
+        /* Loading */
         .loading {
             display: inline-block;
             width: 20px;
             height: 20px;
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #4e73df;
+            border: 2px solid rgba(255,255,255,0.3);
             border-radius: 50%;
-            animation: spin 1s linear infinite;
+            border-top-color: white;
+            animation: spin 0.8s linear infinite;
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            to { transform: rotate(360deg); }
         }
 
-        /* Contracts Gallery */
-        .contracts-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .contract-file {
-            background: white;
-            border-radius: 8px;
-            padding: 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .contract-file:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .contract-file i {
-            font-size: 32px;
-            color: #e74a3b;
-            margin-bottom: 10px;
-        }
-
-        .contract-file h4 {
-            font-size: 12px;
-            margin-bottom: 5px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .contract-file small {
-            color: #6c757d;
-            font-size: 10px;
-        }
-
-        /* Pagination */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            gap: 5px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
-
-        /* Responsive Design */
+        /* Responsive */
         @media (max-width: 1024px) {
-            .sidebar {
-                width: 200px;
-            }
-            
-            .main-content {
-                margin-left: 200px;
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
         @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
+            .animated-title-container {
+                display: none;
             }
             
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
+            .main-header {
+                padding: 0 1rem;
             }
             
-            .nav-menu {
-                display: flex;
-                overflow-x: auto;
-                padding: 10px;
-                gap: 5px;
-                flex-wrap: nowrap;
-            }
-            
-            .nav-menu li {
-                flex-shrink: 0;
-            }
-            
-            .nav-menu a {
-                padding: 8px 12px;
-                font-size: 11px;
+            .logo h2 {
+                display: none;
             }
             
             .main-content {
-                margin-left: 0;
-                padding: 15px;
+                padding: 1rem;
             }
             
-            .header {
+            .page-header {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 10px;
+                gap: 1rem;
             }
             
-            .header-right {
+            .header-actions {
                 width: 100%;
-                justify-content: space-between;
+                flex-wrap: wrap;
             }
             
-            .stats-overview {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .data-table {
-                display: block;
-                overflow-x: auto;
-            }
-            
-            .modal-content {
-                width: 95%;
-                margin: 10px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .stats-overview {
+            .stats-grid {
                 grid-template-columns: 1fr;
             }
             
             .form-row {
                 grid-template-columns: 1fr;
             }
-            
-            .modal-footer {
-                flex-direction: column;
+        }
+
+        @media (max-width: 576px) {
+            .logout-btn span {
+                display: none;
             }
             
-            .btn-success, .btn-secondary {
-                width: 100%;
+            .logout-btn {
+                padding: 0.6rem;
+                width: 40px;
+                height: 40px;
                 justify-content: center;
             }
             
-            .chart-actions {
+            .filter-tabs {
                 flex-direction: column;
-                align-items: stretch;
             }
             
-            .search-box input {
-                width: 100%;
+            .table-actions {
+                flex-direction: column;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Sidebar Navigation -->
-        <nav class="sidebar">
-            <div class="logo">
-                <h2><i class="fas fa-briefcase"></i> HR-Admin Pro</h2>
+    <!-- Modern Fixed Header -->
+    <header class="main-header">
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-briefcase"></i>
             </div>
-            <ul class="nav-menu">
-                <li><a href="../index.html"><i class="fas fa-home"></i> Dashboard</a></li>
-                <li><a href="training.html"><i class="fas fa-graduation-cap"></i> Training</a></li>
-                <li class="active"><a href="vendor-contracts.html"><i class="fas fa-file-contract"></i> Vendor Contracts</a></li>
-                <li><a href="hr-letters.html"><i class="fas fa-envelope"></i> HR Letters</a></li>
-                <li><a href="upcoming-events.html"><i class="fas fa-calendar-alt"></i> Upcoming Events</a></li>
-                <li><a href="task-centre.html"><i class="fas fa-tasks"></i> Task Centre</a></li>
-                <li><a href="employees.html"><i class="fas fa-users"></i> Employees</a></li>
-                <li><a href="reports.html"><i class="fas fa-chart-pie"></i> Reports</a></li>
-                <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
-            </ul>
-            <div class="user-profile">
-                <img src="https://ui-avatars.com/api/?name=Admin+User&background=667eea&color=fff" alt="User">
-                <div>
-                    <h4>Admin User</h4>
-                    <p>HR Manager</p>
+            <h2>HR-Admin Pro</h2>
+        </div>
+        
+        <div class="animated-title-container">
+            <div class="animated-title">Vendor Contracts | Manage Agreements & Renewals</div>
+        </div>
+        
+        <div class="header-right">
+            <!-- Menu Toggle Button for Sidebar -->
+            <div class="hamburger-menu" style="margin-right: 0.5rem;">
+                <div class="hamburger-btn" id="menuToggle" onclick="toggleSidebar()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </div>
             </div>
-        </nav>
-
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Header -->
-            <header class="header">
-                <div class="header-left">
-                    <h1>Vendor Contracts</h1>
-                    <p>Manage all vendor agreements, renewals, and documentation</p>
-                </div>
-                <div class="header-right">
-                    <button class="btn-primary" id="showContractModalBtn">
-                        <i class="fas fa-plus"></i> Add New Contract
-                        <span class="badge">3</span>
-                    </button>
-                    <button class="btn-secondary" id="showRenewalModalBtn">
-                        <i class="fas fa-bell"></i> Renewal Alerts
-                    </button>
-                </div>
-            </header>
-
-            <!-- Animated Stats Cards -->
-            <div class="stats-overview">
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-file-contract"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3>Total Contracts</h3>
-                        <h2 id="totalContracts">24</h2>
-                        <div class="stat-trend">
-                            <span class="positive">+3</span>
-                            <span>this quarter</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3>Active Contracts</h3>
-                        <h2 id="activeContracts">18</h2>
-                        <div class="stat-trend">
-                            <span>76% of total</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-exclamation-triangle"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3>Expiring Soon</h3>
-                        <h2 id="expiringContracts">5</h2>
-                        <div class="stat-trend">
-                            <span>Within 30 days</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-ban"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3>Terminated</h3>
-                        <h2 id="terminatedContracts">2</h2>
-                        <div class="stat-trend">
-                            <span>Requires review</span>
-                        </div>
-                    </div>
-                </div>
+            
+            <!-- Notifications -->
+            <div class="notifications" onclick="showToast('No new notifications', 'info')">
+                <i class="fas fa-bell"></i>
+                <span class="badge" id="notificationBadge">3</span>
             </div>
-
-            <!-- Contracts Table -->
-            <div class="content-card">
-                <div class="card-header">
-                    <h3><i class="fas fa-file-alt"></i> All Contracts</h3>
-                    <div class="chart-actions">
-                        <div class="search-box">
-                            <i class="fas fa-search"></i>
-                            <input type="text" id="searchContracts" placeholder="Search contracts..." onkeyup="searchContracts()">
-                        </div>
-                        <button class="btn-icon" onclick="exportToExcel()">
-                            <i class="fas fa-download"></i> Export
-                        </button>
-                        <button class="btn-icon" onclick="toggleGalleryView()">
-                            <i class="fas fa-th-large"></i> Gallery
-                        </button>
-                    </div>
+            
+            <!-- Logout Button -->
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </button>
+            
+            <!-- Hamburger Menu for Navigation Dropdown -->
+            <div class="hamburger-menu">
+                <div class="hamburger-btn" id="hamburgerBtn" onclick="toggleHamburger()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </div>
                 
-                <div class="filter-tabs">
-                    <button class="filter-btn active" onclick="filterByStatus('all')">All Contracts</button>
-                    <button class="filter-btn" onclick="filterByStatus('active')">Active</button>
-                    <button class="filter-btn" onclick="filterByStatus('pending')">Pending</button>
-                    <button class="filter-btn" onclick="filterByStatus('expiring')">Expiring Soon</button>
-                    <button class="filter-btn" onclick="filterByStatus('terminated')">Terminated</button>
-                </div>
-                
-                <!-- Table View -->
-                <div id="tableView">
-                    <table class="data-table" id="contractsTable">
-                        <thead>
-                            <tr>
-                                <th>Contract ID</th>
-                                <th>Vendor Name</th>
-                                <th>Contract Type</th>
-                                <th>Value (Ksh)</th>
-                                <th>Start Date</th>
-                                <th>End Date</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="contractsTableBody">
-                            <!-- Contracts will be populated by JavaScript -->
-                        </tbody>
-                    </table>
-                </div>
-                
-                <!-- Gallery View (Hidden by default) -->
-                <div id="galleryView" style="display: none;">
-                    <h4 style="margin-bottom: 15px; color: #5a6c7d; font-size: 13px;">
-                        <i class="fas fa-folder-open"></i> Contract Documents Gallery
-                    </h4>
-                    <div class="contracts-gallery" id="contractsGallery">
-                        <!-- Contract files will be populated by JavaScript -->
+                <!-- Navigation Dropdown -->
+                <div class="nav-dropdown" id="navDropdown">
+                    <div class="nav-grid">
+                        <a href="index.html" class="nav-item">
+                            <i class="fas fa-home"></i>
+                            <span>Dashboard</span>
+                        </a>
+                        <a href="task-centre.html" class="nav-item">
+                            <i class="fas fa-tasks"></i>
+                            <span>Task Centre</span>
+                        </a>
+                        <a href="training.html" class="nav-item">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span>Training</span>
+                        </a>
+                        <a href="vendor-contracts.html" class="nav-item active">
+                            <i class="fas fa-file-contract"></i>
+                            <span>Contracts</span>
+                        </a>
+                        <a href="hr-letters.html" class="nav-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>HR Letters</span>
+                        </a>
+                        <a href="upcoming-events.html" class="nav-item">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Events</span>
+                        </a>
+                        <a href="cost-analyzer.html" class="nav-item">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Cost Analyzer</span>
+                        </a>
+                        <a href="financial-hub.html" class="nav-item">
+                            <i class="fas fa-star"></i>
+                            <span>Financial Hub</span>
+                        </a>
+                        <a href="employees.html" class="nav-item">
+                            <i class="fas fa-users"></i>
+                            <span>Employees</span>
+                        </a>
+                        <a href="settings.html" class="nav-item">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
                     </div>
                 </div>
-                
-                <div class="pagination">
-                    <button class="btn-sm btn-secondary" onclick="prevPage()">
-                        <i class="fas fa-chevron-left"></i> Previous
-                    </button>
-                    <button class="btn-sm btn-primary">1</button>
-                    <button class="btn-sm btn-secondary">2</button>
-                    <button class="btn-sm btn-secondary">3</button>
-                    <button class="btn-sm btn-secondary" onclick="nextPage()">
-                        Next <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
             </div>
+        </div>
+    </header>
 
-            <!-- Recent Activity -->
-            <div class="content-card">
-                <div class="card-header">
-                    <h3><i class="fas fa-history"></i> Recent Contract Activity</h3>
-                    <button class="btn-icon" onclick="refreshActivity()">
-                        <i class="fas fa-sync-alt"></i> Refresh
-                    </button>
-                </div>
-                <div class="activity-list" id="activityList">
-                    <!-- Activity items will be populated by JavaScript -->
-                </div>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3><i class="fas fa-file-contract"></i> Contracts Menu</h3>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="index.html"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="task-centre.html"><i class="fas fa-tasks"></i> Task Centre</a></li>
+            <li><a href="training.html"><i class="fas fa-graduation-cap"></i> Training</a></li>
+            <li><a href="vendor-contracts.html" class="active"><i class="fas fa-file-contract"></i> Contracts</a></li>
+            <li><a href="hr-letters.html"><i class="fas fa-envelope"></i> HR Letters</a></li>
+            <li><a href="upcoming-events.html"><i class="fas fa-calendar-alt"></i> Events</a></li>
+            <li><a href="cost-analyzer.html"><i class="fas fa-chart-line"></i> Cost Analyzer</a></li>
+            <li><a href="financial-hub.html"><i class="fas fa-star"></i> Financial Hub</a></li>
+            <li><a href="employees.html"><i class="fas fa-users"></i> Employees</a></li>
+            <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <img src="https://ui-avatars.com/api/?name=Admin+User&background=1e40af&color=fff" alt="User">
+            <div>
+                <h4>Admin User</h4>
+                <p>HR Manager</p>
             </div>
-        </main>
+        </div>
     </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="header-content">
+                <h1>Vendor Contracts</h1>
+                <p>Manage all vendor agreements, renewals, and documentation</p>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-primary" id="showContractModalBtn">
+                    <i class="fas fa-plus"></i> Add New Contract
+                </button>
+                <button class="btn btn-secondary" id="showRenewalModalBtn">
+                    <i class="fas fa-bell"></i> Renewal Alerts
+                </button>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon blue"><i class="fas fa-file-contract"></i></div>
+                <div class="stat-info">
+                    <h3>Total Contracts</h3>
+                    <div class="stat-value" id="totalContracts">24</div>
+                    <div class="stat-trend trend-up">+3 this quarter</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon green"><i class="fas fa-check-circle"></i></div>
+                <div class="stat-info">
+                    <h3>Active Contracts</h3>
+                    <div class="stat-value" id="activeContracts">18</div>
+                    <div class="stat-trend">76% of total</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon yellow"><i class="fas fa-exclamation-triangle"></i></div>
+                <div class="stat-info">
+                    <h3>Expiring Soon</h3>
+                    <div class="stat-value" id="expiringContracts">5</div>
+                    <div class="stat-trend">Within 30 days</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon red"><i class="fas fa-ban"></i></div>
+                <div class="stat-info">
+                    <h3>Terminated</h3>
+                    <div class="stat-value" id="terminatedContracts">2</div>
+                    <div class="stat-trend">Requires review</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contracts Table -->
+        <div class="content-card">
+            <div class="card-header">
+                <h3><i class="fas fa-file-alt"></i> All Contracts</h3>
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchContracts" placeholder="Search contracts..." onkeyup="searchContracts()">
+                </div>
+            </div>
+            
+            <div class="filter-tabs">
+                <button class="filter-btn active" onclick="filterByStatus('all')">All Contracts</button>
+                <button class="filter-btn" onclick="filterByStatus('active')">Active</button>
+                <button class="filter-btn" onclick="filterByStatus('pending')">Pending</button>
+                <button class="filter-btn" onclick="filterByStatus('expiring')">Expiring Soon</button>
+                <button class="filter-btn" onclick="filterByStatus('terminated')">Terminated</button>
+            </div>
+            
+            <div style="overflow-x: auto;">
+                <table class="data-table" id="contractsTable">
+                    <thead>
+                        <tr>
+                            <th>Contract ID</th>
+                            <th>Vendor Name</th>
+                            <th>Contract Type</th>
+                            <th>Value (Ksh)</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="contractsTableBody">
+                        <!-- Contracts will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="content-card">
+            <div class="card-header">
+                <h3><i class="fas fa-history"></i> Recent Contract Activity</h3>
+                <button class="btn btn-outline btn-sm" onclick="refreshActivity()">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+            </div>
+            <div class="activity-list" id="activityList">
+                <!-- Activities will be populated here -->
+            </div>
+        </div>
+    </main>
 
     <!-- Add Contract Modal -->
     <div class="modal" id="contractModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3><i class="fas fa-file-contract"></i> New Vendor Contract</h3>
-                <button class="close-modal" id="closeContractModal">&times;</button>
+                <h3><i class="fas fa-plus-circle"></i> New Vendor Contract</h3>
+                <button class="modal-close" id="closeContractModal">&times;</button>
             </div>
             <div class="modal-body">
                 <form id="newContractForm">
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="contractName"><i class="fas fa-heading"></i> Contract Name *</label>
+                            <label>Contract Name</label>
                             <input type="text" id="contractName" class="form-control" placeholder="e.g., Office Supply Agreement" required>
                         </div>
                         <div class="form-group">
-                            <label for="vendorName"><i class="fas fa-building"></i> Vendor Name *</label>
+                            <label>Vendor Name</label>
                             <input type="text" id="vendorName" class="form-control" placeholder="e.g., ABC Supplies Inc." required>
                         </div>
                     </div>
-                    
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="contractValue"><i class="fas fa-money-bill-wave"></i> Contract Value (Ksh) *</label>
+                            <label>Contract Value (Ksh)</label>
                             <input type="number" id="contractValue" class="form-control" placeholder="e.g., 50000" required>
                         </div>
                         <div class="form-group">
-                            <label for="contractType"><i class="fas fa-tag"></i> Contract Type *</label>
+                            <label>Contract Type</label>
                             <select id="contractType" class="form-control" required>
                                 <option value="">Select Type</option>
                                 <option value="service">Service Agreement</option>
@@ -1307,77 +1355,38 @@
                                 <option value="consulting">Consulting</option>
                                 <option value="software">Software License</option>
                                 <option value="maintenance">Maintenance</option>
-                                <option value="other">Other</option>
                             </select>
                         </div>
                     </div>
-                    
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="startDate"><i class="fas fa-calendar-plus"></i> Start Date *</label>
+                            <label>Start Date</label>
                             <input type="date" id="startDate" class="form-control" required>
                         </div>
                         <div class="form-group">
-                            <label for="endDate"><i class="fas fa-calendar-minus"></i> End Date *</label>
+                            <label>End Date</label>
                             <input type="date" id="endDate" class="form-control" required>
                         </div>
-                        <div class="form-group">
-                            <label for="renewalDate"><i class="fas fa-redo"></i> Renewal Date</label>
-                            <input type="date" id="renewalDate" class="form-control">
-                        </div>
                     </div>
-                    
                     <div class="form-group">
-                        <label for="contractDescription"><i class="fas fa-align-left"></i> Contract Description</label>
+                        <label>Description</label>
                         <textarea id="contractDescription" class="form-control" rows="3" placeholder="Brief description of the contract terms..."></textarea>
                     </div>
-                    
                     <div class="form-group">
-                        <label><i class="fas fa-file-upload"></i> Contract Document Upload *</label>
-                        <div class="file-upload" onclick="triggerFileUpload('contractFile')">
-                            <i class="fas fa-file-pdf"></i>
+                        <label>Contract Document</label>
+                        <div class="file-upload" onclick="document.getElementById('contractFile').click()">
+                            <i class="fas fa-cloud-upload-alt"></i>
                             <p>Click to upload contract document</p>
-                            <small>PDF, DOC, DOCX up to 50MB</small>
+                            <small>PDF, DOC, DOCX (Max 10MB)</small>
                         </div>
-                        <input type="file" id="contractFile" style="display: none;" accept=".pdf,.doc,.docx" onchange="handleFileUpload(event)">
-                        <div class="file-preview" id="filePreview"></div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="responsiblePerson"><i class="fas fa-user-tie"></i> Responsible Person</label>
-                            <select id="responsiblePerson" class="form-control">
-                                <option value="">Select Person</option>
-                                <option value="john">John Doe (HR Manager)</option>
-                                <option value="jane">Jane Smith (Procurement)</option>
-                                <option value="mike">Mike Johnson (Operations)</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="contractStatus"><i class="fas fa-chart-line"></i> Status</label>
-                            <select id="contractStatus" class="form-control">
-                                <option value="active">Active</option>
-                                <option value="pending">Pending Review</option>
-                                <option value="draft">Draft</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>
-                            <input type="checkbox" id="sendEmailNotification" checked>
-                            <span style="margin-left: 5px; font-size: 12px;">Send email notification to responsible person</span>
-                        </label>
+                        <input type="file" id="contractFile" style="display: none;" accept=".pdf,.doc,.docx">
+                        <div id="filePreview" class="file-preview"></div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn-secondary" id="cancelContractBtn">
-                    <i class="fas fa-times"></i> Cancel
-                </button>
-                <button type="button" class="btn-success" id="saveContractBtn">
-                    <i class="fas fa-save"></i> Save Contract
-                </button>
+                <button class="btn btn-outline" id="cancelContractBtn">Cancel</button>
+                <button class="btn btn-primary" id="saveContractBtn">Save Contract</button>
             </div>
         </div>
     </div>
@@ -1387,456 +1396,79 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3><i class="fas fa-bell"></i> Contract Renewal Alerts</h3>
-                <button class="close-modal" id="closeRenewalModal">&times;</button>
+                <button class="modal-close" id="closeRenewalModal">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="alert-list" id="alertList">
-                    <!-- Alerts will be populated by JavaScript -->
+                    <!-- Alerts will be populated here -->
                 </div>
-                
-                <div style="margin-top: 20px; padding: 15px; background: #f8f9fe; border-radius: 8px;">
-                    <h4 style="margin-bottom: 10px; font-size: 13px;">
-                        <i class="fas fa-envelope"></i> Email Notification Settings
+                <div style="margin-top: 1.5rem; padding: 1rem; background: var(--light-blue); border-radius: 12px;">
+                    <h4 style="margin-bottom: 1rem; font-size: 0.9rem;">
+                        <i class="fas fa-envelope"></i> Notification Settings
                     </h4>
                     <div class="form-group">
-                        <label style="font-size: 12px;">
-                            <input type="checkbox" id="emailAlerts" checked>
-                            Send renewal alerts via email
-                        </label>
+                        <label><input type="checkbox" id="emailAlerts" checked> Send renewal alerts via email</label>
                     </div>
                     <div class="form-group">
-                        <label style="font-size: 12px;">
-                            <input type="checkbox" id="dailyDigest" checked>
-                            Send daily digest email
-                        </label>
+                        <label><input type="checkbox" id="dailyDigest" checked> Send daily digest email</label>
                     </div>
-                    <div class="form-group">
-                        <label style="font-size: 12px;">
-                            <input type="checkbox" id="autoRenewal" checked>
-                            Auto-renewal reminders (30 days before expiry)
-                        </label>
-                    </div>
-                    <button class="btn-sm btn-primary" onclick="saveEmailSettings()" style="margin-top: 10px;">
-                        <i class="fas fa-save"></i> Save Settings
-                    </button>
+                    <button class="btn btn-primary btn-sm" onclick="saveEmailSettings()">Save Settings</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Contracts Archive Modal -->
-    <div class="modal" id="archiveModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-archive"></i> Contract Documents Archive</h3>
-                <button class="close-modal" id="closeArchiveModal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="contracts-gallery" id="archiveGallery">
-                    <!-- Archived contracts will be populated by JavaScript -->
-                </div>
-                <div style="text-align: center; margin-top: 20px; color: #6c757d; font-size: 12px;">
-                    <i class="fas fa-info-circle"></i>
-                    <span>Click on any document to download or view</span>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- Toast Container -->
+    <div id="toastContainer"></div>
 
-    <!-- JavaScript -->
     <script>
         // Sample Data
-        const contracts = [
-            {
-                id: 1,
-                contractId: "CON-2024-001",
-                vendorName: "ABC Supplies Inc.",
-                contractType: "Supply Contract",
-                value: 50000,
-                startDate: "2024-01-15",
-                endDate: "2024-12-31",
-                renewalDate: "2024-12-15",
-                status: "active",
-                description: "Office supplies and stationery",
-                responsiblePerson: "John Doe",
-                fileUrl: "contract_001.pdf",
-                fileName: "ABC_Supplies_Agreement.pdf",
-                fileSize: "2.4 MB",
-                uploadedDate: "2024-01-10"
-            },
-            {
-                id: 2,
-                contractId: "CON-2023-045",
-                vendorName: "Tech Solutions Ltd.",
-                contractType: "Software License",
-                value: 25000,
-                startDate: "2023-07-01",
-                endDate: "2024-06-30",
-                renewalDate: "2024-06-15",
-                status: "expiring",
-                description: "Annual software license renewal",
-                responsiblePerson: "Jane Smith",
-                fileUrl: "contract_002.pdf",
-                fileName: "Tech_Solutions_License.pdf",
-                fileSize: "1.8 MB",
-                uploadedDate: "2023-06-25"
-            },
-            {
-                id: 3,
-                contractId: "CON-2024-056",
-                vendorName: "CleanPro Services",
-                contractType: "Service Agreement",
-                value: 15000,
-                startDate: "2024-03-01",
-                endDate: "2025-02-28",
-                renewalDate: "2025-02-15",
-                status: "pending",
-                description: "Office cleaning and maintenance",
-                responsiblePerson: "Mike Johnson",
-                fileUrl: "contract_003.pdf",
-                fileName: "CleanPro_Services_Agreement.pdf",
-                fileSize: "3.2 MB",
-                uploadedDate: "2024-02-25"
-            },
-            {
-                id: 4,
-                contractId: "CON-2024-012",
-                vendorName: "Office Furniture Co.",
-                contractType: "Supply Contract",
-                value: 35000,
-                startDate: "2024-02-01",
-                endDate: "2024-12-31",
-                renewalDate: "2024-12-15",
-                status: "active",
-                description: "Office furniture supply",
-                responsiblePerson: "John Doe",
-                fileUrl: "contract_004.pdf",
-                fileName: "Office_Furniture_Contract.pdf",
-                fileSize: "4.1 MB",
-                uploadedDate: "2024-01-28"
-            },
-            {
-                id: 5,
-                contractId: "CON-2023-028",
-                vendorName: "Security Systems Inc.",
-                contractType: "Maintenance",
-                value: 12000,
-                startDate: "2023-04-01",
-                endDate: "2024-03-31",
-                renewalDate: "2024-03-15",
-                status: "terminated",
-                description: "Security system maintenance",
-                responsiblePerson: "Jane Smith",
-                fileUrl: "contract_005.pdf",
-                fileName: "Security_Maintenance_Contract.pdf",
-                fileSize: "2.9 MB",
-                uploadedDate: "2023-03-25"
-            },
-            {
-                id: 6,
-                contractId: "CON-2024-078",
-                vendorName: "XYZ Technologies",
-                contractType: "Consulting",
-                value: 45000,
-                startDate: "2024-05-01",
-                endDate: "2025-04-30",
-                renewalDate: "2025-04-15",
-                status: "active",
-                description: "IT consulting services",
-                responsiblePerson: "Mike Johnson",
-                fileUrl: "contract_006.pdf",
-                fileName: "XYZ_Tech_Consulting.pdf",
-                fileSize: "5.2 MB",
-                uploadedDate: "2024-04-20"
-            }
+        const contractsData = [
+            { id: 1, contractId: "CON-2024-001", vendorName: "ABC Supplies Inc.", contractType: "Supply Contract", value: 50000, startDate: "2024-01-15", endDate: "2024-12-31", status: "active", description: "Office supplies and stationery" },
+            { id: 2, contractId: "CON-2023-045", vendorName: "Tech Solutions Ltd.", contractType: "Software License", value: 25000, startDate: "2023-07-01", endDate: "2024-06-30", status: "expiring", description: "Annual software license renewal" },
+            { id: 3, contractId: "CON-2024-056", vendorName: "CleanPro Services", contractType: "Service Agreement", value: 15000, startDate: "2024-03-01", endDate: "2025-02-28", status: "pending", description: "Office cleaning and maintenance" },
+            { id: 4, contractId: "CON-2024-012", vendorName: "Office Furniture Co.", contractType: "Supply Contract", value: 35000, startDate: "2024-02-01", endDate: "2024-12-31", status: "active", description: "Office furniture supply" },
+            { id: 5, contractId: "CON-2023-028", vendorName: "Security Systems Inc.", contractType: "Maintenance", value: 12000, startDate: "2023-04-01", endDate: "2024-03-31", status: "terminated", description: "Security system maintenance" }
         ];
 
-        const activities = [
-            {
-                id: 1,
-                type: "new",
-                title: "New contract added",
-                description: "Contract CON-2024-078 for XYZ Technologies",
-                user: "John Doe",
-                timestamp: "2 hours ago",
-                icon: "fa-file-signature",
-                color: "#4e73df"
-            },
-            {
-                id: 2,
-                type: "warning",
-                title: "Contract expiring soon",
-                description: "Contract CON-2023-045 expires in 15 days",
-                user: "System",
-                timestamp: "Yesterday, 4:30 PM",
-                icon: "fa-exclamation-triangle",
-                color: "#f6c23e"
-            },
-            {
-                id: 3,
-                type: "success",
-                title: "Contract renewal approved",
-                description: "Contract CON-2024-012 renewed successfully",
-                user: "Jane Smith",
-                timestamp: "Dec 5, 2024",
-                icon: "fa-check-circle",
-                color: "#1cc88a"
-            },
-            {
-                id: 4,
-                type: "info",
-                title: "Document uploaded",
-                description: "New contract file uploaded for CleanPro Services",
-                user: "Mike Johnson",
-                timestamp: "Dec 4, 2024",
-                icon: "fa-file-upload",
-                color: "#6c757d"
-            }
+        const activitiesData = [
+            { title: "New contract added", description: "Contract CON-2024-078 for XYZ Technologies", time: "2 hours ago", user: "John Doe" },
+            { title: "Contract expiring soon", description: "Contract CON-2023-045 expires in 15 days", time: "Yesterday", user: "System" },
+            { title: "Contract renewal approved", description: "Contract CON-2024-012 renewed successfully", time: "Dec 5, 2024", user: "Jane Smith" }
         ];
 
-        const alerts = [
-            {
-                id: 1,
-                type: "warning",
-                title: "Contract Expiring Soon",
-                description: "CON-2023-045 - Tech Solutions Ltd. expires in 15 days",
-                action: "Action Required",
-                daysLeft: 15
-            },
-            {
-                id: 2,
-                type: "info",
-                title: "Review Required",
-                description: "CON-2024-056 - CleanPro Services pending review",
-                action: "Due in 5 days",
-                daysLeft: 5
-            },
-            {
-                id: 3,
-                type: "warning",
-                title: "Renewal Due",
-                description: "CON-2024-001 - ABC Supplies Inc. renewal due in 30 days",
-                action: "Schedule meeting",
-                daysLeft: 30
-            }
+        const alertsData = [
+            { type: "warning", title: "Contract Expiring Soon", description: "CON-2023-045 - Tech Solutions Ltd. expires in 15 days", action: "Renew Now" },
+            { type: "info", title: "Review Required", description: "CON-2024-056 - CleanPro Services pending review", action: "Review" },
+            { type: "warning", title: "Renewal Due", description: "CON-2024-001 - ABC Supplies Inc. renewal due in 30 days", action: "Schedule" }
         ];
 
-        // Initialize Application
+        let activeModal = null;
+
+        // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            initializeVendorContracts();
-        });
-
-        function initializeVendorContracts() {
-            // Set default dates
-            const today = new Date();
-            const nextMonth = new Date();
-            nextMonth.setMonth(today.getMonth() + 1);
-            
-            document.getElementById('startDate').valueAsDate = today;
-            document.getElementById('endDate').valueAsDate = nextMonth;
-            document.getElementById('renewalDate').valueAsDate = nextMonth;
-            
-            // Load initial data
+            setCurrentDates();
             loadContracts();
             loadActivities();
             loadAlerts();
             updateStats();
-            
-            // Setup event listeners
             setupEventListeners();
-            
-            // Show welcome notification
-            setTimeout(() => {
-                showToast('Vendor Contracts loaded successfully!', 'success');
-            }, 1000);
-        }
+        });
 
-        function setupEventListeners() {
-            // Modal controls
-            document.getElementById('showContractModalBtn').addEventListener('click', showContractModal);
-            document.getElementById('closeContractModal').addEventListener('click', hideContractModal);
-            document.getElementById('cancelContractBtn').addEventListener('click', hideContractModal);
-            
-            document.getElementById('showRenewalModalBtn').addEventListener('click', showRenewalModal);
-            document.getElementById('closeRenewalModal').addEventListener('click', hideRenewalModal);
-            
-            // Form submission
-            document.getElementById('saveContractBtn').addEventListener('click', saveContract);
-            
-            // File upload
-            document.getElementById('contractFile').addEventListener('change', handleFileUpload);
-            
-            // Close modals on outside click
-            document.querySelectorAll('.modal').forEach(modal => {
-                modal.addEventListener('click', function(e) {
-                    if (e.target === this) {
-                        if (this.id === 'contractModal') hideContractModal();
-                        if (this.id === 'renewalModal') hideRenewalModal();
-                        if (this.id === 'archiveModal') hideArchiveModal();
-                    }
-                });
-            });
-            
-            // Keyboard shortcuts
-            document.addEventListener('keydown', function(e) {
-                if (e.ctrlKey && e.key === 'n') {
-                    e.preventDefault();
-                    showContractModal();
-                }
-                if (e.key === 'Escape') {
-                    hideContractModal();
-                    hideRenewalModal();
-                    hideArchiveModal();
-                }
-                if (e.ctrlKey && e.key === 'f') {
-                    e.preventDefault();
-                    document.getElementById('searchContracts').focus();
-                }
-            });
-            
-            // Show archive modal when clicking on badge
-            document.querySelector('.badge').addEventListener('click', showArchiveModal);
-        }
-
-        function showContractModal() {
-            document.getElementById('contractModal').style.display = 'flex';
-            document.getElementById('contractName').focus();
-        }
-
-        function hideContractModal() {
-            document.getElementById('contractModal').style.display = 'none';
-            document.getElementById('newContractForm').reset();
-            document.getElementById('filePreview').innerHTML = '';
-            
-            // Reset dates
+        function setCurrentDates() {
             const today = new Date();
             const nextMonth = new Date();
             nextMonth.setMonth(today.getMonth() + 1);
-            
             document.getElementById('startDate').valueAsDate = today;
             document.getElementById('endDate').valueAsDate = nextMonth;
-            document.getElementById('renewalDate').valueAsDate = nextMonth;
-        }
-
-        function showRenewalModal() {
-            document.getElementById('renewalModal').style.display = 'flex';
-        }
-
-        function hideRenewalModal() {
-            document.getElementById('renewalModal').style.display = 'none';
-        }
-
-        function showArchiveModal() {
-            loadArchiveGallery();
-            document.getElementById('archiveModal').style.display = 'flex';
-        }
-
-        function hideArchiveModal() {
-            document.getElementById('archiveModal').style.display = 'none';
-        }
-
-        function handleFileUpload(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const preview = document.getElementById('filePreview');
-                preview.innerHTML = `
-                    <div class="file-item">
-                        <i class="fas fa-file-pdf"></i>
-                        <div class="file-info">
-                            <p>${file.name}</p>
-                            <small>${(file.size / 1024 / 1024).toFixed(2)} MB</small>
-                        </div>
-                        <button type="button" onclick="removeFile()" class="btn-sm btn-danger">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                `;
-            }
-        }
-
-        function removeFile() {
-            document.getElementById('contractFile').value = '';
-            document.getElementById('filePreview').innerHTML = '';
-        }
-
-        function triggerFileUpload(inputId) {
-            document.getElementById(inputId).click();
-        }
-
-        function saveContract() {
-            const contractName = document.getElementById('contractName').value;
-            const vendorName = document.getElementById('vendorName').value;
-            const contractFile = document.getElementById('contractFile').files[0];
-            
-            if (!contractName || !vendorName || !contractFile) {
-                showToast('Please fill all required fields and upload a contract file', 'error');
-                return;
-            }
-            
-            // Create new contract object
-            const newContract = {
-                id: Date.now(),
-                contractId: `CON-${new Date().getFullYear()}-${String(contracts.length + 1).padStart(3, '0')}`,
-                vendorName: vendorName,
-                contractType: document.getElementById('contractType').value,
-                value: parseInt(document.getElementById('contractValue').value),
-                startDate: document.getElementById('startDate').value,
-                endDate: document.getElementById('endDate').value,
-                renewalDate: document.getElementById('renewalDate').value,
-                status: document.getElementById('contractStatus').value,
-                description: document.getElementById('contractDescription').value,
-                responsiblePerson: document.getElementById('responsiblePerson').value,
-                fileUrl: URL.createObjectURL(contractFile),
-                fileName: contractFile.name,
-                fileSize: `${(contractFile.size / 1024 / 1024).toFixed(2)} MB`,
-                uploadedDate: new Date().toISOString().split('T')[0]
-            };
-            
-            contracts.unshift(newContract);
-            loadContracts();
-            updateStats();
-            hideContractModal();
-            
-            // Add activity
-            const newActivity = {
-                id: Date.now(),
-                type: "new",
-                title: "New contract added",
-                description: `Contract ${newContract.contractId} for ${vendorName}`,
-                user: "Admin User",
-                timestamp: "Just now",
-                icon: "fa-file-signature",
-                color: "#4e73df"
-            };
-            activities.unshift(newActivity);
-            loadActivities();
-            
-            // Send email notification if checked
-            if (document.getElementById('sendEmailNotification').checked) {
-                sendEmailNotification(newContract);
-            }
-            
-            showToast(`Contract for ${vendorName} saved successfully!`, 'success');
-        }
-
-        function sendEmailNotification(contract) {
-            // Simulate email sending
-            console.log(`Email sent to ${contract.responsiblePerson}: New contract "${contract.contractId}" assigned`);
-            showToast('Email notification sent to responsible person', 'info');
         }
 
         function loadContracts() {
-            const tableBody = document.getElementById('contractsTableBody');
-            const gallery = document.getElementById('contractsGallery');
+            const tbody = document.getElementById('contractsTableBody');
+            tbody.innerHTML = '';
             
-            // Clear existing content
-            tableBody.innerHTML = '';
-            gallery.innerHTML = '';
-            
-            // Populate table
-            contracts.forEach(contract => {
+            contractsData.forEach(contract => {
                 const row = document.createElement('tr');
-                row.className = 'contract-row';
                 row.dataset.status = contract.status;
                 
                 row.innerHTML = `
@@ -1849,132 +1481,167 @@
                     <td><span class="status-badge status-${contract.status}">${getStatusText(contract.status)}</span></td>
                     <td>
                         <div class="table-actions">
-                            <button class="btn-sm btn-primary" onclick="editContract(${contract.id})" title="Edit">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button class="btn-sm btn-secondary" onclick="viewContract(${contract.id})" title="View">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                            <button class="btn-sm btn-danger" onclick="deleteContract(${contract.id})" title="Delete">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                            <button class="btn-sm" style="background: #6f42c1; color: white;" onclick="downloadContract(${contract.id})" title="Download">
-                                <i class="fas fa-download"></i>
-                            </button>
+                            <button class="btn btn-sm btn-primary" onclick="viewContract(${contract.id})"><i class="fas fa-eye"></i></button>
+                            <button class="btn btn-sm btn-outline" onclick="editContract(${contract.id})"><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-sm btn-outline" onclick="deleteContract(${contract.id})"><i class="fas fa-trash"></i></button>
                         </div>
                     </td>
                 `;
-                tableBody.appendChild(row);
-            });
-            
-            // Populate gallery
-            contracts.forEach(contract => {
-                const fileItem = document.createElement('div');
-                fileItem.className = 'contract-file';
-                fileItem.onclick = () => downloadContract(contract.id);
-                
-                fileItem.innerHTML = `
-                    <i class="fas fa-file-pdf"></i>
-                    <h4>${contract.fileName}</h4>
-                    <small>${contract.vendorName}</small>
-                    <br>
-                    <small style="color: #4e73df;">${contract.fileSize}</small>
-                `;
-                gallery.appendChild(fileItem);
-            });
-        }
-
-        function loadArchiveGallery() {
-            const archiveGallery = document.getElementById('archiveGallery');
-            archiveGallery.innerHTML = '';
-            
-            contracts.forEach(contract => {
-                const fileItem = document.createElement('div');
-                fileItem.className = 'contract-file';
-                fileItem.onclick = () => downloadContract(contract.id);
-                
-                fileItem.innerHTML = `
-                    <i class="fas fa-file-pdf"></i>
-                    <h4>${contract.contractId}</h4>
-                    <small>${contract.vendorName}</small>
-                    <br>
-                    <small>${formatDate(contract.uploadedDate)}</small>
-                `;
-                archiveGallery.appendChild(fileItem);
+                tbody.appendChild(row);
             });
         }
 
         function loadActivities() {
-            const activityList = document.getElementById('activityList');
-            activityList.innerHTML = '';
-            
-            activities.forEach(activity => {
-                const activityItem = document.createElement('div');
-                activityItem.className = 'activity-item';
-                
-                activityItem.innerHTML = `
-                    <div class="activity-icon">
-                        <i class="fas ${activity.icon}" style="color: ${activity.color};"></i>
-                    </div>
+            const container = document.getElementById('activityList');
+            container.innerHTML = activitiesData.map(activity => `
+                <div class="activity-item">
+                    <div class="activity-icon"><i class="fas fa-file-contract" style="color: var(--primary-blue);"></i></div>
                     <div class="activity-content">
                         <p><strong>${activity.title}</strong> - ${activity.description}</p>
-                        <small>${activity.timestamp} by ${activity.user}</small>
+                        <small>${activity.time} by ${activity.user}</small>
                     </div>
-                `;
-                activityList.appendChild(activityItem);
-            });
+                </div>
+            `).join('');
         }
 
         function loadAlerts() {
-            const alertList = document.getElementById('alertList');
-            alertList.innerHTML = '';
-            
-            alerts.forEach(alert => {
-                const alertItem = document.createElement('div');
-                alertItem.className = `alert-item alert-${alert.type === 'warning' ? 'warning' : 'info-type'}`;
-                
-                alertItem.innerHTML = `
-                    <i class="fas fa-${alert.type === 'warning' ? 'exclamation-circle' : 'info-circle'}"></i>
-                    <div class="alert-info">
-                        <h4>${alert.title}</h4>
-                        <p>${alert.description}</p>
-                        <small>${alert.action}</small>
+            const container = document.getElementById('alertList');
+            container.innerHTML = alertsData.map(alert => `
+                <div class="alert-item alert-${alert.type === 'warning' ? 'warning' : 'info'}">
+                    <i class="fas fa-${alert.type === 'warning' ? 'exclamation-triangle' : 'info-circle'}" style="color: ${alert.type === 'warning' ? 'var(--warning)' : 'var(--primary-blue)'};"></i>
+                    <div style="flex: 1;">
+                        <h4 style="font-size: 0.9rem; margin-bottom: 0.2rem;">${alert.title}</h4>
+                        <p style="font-size: 0.8rem; color: var(--text-secondary);">${alert.description}</p>
                     </div>
-                    <button class="btn-sm ${alert.type === 'warning' ? 'btn-primary' : 'btn-secondary'}" onclick="handleAlert(${alert.id})">
-                        ${alert.type === 'warning' ? 'Renew Now' : 'Review'}
-                    </button>
-                `;
-                alertList.appendChild(alertItem);
-            });
+                    <button class="btn btn-sm btn-primary" onclick="handleAlert('${alert.action}')">${alert.action}</button>
+                </div>
+            `).join('');
         }
 
         function updateStats() {
-            const total = contracts.length;
-            const active = contracts.filter(c => c.status === 'active').length;
-            const expiring = contracts.filter(c => c.status === 'expiring').length;
-            const terminated = contracts.filter(c => c.status === 'terminated').length;
+            const total = contractsData.length;
+            const active = contractsData.filter(c => c.status === 'active').length;
+            const expiring = contractsData.filter(c => c.status === 'expiring').length;
+            const terminated = contractsData.filter(c => c.status === 'terminated').length;
             
             document.getElementById('totalContracts').textContent = total;
             document.getElementById('activeContracts').textContent = active;
             document.getElementById('expiringContracts').textContent = expiring;
             document.getElementById('terminatedContracts').textContent = terminated;
+            document.getElementById('notificationBadge').textContent = expiring;
+        }
+
+        function setupEventListeners() {
+            document.getElementById('showContractModalBtn').onclick = () => showModal('contractModal');
+            document.getElementById('closeContractModal').onclick = () => closeModal('contractModal');
+            document.getElementById('cancelContractBtn').onclick = () => closeModal('contractModal');
+            document.getElementById('showRenewalModalBtn').onclick = () => showModal('renewalModal');
+            document.getElementById('closeRenewalModal').onclick = () => closeModal('renewalModal');
+            document.getElementById('saveContractBtn').onclick = saveContract;
+            document.getElementById('contractFile').onchange = handleFileUpload;
             
-            // Update badge
-            const badge = document.querySelector('.badge');
-            badge.textContent = expiring;
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && activeModal) closeModal(activeModal);
+            });
             
-            // Animate badge if there are expiring contracts
-            if (expiring > 0) {
-                badge.style.animation = 'pulse 1s infinite';
-            } else {
-                badge.style.animation = 'none';
+            document.addEventListener('click', function(e) {
+                const hamburgerBtn = document.getElementById('hamburgerBtn');
+                const navDropdown = document.getElementById('navDropdown');
+                if (hamburgerBtn && navDropdown && !hamburgerBtn.contains(e.target) && !navDropdown.contains(e.target)) {
+                    hamburgerBtn.classList.remove('active');
+                    navDropdown.classList.remove('active');
+                }
+            });
+        }
+
+        function showModal(modalId) {
+            if (activeModal) closeModal(activeModal);
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('active');
+                activeModal = modalId;
+                document.body.style.overflow = 'hidden';
+                closeSidebar();
             }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('active');
+                activeModal = null;
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function saveContract() {
+            const contractName = document.getElementById('contractName').value;
+            const vendorName = document.getElementById('vendorName').value;
+            
+            if (!contractName || !vendorName) {
+                showToast('Please fill all required fields', 'error');
+                return;
+            }
+            
+            showToast(`Contract "${contractName}" saved successfully!`, 'success');
+            closeModal('contractModal');
+            document.getElementById('newContractForm').reset();
+            document.getElementById('filePreview').innerHTML = '';
+            setCurrentDates();
+        }
+
+        function handleFileUpload(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const preview = document.getElementById('filePreview');
+                preview.innerHTML = `
+                    <div class="file-item">
+                        <i class="fas fa-file-pdf"></i>
+                        <div style="flex: 1;">
+                            <p style="font-weight: 500;">${file.name}</p>
+                            <small>${(file.size/1024/1024).toFixed(2)} MB</small>
+                        </div>
+                        <button onclick="this.parentElement.remove()" class="btn btn-sm btn-outline"><i class="fas fa-times"></i></button>
+                    </div>
+                `;
+            }
+        }
+
+        function viewContract(id) {
+            const contract = contractsData.find(c => c.id === id);
+            if (contract) {
+                showToast(`Viewing contract: ${contract.contractId}`, 'info');
+            }
+        }
+
+        function editContract(id) {
+            const contract = contractsData.find(c => c.id === id);
+            if (contract) {
+                showModal('contractModal');
+                document.getElementById('contractName').value = contract.description;
+                document.getElementById('vendorName').value = contract.vendorName;
+                document.getElementById('contractValue').value = contract.value;
+                showToast(`Editing contract: ${contract.contractId}`, 'info');
+            }
+        }
+
+        function deleteContract(id) {
+            if (confirm('Delete this contract?')) {
+                showToast('Contract deleted', 'success');
+            }
+        }
+
+        function handleAlert(action) {
+            showToast(`Processing: ${action}`, 'info');
+        }
+
+        function saveEmailSettings() {
+            showToast('Email settings saved!', 'success');
         }
 
         function searchContracts() {
             const searchTerm = document.getElementById('searchContracts').value.toLowerCase();
-            const rows = document.querySelectorAll('.contract-row');
-            
+            const rows = document.querySelectorAll('#contractsTableBody tr');
             rows.forEach(row => {
                 const text = row.textContent.toLowerCase();
                 row.style.display = text.includes(searchTerm) ? '' : 'none';
@@ -1982,11 +1649,9 @@
         }
 
         function filterByStatus(status) {
-            const rows = document.querySelectorAll('.contract-row');
-            const filterButtons = document.querySelectorAll('.filter-btn');
-            
-            // Update active filter button
-            filterButtons.forEach(btn => btn.classList.remove('active'));
+            const rows = document.querySelectorAll('#contractsTableBody tr');
+            const btns = document.querySelectorAll('.filter-btn');
+            btns.forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
             
             rows.forEach(row => {
@@ -1998,278 +1663,76 @@
             });
         }
 
-        function toggleGalleryView() {
-            const tableView = document.getElementById('tableView');
-            const galleryView = document.getElementById('galleryView');
-            const toggleBtn = event.target;
-            
-            if (tableView.style.display !== 'none') {
-                tableView.style.display = 'none';
-                galleryView.style.display = 'block';
-                toggleBtn.innerHTML = '<i class="fas fa-table"></i> Table';
-            } else {
-                tableView.style.display = 'block';
-                galleryView.style.display = 'none';
-                toggleBtn.innerHTML = '<i class="fas fa-th-large"></i> Gallery';
-            }
-        }
-
-        function editContract(id) {
-            const contract = contracts.find(c => c.id === id);
-            if (contract) {
-                showContractModal();
-                
-                // Populate form with contract data
-                document.getElementById('contractName').value = contract.description;
-                document.getElementById('vendorName').value = contract.vendorName;
-                document.getElementById('contractValue').value = contract.value;
-                document.getElementById('contractType').value = contract.contractType;
-                document.getElementById('startDate').value = contract.startDate;
-                document.getElementById('endDate').value = contract.endDate;
-                document.getElementById('renewalDate').value = contract.renewalDate;
-                document.getElementById('contractDescription').value = contract.description;
-                document.getElementById('responsiblePerson').value = contract.responsiblePerson;
-                document.getElementById('contractStatus').value = contract.status;
-                
-                showToast(`Editing contract ${contract.contractId}`, 'info');
-            }
-        }
-
-        function viewContract(id) {
-            const contract = contracts.find(c => c.id === id);
-            if (contract) {
-                // In a real app, this would open a modal with detailed view
-                const message = `
-                    Contract: ${contract.contractId}
-                    Vendor: ${contract.vendorName}
-                    Type: ${contract.contractType}
-                    Value: Ksh ${contract.value.toLocaleString()}
-                    Period: ${formatDate(contract.startDate)} to ${formatDate(contract.endDate)}
-                    Status: ${getStatusText(contract.status)}
-                    Responsible: ${contract.responsiblePerson}
-                    Description: ${contract.description}
-                `;
-                
-                // Create a preview modal
-                const previewModal = document.createElement('div');
-                previewModal.className = 'modal';
-                previewModal.style.display = 'flex';
-                previewModal.innerHTML = `
-                    <div class="modal-content" style="max-width: 500px;">
-                        <div class="modal-header">
-                            <h3><i class="fas fa-file-contract"></i> ${contract.contractId}</h3>
-                            <button class="close-modal" onclick="this.parentElement.parentElement.remove()">&times;</button>
-                        </div>
-                        <div class="modal-body">
-                            <div style="display: grid; gap: 10px;">
-                                <div><strong>Vendor:</strong> ${contract.vendorName}</div>
-                                <div><strong>Type:</strong> ${contract.contractType}</div>
-                                <div><strong>Value:</strong> Ksh ${contract.value.toLocaleString()}</div>
-                                <div><strong>Start Date:</strong> ${formatDate(contract.startDate)}</div>
-                                <div><strong>End Date:</strong> ${formatDate(contract.endDate)}</div>
-                                <div><strong>Renewal Date:</strong> ${formatDate(contract.renewalDate)}</div>
-                                <div><strong>Status:</strong> <span class="status-badge status-${contract.status}">${getStatusText(contract.status)}</span></div>
-                                <div><strong>Responsible:</strong> ${contract.responsiblePerson}</div>
-                                <div><strong>Description:</strong> ${contract.description}</div>
-                                <div><strong>File:</strong> ${contract.fileName} (${contract.fileSize})</div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn-secondary" onclick="this.parentElement.parentElement.parentElement.remove()">Close</button>
-                            <button class="btn-success" onclick="downloadContract(${contract.id})">
-                                <i class="fas fa-download"></i> Download PDF
-                            </button>
-                        </div>
-                    </div>
-                `;
-                document.body.appendChild(previewModal);
-            }
-        }
-
-        function deleteContract(id) {
-            if (confirm('Are you sure you want to delete this contract?')) {
-                const index = contracts.findIndex(c => c.id === id);
-                if (index > -1) {
-                    const contract = contracts[index];
-                    contracts.splice(index, 1);
-                    loadContracts();
-                    updateStats();
-                    showToast(`Contract ${contract.contractId} deleted successfully!`, 'success');
-                }
-            }
-        }
-
-        function downloadContract(id) {
-            const contract = contracts.find(c => c.id === id);
-            if (contract) {
-                // Simulate download
-                showToast(`Downloading ${contract.fileName}...`, 'info');
-                
-                // In a real app, this would trigger actual file download
-                const a = document.createElement('a');
-                a.href = contract.fileUrl;
-                a.download = contract.fileName;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                
-                // Add activity
-                const newActivity = {
-                    id: Date.now(),
-                    type: "info",
-                    title: "Document downloaded",
-                    description: contract.fileName,
-                    user: "Admin User",
-                    timestamp: "Just now",
-                    icon: "fa-download",
-                    color: "#6c757d"
-                };
-                activities.unshift(newActivity);
-                loadActivities();
-            }
-        }
-
-        function handleAlert(alertId) {
-            const alert = alerts.find(a => a.id === alertId);
-            if (alert) {
-                showToast(`Processing alert: ${alert.title}`, 'info');
-                
-                // Send email notification for renewal
-                if (alert.type === 'warning') {
-                    sendRenewalEmail(alert);
-                }
-                
-                // Remove alert after handling
-                const index = alerts.findIndex(a => a.id === alertId);
-                if (index > -1) {
-                    alerts.splice(index, 1);
-                    loadAlerts();
-                }
-            }
-        }
-
-        function sendRenewalEmail(alert) {
-            // Simulate sending renewal email
-            console.log(`Renewal email sent to admin: ${alert.description}`);
-            showToast(`Renewal email sent for ${alert.description}`, 'success');
-        }
-
-        function saveEmailSettings() {
-            const emailAlerts = document.getElementById('emailAlerts').checked;
-            const dailyDigest = document.getElementById('dailyDigest').checked;
-            const autoRenewal = document.getElementById('autoRenewal').checked;
-            
-            showToast('Email settings saved successfully!', 'success');
-            
-            // In a real app, save to localStorage or send to server
-            localStorage.setItem('emailSettings', JSON.stringify({
-                emailAlerts,
-                dailyDigest,
-                autoRenewal
-            }));
-        }
-
-        function exportToExcel() {
-            // Simulate export to Excel
-            showToast('Exporting contracts to Excel...', 'info');
-            
-            // In a real app, this would generate and download Excel file
-            setTimeout(() => {
-                showToast('Contracts exported successfully!', 'success');
-                
-                // Add activity
-                const newActivity = {
-                    id: Date.now(),
-                    type: "info",
-                    title: "Data exported",
-                    description: "All contracts exported to Excel",
-                    user: "Admin User",
-                    timestamp: "Just now",
-                    icon: "fa-file-export",
-                    color: "#1cc88a"
-                };
-                activities.unshift(newActivity);
-                loadActivities();
-            }, 1000);
-        }
-
         function refreshActivity() {
             const btn = event.target;
-            const originalHtml = btn.innerHTML;
-            
-            // Show loading state
             btn.innerHTML = '<div class="loading"></div>';
-            btn.disabled = true;
-            
-            // Simulate refresh
             setTimeout(() => {
                 loadActivities();
-                btn.innerHTML = originalHtml;
-                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh';
                 showToast('Activity refreshed!', 'success');
             }, 800);
         }
 
-        function prevPage() {
-            showToast('Loading previous page...', 'info');
+        // Sidebar Functions
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+            document.getElementById('overlay').classList.toggle('active');
+            document.getElementById('menuToggle').classList.toggle('active');
         }
 
-        function nextPage() {
-            showToast('Loading next page...', 'info');
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.remove('active');
+            document.getElementById('overlay').classList.remove('active');
+            document.getElementById('menuToggle').classList.remove('active');
+        }
+
+        function toggleHamburger() {
+            const btn = document.getElementById('hamburgerBtn');
+            const dropdown = document.getElementById('navDropdown');
+            btn.classList.toggle('active');
+            dropdown.classList.toggle('active');
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                showToast('Logging out...', 'info');
+                setTimeout(() => window.location.href = 'login.html', 1000);
+            }
         }
 
         // Utility Functions
         function formatDate(dateString) {
-            const options = { month: 'short', day: 'numeric', year: 'numeric' };
-            return new Date(dateString).toLocaleDateString('en-US', options);
+            return new Date(dateString).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
         }
 
         function getStatusText(status) {
-            const statusMap = {
-                'active': 'Active',
-                'pending': 'Pending Review',
-                'expiring': 'Expiring Soon',
-                'terminated': 'Terminated',
-                'draft': 'Draft'
-            };
-            return statusMap[status] || status;
+            const map = { active: 'Active', pending: 'Pending', expiring: 'Expiring Soon', terminated: 'Terminated' };
+            return map[status] || status;
         }
 
         function showToast(message, type = 'info') {
-            // Remove existing toasts
-            document.querySelectorAll('.toast').forEach(toast => toast.remove());
-            
-            // Create toast
+            const container = document.getElementById('toastContainer');
             const toast = document.createElement('div');
-            toast.className = `toast toast-${type}`;
-            toast.innerHTML = `
-                <i class="fas fa-${getToastIcon(type)}"></i>
-                <div class="toast-content">${message}</div>
-            `;
-            
-            document.body.appendChild(toast);
-            
-            // Show toast
-            setTimeout(() => toast.classList.add('show'), 10);
-            
-            // Remove after 3 seconds
-            setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i><span>${message}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
         }
 
-        function getToastIcon(type) {
-            switch(type) {
-                case 'success': return 'check-circle';
-                case 'error': return 'exclamation-circle';
-                case 'warning': return 'exclamation-triangle';
-                default: return 'info-circle';
-            }
-        }
-
-        // Initialize on load
-        window.addEventListener('load', initializeVendorContracts);
+        // Make functions global
+        window.toggleSidebar = toggleSidebar;
+        window.closeSidebar = closeSidebar;
+        window.toggleHamburger = toggleHamburger;
+        window.logout = logout;
+        window.viewContract = viewContract;
+        window.editContract = editContract;
+        window.deleteContract = deleteContract;
+        window.handleAlert = handleAlert;
+        window.filterByStatus = filterByStatus;
+        window.searchContracts = searchContracts;
+        window.refreshActivity = refreshActivity;
+        window.saveEmailSettings = saveEmailSettings;
+        window.showToast = showToast;
     </script>
 </body>
 </html>
