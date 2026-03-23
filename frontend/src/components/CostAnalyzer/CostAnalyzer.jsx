@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import api from '../../utils/api';
 import toast from 'react-hot-toast';
 import { 
-    ChartBarIcon,
     CurrencyDollarIcon,
-    ArrowTrendingUpIcon,
-    ArrowTrendingDownIcon,
+    ChartBarIcon,
+    ArrowUpIcon,        // ✅ replaces TrendingUpIcon
+    ArrowDownIcon,      // ✅ replaces TrendingDownIcon
     DocumentTextIcon,
     ArrowPathIcon,
-    DownloadIcon
+    ArrowDownTrayIcon
 } from '@heroicons/react/24/outline';
 
 const CostAnalyzer = () => {
