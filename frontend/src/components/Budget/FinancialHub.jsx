@@ -4,11 +4,11 @@ import toast from 'react-hot-toast';
 import { 
     CurrencyDollarIcon,
     ChartBarIcon,
-    TrendingUpIcon,
-    TrendingDownIcon,
+    ArrowUpIcon,        // ✅ replaces TrendingUpIcon
+    ArrowDownIcon,      // ✅ replaces TrendingDownIcon
     DocumentTextIcon,
     ArrowPathIcon,
-    ArrowDownTrayIcon  // ✅ Fixed: Correct icon name
+    ArrowDownTrayIcon
 } from '@heroicons/react/24/outline';
 
 const FinancialHub = () => {
