@@ -8,7 +8,7 @@ import {
     TrendingDownIcon,
     DocumentTextIcon,
     ArrowPathIcon,
-    DownloadIcon
+    ArrowDownTrayIcon  // ✅ Fixed: Correct icon name
 } from '@heroicons/react/24/outline';
 
 const FinancialHub = () => {
@@ -230,10 +230,16 @@ const FinancialHub = () => {
                 </div>
             </div>
 
-            {/* Export Button */}
+            {/* Export Button - Fixed with ArrowDownTrayIcon */}
             <div className="flex justify-end">
-                <button className="bg-primary-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-primary-700 transition-colors flex items-center gap-2">
-                    <DownloadIcon className="w-5 h-5" />
+                <button 
+                    onClick={() => {
+                        // Add your export logic here
+                        toast.success('Export functionality coming soon');
+                    }}
+                    className="bg-primary-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-primary-700 transition-colors flex items-center gap-2"
+                >
+                    <ArrowDownTrayIcon className="w-5 h-5" />
                     Export Report
                 </button>
             </div>
