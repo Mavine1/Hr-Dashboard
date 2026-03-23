@@ -5,10 +5,6 @@ import {
     CurrencyDollarIcon,
     ChartBarIcon,
     TrendingUpIcon,
-    TrendingDownIcon,
-    DocumentTextIcon,
-    ArrowPathIcon,
-    ArrowDownTrayIcon  // ✅ Fixed: Correct icon name
 } from '@heroicons/react/24/outline';
 
 const FinancialHub = () => {
