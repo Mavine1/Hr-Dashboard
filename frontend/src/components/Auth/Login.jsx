@@ -1,40 +1,36 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-// import { useAuth } from '../../context/AuthContext';
-// import { GoogleLogin } from '@react-oauth/google';
+import { useAuth } from '../../context/AuthContext';
+import { GoogleLogin } from '@react-oauth/google';
 import toast from 'react-hot-toast';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
-    // const { login, googleLogin } = useAuth();
+    const { login, googleLogin } = useAuth();
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        // const result = await login(email, password);
-        // setLoading(false);
-        // if (result.success) {
-        //     navigate('/dashboard');
-        // }
-        setTimeout(() => {
-            setLoading(false);
+        const result = await login(email, password);
+        setLoading(false);
+        if (result.success) {
             navigate('/dashboard');
-        }, 500);
+        }
     };
 
-    // const handleGoogleSuccess = async (credentialResponse) => {
-    //     const result = await googleLogin(credentialResponse);
-    //     if (result.success) {
-    //         navigate('/dashboard');
-    //     }
-    // };
+    const handleGoogleSuccess = async (credentialResponse) => {
+        const result = await googleLogin(credentialResponse);
+        if (result.success) {
+            navigate('/dashboard');
+        }
+    };
 
-    // const handleGoogleError = () => {
-    //     toast.error('Google login failed');
-    // };
+    const handleGoogleError = () => {
+        toast.error('Google login failed');
+    };
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 to-gray-100 py-12">
@@ -97,21 +93,17 @@ const Login = () => {
                     </div>
                 </div>
 
-                {/* Google Login — commented out until auth is wired up */}
-                {/* <div className="flex justify-center">
+                {/* Google Login */}
+                <div className="flex justify-center">
                     <GoogleLogin
                         onSuccess={handleGoogleSuccess}
                         onError={handleGoogleError}
                         useOneTap
                     />
-                </div> */}
-
-                <p className="text-center text-sm text-gray-500 mt-2">
-                    Demo mode — any credentials will work
-                </p>
+                </div>
 
                 {/* Register Link */}
-                <p className="text-center text-sm text-gray-600 mt-4">
+                <p className="text-center text-sm text-gray-600 mt-6">
                     Don't have an account?{' '}
                     <Link to="/register" className="text-primary-600 font-semibold hover:underline">
                         Sign up
