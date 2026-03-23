@@ -19,14 +19,12 @@ export default {
           800: '#1e40af',
           900: '#1e3a8a',
         },
-        red: {
-          500: '#ef4444',
-          600: '#dc2626',
-          700: '#b91c1c',
-        }
       },
       fontFamily: {
         'inter': ['Inter', 'system-ui', 'sans-serif'],
+      },
+      animation: {
+        'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
     },
   },
