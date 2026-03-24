@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Financial Budget Hub | HR Admin Pro | Persistent Data</title>
+    <title>Financial Budget Hub | HR Admin Pro | Dynamic Programs</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -113,48 +112,57 @@
         .notification.success { border-left-color: var(--success); }
         .notification.error { border-left-color: var(--danger); }
         .main-footer { background: white; border-top: 1px solid var(--border-color); padding: 1.5rem; text-align: center; color: var(--text-secondary); font-size: 0.9rem; }
-        @media (max-width:768px) { .main-content { padding: 1rem; } .charts-container { grid-template-columns: 1fr; } .animated-title-container { display: none; } .page-header { flex-direction: column; align-items: flex-start; } }
+        .delete-program-btn { background: none; border: none; color: var(--danger); cursor: pointer; padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; transition: 0.2s; }
+        .delete-program-btn:hover { background: var(--light-red); }
+        .add-program-hint { font-size: 0.8rem; color: var(--primary-blue); margin-top: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        @media (max-width:768px) { .main-content { padding: 1rem; } .charts-container { grid-template-columns: 1fr; } .animated-title-container { display: none; } }
     </style>
 </head>
 <body>
-    <header class="main-header"><div class="logo"><div class="logo-icon"><i class="fas fa-star"></i></div><h2>HR-Admin Pro</h2></div><div class="animated-title-container"><div class="animated-title">Financial Budget Hub | Cost Analysis | Real-time Tracking | Persistent Storage</div></div><div class="header-right"><div class="notifications" id="notificationsBtn"><i class="fas fa-bell"></i><span class="badge">3</span></div><button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i><span>Logout</span></button><div class="hamburger-menu"><div class="hamburger-btn" id="hamburgerBtn"><span></span><span></span><span></span></div><div class="nav-dropdown" id="navDropdown"><div class="nav-grid"><a href="#" class="nav-item"><i class="fas fa-home"></i><span>Dashboard</span></a><a href="#" class="nav-item"><i class="fas fa-tasks"></i><span>Task Centre</span></a><a href="#" class="nav-item active"><i class="fas fa-star"></i><span>Financial Hub</span></a><a href="#" class="nav-item"><i class="fas fa-users"></i><span>Employees</span></a></div></div></div></div></header>
+    <header class="main-header"><div class="logo"><div class="logo-icon"><i class="fas fa-star"></i></div><h2>HR-Admin Pro</h2></div><div class="animated-title-container"><div class="animated-title">Financial Budget Hub | Dynamic Programs | Real-time Tracking | Persistent Storage</div></div><div class="header-right"><div class="notifications" id="notificationsBtn"><i class="fas fa-bell"></i><span class="badge">3</span></div><button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i><span>Logout</span></button><div class="hamburger-menu"><div class="hamburger-btn" id="hamburgerBtn"><span></span><span></span><span></span></div><div class="nav-dropdown" id="navDropdown"><div class="nav-grid"><a href="#" class="nav-item"><i class="fas fa-home"></i><span>Dashboard</span></a><a href="#" class="nav-item"><i class="fas fa-tasks"></i><span>Task Centre</span></a><a href="#" class="nav-item active"><i class="fas fa-star"></i><span>Financial Hub</span></a><a href="#" class="nav-item"><i class="fas fa-users"></i><span>Employees</span></a></div></div></div></div></header>
     <main class="main-content">
-        <div class="page-header"><div class="header-content"><h1>Financial Budget Hub</h1><p>Track, edit, and save new budgets persistently</p></div><div class="header-actions"><select class="period-selector" id="periodSelect"><option value="q1">Q1 - Jan to Mar</option><option value="q2">Q2 - Apr to Jun</option><option value="q3">Q3 - Jul to Sep</option><option value="q4" selected>Q4 - Oct to Dec</option></select><div class="export-menu"><button class="btn btn-primary" id="exportBtn"><i class="fas fa-download"></i> Export</button><div class="export-options" id="exportOptions"><div class="export-option" data-format="excel"><i class="fas fa-file-excel"></i> Excel</div><div class="export-option" data-format="csv"><i class="fas fa-file-csv"></i> CSV</div></div></div><button class="btn btn-success" id="addBudgetBtn"><i class="fas fa-plus-circle"></i> Add Budget</button><button class="btn btn-outline" id="refreshDataBtn"><i class="fas fa-sync-alt"></i> Refresh</button></div></div>
-        <section class="cards-container"><div class="card"><div class="card-header"><h3 class="card-title">Total Budget</h3><div class="card-icon"><i class="fas fa-wallet"></i></div></div><div class="card-value" id="totalBudget">Ksh 0</div><div class="card-change positive"><i class="fas fa-chart-line"></i> Real-time</div></div><div class="card"><div class="card-header"><h3 class="card-title">Total Expenses</h3><div class="card-icon"><i class="fas fa-receipt"></i></div></div><div class="card-value" id="totalExpenses">Ksh 0</div></div><div class="card"><div class="card-header"><h3 class="card-title">Remaining Balance</h3><div class="card-icon"><i class="fas fa-piggy-bank"></i></div></div><div class="card-value" id="remainingBalance">Ksh 0</div></div><div class="card"><div class="card-header"><h3 class="card-title">Utilization Rate</h3><div class="card-icon"><i class="fas fa-chart-line"></i></div></div><div class="card-value" id="utilizationRate">0%</div><div class="progress-bar"><div class="progress-fill" id="utilProgressFill" style="width:0%; background-color:#1e40af;"></div></div></div></section>
+        <div class="page-header"><div class="header-content"><h1>Financial Budget Hub</h1><p>Add custom programs • Dynamic dashboard • Editable budgets & expenses</p></div><div class="header-actions"><select class="period-selector" id="periodSelect"><option value="q1">Q1 - Jan to Mar</option><option value="q2">Q2 - Apr to Jun</option><option value="q3">Q3 - Jul to Sep</option><option value="q4" selected>Q4 - Oct to Dec</option></select><div class="export-menu"><button class="btn btn-primary" id="exportBtn"><i class="fas fa-download"></i> Export</button><div class="export-options" id="exportOptions"><div class="export-option" data-format="excel"><i class="fas fa-file-excel"></i> Excel</div><div class="export-option" data-format="csv"><i class="fas fa-file-csv"></i> CSV</div></div></div><button class="btn btn-success" id="addBudgetBtn"><i class="fas fa-plus-circle"></i> Add Program / Budget</button><button class="btn btn-outline" id="refreshDataBtn"><i class="fas fa-sync-alt"></i> Refresh</button></div></div>
+        <section class="cards-container"><div class="card"><div class="card-header"><h3 class="card-title">Total Budget</h3><div class="card-icon"><i class="fas fa-wallet"></i></div></div><div class="card-value" id="totalBudget">Ksh 0</div></div><div class="card"><div class="card-header"><h3 class="card-title">Total Expenses</h3><div class="card-icon"><i class="fas fa-receipt"></i></div></div><div class="card-value" id="totalExpenses">Ksh 0</div></div><div class="card"><div class="card-header"><h3 class="card-title">Remaining Balance</h3><div class="card-icon"><i class="fas fa-piggy-bank"></i></div></div><div class="card-value" id="remainingBalance">Ksh 0</div></div><div class="card"><div class="card-header"><h3 class="card-title">Utilization Rate</h3><div class="card-icon"><i class="fas fa-chart-line"></i></div></div><div class="card-value" id="utilizationRate">0%</div><div class="progress-bar"><div class="progress-fill" id="utilProgressFill" style="width:0%; background-color:#1e40af;"></div></div></div></section>
         <section class="charts-container"><div class="chart-card"><div class="chart-header"><h3><i class="fas fa-chart-bar"></i> Budget vs Expenses by Program</h3></div><div class="chart-container"><canvas id="budgetVsExpenseChart"></canvas></div></div><div class="chart-card"><div class="chart-header"><h3><i class="fas fa-chart-line"></i> Quarterly Trend (Expenses)</h3></div><div class="chart-container"><canvas id="quarterlyTrendChart"></canvas></div></div></section>
-        <section class="data-table-container"><div class="table-header"><h3><i class="fas fa-table"></i> Program-wise Financial Analysis (Editable)</h3><span style="font-size:0.8rem; color:gray;"><i class="fas fa-pen"></i> Click on budget/expense cells to edit</span></div><table id="editableTable"><thead><tr><th>Program</th><th>Budget (Ksh)</th><th>Expenses (Ksh)</th><th>Variance</th><th>Utilization</th><th>Status</th></tr></thead><tbody id="tableBody"></tbody></table></section>
+        <section class="data-table-container"><div class="table-header"><h3><i class="fas fa-table"></i> Program-wise Financial Analysis</h3><span style="font-size:0.8rem; color:gray;"><i class="fas fa-pen"></i> Click budget/expense cells to edit | <i class="fas fa-trash"></i> Delete custom programs</span></div><table id="editableTable"><thead><tr><th>Program</th><th>Budget (Ksh)</th><th>Expenses (Ksh)</th><th>Variance</th><th>Utilization</th><th>Status</th><th style="width:60px">Action</th></tr></thead><tbody id="tableBody"></tbody></table></section>
     </main>
-    <footer class="main-footer"><div class="footer-content"><p>Financial Budget Hub &copy; 2026 | Persistent data storage (localStorage) | Changes auto-save</p><p>Last updated: <span id="lastUpdated">Today</span></p></div></footer>
-    <div class="modal" id="addBudgetModal"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-plus-circle"></i> Add New Budget Entry</h3><button class="modal-close" id="closeModalBtn">&times;</button></div><div class="modal-body"><form id="budgetForm"><div class="form-group"><label class="form-label">Program Type</label><select class="form-control" id="programType" required><option value="">Select</option><option value="training">Training Program</option><option value="events">Events Program</option><option value="extra">Extra Program</option></select></div><div class="form-group"><label class="form-label">Budget Name (optional)</label><input type="text" class="form-control" id="budgetName" placeholder="e.g., Q4 Special Initiative"></div><div class="form-group"><label class="form-label">Budget Amount (Ksh)</label><input type="number" class="form-control" id="budgetAmount" required min="0" step="1000"></div><div class="form-group"><label class="form-label">Expenses Amount (Ksh)</label><input type="number" class="form-control" id="expenseAmount" required min="0" step="1000" value="0"></div><div class="form-group"><label class="form-label">Quarter</label><select class="form-control" id="budgetQuarter"><option value="q1">Q1</option><option value="q2">Q2</option><option value="q3">Q3</option><option value="q4" selected>Q4</option></select></div></form></div><div class="modal-footer"><button class="btn btn-outline" id="cancelBudgetBtn">Cancel</button><button class="btn btn-primary" id="saveBudgetBtn">Save Budget</button></div></div></div>
+    <footer class="main-footer"><div class="footer-content"><p>Financial Budget Hub &copy; 2026 | Custom programs persist automatically | Changes auto-save</p><p>Last updated: <span id="lastUpdated">Today</span></p></div></footer>
+    <div class="modal" id="addBudgetModal"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-plus-circle"></i> Add New Program / Update Budget</h3><button class="modal-close" id="closeModalBtn">&times;</button></div><div class="modal-body"><form id="budgetForm"><div class="form-group"><label class="form-label">Program Name (NEW or Existing)</label><input type="text" class="form-control" id="programName" placeholder="e.g., Marketing, R&D, IT Infrastructure" required></div><div class="form-group"><label class="form-label">Quarter</label><select class="form-control" id="budgetQuarter"><option value="q1">Q1</option><option value="q2">Q2</option><option value="q3">Q3</option><option value="q4" selected>Q4</option></select></div><div class="form-group"><label class="form-label">Budget Amount (Ksh)</label><input type="number" class="form-control" id="budgetAmount" required min="0" step="1000" placeholder="0"></div><div class="form-group"><label class="form-label">Expenses Amount (Ksh)</label><input type="number" class="form-control" id="expenseAmount" required min="0" step="1000" placeholder="0"></div><div class="add-program-hint"><i class="fas fa-info-circle"></i> Enter a new program name to add it dynamically. Existing programs will be updated.</div></form></div><div class="modal-footer"><button class="btn btn-outline" id="cancelBudgetBtn">Cancel</button><button class="btn btn-primary" id="saveBudgetBtn">Save Program Budget</button></div></div></div>
     <div id="notificationContainer"></div>
     <script>
-        // ----- PERSISTENT DATA STRUCTURE -----
+        // ----- PERSISTENT DATA STRUCTURE (Supports dynamic programs) -----
+        // Default programs: training, events, extra (core)
         let financialData = {
             q1: { training: { budget: 200000, expenses: 185000 }, events: { budget: 140000, expenses: 135000 }, extra: { budget: 80000, expenses: 72000 } },
             q2: { training: { budget: 210000, expenses: 195000 }, events: { budget: 150000, expenses: 148000 }, extra: { budget: 85000, expenses: 79000 } },
             q3: { training: { budget: 220000, expenses: 205000 }, events: { budget: 160000, expenses: 155000 }, extra: { budget: 90000, expenses: 82000 } },
             q4: { training: { budget: 250000, expenses: 230500 }, events: { budget: 185000, expenses: 172000 }, extra: { budget: 107800, expenses: 84920 } }
         };
-        function loadFromLocalStorage() { const stored = localStorage.getItem('hr_financial_hub'); if(stored) { financialData = JSON.parse(stored); } else { saveToLocalStorage(); } }
-        function saveToLocalStorage() { localStorage.setItem('hr_financial_hub', JSON.stringify(financialData)); }
+        
+        function loadFromLocalStorage() { 
+            const stored = localStorage.getItem('hr_financial_hub_dynamic'); 
+            if(stored) { 
+                financialData = JSON.parse(stored); 
+                // Ensure all quarters exist
+                ['q1','q2','q3','q4'].forEach(q => { if(!financialData[q]) financialData[q] = {}; });
+            } else { 
+                saveToLocalStorage(); 
+            }
+        }
+        function saveToLocalStorage() { localStorage.setItem('hr_financial_hub_dynamic', JSON.stringify(financialData)); }
         loadFromLocalStorage();
 
         let currentPeriod = 'q4';
         let budgetVsExpenseChart, quarterlyTrendChart;
 
-        // Helper functions
         function numberWithCommas(x) { return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
         function showNotification(msg, type='info') { const cont = document.getElementById('notificationContainer'); if(!cont) return; const notif = document.createElement('div'); notif.className = `notification ${type}`; let icon = 'info-circle'; if(type==='success') icon='check-circle'; if(type==='error') icon='exclamation-circle'; notif.innerHTML = `<i class="fas fa-${icon}"></i><span>${msg}</span>`; cont.appendChild(notif); setTimeout(()=>notif.remove(), 3000); }
 
-        function updateAllUI() {
-            updateSummaryCards(currentPeriod);
-            updateFinancialTable(currentPeriod);
-            updateChartsForPeriod(currentPeriod);
-            updateLastUpdatedTime();
-        }
+        function getAllProgramsForPeriod(period) { return financialData[period] || {}; }
+        
         function updateSummaryCards(period) {
-            const data = financialData[period];
-            let totalBudget=0, totalExpenses=0;
+            const data = financialData[period] || {};
+            let totalBudget = 0, totalExpenses = 0;
             for(let prog in data) { totalBudget += data[prog].budget; totalExpenses += data[prog].expenses; }
             const remaining = totalBudget - totalExpenses;
             const util = totalBudget === 0 ? 0 : ((totalExpenses/totalBudget)*100).toFixed(1);
@@ -165,46 +173,53 @@
             const fill = document.getElementById('utilProgressFill');
             if(fill) { fill.style.width = `${util}%`; fill.style.backgroundColor = parseFloat(util) > 90 ? '#ef4444' : (parseFloat(util) > 75 ? '#f59e0b' : '#1e40af'); }
         }
+        
+        function getStatusColor(util) { if(util>95) return '#ef4444'; if(util>85) return '#f59e0b'; return '#1e40af'; }
+        
         function updateFinancialTable(period) {
-            const data = financialData[period];
+            const data = financialData[period] || {};
             const tbody = document.getElementById('tableBody');
             if(!tbody) return;
             tbody.innerHTML = '';
-            const programs = ['training','events','extra'];
-            programs.forEach(prog => {
+            const programNames = Object.keys(data).sort();
+            for(let prog of programNames) {
                 const progData = data[prog];
                 const variance = progData.budget - progData.expenses;
                 const utilization = progData.budget === 0 ? 0 : ((progData.expenses / progData.budget)*100).toFixed(1);
                 let statusClass = 'status-success', statusText = 'On Track';
                 if(utilization > 95) { statusClass = 'status-danger'; statusText = 'Over Budget'; }
                 else if(utilization > 85) { statusClass = 'status-warning'; statusText = 'Watch'; }
+                const isDeletable = !['training','events','extra'].includes(prog);
                 const row = document.createElement('tr');
                 row.setAttribute('data-program', prog);
                 row.innerHTML = `
-                    <td>${prog.charAt(0).toUpperCase() + prog.slice(1)} Program</td>
+                    <td><strong>${prog.charAt(0).toUpperCase() + prog.slice(1)}</strong></td>
                     <td class="editable-budget" contenteditable="true" data-field="budget">${numberWithCommas(progData.budget)}</td>
                     <td class="editable-expenses" contenteditable="true" data-field="expenses">${numberWithCommas(progData.expenses)}</td>
                     <td>Ksh ${numberWithCommas(variance)}</td>
                     <td><div style="display:flex; align-items:center; gap:8px;"><span>${utilization}%</span><div class="progress-bar" style="flex:1"><div class="progress-fill" style="width:${utilization}%; background-color:${getStatusColor(utilization)};"></div></div></div></td>
                     <td><span class="${statusClass}">${statusText}</span></td>
+                    <td>${isDeletable ? `<button class="delete-program-btn" data-prog="${prog}"><i class="fas fa-trash-alt"></i> Delete</button>` : '<span style="color:gray; font-size:12px;">Core</span>'}</td>
                 `;
                 tbody.appendChild(row);
-            });
+            }
             attachInlineEditors();
+            attachDeleteButtons();
         }
-        function getStatusColor(util) { if(util>95) return '#ef4444'; if(util>85) return '#f59e0b'; return '#1e40af'; }
+        
         function attachInlineEditors() {
             document.querySelectorAll('.editable-budget, .editable-expenses').forEach(cell => {
                 cell.removeEventListener('blur', handleInlineEdit);
                 cell.addEventListener('blur', handleInlineEdit);
             });
         }
+        
         function handleInlineEdit(e) {
             const cell = e.target;
             const rawValue = cell.innerText.replace(/,/g, '').trim();
             let newValue = parseInt(rawValue, 10);
             if(isNaN(newValue)) newValue = 0;
-            const field = cell.getAttribute('data-field'); // budget or expenses
+            const field = cell.getAttribute('data-field');
             const row = cell.closest('tr');
             const program = row.getAttribute('data-program');
             if(!program || !financialData[currentPeriod]?.[program]) return;
@@ -214,62 +229,134 @@
             updateAllUI();
             showNotification(`${program} ${field} updated to Ksh ${numberWithCommas(newValue)}`, 'success');
         }
+        
+        function attachDeleteButtons() {
+            document.querySelectorAll('.delete-program-btn').forEach(btn => {
+                btn.removeEventListener('click', handleDeleteProgram);
+                btn.addEventListener('click', handleDeleteProgram);
+            });
+        }
+        
+        function handleDeleteProgram(e) {
+            e.stopPropagation();
+            const prog = e.currentTarget.getAttribute('data-prog');
+            if(!prog || ['training','events','extra'].includes(prog)) return;
+            if(confirm(`Delete program "${prog}" and all its data for all quarters?`)) {
+                ['q1','q2','q3','q4'].forEach(q => {
+                    if(financialData[q] && financialData[q][prog]) delete financialData[q][prog];
+                });
+                saveToLocalStorage();
+                updateAllUI();
+                showNotification(`Program "${prog}" deleted successfully`, 'success');
+            }
+        }
+        
         function updateChartsForPeriod(period) {
-            const data = financialData[period];
+            const data = financialData[period] || {};
+            const programLabels = Object.keys(data);
+            const budgets = programLabels.map(p => data[p].budget);
+            const expenses = programLabels.map(p => data[p].expenses);
             if(budgetVsExpenseChart) {
-                budgetVsExpenseChart.data.datasets[0].data = [data.training.budget, data.events.budget, data.extra.budget];
-                budgetVsExpenseChart.data.datasets[1].data = [data.training.expenses, data.events.expenses, data.extra.expenses];
+                budgetVsExpenseChart.data.labels = programLabels.map(l => l.charAt(0).toUpperCase() + l.slice(1));
+                budgetVsExpenseChart.data.datasets[0].data = budgets;
+                budgetVsExpenseChart.data.datasets[1].data = expenses;
                 budgetVsExpenseChart.update();
             }
         }
-        function initializeCharts() {
-            const ctxBar = document.getElementById('budgetVsExpenseChart').getContext('2d');
-            const data = financialData.q4;
-            budgetVsExpenseChart = new Chart(ctxBar, { type:'bar', data:{ labels:['Training','Events','Extra'], datasets:[{ label:'Budget', data:[data.training.budget, data.events.budget, data.extra.budget], backgroundColor:'rgba(30,64,175,0.7)', borderColor:'#1e40af', borderWidth:1 },{ label:'Expenses', data:[data.training.expenses, data.events.expenses, data.extra.expenses], backgroundColor:'rgba(185,28,28,0.7)', borderColor:'#b91c1c' }] }, options:{ responsive:true, maintainAspectRatio:false, scales:{ y:{ ticks:{ callback:(val)=>'Ksh '+numberWithCommas(val) } } } } });
-            const ctxLine = document.getElementById('quarterlyTrendChart').getContext('2d');
-            quarterlyTrendChart = new Chart(ctxLine, { type:'line', data:{ labels:['Q1','Q2','Q3','Q4'], datasets:[{ label:'Training', data:[financialData.q1.training.expenses, financialData.q2.training.expenses, financialData.q3.training.expenses, financialData.q4.training.expenses], borderColor:'#1e40af', tension:0.3, fill:false },{ label:'Events', data:[financialData.q1.events.expenses, financialData.q2.events.expenses, financialData.q3.events.expenses, financialData.q4.events.expenses], borderColor:'#b91c1c', tension:0.3 },{ label:'Extra', data:[financialData.q1.extra.expenses, financialData.q2.extra.expenses, financialData.q3.extra.expenses, financialData.q4.extra.expenses], borderColor:'#3b82f6', tension:0.3 }] }, options:{ responsive:true, maintainAspectRatio:false, scales:{ y:{ ticks:{ callback:(val)=>'Ksh '+numberWithCommas(val) } } } } });
-        }
+        
         function updateFullTrendChart() {
-            if(quarterlyTrendChart) {
-                quarterlyTrendChart.data.datasets[0].data = [financialData.q1.training.expenses, financialData.q2.training.expenses, financialData.q3.training.expenses, financialData.q4.training.expenses];
-                quarterlyTrendChart.data.datasets[1].data = [financialData.q1.events.expenses, financialData.q2.events.expenses, financialData.q3.events.expenses, financialData.q4.events.expenses];
-                quarterlyTrendChart.data.datasets[2].data = [financialData.q1.extra.expenses, financialData.q2.extra.expenses, financialData.q3.extra.expenses, financialData.q4.extra.expenses];
-                quarterlyTrendChart.update();
-            }
+            if(!quarterlyTrendChart) return;
+            const allProgramsSet = new Set();
+            ['q1','q2','q3','q4'].forEach(q => { if(financialData[q]) Object.keys(financialData[q]).forEach(p => allProgramsSet.add(p)); });
+            const programs = Array.from(allProgramsSet);
+            const colors = ['#1e40af','#b91c1c','#3b82f6','#10b981','#f59e0b','#8b5cf6','#ec489a'];
+            const datasets = programs.map((prog, idx) => ({
+                label: prog.charAt(0).toUpperCase() + prog.slice(1),
+                data: ['q1','q2','q3','q4'].map(q => financialData[q]?.[prog]?.expenses || 0),
+                borderColor: colors[idx % colors.length],
+                backgroundColor: 'transparent',
+                borderWidth: 2,
+                tension: 0.2,
+                fill: false
+            }));
+            quarterlyTrendChart.data.datasets = datasets;
+            quarterlyTrendChart.update();
         }
+        
+        function initializeCharts() {
+            const data = financialData.q4 || {};
+            const ctxBar = document.getElementById('budgetVsExpenseChart').getContext('2d');
+            budgetVsExpenseChart = new Chart(ctxBar, { 
+                type:'bar', 
+                data:{ labels:Object.keys(data).map(l=>l.charAt(0).toUpperCase()+l.slice(1)), 
+                       datasets:[{ label:'Budget', data:Object.values(data).map(d=>d.budget), backgroundColor:'rgba(30,64,175,0.7)', borderColor:'#1e40af', borderWidth:1 },
+                                 { label:'Expenses', data:Object.values(data).map(d=>d.expenses), backgroundColor:'rgba(185,28,28,0.7)', borderColor:'#b91c1c' }] }, 
+                options:{ responsive:true, maintainAspectRatio:false, scales:{ y:{ ticks:{ callback:(val)=>'Ksh '+numberWithCommas(val) } } } } 
+            });
+            const ctxLine = document.getElementById('quarterlyTrendChart').getContext('2d');
+            quarterlyTrendChart = new Chart(ctxLine, { type:'line', data:{ labels:['Q1','Q2','Q3','Q4'], datasets:[] }, options:{ responsive:true, maintainAspectRatio:false, scales:{ y:{ ticks:{ callback:(val)=>'Ksh '+numberWithCommas(val) } } } } });
+            updateFullTrendChart();
+        }
+        
+        function updateAllUI() {
+            updateSummaryCards(currentPeriod);
+            updateFinancialTable(currentPeriod);
+            updateChartsForPeriod(currentPeriod);
+            updateFullTrendChart();
+            updateLastUpdatedTime();
+        }
+        
         function updateLastUpdatedTime() { const now = new Date(); document.getElementById('lastUpdated').innerText = now.toLocaleString(); }
-        function addNewBudgetEntry() {
-            const program = document.getElementById('programType').value;
+        
+        function addOrUpdateProgram() {
+            const programRaw = document.getElementById('programName').value.trim();
+            if(!programRaw) { showNotification('Please enter a program name', 'error'); return false; }
+            const programKey = programRaw.toLowerCase().replace(/\s+/g, '_');
+            const quarter = document.getElementById('budgetQuarter').value;
             const budgetAmount = parseFloat(document.getElementById('budgetAmount').value);
             const expenseAmount = parseFloat(document.getElementById('expenseAmount').value);
-            const quarter = document.getElementById('budgetQuarter').value;
-            if(!program || isNaN(budgetAmount) || budgetAmount<0 || isNaN(expenseAmount)) { showNotification('Please select program and enter valid numbers', 'error'); return false; }
-            if(!financialData[quarter]) financialData[quarter] = { training:{budget:0,expenses:0}, events:{budget:0,expenses:0}, extra:{budget:0,expenses:0} };
-            if(!financialData[quarter][program]) financialData[quarter][program] = { budget:0, expenses:0 };
-            financialData[quarter][program].budget = budgetAmount;
-            financialData[quarter][program].expenses = expenseAmount;
+            if(isNaN(budgetAmount) || budgetAmount<0 || isNaN(expenseAmount) || expenseAmount<0) { showNotification('Enter valid budget/expenses', 'error'); return false; }
+            if(!financialData[quarter]) financialData[quarter] = {};
+            if(!financialData[quarter][programKey]) financialData[quarter][programKey] = { budget:0, expenses:0 };
+            financialData[quarter][programKey].budget = budgetAmount;
+            financialData[quarter][programKey].expenses = expenseAmount;
             saveToLocalStorage();
             if(currentPeriod === quarter) updateAllUI();
-            else { updateSummaryCards(currentPeriod); updateFinancialTable(currentPeriod); updateChartsForPeriod(currentPeriod); }
-            updateFullTrendChart();
-            showNotification(`Added ${program} budget: Ksh ${numberWithCommas(budgetAmount)} for ${quarter.toUpperCase()}`, 'success');
+            else { updateSummaryCards(currentPeriod); updateFinancialTable(currentPeriod); updateChartsForPeriod(currentPeriod); updateFullTrendChart(); }
+            showNotification(`${programRaw} updated for ${quarter.toUpperCase()}: Budget Ksh ${numberWithCommas(budgetAmount)}`, 'success');
             return true;
         }
-        function generateExcel() { const data = financialData[currentPeriod]; const wsData = [['Program','Budget (Ksh)','Expenses (Ksh)','Variance','Utilization %','Status']]; for(let prog in data){ const d=data[prog]; const varian=d.budget-d.expenses; const util=((d.expenses/d.budget)*100).toFixed(1); let status=util>95?'Over Budget':(util>85?'Watch':'On Track'); wsData.push([prog.charAt(0).toUpperCase()+prog.slice(1), d.budget, d.expenses, varian, util, status]); } const wb=XLSX.utils.book_new(); const ws=XLSX.utils.aoa_to_sheet(wsData); XLSX.utils.book_append_sheet(wb,ws,'Budget'); XLSX.writeFile(wb,`budget_${currentPeriod}.xlsx`); showNotification('Excel exported','success'); }
-        function generateCSV(){ const data=financialData[currentPeriod]; let csv="Program,Budget,Expenses,Variance,Utilization%,Status\n"; for(let prog in data){ const d=data[prog]; const varian=d.budget-d.expenses; const util=((d.expenses/d.budget)*100).toFixed(1); let status=util>95?'Over Budget':(util>85?'Watch':'On Track'); csv+=`${prog},${d.budget},${d.expenses},${varian},${util},${status}\n`; } const blob=new Blob([csv],{type:'text/csv'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`budget_${currentPeriod}.csv`; a.click(); showNotification('CSV exported','success'); }
+        
+        function generateExcel() { 
+            const data = financialData[currentPeriod] || {};
+            const wsData = [['Program','Budget (Ksh)','Expenses (Ksh)','Variance','Utilization %','Status']];
+            for(let prog in data){ 
+                const d=data[prog]; const varian=d.budget-d.expenses; const util=((d.expenses/d.budget)*100).toFixed(1); 
+                let status=util>95?'Over Budget':(util>85?'Watch':'On Track'); 
+                wsData.push([prog, d.budget, d.expenses, varian, util, status]); 
+            } 
+            const wb=XLSX.utils.book_new(); const ws=XLSX.utils.aoa_to_sheet(wsData); XLSX.utils.book_append_sheet(wb,ws,'Budget'); XLSX.writeFile(wb,`budget_${currentPeriod}.xlsx`); showNotification('Excel exported','success'); 
+        }
+        function generateCSV(){ 
+            const data=financialData[currentPeriod] || {}; let csv="Program,Budget,Expenses,Variance,Utilization%,Status\n"; 
+            for(let prog in data){ const d=data[prog]; const varian=d.budget-d.expenses; const util=((d.expenses/d.budget)*100).toFixed(1); let status=util>95?'Over Budget':(util>85?'Watch':'On Track'); csv+=`${prog},${d.budget},${d.expenses},${varian},${util},${status}\n`; } 
+            const blob=new Blob([csv],{type:'text/csv'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`budget_${currentPeriod}.csv`; a.click(); showNotification('CSV exported','success'); 
+        }
+        
         function openModal(){ document.getElementById('addBudgetModal').classList.add('active'); document.body.style.overflow='hidden'; }
         function closeModal(){ document.getElementById('addBudgetModal').classList.remove('active'); document.body.style.overflow='auto'; document.getElementById('budgetForm').reset(); }
-        function refreshData(){ updateAllUI(); updateFullTrendChart(); showNotification('Data refreshed from storage','success'); }
-        let activeModal=false;
+        function refreshData(){ updateAllUI(); showNotification('Dashboard refreshed from persistent storage','success'); }
+        
+        let activeModalFlag = false;
         document.addEventListener('DOMContentLoaded',()=>{
-            initializeCharts(); updateAllUI(); updateFullTrendChart();
+            initializeCharts(); updateAllUI();
             document.getElementById('periodSelect').addEventListener('change',(e)=>{ currentPeriod=e.target.value; updateAllUI(); });
             document.getElementById('exportBtn').addEventListener('click',(e)=>{ e.stopPropagation(); document.getElementById('exportOptions').classList.toggle('show'); });
             document.querySelectorAll('.export-option').forEach(opt=>{ opt.addEventListener('click',()=>{ const fmt=opt.getAttribute('data-format'); if(fmt==='excel') generateExcel(); else if(fmt==='csv') generateCSV(); document.getElementById('exportOptions').classList.remove('show'); }); });
             document.getElementById('addBudgetBtn').addEventListener('click',openModal);
             document.getElementById('closeModalBtn').addEventListener('click',closeModal);
             document.getElementById('cancelBudgetBtn').addEventListener('click',closeModal);
-            document.getElementById('saveBudgetBtn').addEventListener('click',()=>{ if(addNewBudgetEntry()) closeModal(); });
+            document.getElementById('saveBudgetBtn').addEventListener('click',()=>{ if(addOrUpdateProgram()) closeModal(); });
             document.getElementById('refreshDataBtn').addEventListener('click',refreshData);
             document.getElementById('logoutBtn').addEventListener('click',()=>{ if(confirm('Logout?')) showNotification('Logged out (demo)','info'); });
             document.getElementById('notificationsBtn').addEventListener('click',()=>showNotification('All financial data synced','info'));
