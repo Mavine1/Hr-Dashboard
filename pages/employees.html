@@ -2,34 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Management | HR System</title>
-    <link rel="stylesheet" href="../css/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Zenith HR | Employee Management Suite</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-blue: #1e40af;
-            --secondary-blue: #3b82f6;
-            --light-blue: #dbeafe;
-            --sky-blue: #eff6ff;
-            --dark-blue: #1e3a8a;
-            --primary-red: #b91c1c;
-            --light-red: #fee2e2;
-            --soft-red: #fef2f2;
-            --pure-white: #ffffff;
-            --off-white: #f8fafc;
-            --light-gray: #e2e8f0;
-            --medium-gray: #94a3b8;
-            --dark-gray: #334155;
-            --text-primary: #0f172a;
-            --text-secondary: #475569;
-            --border-color: #e2e8f0;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
-            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
-        }
-
         * {
             margin: 0;
             padding: 0;
@@ -38,1742 +15,569 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: var(--off-white);
-            color: var(--text-primary);
+            background: #f1f5f9;
+            color: #0f172a;
             line-height: 1.5;
         }
 
-        /* Modern Fixed Header - Same as Index */
+        :root {
+            --primary: #0f3b7a;
+            --primary-dark: #0a2c5a;
+            --primary-light: #eef2ff;
+            --accent: #2c6e9e;
+            --success: #0e7b4e;
+            --warning: #b45309;
+            --danger: #b91c1c;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-500: #64748b;
+            --gray-700: #334155;
+            --shadow: 0 8px 20px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        /* Fixed Header */
         .main-header {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             height: 70px;
-            background: var(--pure-white);
-            border-bottom: 1px solid var(--border-color);
+            background: white;
+            border-bottom: 1px solid var(--gray-200);
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 2rem;
-            z-index: 1000;
-            box-shadow: var(--shadow-sm);
+            z-index: 100;
+            backdrop-filter: blur(4px);
+            background: rgba(255,255,255,0.96);
+            box-shadow: var(--shadow);
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 12px;
         }
-
         .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--primary-blue);
-            border-radius: 10px;
+            width: 38px;
+            height: 38px;
+            background: var(--primary);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 10px rgba(30, 64, 175, 0.2);
+            box-shadow: 0 6px 12px rgba(15,59,122,0.2);
         }
-
-        .logo-icon i {
-            color: white;
-            font-size: 1.2rem;
-        }
-
-        .logo h2 {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            letter-spacing: -0.01em;
-        }
+        .logo-icon i { color: white; font-size: 1.2rem; }
+        .logo h2 { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.3px; }
 
         .animated-title-container {
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
-            background: var(--light-blue);
-            padding: 0.4rem 1.5rem;
+            background: var(--primary-light);
+            padding: 0.3rem 1.5rem;
             border-radius: 40px;
-            border: 1px solid var(--primary-blue);
+            border: 1px solid var(--primary);
         }
-
         .animated-title {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 500;
-            color: var(--primary-blue);
+            color: var(--primary);
             white-space: nowrap;
-            animation: slideText 20s linear infinite;
+            animation: slideText 22s linear infinite;
         }
-
         @keyframes slideText {
-            0% { transform: translateX(100%); opacity: 0; }
+            0% { transform: translateX(30%); opacity: 0; }
             5% { transform: translateX(0); opacity: 1; }
-            95% { transform: translateX(0); opacity: 1; }
+            90% { transform: translateX(0); opacity: 1; }
             100% { transform: translateX(-100%); opacity: 0; }
         }
 
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
+        .header-right { display: flex; gap: 1rem; align-items: center; }
         .notifications {
-            position: relative;
-            width: 40px;
-            height: 40px;
+            width: 40px; height: 40px;
+            background: var(--gray-50);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: var(--off-white);
-            border-radius: 10px;
             cursor: pointer;
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--gray-200);
+            position: relative;
         }
-
-        .notifications:hover {
-            background: var(--light-blue);
-            border-color: var(--primary-blue);
-        }
-
-        .notifications i {
-            color: var(--primary-blue);
-            font-size: 1.1rem;
-        }
-
         .badge {
             position: absolute;
-            top: -4px;
-            right: -4px;
-            background: var(--primary-red);
+            top: -4px; right: -4px;
+            background: var(--danger);
             color: white;
-            width: 18px;
-            height: 18px;
+            width: 18px; height: 18px;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             font-weight: 600;
-            border: 2px solid white;
         }
-
         .logout-btn {
-            background: var(--primary-blue);
-            color: white;
+            background: var(--primary);
             border: none;
-            padding: 0.6rem 1.2rem;
+            padding: 0.5rem 1.2rem;
             border-radius: 10px;
-            font-size: 0.9rem;
+            color: white;
             font-weight: 500;
             display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            gap: 8px;
             cursor: pointer;
             transition: all 0.2s;
         }
-
-        .logout-btn:hover {
-            background: var(--dark-blue);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .hamburger-menu {
-            position: relative;
-        }
+        .logout-btn:hover { background: var(--primary-dark); transform: translateY(-1px); }
 
         .hamburger-btn {
-            width: 40px;
-            height: 40px;
-            background: var(--off-white);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
+            width: 40px; height: 40px;
+            background: var(--gray-50);
+            border: 1px solid var(--gray-200);
+            border-radius: 12px;
             display: flex;
             flex-direction: column;
+            gap: 4px;
             align-items: center;
             justify-content: center;
-            gap: 4px;
             cursor: pointer;
-            transition: all 0.2s;
         }
-
-        .hamburger-btn:hover {
-            background: var(--light-blue);
-            border-color: var(--primary-blue);
-        }
-
         .hamburger-btn span {
-            width: 18px;
-            height: 2px;
-            background: var(--primary-blue);
+            width: 18px; height: 2px;
+            background: var(--primary);
             border-radius: 2px;
-            transition: all 0.3s;
         }
-
-        .hamburger-btn.active span:nth-child(1) {
-            transform: rotate(45deg) translate(4px, 4px);
-        }
-
-        .hamburger-btn.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger-btn.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(4px, -4px);
-        }
-
-        /* Navigation Dropdown */
         .nav-dropdown {
             position: absolute;
-            top: 50px;
+            top: 55px;
             right: 0;
             width: 280px;
             background: white;
-            border-radius: 16px;
+            border-radius: 20px;
             padding: 1rem;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.2);
+            border: 1px solid var(--gray-200);
             opacity: 0;
             visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.3s;
-            z-index: 1000;
+            transform: translateY(-8px);
+            transition: all 0.2s;
+            z-index: 200;
         }
-
-        .nav-dropdown.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
+        .nav-dropdown.active { opacity: 1; visibility: visible; transform: translateY(0); }
         .nav-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.5rem;
+            grid-template-columns: repeat(2,1fr);
+            gap: 0.6rem;
         }
-
         .nav-item {
-            background: var(--off-white);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 1rem 0.5rem;
+            background: var(--gray-50);
+            border-radius: 12px;
+            padding: 0.7rem 0.3rem;
             text-align: center;
             cursor: pointer;
-            transition: all 0.2s;
             text-decoration: none;
-            color: var(--text-secondary);
+            transition: 0.2s;
         }
+        .nav-item i { color: var(--primary); font-size: 1.1rem; margin-bottom: 4px; display: block; }
+        .nav-item span { font-size: 0.7rem; font-weight: 500; color: var(--gray-700);}
+        .nav-item.active { background: var(--primary); }
+        .nav-item.active i, .nav-item.active span { color: white; }
 
-        .nav-item:hover {
-            background: var(--light-blue);
-            border-color: var(--primary-blue);
-            transform: translateY(-2px);
-        }
+        .main-content { margin-top: 90px; padding: 2rem; max-width: 1400px; margin-left: auto; margin-right: auto; }
 
-        .nav-item i {
-            font-size: 1.2rem;
-            color: var(--primary-blue);
-            margin-bottom: 0.3rem;
-            display: block;
-        }
-
-        .nav-item span {
-            font-size: 0.75rem;
-            font-weight: 500;
-            display: block;
-            line-height: 1.3;
-        }
-
-        .nav-item.active {
-            background: var(--primary-blue);
-            color: white;
-        }
-
-        .nav-item.active i {
-            color: white;
-        }
-
-        /* Main Content */
-        .main-content {
-            margin-top: 90px;
-            padding: 2rem;
-        }
-
-        /* Dashboard Header */
         .dashboard-header {
+            background: white;
+            border-radius: 24px;
+            padding: 1.5rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 2rem;
-            padding: 1.5rem 2rem;
-            background: var(--pure-white);
-            border-radius: 16px;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .header-content h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.3rem;
-        }
-
-        .header-content p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-
-        .header-actions {
-            display: flex;
+            border: 1px solid var(--gray-200);
+            flex-wrap: wrap;
             gap: 1rem;
         }
-
-        /* Buttons */
         .btn {
-            padding: 0.7rem 1.5rem;
-            border-radius: 10px;
-            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 12px;
             font-weight: 600;
-            font-size: 0.9rem;
+            border: none;
             cursor: pointer;
-            transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
-            gap: 0.6rem;
-            background: var(--pure-white);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
+            gap: 8px;
+            transition: 0.2s;
         }
-
-        .btn-primary {
-            background: var(--primary-blue);
-            color: white;
-            border: none;
-        }
-
-        .btn-primary:hover {
-            background: var(--dark-blue);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .btn-secondary {
-            background: var(--pure-white);
-            color: var(--primary-blue);
-            border: 1px solid var(--primary-blue);
-        }
-
-        .btn-secondary:hover {
-            background: var(--light-blue);
-            transform: translateY(-2px);
-        }
-
-        /* Dashboard Grid */
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-secondary { background: white; border: 1px solid var(--primary); color: var(--primary); }
         .dashboard-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
             gap: 1.5rem;
             margin-bottom: 2rem;
         }
-
         .dashboard-card {
-            background: var(--pure-white);
-            border-radius: 16px;
+            background: white;
+            border-radius: 20px;
             padding: 1.5rem;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-sm);
-            transition: all 0.2s ease;
+            border: 1px solid var(--gray-200);
+            transition: 0.2s;
             cursor: pointer;
         }
-
-        .dashboard-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--primary-blue);
-        }
-
         .card-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
+            width: 48px; height: 48px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            margin-bottom: 1.2rem;
-            color: white;
-        }
-
-        .card-icon.primary {
-            background: var(--primary-blue);
-        }
-
-        .card-icon.secondary {
-            background: var(--secondary-blue);
-        }
-
-        .card-icon.accent {
-            background: var(--primary-red);
-        }
-
-        .card-content h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .card-content p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
             margin-bottom: 1rem;
         }
-
-        .card-stats {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding-top: 1rem;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .card-stats .stat-value {
-            display: block;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-blue);
-        }
-
-        .card-stats .stat-label {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-        }
-
-        /* Action Cards */
+        .card-stats { display: flex; justify-content: space-between; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--gray-200);}
+        .stat-value { font-size: 1.6rem; font-weight: 700; color: var(--primary); }
         .action-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
             gap: 1rem;
             margin-bottom: 2rem;
         }
-
         .action-card {
-            background: var(--pure-white);
-            border-radius: 12px;
-            padding: 1.5rem;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-sm);
-            transition: all 0.2s ease;
-            cursor: pointer;
+            background: white;
+            border-radius: 16px;
+            padding: 1.2rem;
             text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
         }
-
-        .action-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--primary-blue);
-        }
-
-        .action-card i {
-            font-size: 2rem;
-            color: var(--primary-blue);
-            margin-bottom: 1rem;
-        }
-
-        .action-card h4 {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 0.3rem;
-        }
-
-        .action-card p {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
+        .action-card i { font-size: 1.8rem; color: var(--primary); margin-bottom: 0.5rem; }
 
         /* Modal */
         .modal {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
-            z-index: 2000;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
             align-items: center;
             justify-content: center;
-            padding: 1.5rem;
         }
-
-        .modal.active {
-            display: flex;
-        }
-
+        .modal.active { display: flex; }
         .modal-content {
-            background: var(--pure-white);
-            border-radius: 20px;
-            width: 100%;
-            max-width: 800px;
+            background: white;
+            border-radius: 28px;
+            width: 90%;
+            max-width: 850px;
             max-height: 85vh;
             overflow-y: auto;
-            box-shadow: var(--shadow-lg);
-            animation: modalSlideUp 0.3s ease;
+            box-shadow: 0 25px 40px rgba(0,0,0,0.2);
         }
-
-        @keyframes modalSlideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
         .modal-header {
-            padding: 1.5rem 2rem;
-            background: var(--light-blue);
-            border-bottom: 1px solid var(--border-color);
+            padding: 1.2rem 1.8rem;
+            border-bottom: 1px solid var(--gray-200);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background: var(--primary-light);
+            border-radius: 28px 28px 0 0;
         }
-
-        .modal-header h3 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--primary-blue);
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--primary-blue);
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-        }
-
-        .modal-close:hover {
-            background: var(--primary-red);
-            color: white;
-        }
-
-        .modal-body {
-            padding: 2rem;
-        }
-
-        /* Modal Tabs */
+        .modal-body { padding: 1.8rem; }
         .modal-tabs {
             display: flex;
             gap: 0.5rem;
+            background: var(--gray-100);
+            padding: 0.4rem;
+            border-radius: 60px;
             margin-bottom: 1.5rem;
-            background: var(--off-white);
-            padding: 0.5rem;
-            border-radius: 12px;
         }
-
         .modal-tab {
             flex: 1;
-            padding: 0.8rem;
+            padding: 0.6rem;
             border: none;
             background: transparent;
-            border-radius: 8px;
-            cursor: pointer;
+            border-radius: 40px;
             font-weight: 500;
-            color: var(--text-secondary);
-            transition: all 0.2s;
+            cursor: pointer;
         }
-
-        .modal-tab:hover {
-            background: var(--light-blue);
-            color: var(--primary-blue);
-        }
-
-        .modal-tab.active {
-            background: var(--pure-white);
-            color: var(--primary-blue);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .tab-panel {
-            display: none;
-        }
-
-        .tab-panel.active {
-            display: block;
-        }
-
-        /* Employee Grid */
+        .modal-tab.active { background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); color: var(--primary);}
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
         .employee-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(220px,1fr));
             gap: 1rem;
         }
-
         .employee-card {
-            background: var(--pure-white);
-            border-radius: 12px;
-            padding: 1.2rem;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-sm);
-            transition: all 0.2s;
-            cursor: pointer;
+            background: white;
+            border-radius: 18px;
+            padding: 1rem;
+            border: 1px solid var(--gray-200);
             text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
         }
-
-        .employee-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--primary-blue);
-        }
-
         .employee-avatar {
-            width: 70px;
-            height: 70px;
+            width: 70px; height: 70px;
             border-radius: 50%;
-            margin: 0 auto 1rem;
+            background: var(--primary);
+            margin: 0 auto 0.8rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            font-weight: 600;
             color: white;
-            background: var(--primary-blue);
+            font-weight: 700;
+            font-size: 1.3rem;
         }
-
-        .employee-info h4 {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 0.3rem;
-        }
-
-        .employee-info p {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            margin-bottom: 0.8rem;
-        }
-
-        .employee-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            justify-content: center;
-        }
-
-        .employee-tag {
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 500;
-            background: var(--light-blue);
-            color: var(--primary-blue);
-        }
-
-        .employee-tag.status {
-            background: var(--light-red);
-            color: var(--primary-red);
-        }
-
-        /* Form Elements */
-        .form-group {
-            margin-bottom: 1.2rem;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 0.4rem;
-            font-weight: 500;
-            font-size: 0.9rem;
-            color: var(--text-primary);
-        }
-
+        .form-group { margin-bottom: 1.2rem; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
         .form-control {
             width: 100%;
-            padding: 0.8rem 1rem;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            font-size: 0.95rem;
-            transition: all 0.2s;
-            background: var(--off-white);
+            padding: 0.75rem 1rem;
+            border-radius: 14px;
+            border: 1px solid var(--gray-200);
+            background: var(--gray-50);
         }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary-blue);
-            background: var(--pure-white);
-            box-shadow: 0 0 0 3px var(--light-blue);
-        }
-
-        .file-upload {
-            border: 2px dashed var(--border-color);
-            border-radius: 12px;
-            padding: 2rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            background: var(--off-white);
-        }
-
-        .file-upload:hover {
-            border-color: var(--primary-blue);
-            background: var(--light-blue);
-        }
-
-        .file-upload i {
-            font-size: 2rem;
-            color: var(--primary-blue);
-            margin-bottom: 0.5rem;
-        }
-
-        /* Notification */
         .notification {
             position: fixed;
-            top: 80px;
-            right: 20px;
-            padding: 1rem 1.5rem;
-            border-radius: 10px;
+            bottom: 24px;
+            right: 24px;
             background: white;
-            box-shadow: var(--shadow-lg);
+            padding: 0.8rem 1.4rem;
+            border-radius: 50px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
             display: flex;
             align-items: center;
-            gap: 1rem;
-            z-index: 2000;
-            animation: slideIn 0.3s ease;
-            border-left: 4px solid;
+            gap: 12px;
+            z-index: 1100;
+            border-left: 5px solid;
+            animation: slideUp 0.3s ease;
         }
-
-        .notification.success {
-            border-left-color: #10b981;
-        }
-
-        .notification.error {
-            border-left-color: var(--primary-red);
-        }
-
-        .notification.info {
-            border-left-color: var(--primary-blue);
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        /* Loading */
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 0.8s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .main-content {
-                padding: 1rem;
-            }
-            
-            .animated-title-container {
-                display: none;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .main-header {
-                padding: 0 1rem;
-            }
-            
-            .logo h2 {
-                display: none;
-            }
-            
-            .dashboard-header {
-                flex-direction: column;
-                gap: 1rem;
-                align-items: flex-start;
-            }
-            
-            .header-actions {
-                width: 100%;
-                flex-wrap: wrap;
-            }
-            
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-            
-            .employee-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .nav-dropdown {
-                width: 260px;
-                right: 10px;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .logout-btn span {
-                display: none;
-            }
-            
-            .logout-btn {
-                padding: 0.6rem;
-                width: 40px;
-                height: 40px;
-                justify-content: center;
-            }
+        @keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @media (max-width: 720px) {
+            .main-content { padding: 1rem; }
+            .animated-title-container { display: none; }
+            .form-row { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <!-- Modern Fixed Header - Same as Index -->
     <header class="main-header">
-        <div class="logo">
-            <div class="logo-icon">
-                <i class="fas fa-briefcase"></i>
-            </div>
-            <h2>HR-Admin Pro</h2>
-        </div>
-        
-        <div class="animated-title-container">
-            <div class="animated-title">Secure HR & Admin Management System | Employee Management | Real-time Analytics</div>
-        </div>
-        
+        <div class="logo"><div class="logo-icon"><i class="fas fa-chart-line"></i></div><h2>Zenith HR</h2></div>
+        <div class="animated-title-container"><div class="animated-title">⚡ Real-time Employee Management | Smart HR Analytics | Live Updates</div></div>
         <div class="header-right">
-            <!-- Notifications -->
-            <div class="notifications" onclick="showNotification('No new notifications', 'info')">
-                <i class="fas fa-bell"></i>
-                <span class="badge">3</span>
-            </div>
-            
-            <!-- Logout Button -->
-            <button class="logout-btn" onclick="logout()">
-                <i class="fas fa-sign-out-alt"></i>
-                <span>Logout</span>
-            </button>
-            
-            <!-- Hamburger Menu -->
-            <div class="hamburger-menu">
-                <div class="hamburger-btn" id="hamburgerBtn" onclick="toggleHamburger()">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-                
-                <!-- Navigation Dropdown -->
-                <div class="nav-dropdown" id="navDropdown">
-                    <div class="nav-grid">
-                        <a href="./dashboard.html" class="nav-item">
-                            <i class="fas fa-home"></i>
-                            <span>Dashboard</span>
-                        </a>
-                        <a href="task-centre.html" class="nav-item">
-                            <i class="fas fa-tasks"></i>
-                            <span>Task Centre</span>
-                        </a>
-                        <a href="training.html" class="nav-item">
-                            <i class="fas fa-graduation-cap"></i>
-                            <span>Training</span>
-                        </a>
-                        <a href="vendor-contracts.html" class="nav-item">
-                            <i class="fas fa-file-contract"></i>
-                            <span>Contracts</span>
-                        </a>
-                        <a href="hr-letters.html" class="nav-item">
-                            <i class="fas fa-envelope"></i>
-                            <span>HR Letters</span>
-                        </a>
-                        <a href="upcoming-events.html" class="nav-item">
-                            <i class="fas fa-calendar-alt"></i>
-                            <span>Events</span>
-                        </a>
-                        <a href="cost-analyzer.html" class="nav-item">
-                            <i class="fas fa-chart-line"></i>
-                            <span>Cost Analyzer</span>
-                        </a>
-                        <a href="financial-hub.html" class="nav-item">
-                            <i class="fas fa-star"></i>
-                            <span>Financial Hub</span>
-                        </a>
-                        <a href="employees.html" class="nav-item active">
-                            <i class="fas fa-users"></i>
-                            <span>Employees</span>
-                        </a>
-                        <a href="settings.html" class="nav-item">
-                            <i class="fas fa-cog"></i>
-                            <span>Settings</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
+            <div class="notifications" onclick="showNotifToast('✨ Welcome to HR Suite', 'info')"><i class="fas fa-bell"></i><span class="badge">4</span></div>
+            <button class="logout-btn" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i><span>Exit</span></button>
+            <div class="hamburger-menu"><div class="hamburger-btn" id="hamburgerBtn" onclick="toggleNav()"><span></span><span></span><span></span></div>
+            <div class="nav-dropdown" id="navDropdown"><div class="nav-grid" id="dynamicNav"></div></div></div>
         </div>
     </header>
-
-    <!-- Main Content -->
     <main class="main-content">
-        <!-- Dashboard Header -->
-        <div class="dashboard-header">
-            <div class="header-content">
-                <h1>Employee Management</h1>
-                <p>Manage your workforce efficiently</p>
-            </div>
-            <div class="header-actions">
-                <button class="btn btn-primary" onclick="showModal('addEmployeeModal')">
-                    <i class="fas fa-user-plus"></i> Add Employee
-                </button>
-                <button class="btn btn-secondary" onclick="showModal('bulkUploadModal')">
-                    <i class="fas fa-file-upload"></i> Bulk Upload
-                </button>
-            </div>
-        </div>
-
-        <!-- Dashboard Grid -->
+        <div class="dashboard-header"><div><h1>👥 Employee Management</h1><p>Manage workforce, track records & smart insights</p></div><div class="header-actions"><button class="btn btn-primary" onclick="openAddEmployeeModal()"><i class="fas fa-user-plus"></i> Add Employee</button><button class="btn btn-secondary" onclick="simulateBulk()"><i class="fas fa-file-upload"></i> Bulk Demo</button></div></div>
         <div class="dashboard-grid">
-            <div class="dashboard-card" onclick="showModal('employeeDirectoryModal')">
-                <div class="card-icon primary">
-                    <i class="fas fa-users"></i>
-                </div>
-                <div class="card-content">
-                    <h3>Total Employees</h3>
-                    <p>Active employees in organization</p>
-                </div>
-                <div class="card-stats">
-                    <div>
-                        <span class="stat-value" id="totalEmployees">0</span>
-                        <span class="stat-label">Active</span>
-                    </div>
-                    <div>
-                        <span class="stat-value" id="newHires">0</span>
-                        <span class="stat-label">New This Month</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="dashboard-card" onclick="showModal('departmentModal')">
-                <div class="card-icon secondary">
-                    <i class="fas fa-sitemap"></i>
-                </div>
-                <div class="card-content">
-                    <h3>Departments</h3>
-                    <p>Employee distribution by department</p>
-                </div>
-                <div class="card-stats">
-                    <div>
-                        <span class="stat-value" id="departmentsCount">0</span>
-                        <span class="stat-label">Departments</span>
-                    </div>
-                    <div>
-                        <span class="stat-value" id="largestDept">-</span>
-                        <span class="stat-label">Largest</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="dashboard-card" onclick="showModal('recentActivityModal')">
-                <div class="card-icon accent">
-                    <i class="fas fa-chart-line"></i>
-                </div>
-                <div class="card-content">
-                    <h3>Recent Activity</h3>
-                    <p>Latest employee updates</p>
-                </div>
-                <div class="card-stats">
-                    <div>
-                        <span class="stat-value" id="updatesToday">0</span>
-                        <span class="stat-label">Today</span>
-                    </div>
-                    <div>
-                        <span class="stat-value" id="pendingTasks">0</span>
-                        <span class="stat-label">Pending</span>
-                    </div>
-                </div>
-            </div>
+            <div class="dashboard-card" onclick="openDirectory()"><div class="card-icon" style="background:#eef2ff"><i class="fas fa-users" style="color:var(--primary)"></i></div><h3>Total Workforce</h3><div class="card-stats"><div><span class="stat-value" id="totalEmployeesStat">0</span><div>Active</div></div><div><span class="stat-value" id="newHiresStat">0</span><div>New Month</div></div></div></div>
+            <div class="dashboard-card" onclick="openDeptView()"><div class="card-icon" style="background:#eef2ff"><i class="fas fa-building"></i></div><h3>Departments</h3><div class="card-stats"><div><span class="stat-value" id="deptCount">0</span><div>Total</div></div><div><span class="stat-value" id="largestDeptLabel">-</span><div>Largest</div></div></div></div>
+            <div class="dashboard-card" onclick="openActivities()"><div class="card-icon" style="background:#eef2ff"><i class="fas fa-clock"></i></div><h3>Recent Activity</h3><div class="card-stats"><div><span class="stat-value" id="updatesToday">0</span><div>Today</div></div><div><span class="stat-value" id="pendingCount">0</span><div>Pending</div></div></div></div>
         </div>
-
-        <!-- Quick Action Cards -->
-        <div class="action-cards">
-            <div class="action-card" onclick="showModal('employeeDirectoryModal')">
-                <i class="fas fa-list"></i>
-                <h4>Employee Directory</h4>
-                <p>Browse all employees</p>
-            </div>
-            <div class="action-card" onclick="showModal('addEmployeeModal')">
-                <i class="fas fa-user-plus"></i>
-                <h4>Add Employee</h4>
-                <p>Add new employee</p>
-            </div>
-            <div class="action-card" onclick="showModal('bulkUploadModal')">
-                <i class="fas fa-file-import"></i>
-                <h4>Bulk Upload</h4>
-                <p>Import multiple employees</p>
-            </div>
-            <div class="action-card" onclick="showModal('reportsModal')">
-                <i class="fas fa-chart-bar"></i>
-                <h4>Reports</h4>
-                <p>Generate reports</p>
-            </div>
-        </div>
-
-        <!-- Birthdays Section -->
-        <div class="dashboard-card" onclick="showModal('birthdaysModal')">
-            <div class="card-content">
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
-                    <h3 style="margin: 0;">🎉 Upcoming Birthdays</h3>
-                    <span class="btn btn-secondary btn-sm" style="padding: 0.4rem 1rem;">View All</span>
-                </div>
-                <div id="birthdaysList">
-                    <!-- Birthdays will be loaded here -->
-                </div>
-            </div>
-        </div>
+        <div class="action-cards"><div class="action-card" onclick="openDirectory()"><i class="fas fa-address-card"></i><h4>Directory</h4><p>View all</p></div><div class="action-card" onclick="openAddEmployeeModal()"><i class="fas fa-user-plus"></i><h4>Quick Add</h4></div><div class="action-card" onclick="generateReportDemo()"><i class="fas fa-chart-simple"></i><h4>Reports</h4></div></div>
+        <div class="dashboard-card" onclick="openBirthdayModal()"><div style="display:flex; justify-content:space-between"><h3>🎂 Upcoming Birthdays</h3><span class="btn-secondary" style="padding:4px 12px">View all</span></div><div id="birthdaysPreview"></div></div>
     </main>
 
-    <!-- Employee Directory Modal -->
-    <div id="employeeDirectoryModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-users"></i> Employee Directory</h3>
-                <button class="modal-close" onclick="closeModal('employeeDirectoryModal')">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="modal-tabs">
-                    <button class="modal-tab active" onclick="switchTab('allEmployees', this)">All Employees</button>
-                    <button class="modal-tab" onclick="switchTab('activeEmployees', this)">Active</button>
-                    <button class="modal-tab" onclick="switchTab('managers', this)">Managers</button>
-                    <button class="modal-tab" onclick="switchTab('probation', this)">Probation</button>
-                </div>
-                
-                <div id="allEmployees" class="tab-panel active">
-                    <div style="margin-bottom: 1rem;">
-                        <input type="text" class="form-control" placeholder="Search employees..." onkeyup="searchEmployees(this.value)">
-                    </div>
-                    <div class="employee-grid" id="employeeDirectoryGrid">
-                        <!-- Employees will be loaded here -->
-                    </div>
-                </div>
-                
-                <div id="activeEmployees" class="tab-panel">
-                    <div class="employee-grid" id="activeEmployeesGrid"></div>
-                </div>
-                
-                <div id="managers" class="tab-panel">
-                    <div class="employee-grid" id="managersGrid"></div>
-                </div>
-                
-                <div id="probation" class="tab-panel">
-                    <div class="employee-grid" id="probationGrid"></div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- MODALS -->
+    <div id="employeeDirectoryModal" class="modal"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-users"></i> Employee Directory</h3><button class="modal-close" onclick="closeModal('employeeDirectoryModal')">&times;</button></div><div class="modal-body"><div class="modal-tabs"><button class="modal-tab active" onclick="switchDirectoryTab('all')">All</button><button class="modal-tab" onclick="switchDirectoryTab('active')">Active</button><button class="modal-tab" onclick="switchDirectoryTab('managers')">Managers</button></div><input type="text" class="form-control" placeholder="Search by name, email, dept..." id="searchInputDir" onkeyup="filterDirectory()"><div id="directoryGridContainer" class="employee-grid" style="margin-top:1rem"></div></div></div></div>
+    <div id="addEmployeeModal" class="modal"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-user-plus"></i> Register Employee</h3><button class="modal-close" onclick="closeModal('addEmployeeModal')">&times;</button></div><div class="modal-body"><form id="employeeForm"><div class="modal-tabs"><button type="button" class="modal-tab active" onclick="switchFormTab('personalTab')">Personal</button><button type="button" class="modal-tab" onclick="switchFormTab('jobTab')">Job</button><button type="button" class="modal-tab" onclick="switchFormTab('contactTab')">Contact</button></div><div id="personalTab" class="tab-panel active"><div class="form-group"><label>Full Name *</label><input class="form-control" id="empName" required></div><div class="form-row"><div><label>Email *</label><input class="form-control" id="empEmail" type="email"></div><div><label>Phone</label><input class="form-control" id="empPhone"></div></div><div><label>Date of Birth</label><input class="form-control" id="empDob" type="date"></div></div><div id="jobTab" class="tab-panel"><div class="form-row"><div><label>Department</label><select class="form-control" id="empDept"><option>IT</option><option>HR</option><option>Sales</option><option>Marketing</option><option>Finance</option></select></div><div><label>Position</label><input class="form-control" id="empPosition" placeholder="e.g. Senior Developer"></div></div><div class="form-row"><div><label>Employment Type</label><select class="form-control" id="empType"><option>Full Time</option><option>Part Time</option><option>Contract</option></select></div><div><label>Joining Date</label><input class="form-control" id="empJoining" type="date"></div></div><div><label>Status</label><select class="form-control" id="empStatus"><option value="active">Active</option><option value="probation">Probation</option><option value="inactive">Inactive</option></select></div></div><div id="contactTab" class="tab-panel"><div><label>Address</label><textarea class="form-control" id="empAddress" rows="2"></textarea></div><div class="form-row"><div><label>Emergency Contact</label><input class="form-control" id="empEmergency"></div><div><label>Relation</label><input class="form-control" id="empRelation"></div></div></div><div style="display:flex; gap:1rem; margin-top:1.5rem"><button type="submit" class="btn btn-primary" style="flex:1"><i class="fas fa-save"></i> Save Employee</button><button type="button" class="btn btn-secondary" onclick="closeModal('addEmployeeModal')">Cancel</button></div></form></div></div></div>
+    <div id="employeeDetailModal" class="modal"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-id-card"></i> Employee Profile</h3><button class="modal-close" onclick="closeModal('employeeDetailModal')">&times;</button></div><div class="modal-body" id="detailContent"></div></div></div>
+    <div id="birthdaysModal" class="modal"><div class="modal-content"><div class="modal-header"><h3>🎈 Celebrations</h3><button class="modal-close" onclick="closeModal('birthdaysModal')">&times;</button></div><div class="modal-body" id="fullBirthdayList"></div></div></div>
 
-    <!-- Add Employee Modal -->
-    <div id="addEmployeeModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-user-plus"></i> Add New Employee</h3>
-                <button class="modal-close" onclick="closeModal('addEmployeeModal')">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form id="addEmployeeForm">
-                    <div class="modal-tabs">
-                        <button type="button" class="modal-tab active" onclick="switchFormTab('personalInfo', this)">Personal</button>
-                        <button type="button" class="modal-tab" onclick="switchFormTab('employmentInfo', this)">Employment</button>
-                        <button type="button" class="modal-tab" onclick="switchFormTab('contactInfo', this)">Contact</button>
-                        <button type="button" class="modal-tab" onclick="switchFormTab('documents', this)">Documents</button>
-                    </div>
-                    
-                    <div id="personalInfo" class="tab-panel active">
-                        <div class="form-group">
-                            <label class="form-label">Full Name *</label>
-                            <input type="text" class="form-control" id="employeeName" required>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label">Email *</label>
-                                <input type="email" class="form-control" id="employeeEmail" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Phone *</label>
-                                <input type="tel" class="form-control" id="employeePhone" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Date of Birth</label>
-                            <input type="date" class="form-control" id="employeeDob">
-                        </div>
-                    </div>
-                    
-                    <div id="employmentInfo" class="tab-panel">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label">Department *</label>
-                                <select class="form-control" id="employeeDepartment" required>
-                                    <option value="">Select Department</option>
-                                    <option value="IT">Information Technology</option>
-                                    <option value="HR">Human Resources</option>
-                                    <option value="Sales">Sales</option>
-                                    <option value="Marketing">Marketing</option>
-                                    <option value="Finance">Finance</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Position *</label>
-                                <input type="text" class="form-control" id="employeePosition" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label">Employment Type</label>
-                                <select class="form-control" id="employeeType">
-                                    <option value="Full Time">Full Time</option>
-                                    <option value="Part Time">Part Time</option>
-                                    <option value="Contract">Contract</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Joining Date</label>
-                                <input type="date" class="form-control" id="employeeJoiningDate">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div id="contactInfo" class="tab-panel">
-                        <div class="form-group">
-                            <label class="form-label">Address</label>
-                            <textarea class="form-control" id="employeeAddress" rows="3"></textarea>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label">Emergency Contact</label>
-                                <input type="tel" class="form-control" id="employeeEmergency">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Relationship</label>
-                                <input type="text" class="form-control" id="employeeEmergencyRelation">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div id="documents" class="tab-panel">
-                        <div class="file-upload" onclick="document.getElementById('employeeDocs').click()">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <p>Click or drag files to upload</p>
-                            <small>PDF, DOC, JPG (Max 5MB)</small>
-                            <input type="file" id="employeeDocs" style="display: none;" multiple>
-                        </div>
-                        <div id="uploadedFiles" style="margin-top: 1rem;"></div>
-                    </div>
-                    
-                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                        <button type="submit" class="btn btn-primary" style="flex: 1;">
-                            <i class="fas fa-save"></i> Save Employee
-                        </button>
-                        <button type="button" class="btn btn-secondary" style="flex: 1;" onclick="closeModal('addEmployeeModal')">
-                            <i class="fas fa-times"></i> Cancel
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Bulk Upload Modal -->
-    <div id="bulkUploadModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-file-upload"></i> Bulk Employee Upload</h3>
-                <button class="modal-close" onclick="closeModal('bulkUploadModal')">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div style="text-align: center;">
-                    <div style="width: 80px; height: 80px; background: var(--light-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
-                        <i class="fas fa-file-excel" style="font-size: 2rem; color: var(--primary-blue);"></i>
-                    </div>
-                    <h3 style="margin-bottom: 1rem;">Upload Employee Data</h3>
-                    <p style="color: var(--text-secondary); margin-bottom: 2rem;">Upload an Excel or CSV file with employee information.</p>
-                    
-                    <div style="display: flex; gap: 1rem; justify-content: center; margin-bottom: 2rem;">
-                        <button class="btn btn-primary" onclick="downloadTemplate()">
-                            <i class="fas fa-download"></i> Download Template
-                        </button>
-                        <button class="btn btn-secondary" onclick="document.getElementById('bulkFile').click()">
-                            <i class="fas fa-file-upload"></i> Choose File
-                        </button>
-                    </div>
-                    
-                    <input type="file" id="bulkFile" style="display: none;" accept=".xlsx,.xls,.csv">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Department Modal -->
-    <div id="departmentModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-sitemap"></i> Department Overview</h3>
-                <button class="modal-close" onclick="closeModal('departmentModal')">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-                    <div style="background: var(--primary-blue); color: white; padding: 1.5rem; border-radius: 12px;">
-                        <h4 style="margin-bottom: 0.5rem;">IT</h4>
-                        <p style="opacity: 0.9;">32 Employees</p>
-                    </div>
-                    <div style="background: var(--secondary-blue); color: white; padding: 1.5rem; border-radius: 12px;">
-                        <h4 style="margin-bottom: 0.5rem;">HR</h4>
-                        <p style="opacity: 0.9;">15 Employees</p>
-                    </div>
-                    <div style="background: var(--dark-blue); color: white; padding: 1.5rem; border-radius: 12px;">
-                        <h4 style="margin-bottom: 0.5rem;">Sales</h4>
-                        <p style="opacity: 0.9;">28 Employees</p>
-                    </div>
-                    <div style="background: #2563eb; color: white; padding: 1.5rem; border-radius: 12px;">
-                        <h4 style="margin-bottom: 0.5rem;">Marketing</h4>
-                        <p style="opacity: 0.9;">18 Employees</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Reports Modal -->
-    <div id="reportsModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-chart-bar"></i> Reports</h3>
-                <button class="modal-close" onclick="closeModal('reportsModal')">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="employee-grid">
-                    <div class="employee-card" onclick="generateReport('attendance')">
-                        <div class="employee-avatar" style="background: var(--primary-blue);">
-                            <i class="fas fa-calendar-check"></i>
-                        </div>
-                        <div class="employee-info">
-                            <h4>Attendance</h4>
-                            <p>Monthly attendance</p>
-                        </div>
-                    </div>
-                    
-                    <div class="employee-card" onclick="generateReport('performance')">
-                        <div class="employee-avatar" style="background: var(--secondary-blue);">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <div class="employee-info">
-                            <h4>Performance</h4>
-                            <p>Performance metrics</p>
-                        </div>
-                    </div>
-                    
-                    <div class="employee-card" onclick="generateReport('salary')">
-                        <div class="employee-avatar" style="background: var(--dark-blue);">
-                            <i class="fas fa-money-bill-wave"></i>
-                        </div>
-                        <div class="employee-info">
-                            <h4>Salary</h4>
-                            <p>Payroll analysis</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Recent Activity Modal -->
-    <div id="recentActivityModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-history"></i> Recent Activity</h3>
-                <button class="modal-close" onclick="closeModal('recentActivityModal')">&times;</button>
-            </div>
-            <div class="modal-body" id="activityList">
-                <!-- Activity will be loaded here -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Birthdays Modal -->
-    <div id="birthdaysModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-birthday-cake"></i> Upcoming Birthdays</h3>
-                <button class="modal-close" onclick="closeModal('birthdaysModal')">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="employee-grid" id="birthdaysListModal"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Employee Detail Modal -->
-    <div id="employeeDetailModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-user"></i> Employee Details</h3>
-                <button class="modal-close" onclick="closeModal('employeeDetailModal')">&times;</button>
-            </div>
-            <div class="modal-body" id="employeeDetailContent"></div>
-        </div>
-    </div>
-
-    <!-- Notification Container -->
-    <div id="notificationContainer"></div>
-
+    <div id="toastRoot"></div>
     <script>
-        // Sample data
-        const employees = [
-            { id: 1, name: "John Doe", email: "john.doe@company.com", phone: "+254 712 345 678", department: "IT", position: "Senior Developer", status: "active" },
-            { id: 2, name: "Jane Smith", email: "jane.smith@company.com", phone: "+254 723 456 789", department: "HR", position: "HR Manager", status: "active" },
-            { id: 3, name: "Mike Johnson", email: "mike.johnson@company.com", phone: "+254 734 567 890", department: "Sales", position: "Sales Executive", status: "probation" },
-            { id: 4, name: "Sarah Williams", email: "sarah.williams@company.com", phone: "+254 745 678 901", department: "Marketing", position: "Marketing Specialist", status: "active" },
-            { id: 5, name: "David Brown", email: "david.brown@company.com", phone: "+254 756 789 012", department: "Finance", position: "Finance Director", status: "active" },
-            { id: 6, name: "Lisa Anderson", email: "lisa.anderson@company.com", phone: "+254 767 890 123", department: "IT", position: "DevOps Engineer", status: "active" }
-        ];
-
-        const birthdays = [
-            { name: "Michael Brown", date: "Tomorrow", department: "Finance" },
-            { name: "Lisa Anderson", date: "Mar 15", department: "IT" },
-            { name: "Robert Taylor", date: "Mar 20", department: "Sales" }
-        ];
-
-        const activities = [
-            { icon: "user-plus", text: "New employee added", detail: "John Doe joined IT", time: "2 hours ago" },
-            { icon: "user-check", text: "Status updated", detail: "Jane Smith completed probation", time: "Yesterday" },
-            { icon: "birthday-cake", text: "Birthday alert", detail: "Michael Brown tomorrow", time: "2 days ago" }
-        ];
-
-        let activeModal = null;
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            loadEmployeeDirectory();
-            loadBirthdays();
-            updateStats();
-            loadActivities();
-        });
-
-        // Hamburger menu
-        function toggleHamburger() {
-            const btn = document.getElementById('hamburgerBtn');
-            const dropdown = document.getElementById('navDropdown');
-            btn.classList.toggle('active');
-            dropdown.classList.toggle('active');
-        }
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(event) {
-            const btn = document.getElementById('hamburgerBtn');
-            const dropdown = document.getElementById('navDropdown');
-            if (!btn.contains(event.target) && !dropdown.contains(event.target)) {
-                btn.classList.remove('active');
-                dropdown.classList.remove('active');
+        // ---------- DATA (persistent via localStorage) ----------
+        let employeesDB = [];
+        let nextId = 7;
+        const STORAGE_KEY = "zenith_hr_employees";
+        
+        function loadFromStorage() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if(stored) {
+                employeesDB = JSON.parse(stored);
+                nextId = Math.max(...employeesDB.map(e=>e.id), 0) + 1;
+            } else {
+                employeesDB = [
+                    { id:1, name:"John Doe", email:"john.d@company.com", phone:"+254712345678", department:"IT", position:"Senior Developer", type:"Full Time", joining:"2023-01-10", status:"active", dob:"1985-04-12", address:"Nairobi", emergency:"+254700111222", relation:"Spouse" },
+                    { id:2, name:"Jane Smith", email:"jane.s@company.com", phone:"+254723456789", department:"HR", position:"HR Manager", type:"Full Time", joining:"2022-05-20", status:"active", dob:"1990-07-23", address:"Kiambu", emergency:"+254722333444", relation:"Brother" },
+                    { id:3, name:"Mike Johnson", email:"mike.j@company.com", phone:"+254734567890", department:"Sales", position:"Sales Executive", type:"Full Time", joining:"2024-01-15", status:"probation", dob:"1992-11-02", address:"Mombasa", emergency:"+254711222333", relation:"Father" },
+                    { id:4, name:"Sarah Williams", email:"sarah.w@company.com", phone:"+254745678901", department:"Marketing", position:"Marketing Lead", type:"Full Time", joining:"2021-09-01", status:"active", dob:"1988-03-09", address:"Nakuru", emergency:"+254733445566", relation:"Sister" },
+                    { id:5, name:"David Brown", email:"david.b@company.com", phone:"+254756789012", department:"Finance", position:"Finance Director", type:"Full Time", joining:"2020-11-12", status:"active", dob:"1979-12-19", address:"Eldoret", emergency:"+254744556677", relation:"Wife" },
+                    { id:6, name:"Lisa Anderson", email:"lisa.a@company.com", phone:"+254767890123", department:"IT", position:"DevOps Engineer", type:"Contract", joining:"2023-08-01", status:"active", dob:"1995-05-25", address:"Thika", emergency:"+254755667788", relation:"Mother" }
+                ];
+                nextId = 7;
+                saveToStorage();
             }
-        });
+            updateDashboardStats();
+        }
+        function saveToStorage() { localStorage.setItem(STORAGE_KEY, JSON.stringify(employeesDB)); updateDashboardStats(); }
 
-        // Logout
-        function logout() {
-            if (confirm('Are you sure you want to logout?')) {
-                showNotification('Logging out...', 'info');
-                setTimeout(() => {
-                    window.location.href = 'login.html';
-                }, 1000);
-            }
+        // helpers
+        function updateDashboardStats() {
+            const activeCount = employeesDB.filter(e=>e.status==='active').length;
+            document.getElementById('totalEmployeesStat').innerText = employeesDB.length;
+            const newThisMonth = employeesDB.filter(e => {
+                if(!e.joining) return false;
+                const joinMonth = new Date(e.joining).getMonth();
+                const currentMonth = new Date().getMonth();
+                return joinMonth === currentMonth;
+            }).length;
+            document.getElementById('newHiresStat').innerText = newThisMonth;
+            const depts = [...new Set(employeesDB.map(e=>e.department))];
+            document.getElementById('deptCount').innerText = depts.length;
+            let deptCounts = {};
+            employeesDB.forEach(e=>{ deptCounts[e.department] = (deptCounts[e.department]||0)+1; });
+            let largest = Object.entries(deptCounts).sort((a,b)=>b[1]-a[1])[0];
+            document.getElementById('largestDeptLabel').innerText = largest ? largest[0] : 'N/A';
+            document.getElementById('updatesToday').innerText = Math.floor(Math.random()*5)+2;
+            document.getElementById('pendingCount').innerText = employeesDB.filter(e=>e.status==='probation').length;
+            renderBirthdayPreview();
+        }
+        
+        function renderBirthdayPreview() {
+            const today = new Date();
+            const upcoming = employeesDB.map(emp => {
+                if(!emp.dob) return null;
+                let dobDate = new Date(emp.dob);
+                let nextBirthday = new Date(today.getFullYear(), dobDate.getMonth(), dobDate.getDate());
+                if(nextBirthday < today) nextBirthday.setFullYear(today.getFullYear()+1);
+                return { ...emp, nextDate: nextBirthday };
+            }).filter(b=>b).sort((a,b)=>a.nextDate - b.nextDate).slice(0,3);
+            const container = document.getElementById('birthdaysPreview');
+            if(upcoming.length) container.innerHTML = upcoming.map(emp => `<div style="background:#f0f4ff; border-radius:12px; padding:0.6rem; margin-bottom:8px; display:flex; justify-content:space-between"><span><i class="fas fa-cake-candles"></i> ${emp.name}</span><span style="font-size:0.8rem">${emp.nextDate.toLocaleDateString()}</span></div>`).join('');
+            else container.innerHTML = "<p>No upcoming birthdays</p>";
         }
 
-        // Modal functions
-        function showModal(modalId) {
-            if (activeModal) closeModal(activeModal);
-            
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                modal.classList.add('active');
-                activeModal = modalId;
-                document.body.style.overflow = 'hidden';
-                
-                if (modalId === 'birthdaysModal') loadBirthdaysModal();
-            }
+        function openDirectory() { 
+            renderDirectoryGrid(employeesDB);
+            showModal('employeeDirectoryModal'); 
         }
-
-        function closeModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                modal.classList.remove('active');
-                activeModal = null;
-                document.body.style.overflow = 'auto';
-            }
-        }
-
-        // Tab switching
-        function switchTab(tabId, element) {
-            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            
-            document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
-            element.classList.add('active');
-            
-            if (tabId === 'allEmployees') loadEmployeeDirectory();
-            else if (tabId === 'activeEmployees') loadActiveEmployees();
-            else if (tabId === 'managers') loadManagers();
-            else if (tabId === 'probation') loadProbationEmployees();
-        }
-
-        function switchFormTab(tabId, element) {
-            document.querySelectorAll('#addEmployeeForm .tab-panel').forEach(p => p.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            
-            element.parentElement.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
-            element.classList.add('active');
-        }
-
-        // Load data functions
-        function loadEmployeeDirectory() {
-            const grid = document.getElementById('employeeDirectoryGrid');
-            if (!grid) return;
-            
-            grid.innerHTML = employees.map(emp => `
+        function renderDirectoryGrid(filteredArr) {
+            const grid = document.getElementById('directoryGridContainer');
+            grid.innerHTML = filteredArr.map(emp => `
                 <div class="employee-card" onclick="showEmployeeDetail(${emp.id})">
-                    <div class="employee-avatar" style="background: var(--primary-blue);">
-                        ${emp.name.split(' ').map(n => n[0]).join('')}
-                    </div>
-                    <div class="employee-info">
-                        <h4>${emp.name}</h4>
-                        <p>${emp.position}</p>
-                        <div class="employee-tags">
-                            <span class="employee-tag">${emp.department}</span>
-                            <span class="employee-tag status">${emp.status}</span>
-                        </div>
-                    </div>
+                    <div class="employee-avatar">${emp.name.split(' ').map(n=>n[0]).join('').toUpperCase()}</div>
+                    <h4>${emp.name}</h4>
+                    <p style="font-size:0.8rem; color:gray">${emp.position}</p>
+                    <div style="display:flex; gap:6px; justify-content:center; margin-top:8px"><span class="employee-tag" style="background:#eef2ff; padding:4px 8px; border-radius:40px; font-size:0.7rem">${emp.department}</span><span style="background:#fef3c7; padding:4px 8px; border-radius:40px; font-size:0.7rem">${emp.status}</span></div>
                 </div>
             `).join('');
         }
-
-        function loadActiveEmployees() {
-            const grid = document.getElementById('activeEmployeesGrid');
-            const active = employees.filter(e => e.status === 'active');
-            grid.innerHTML = active.map(emp => `
-                <div class="employee-card" onclick="showEmployeeDetail(${emp.id})">
-                    <div class="employee-avatar">${emp.name.split(' ').map(n => n[0]).join('')}</div>
-                    <div class="employee-info">
-                        <h4>${emp.name}</h4>
-                        <p>${emp.position}</p>
-                        <div class="employee-tags">
-                            <span class="employee-tag">${emp.department}</span>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function loadManagers() {
-            const grid = document.getElementById('managersGrid');
-            const managers = employees.filter(e => e.position.toLowerCase().includes('manager') || e.position.toLowerCase().includes('director'));
-            grid.innerHTML = managers.map(emp => `
-                <div class="employee-card" onclick="showEmployeeDetail(${emp.id})">
-                    <div class="employee-avatar">${emp.name.split(' ').map(n => n[0]).join('')}</div>
-                    <div class="employee-info">
-                        <h4>${emp.name}</h4>
-                        <p>${emp.position}</p>
-                        <div class="employee-tags">
-                            <span class="employee-tag">${emp.department}</span>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function loadProbationEmployees() {
-            const grid = document.getElementById('probationGrid');
-            const probation = employees.filter(e => e.status === 'probation');
-            grid.innerHTML = probation.map(emp => `
-                <div class="employee-card" onclick="showEmployeeDetail(${emp.id})">
-                    <div class="employee-avatar">${emp.name.split(' ').map(n => n[0]).join('')}</div>
-                    <div class="employee-info">
-                        <h4>${emp.name}</h4>
-                        <p>${emp.position}</p>
-                        <div class="employee-tags">
-                            <span class="employee-tag">${emp.department}</span>
-                            <span class="employee-tag status">Probation</span>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function loadBirthdays() {
-            const container = document.getElementById('birthdaysList');
-            container.innerHTML = birthdays.map(b => `
-                <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.8rem; background: var(--light-blue); border-radius: 8px; margin-bottom: 0.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.8rem;">
-                        <i class="fas fa-birthday-cake" style="color: var(--primary-blue);"></i>
-                        <span><strong>${b.name}</strong> - ${b.department}</span>
-                    </div>
-                    <span style="background: var(--primary-blue); color: white; padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.8rem;">${b.date}</span>
-                </div>
-            `).join('');
-        }
-
-        function loadBirthdaysModal() {
-            const container = document.getElementById('birthdaysListModal');
-            container.innerHTML = birthdays.map(b => `
-                <div class="employee-card">
-                    <div class="employee-avatar" style="background: var(--secondary-blue);">
-                        <i class="fas fa-birthday-cake"></i>
-                    </div>
-                    <div class="employee-info">
-                        <h4>${b.name}</h4>
-                        <p>${b.department}</p>
-                        <div class="employee-tags">
-                            <span class="employee-tag">Birthday: ${b.date}</span>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function loadActivities() {
-            const container = document.getElementById('activityList');
-            if (!container) return;
-            
-            container.innerHTML = activities.map(a => `
-                <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--off-white); border-radius: 8px; margin-bottom: 0.5rem;">
-                    <div style="width: 40px; height: 40px; background: var(--light-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                        <i class="fas fa-${a.icon}" style="color: var(--primary-blue);"></i>
-                    </div>
-                    <div style="flex: 1;">
-                        <h4 style="margin-bottom: 0.2rem; font-size: 0.95rem;">${a.text}</h4>
-                        <p style="color: var(--text-secondary); font-size: 0.85rem;">${a.detail}</p>
-                    </div>
-                    <span style="color: var(--medium-gray); font-size: 0.8rem;">${a.time}</span>
-                </div>
-            `).join('');
-        }
-
+        function filterDirectory() { const query = document.getElementById('searchInputDir').value.toLowerCase(); const filtered = employeesDB.filter(e=>e.name.toLowerCase().includes(query)||e.email.toLowerCase().includes(query)||e.department.toLowerCase().includes(query)); renderDirectoryGrid(filtered); }
+        function switchDirectoryTab(type) { let data=[]; if(type==='all') data=employeesDB; else if(type==='active') data=employeesDB.filter(e=>e.status==='active'); else if(type==='managers') data=employeesDB.filter(e=>e.position.toLowerCase().includes('manager')||e.position.toLowerCase().includes('director')||e.position.toLowerCase().includes('lead')); renderDirectoryGrid(data); document.querySelectorAll('#employeeDirectoryModal .modal-tab').forEach(t=>t.classList.remove('active')); event.target.classList.add('active'); }
+        
         function showEmployeeDetail(id) {
-            const emp = employees.find(e => e.id === id);
-            if (!emp) return;
-            
-            const content = document.getElementById('employeeDetailContent');
-            content.innerHTML = `
-                <div style="text-align: center; margin-bottom: 2rem;">
-                    <div class="employee-avatar" style="width: 80px; height: 80px; margin: 0 auto 1rem; background: var(--primary-blue);">
-                        ${emp.name.split(' ').map(n => n[0]).join('')}
-                    </div>
-                    <h3 style="margin-bottom: 0.3rem;">${emp.name}</h3>
-                    <p style="color: var(--text-secondary);">${emp.position} • ${emp.department}</p>
-                </div>
-                
-                <div style="display: grid; gap: 1rem;">
-                    <div style="padding: 1rem; background: var(--off-white); border-radius: 8px; display: flex; align-items: center; gap: 1rem;">
-                        <i class="fas fa-envelope" style="color: var(--primary-blue);"></i>
-                        <div>
-                            <p style="font-size: 0.8rem; color: var(--text-secondary);">Email</p>
-                            <p style="font-weight: 500;">${emp.email}</p>
-                        </div>
-                    </div>
-                    
-                    <div style="padding: 1rem; background: var(--off-white); border-radius: 8px; display: flex; align-items: center; gap: 1rem;">
-                        <i class="fas fa-phone" style="color: var(--primary-blue);"></i>
-                        <div>
-                            <p style="font-size: 0.8rem; color: var(--text-secondary);">Phone</p>
-                            <p style="font-weight: 500;">${emp.phone}</p>
-                        </div>
-                    </div>
-                    
-                    <div style="padding: 1rem; background: var(--off-white); border-radius: 8px; display: flex; align-items: center; gap: 1rem;">
-                        <i class="fas fa-building" style="color: var(--primary-blue);"></i>
-                        <div>
-                            <p style="font-size: 0.8rem; color: var(--text-secondary);">Department</p>
-                            <p style="font-weight: 500;">${emp.department}</p>
-                        </div>
-                    </div>
-                    
-                    <div style="padding: 1rem; background: var(--off-white); border-radius: 8px; display: flex; align-items: center; gap: 1rem;">
-                        <i class="fas fa-user-check" style="color: var(--primary-blue);"></i>
-                        <div>
-                            <p style="font-size: 0.8rem; color: var(--text-secondary);">Status</p>
-                            <p style="font-weight: 500; color: ${emp.status === 'active' ? '#10b981' : 'var(--primary-red)'};">${emp.status.charAt(0).toUpperCase() + emp.status.slice(1)}</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                    <button class="btn btn-primary" style="flex: 1;" onclick="editEmployee(${emp.id})">
-                        <i class="fas fa-edit"></i> Edit
-                    </button>
-                    <button class="btn btn-secondary" style="flex: 1;" onclick="closeModal('employeeDetailModal')">
-                        <i class="fas fa-times"></i> Close
-                    </button>
-                </div>
-            `;
-            
+            const emp = employeesDB.find(e=>e.id===id);
+            document.getElementById('detailContent').innerHTML = `<div style="text-align:center"><div class="employee-avatar" style="width:80px;height:80px;font-size:1.8rem">${emp.name[0]}</div><h2>${emp.name}</h2><p>${emp.position} · ${emp.department}</p></div><div class="info-grid" style="display:grid;gap:0.8rem;margin-top:1.5rem"><div><i class="fas fa-envelope"></i> ${emp.email}</div><div><i class="fas fa-phone"></i> ${emp.phone || 'N/A'}</div><div><i class="fas fa-calendar"></i> Joined: ${emp.joining || 'N/A'}</div><div><i class="fas fa-tag"></i> Status: ${emp.status.toUpperCase()}</div><div><i class="fas fa-home"></i> ${emp.address || 'Not provided'}</div></div><div style="display:flex; gap:1rem; margin-top:2rem"><button class="btn btn-primary" onclick="editEmployeeById(${emp.id})">Edit</button><button class="btn btn-secondary" onclick="closeModal('employeeDetailModal')">Close</button></div>`;
             showModal('employeeDetailModal');
         }
-
-        // Form submission
-        document.getElementById('addEmployeeForm')?.addEventListener('submit', function(e) {
+        
+        function editEmployeeById(id) { 
+            const emp = employeesDB.find(e=>e.id===id);
+            if(emp){
+                openAddEmployeeModal(emp);
+                closeModal('employeeDetailModal');
+            }
+        }
+        function openAddEmployeeModal(empData=null) {
+            const modal = document.getElementById('addEmployeeModal');
+            const form = document.getElementById('employeeForm');
+            form.reset();
+            if(empData){
+                document.getElementById('empName').value = empData.name || '';
+                document.getElementById('empEmail').value = empData.email || '';
+                document.getElementById('empPhone').value = empData.phone || '';
+                document.getElementById('empDob').value = empData.dob || '';
+                document.getElementById('empDept').value = empData.department || 'IT';
+                document.getElementById('empPosition').value = empData.position || '';
+                document.getElementById('empType').value = empData.type || 'Full Time';
+                document.getElementById('empJoining').value = empData.joining || '';
+                document.getElementById('empStatus').value = empData.status || 'active';
+                document.getElementById('empAddress').value = empData.address || '';
+                document.getElementById('empEmergency').value = empData.emergency || '';
+                document.getElementById('empRelation').value = empData.relation || '';
+                window._editId = empData.id;
+            } else { window._editId = null; }
+            showModal('addEmployeeModal');
+        }
+        
+        document.getElementById('employeeForm').addEventListener('submit', (e)=>{
             e.preventDefault();
-            const btn = this.querySelector('button[type="submit"]');
-            btn.innerHTML = '<div class="loading"></div> Saving...';
-            btn.disabled = true;
-            
-            setTimeout(() => {
-                showNotification('Employee added successfully!', 'success');
-                closeModal('addEmployeeModal');
-                btn.innerHTML = '<i class="fas fa-save"></i> Save Employee';
-                btn.disabled = false;
-                this.reset();
-                updateStats();
-            }, 1500);
-        });
-
-        // File upload
-        document.getElementById('employeeDocs')?.addEventListener('change', function(e) {
-            const container = document.getElementById('uploadedFiles');
-            container.innerHTML = Array.from(this.files).map(f => `
-                <div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; background: var(--light-blue); border-radius: 5px; margin-bottom: 0.3rem;">
-                    <i class="fas fa-file"></i>
-                    <span>${f.name}</span>
-                    <small style="color: var(--text-secondary);">${(f.size/1024).toFixed(1)} KB</small>
-                </div>
-            `).join('');
-        });
-
-        document.getElementById('bulkFile')?.addEventListener('change', function(e) {
-            if (this.files[0]) {
-                showNotification(`File "${this.files[0].name}" selected`, 'info');
+            const newEmp = {
+                id: window._editId ? window._editId : nextId++,
+                name: document.getElementById('empName').value.trim(),
+                email: document.getElementById('empEmail').value.trim(),
+                phone: document.getElementById('empPhone').value,
+                department: document.getElementById('empDept').value,
+                position: document.getElementById('empPosition').value,
+                type: document.getElementById('empType').value,
+                joining: document.getElementById('empJoining').value,
+                status: document.getElementById('empStatus').value,
+                dob: document.getElementById('empDob').value,
+                address: document.getElementById('empAddress').value,
+                emergency: document.getElementById('empEmergency').value,
+                relation: document.getElementById('empRelation').value
+            };
+            if(!newEmp.name || !newEmp.email) { showNotifToast("Name and email required", "error"); return; }
+            if(window._editId) {
+                const idx = employeesDB.findIndex(e=>e.id===window._editId);
+                if(idx!==-1) employeesDB[idx] = {...employeesDB[idx], ...newEmp};
+                showNotifToast("Employee updated", "success");
+            } else {
+                employeesDB.push(newEmp);
+                showNotifToast(`✨ ${newEmp.name} added`, "success");
             }
+            saveToStorage();
+            closeModal('addEmployeeModal');
+            updateDashboardStats();
+            window._editId = null;
         });
-
-        // Search
-        function searchEmployees(query) {
-            const filtered = employees.filter(e => 
-                e.name.toLowerCase().includes(query.toLowerCase()) ||
-                e.email.toLowerCase().includes(query.toLowerCase()) ||
-                e.department.toLowerCase().includes(query.toLowerCase())
-            );
-            
-            const grid = document.getElementById('employeeDirectoryGrid');
-            grid.innerHTML = filtered.map(emp => `
-                <div class="employee-card" onclick="showEmployeeDetail(${emp.id})">
-                    <div class="employee-avatar" style="background: var(--primary-blue);">
-                        ${emp.name.split(' ').map(n => n[0]).join('')}
-                    </div>
-                    <div class="employee-info">
-                        <h4>${emp.name}</h4>
-                        <p>${emp.position}</p>
-                        <div class="employee-tags">
-                            <span class="employee-tag">${emp.department}</span>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
+        
+        function showModal(id) { document.getElementById(id).classList.add('active'); document.body.style.overflow='hidden';}
+        function closeModal(id) { const m=document.getElementById(id); if(m) m.classList.remove('active'); document.body.style.overflow='auto';}
+        function switchFormTab(tabId) {
+            ['personalTab','jobTab','contactTab'].forEach(t=>document.getElementById(t).classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            const btns = document.querySelectorAll('#addEmployeeModal .modal-tab');
+            btns.forEach((btn,idx)=>{ if((tabId==='personalTab'&&idx===0)||(tabId==='jobTab'&&idx===1)||(tabId==='contactTab'&&idx===2)) btn.classList.add('active'); else btn.classList.remove('active'); });
         }
-
-        // Stats
-        function updateStats() {
-            document.getElementById('totalEmployees').textContent = employees.length;
-            document.getElementById('newHires').textContent = Math.floor(Math.random() * 5) + 1;
-            document.getElementById('departmentsCount').textContent = [...new Set(employees.map(e => e.department))].length;
-            document.getElementById('largestDept').textContent = 'IT';
-            document.getElementById('updatesToday').textContent = Math.floor(Math.random() * 10) + 1;
-            document.getElementById('pendingTasks').textContent = Math.floor(Math.random() * 5) + 1;
+        function openDeptView() { showNotifToast(`Departments: ${[...new Set(employeesDB.map(e=>e.department))].join(', ')}`, "info"); }
+        function openActivities() { showNotifToast(`Recent: ${employeesDB.length} total, ${employeesDB.filter(e=>e.status==='probation').length} on probation`, "info"); }
+        function openBirthdayModal() { 
+            const sorted = [...employeesDB].filter(e=>e.dob).map(e=>{let d=new Date(e.dob); return {...e, bday: `${d.getMonth()+1}/${d.getDate()}`}; });
+            document.getElementById('fullBirthdayList').innerHTML = `<div class="employee-grid">${sorted.map(e=>`<div class="employee-card"><div class="employee-avatar" style="background:var(--accent)"><i class="fas fa-birthday-cake"></i></div><h4>${e.name}</h4><p>${e.department}</p><span>🎂 ${e.bday}</span></div>`).join('')}</div>`;
+            showModal('birthdaysModal');
         }
-
-        // Other functions
-        function downloadTemplate() {
-            showNotification('Template downloaded!', 'success');
+        function simulateBulk() { 
+            const demo = { name:"Bulk Demo", email:"bulk@demo.com", department:"IT", position:"Associate", status:"active", type:"Full Time" };
+            employeesDB.push({ id:nextId++, ...demo, joining:new Date().toISOString().split('T')[0], phone:"+254700000000" });
+            saveToStorage();
+            showNotifToast("Bulk demo: Added sample employee", "success");
         }
-
-        function generateReport(type) {
-            showNotification(`Generating ${type} report...`, 'info');
-            closeModal('reportsModal');
+        function generateReportDemo() { showNotifToast("📊 Report ready: Employee summary exported (demo)", "info"); }
+        function showNotifToast(msg, type="info") { const container = document.getElementById('toastRoot'); const toast=document.createElement('div'); toast.className='notification'; toast.style.borderLeftColor=type==='success'?'#0e7b4e':'#0f3b7a'; toast.innerHTML=`<i class="fas ${type==='success'?'fa-check-circle':'fa-info-circle'}"></i><span>${msg}</span>`; container.appendChild(toast); setTimeout(()=>{toast.remove();},3200); }
+        function handleLogout() { if(confirm('Secure logout?')){ showNotifToast('Session ended', 'info'); setTimeout(()=>{ window.location.reload(); },600); } }
+        function toggleNav() { document.getElementById('hamburgerBtn').classList.toggle('active'); document.getElementById('navDropdown').classList.toggle('active'); }
+        document.addEventListener('click',(e)=>{ if(!e.target.closest('.hamburger-menu')){ document.getElementById('hamburgerBtn')?.classList.remove('active'); document.getElementById('navDropdown')?.classList.remove('active'); } });
+        document.querySelectorAll('.modal-close').forEach(btn=>{ btn.addEventListener('click',(e)=>{ const modalDiv=btn.closest('.modal'); if(modalDiv) closeModal(modalDiv.id); }); });
+        window.onclick = (e) => { if(e.target.classList && e.target.classList.contains('modal')) closeModal(e.target.id); };
+        
+        // dynamic nav
+        function buildNav(){
+            const navItems = ['Dashboard','Task Centre','Training','Contracts','HR Letters','Events','Cost Analyzer','Financial Hub','Employees','Settings'];
+            const icons = ['home','tasks','graduation-cap','file-contract','envelope','calendar-alt','chart-line','star','users','cog'];
+            const container = document.getElementById('dynamicNav');
+            container.innerHTML = navItems.map((item,idx)=>`<div class="nav-item ${item==='Employees'?'active':''}" onclick="window.location.href='#'"><i class="fas fa-${icons[idx]}"></i><span>${item}</span></div>`).join('');
         }
-
-        function editEmployee(id) {
-            showNotification('Edit employee functionality', 'info');
-            closeModal('employeeDetailModal');
-        }
-
-        // Notification
-        function showNotification(message, type = 'info') {
-            const container = document.getElementById('notificationContainer');
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            notification.innerHTML = `
-                <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i>
-                <span>${message}</span>
-            `;
-            
-            container.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.style.animation = 'slideIn 0.3s ease reverse';
-                setTimeout(() => notification.remove(), 300);
-            }, 3000);
-        }
-
-        // Keyboard events
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && activeModal) {
-                closeModal(activeModal);
-            }
-        });
-
-        // Make functions global
-        window.showModal = showModal;
-        window.closeModal = closeModal;
-        window.switchTab = switchTab;
-        window.switchFormTab = switchFormTab;
-        window.searchEmployees = searchEmployees;
-        window.showEmployeeDetail = showEmployeeDetail;
-        window.editEmployee = editEmployee;
-        window.downloadTemplate = downloadTemplate;
-        window.generateReport = generateReport;
-        window.toggleHamburger = toggleHamburger;
-        window.logout = logout;
-        window.showNotification = showNotification;
+        buildNav();
+        loadFromStorage();
+        window.openDirectory=openDirectory; window.showEmployeeDetail=showEmployeeDetail; window.closeModal=closeModal; window.filterDirectory=filterDirectory; window.switchDirectoryTab=switchDirectoryTab; window.editEmployeeById=editEmployeeById; window.openAddEmployeeModal=openAddEmployeeModal; window.simulateBulk=simulateBulk; window.generateReportDemo=generateReportDemo; window.openBirthdayModal=openBirthdayModal; window.openDeptView=openDeptView; window.openActivities=openActivities; window.handleLogout=handleLogout; window.toggleNav=toggleNav; window.showNotifToast=showNotifToast; window.switchFormTab=switchFormTab;
     </script>
 </body>
 </html>
