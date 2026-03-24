@@ -1,27 +1,27 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { Link } from 'react-router-dom';
 import { 
     Bars3Icon, 
     BellIcon, 
     UserCircleIcon,
     ArrowRightOnRectangleIcon 
 } from '@heroicons/react/24/outline';
+import toast from 'react-hot-toast';
 
 const Header = ({ toggleSidebar }) => {
-    const { user, logout } = useAuth();
-    const navigate = useNavigate();
     const [showNotifications, setShowNotifications] = useState(false);
+    const user = JSON.parse(localStorage.getItem('user') || '{"name":"Admin User","role":"admin"}');
 
     const handleLogout = () => {
-        logout();
-        navigate('/login');
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        toast.success('Logged out successfully');
+        window.location.href = '/login';
     };
 
     return (
         <header className="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-50">
             <div className="flex items-center justify-between px-6 py-3">
-                {/* Logo and Menu Button */}
                 <div className="flex items-center gap-4">
                     <button 
                         onClick={toggleSidebar}
@@ -39,7 +39,6 @@ const Header = ({ toggleSidebar }) => {
                     </Link>
                 </div>
 
-                {/* Animated Title (Desktop) */}
                 <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2">
                     <div className="bg-primary-50 px-4 py-1 rounded-full border border-primary-200">
                         <p className="text-sm text-primary-700 font-medium animate-pulse">
@@ -48,9 +47,7 @@ const Header = ({ toggleSidebar }) => {
                     </div>
                 </div>
 
-                {/* Right Actions */}
                 <div className="flex items-center gap-3">
-                    {/* Notifications */}
                     <div className="relative">
                         <button 
                             onClick={() => setShowNotifications(!showNotifications)}
@@ -67,19 +64,18 @@ const Header = ({ toggleSidebar }) => {
                                 </div>
                                 <div className="max-h-96 overflow-y-auto">
                                     <div className="p-3 hover:bg-gray-50 cursor-pointer">
-                                        <p className="text-sm font-medium">New task assigned</p>
-                                        <p className="text-xs text-gray-500">2 hours ago</p>
+                                        <p className="text-sm font-medium">Welcome to HR Admin Pro!</p>
+                                        <p className="text-xs text-gray-500">Just now</p>
                                     </div>
                                     <div className="p-3 hover:bg-gray-50 cursor-pointer">
-                                        <p className="text-sm font-medium">Contract expiring soon</p>
-                                        <p className="text-xs text-gray-500">1 day ago</p>
+                                        <p className="text-sm font-medium">3 tasks pending</p>
+                                        <p className="text-xs text-gray-500">2 hours ago</p>
                                     </div>
                                 </div>
                             </div>
                         )}
                     </div>
 
-                    {/* User Profile */}
                     <div className="flex items-center gap-3">
                         <div className="hidden md:block text-right">
                             <p className="text-sm font-semibold">{user?.name || 'User'}</p>

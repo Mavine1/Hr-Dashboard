@@ -12,10 +12,10 @@ const Login = () => {
         e.preventDefault();
         setLoading(true);
         
-        // Simulate login - in real app, call API
+        // Mock login - will connect to backend later
         setTimeout(() => {
-            if (email === 'admin@example.com' && password === 'password') {
-                localStorage.setItem('token', 'demo-token');
+            if (email && password) {
+                localStorage.setItem('token', 'demo-token-12345');
                 localStorage.setItem('user', JSON.stringify({ name: 'Admin User', email, role: 'admin' }));
                 toast.success('Login successful!');
                 navigate('/dashboard');
@@ -23,7 +23,7 @@ const Login = () => {
                 toast.error('Invalid credentials');
             }
             setLoading(false);
-        }, 1000);
+        }, 800);
     };
 
     return (
@@ -39,9 +39,7 @@ const Login = () => {
 
                 <form onSubmit={handleSubmit} className="space-y-5">
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                            Email Address
-                        </label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
                         <input
                             type="email"
                             value={email}
@@ -53,9 +51,7 @@ const Login = () => {
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                            Password
-                        </label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
                         <input
                             type="password"
                             value={password}

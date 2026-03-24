@@ -1,6 +1,5 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
 import {
     HomeIcon,
     ClipboardDocumentListIcon,
@@ -16,8 +15,6 @@ import {
 } from '@heroicons/react/24/outline';
 
 const Sidebar = ({ isOpen, onClose }) => {
-    const { user } = useAuth();
-
     const menuItems = [
         { path: '/dashboard', name: 'Dashboard', icon: HomeIcon },
         { path: '/task-centre', name: 'Task Centre', icon: ClipboardDocumentListIcon },
@@ -31,13 +28,8 @@ const Sidebar = ({ isOpen, onClose }) => {
         { path: '/settings', name: 'Settings', icon: Cog6ToothIcon },
     ];
 
-    const sidebarClasses = `fixed top-16 left-0 h-full bg-white border-r border-gray-200 z-40 transition-transform duration-300 ease-in-out ${
-        isOpen ? 'translate-x-0' : '-translate-x-full'
-    } lg:translate-x-0 w-64`;
-
     return (
         <>
-            {/* Overlay for mobile */}
             {isOpen && (
                 <div 
                     className="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
@@ -45,7 +37,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                 />
             )}
             
-            <aside className={sidebarClasses}>
+            <aside className={`fixed top-16 left-0 h-full bg-white border-r border-gray-200 z-40 transition-transform duration-300 ease-in-out lg:translate-x-0 w-64 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
                 <nav className="flex flex-col h-full">
                     <div className="flex-1 py-6">
                         {menuItems.map((item) => (
@@ -59,7 +51,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                                             : 'text-gray-700 hover:bg-gray-100'
                                     }`
                                 }
-                                onClick={() => onClose()}
+                                onClick={onClose}
                             >
                                 <item.icon className="w-5 h-5" />
                                 <span className="text-sm font-medium">{item.name}</span>
@@ -67,17 +59,14 @@ const Sidebar = ({ isOpen, onClose }) => {
                         ))}
                     </div>
 
-                    {/* User Profile Footer */}
                     <div className="p-4 border-t border-gray-200">
                         <div className="flex items-center gap-3">
                             <div className="w-10 h-10 bg-primary-100 rounded-full flex items-center justify-center">
-                                <span className="text-primary-600 font-semibold">
-                                    {user?.name?.charAt(0) || 'U'}
-                                </span>
+                                <span className="text-primary-600 font-semibold">A</span>
                             </div>
                             <div className="flex-1 min-w-0">
-                                <p className="text-sm font-semibold truncate">{user?.name || 'User'}</p>
-                                <p className="text-xs text-gray-500 capitalize">{user?.role || 'Employee'}</p>
+                                <p className="text-sm font-semibold truncate">Admin User</p>
+                                <p className="text-xs text-gray-500 capitalize">Administrator</p>
                             </div>
                         </div>
                     </div>
