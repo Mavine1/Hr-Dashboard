@@ -2,21 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Financial Budget Hub | HR Admin Pro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Financial Budget Hub | HR Admin Pro | Persistent Data</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pptxgenjs/3.10.0/pptxgen.bundle.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --primary-blue: #1e40af;
             --secondary-blue: #3b82f6;
@@ -25,12 +19,10 @@
             --dark-blue: #1e3a8a;
             --primary-red: #b91c1c;
             --light-red: #fee2e2;
-            --soft-red: #fef2f2;
             --pure-white: #ffffff;
             --off-white: #f8fafc;
             --light-gray: #e2e8f0;
             --medium-gray: #94a3b8;
-            --dark-gray: #334155;
             --text-primary: #0f172a;
             --text-secondary: #475569;
             --border-color: #e2e8f0;
@@ -41,1774 +33,251 @@
             --warning: #f59e0b;
             --danger: #ef4444;
         }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--off-white);
-            color: var(--text-primary);
-            line-height: 1.5;
-        }
-
-        /* Fixed Header */
-        .main-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 70px;
-            background: var(--pure-white);
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 2rem;
-            z-index: 1000;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--primary-blue);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 10px rgba(30, 64, 175, 0.2);
-        }
-
-        .logo-icon i {
-            color: white;
-            font-size: 1.2rem;
-        }
-
-        .logo h2 {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            letter-spacing: -0.01em;
-        }
-
-        .animated-title-container {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--light-blue);
-            padding: 0.4rem 1.5rem;
-            border-radius: 40px;
-            border: 1px solid var(--primary-blue);
-        }
-
-        .animated-title {
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--primary-blue);
-            white-space: nowrap;
-            animation: slideText 20s linear infinite;
-        }
-
-        @keyframes slideText {
-            0% { transform: translateX(100%); opacity: 0; }
-            5% { transform: translateX(0); opacity: 1; }
-            95% { transform: translateX(0); opacity: 1; }
-            100% { transform: translateX(-100%); opacity: 0; }
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .notifications {
-            position: relative;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--off-white);
-            border-radius: 10px;
-            cursor: pointer;
-            border: 1px solid var(--border-color);
-        }
-
-        .notifications:hover {
-            background: var(--light-blue);
-            border-color: var(--primary-blue);
-        }
-
-        .notifications i {
-            color: var(--primary-blue);
-            font-size: 1.1rem;
-        }
-
-        .badge {
-            position: absolute;
-            top: -4px;
-            right: -4px;
-            background: var(--primary-red);
-            color: white;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
-            font-weight: 600;
-            border: 2px solid white;
-        }
-
-        .logout-btn {
-            background: var(--primary-blue);
-            color: white;
-            border: none;
-            padding: 0.6rem 1.2rem;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .logout-btn:hover {
-            background: var(--dark-blue);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .hamburger-menu {
-            position: relative;
-        }
-
-        .hamburger-btn {
-            width: 40px;
-            height: 40px;
-            background: var(--off-white);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .hamburger-btn:hover {
-            background: var(--light-blue);
-            border-color: var(--primary-blue);
-        }
-
-        .hamburger-btn span {
-            width: 18px;
-            height: 2px;
-            background: var(--primary-blue);
-            border-radius: 2px;
-            transition: all 0.3s;
-        }
-
-        .hamburger-btn.active span:nth-child(1) {
-            transform: rotate(45deg) translate(4px, 4px);
-        }
-
-        .hamburger-btn.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger-btn.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(4px, -4px);
-        }
-
-        /* Navigation Dropdown */
-        .nav-dropdown {
-            position: absolute;
-            top: 50px;
-            right: 0;
-            width: 280px;
-            background: white;
-            border-radius: 16px;
-            padding: 1rem;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--border-color);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.3s;
-            z-index: 1000;
-        }
-
-        .nav-dropdown.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .nav-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.5rem;
-        }
-
-        .nav-item {
-            background: var(--off-white);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 1rem 0.5rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
-            color: var(--text-secondary);
-        }
-
-        .nav-item:hover {
-            background: var(--light-blue);
-            border-color: var(--primary-blue);
-            transform: translateY(-2px);
-        }
-
-        .nav-item i {
-            font-size: 1.2rem;
-            color: var(--primary-blue);
-            margin-bottom: 0.3rem;
-            display: block;
-        }
-
-        .nav-item span {
-            font-size: 0.75rem;
-            font-weight: 500;
-            display: block;
-            line-height: 1.3;
-        }
-
-        .nav-item.active {
-            background: var(--primary-blue);
-            color: white;
-        }
-
-        .nav-item.active i {
-            color: white;
-        }
-
-        /* Main Content */
-        .main-content {
-            margin-top: 90px;
-            padding: 2rem;
-        }
-
-        /* Page Header */
-        .page-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding: 1.5rem 2rem;
-            background: var(--pure-white);
-            border-radius: 16px;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .header-content h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.3rem;
-        }
-
-        .header-content p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-
-        .header-actions {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        /* Buttons */
-        .btn {
-            padding: 0.7rem 1.5rem;
-            border-radius: 10px;
-            border: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            background: var(--pure-white);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-        }
-
-        .btn i {
-            font-size: 1rem;
-        }
-
-        .btn-primary {
-            background: var(--primary-blue);
-            color: white;
-            border: none;
-        }
-
-        .btn-primary:hover {
-            background: var(--dark-blue);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .btn-success {
-            background: var(--success);
-            color: white;
-            border: none;
-        }
-
-        .btn-success:hover {
-            background: #0b8e5e;
-            transform: translateY(-2px);
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 1px solid var(--border-color);
-        }
-
-        .btn-outline:hover {
-            background: var(--off-white);
-            border-color: var(--medium-gray);
-        }
-
-        /* Period Selector */
-        .period-selector {
-            background: var(--off-white);
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
-            padding: 0.6rem 1.2rem;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        /* Export Menu */
-        .export-menu {
-            position: relative;
-        }
-
-        .export-options {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: var(--pure-white);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 0.5rem;
-            min-width: 200px;
-            box-shadow: var(--shadow-lg);
-            display: none;
-            z-index: 100;
-            margin-top: 0.5rem;
-        }
-
-        .export-options.show {
-            display: block;
-        }
-
-        .export-option {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            padding: 0.8rem 1rem;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: all 0.2s;
-            color: var(--text-secondary);
-        }
-
-        .export-option:hover {
-            background: var(--light-blue);
-            color: var(--primary-blue);
-        }
-
-        .export-option i {
-            color: var(--primary-blue);
-        }
-
-        /* Cards Section */
-        .cards-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .card {
-            background: var(--pure-white);
-            border-radius: 16px;
-            padding: 1.5rem;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-sm);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--primary-blue);
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .card-title {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-        }
-
-        .card-icon {
-            width: 45px;
-            height: 45px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--light-blue);
-        }
-
-        .card-icon i {
-            font-size: 1.3rem;
-            color: var(--primary-blue);
-        }
-
-        .card-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .card-change {
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-        }
-
-        .positive {
-            color: var(--success);
-        }
-
-        .negative {
-            color: var(--danger);
-        }
-
-        /* Progress Bar */
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: var(--light-gray);
-            border-radius: 4px;
-            overflow: hidden;
-            margin-top: 0.5rem;
-        }
-
-        .progress-fill {
-            height: 100%;
-            border-radius: 4px;
-            transition: width 0.3s ease;
-        }
-
-        /* Charts Section */
-        .charts-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .chart-card {
-            background: var(--pure-white);
-            border-radius: 16px;
-            padding: 1.5rem;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .chart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .chart-header h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .chart-header h3 i {
-            color: var(--primary-blue);
-        }
-
-        .chart-container {
-            height: 300px;
-            position: relative;
-        }
-
-        /* Data Table */
-        .data-table-container {
-            background: var(--pure-white);
-            border-radius: 16px;
-            padding: 1.5rem;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-sm);
-            margin-bottom: 2rem;
-            overflow-x: auto;
-        }
-
-        .table-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .table-header h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .table-header h3 i {
-            color: var(--primary-blue);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.9rem;
-        }
-
-        th {
-            text-align: left;
-            padding: 1rem;
-            background: var(--light-blue);
-            color: var(--primary-blue);
-            font-weight: 600;
-            border-bottom: 2px solid var(--primary-blue);
-        }
-
-        td {
-            padding: 1rem;
-            border-bottom: 1px solid var(--border-color);
-            color: var(--text-secondary);
-        }
-
-        tr:hover {
-            background: var(--off-white);
-        }
-
-        /* Status Colors */
-        .status-success {
-            color: var(--success);
-            font-weight: 600;
-        }
-
-        .status-warning {
-            color: var(--warning);
-            font-weight: 600;
-        }
-
-        .status-danger {
-            color: var(--danger);
-            font-weight: 600;
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-            padding: 1.5rem;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: var(--pure-white);
-            border-radius: 20px;
-            width: 100%;
-            max-width: 600px;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--border-color);
-            animation: modalSlideUp 0.3s ease;
-        }
-
-        @keyframes modalSlideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .modal-header {
-            padding: 1.5rem 2rem;
-            background: var(--light-blue);
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--primary-blue);
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: var(--primary-blue);
-            cursor: pointer;
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-        }
-
-        .modal-close:hover {
-            background: var(--primary-red);
-            color: white;
-        }
-
-        .modal-body {
-            padding: 2rem;
-        }
-
-        .modal-footer {
-            padding: 1.5rem 2rem;
-            border-top: 1px solid var(--border-color);
-            display: flex;
-            justify-content: flex-end;
-            gap: 1rem;
-            background: var(--off-white);
-        }
-
-        /* Forms */
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            font-size: 0.9rem;
-            color: var(--text-primary);
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 0.8rem 1rem;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            font-size: 0.95rem;
-            transition: all 0.2s;
-            background: var(--off-white);
-            color: var(--text-primary);
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary-blue);
-            background: var(--pure-white);
-            box-shadow: 0 0 0 3px var(--light-blue);
-        }
-
-        select.form-control {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%231e40af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 1rem center;
-            background-size: 1rem;
-        }
-
-        /* Notification */
-        .notification {
-            position: fixed;
-            top: 90px;
-            right: 20px;
-            padding: 1rem 1.5rem;
-            border-radius: 10px;
-            background: var(--pure-white);
-            box-shadow: var(--shadow-lg);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            z-index: 3000;
-            animation: notificationSlideIn 0.3s ease;
-            border-left: 4px solid;
-            max-width: 350px;
-        }
-
-        .notification.success {
-            border-left-color: var(--success);
-        }
-
-        .notification.success i {
-            color: var(--success);
-        }
-
-        .notification.error {
-            border-left-color: var(--danger);
-        }
-
-        .notification.error i {
-            color: var(--danger);
-        }
-
-        .notification.info {
-            border-left-color: var(--primary-blue);
-        }
-
-        .notification.info i {
-            color: var(--primary-blue);
-        }
-
-        @keyframes notificationSlideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        /* Footer */
-        .main-footer {
-            background: var(--pure-white);
-            border-top: 1px solid var(--border-color);
-            padding: 1.5rem;
-            text-align: center;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .footer-content p {
-            margin-bottom: 0.3rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .charts-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .animated-title-container {
-                display: none;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .main-header {
-                padding: 0 1rem;
-            }
-            
-            .logo h2 {
-                display: none;
-            }
-            
-            .main-content {
-                padding: 1rem;
-            }
-            
-            .page-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
-            }
-            
-            .header-actions {
-                width: 100%;
-                flex-wrap: wrap;
-            }
-            
-            .cards-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .nav-dropdown {
-                width: 260px;
-                right: 10px;
-            }
-            
-            .modal-content {
-                width: 95%;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .logout-btn span {
-                display: none;
-            }
-            
-            .logout-btn {
-                padding: 0.6rem;
-                width: 40px;
-                height: 40px;
-                justify-content: center;
-            }
-            
-            .btn {
-                padding: 0.5rem 1rem;
-            }
-        }
+        body { font-family: 'Inter', sans-serif; background: var(--off-white); color: var(--text-primary); line-height: 1.5; }
+        .main-header { position: fixed; top: 0; left: 0; right: 0; height: 70px; background: var(--pure-white); border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; z-index: 1000; box-shadow: var(--shadow-sm); }
+        .logo { display: flex; align-items: center; gap: 1rem; }
+        .logo-icon { width: 40px; height: 40px; background: var(--primary-blue); border-radius: 10px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(30,64,175,0.2); }
+        .logo-icon i { color: white; font-size: 1.2rem; }
+        .logo h2 { font-size: 1.2rem; font-weight: 700; }
+        .animated-title-container { position: absolute; left: 50%; transform: translateX(-50%); background: var(--light-blue); padding: 0.4rem 1.5rem; border-radius: 40px; border: 1px solid var(--primary-blue); }
+        .animated-title { font-size: 0.9rem; font-weight: 500; color: var(--primary-blue); white-space: nowrap; animation: slideText 20s linear infinite; }
+        @keyframes slideText { 0% { transform: translateX(100%); opacity: 0; } 5% { transform: translateX(0); opacity: 1; } 95% { transform: translateX(0); opacity: 1; } 100% { transform: translateX(-100%); opacity: 0; } }
+        .header-right { display: flex; align-items: center; gap: 1rem; }
+        .notifications { position: relative; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: var(--off-white); border-radius: 10px; cursor: pointer; border: 1px solid var(--border-color); }
+        .badge { position: absolute; top: -4px; right: -4px; background: var(--primary-red); color: white; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 600; border: 2px solid white; }
+        .logout-btn { background: var(--primary-blue); color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 10px; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; cursor: pointer; transition: 0.2s; }
+        .logout-btn:hover { background: var(--dark-blue); transform: translateY(-2px); }
+        .hamburger-menu { position: relative; }
+        .hamburger-btn { width: 40px; height: 40px; background: var(--off-white); border: 1px solid var(--border-color); border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer; }
+        .hamburger-btn span { width: 18px; height: 2px; background: var(--primary-blue); border-radius: 2px; transition: 0.3s; }
+        .hamburger-btn.active span:nth-child(1) { transform: rotate(45deg) translate(4px,4px); }
+        .hamburger-btn.active span:nth-child(2) { opacity: 0; }
+        .hamburger-btn.active span:nth-child(3) { transform: rotate(-45deg) translate(4px,-4px); }
+        .nav-dropdown { position: absolute; top: 50px; right: 0; width: 280px; background: white; border-radius: 16px; padding: 1rem; box-shadow: var(--shadow-lg); border: 1px solid var(--border-color); opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.3s; z-index: 1000; }
+        .nav-dropdown.active { opacity: 1; visibility: visible; transform: translateY(0); }
+        .nav-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 0.5rem; }
+        .nav-item { background: var(--off-white); border: 1px solid var(--border-color); border-radius: 10px; padding: 1rem 0.5rem; text-align: center; cursor: pointer; transition: 0.2s; text-decoration: none; color: var(--text-secondary); }
+        .nav-item i { font-size: 1.2rem; color: var(--primary-blue); margin-bottom: 0.3rem; display: block; }
+        .nav-item span { font-size: 0.75rem; font-weight: 500; }
+        .nav-item.active { background: var(--primary-blue); color: white; }
+        .nav-item.active i { color: white; }
+        .main-content { margin-top: 90px; padding: 2rem; }
+        .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding: 1.5rem 2rem; background: white; border-radius: 16px; border: 1px solid var(--border-color); flex-wrap: wrap; gap: 1rem; }
+        .header-content h1 { font-size: 1.8rem; font-weight: 700; }
+        .header-content p { color: var(--text-secondary); }
+        .header-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .btn { padding: 0.7rem 1.5rem; border-radius: 10px; font-weight: 600; font-size: 0.9rem; cursor: pointer; display: inline-flex; align-items: center; gap: 0.6rem; background: white; border: 1px solid var(--border-color); transition: 0.2s; }
+        .btn-primary { background: var(--primary-blue); color: white; border: none; }
+        .btn-primary:hover { background: var(--dark-blue); transform: translateY(-2px); }
+        .btn-success { background: var(--success); color: white; border: none; }
+        .btn-outline { background: transparent; }
+        .period-selector { padding: 0.6rem 1.2rem; border-radius: 10px; border: 1px solid var(--border-color); background: var(--off-white); font-weight: 500; cursor: pointer; }
+        .export-menu { position: relative; }
+        .export-options { position: absolute; top: 100%; right: 0; background: white; border-radius: 10px; padding: 0.5rem; min-width: 200px; box-shadow: var(--shadow-lg); display: none; z-index: 100; margin-top: 0.5rem; }
+        .export-options.show { display: block; }
+        .export-option { display: flex; align-items: center; gap: 0.8rem; padding: 0.8rem 1rem; cursor: pointer; border-radius: 8px; color: var(--text-secondary); }
+        .export-option:hover { background: var(--light-blue); color: var(--primary-blue); }
+        .cards-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+        .card { background: white; border-radius: 16px; padding: 1.5rem; border: 1px solid var(--border-color); transition: 0.3s; }
+        .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .card-title { font-weight: 600; color: var(--text-secondary); }
+        .card-icon { width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; background: var(--light-blue); }
+        .card-icon i { font-size: 1.3rem; color: var(--primary-blue); }
+        .card-value { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .progress-bar { width: 100%; height: 8px; background: var(--light-gray); border-radius: 4px; overflow: hidden; margin-top: 0.5rem; }
+        .progress-fill { height: 100%; border-radius: 4px; transition: width 0.3s; }
+        .charts-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(500px,1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+        .chart-card { background: white; border-radius: 16px; padding: 1.5rem; border: 1px solid var(--border-color); }
+        .chart-container { height: 300px; position: relative; }
+        .data-table-container { background: white; border-radius: 16px; padding: 1.5rem; border: 1px solid var(--border-color); margin-bottom: 2rem; overflow-x: auto; }
+        .table-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+        th { text-align: left; padding: 1rem; background: var(--light-blue); color: var(--primary-blue); font-weight: 600; border-bottom: 2px solid var(--primary-blue); }
+        td { padding: 1rem; border-bottom: 1px solid var(--border-color); }
+        tr:hover { background: var(--off-white); }
+        .status-success { color: var(--success); font-weight: 600; }
+        .status-warning { color: var(--warning); font-weight: 600; }
+        .status-danger { color: var(--danger); font-weight: 600; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 2000; align-items: center; justify-content: center; }
+        .modal.active { display: flex; }
+        .modal-content { background: white; border-radius: 20px; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; animation: modalSlideUp 0.3s ease; }
+        .modal-header { padding: 1.5rem 2rem; background: var(--light-blue); border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; }
+        .modal-close { background: none; border: none; font-size: 1.5rem; cursor: pointer; width: 36px; height: 36px; border-radius: 8px; }
+        .modal-body { padding: 2rem; }
+        .modal-footer { padding: 1.5rem 2rem; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end; gap: 1rem; background: var(--off-white); }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+        .form-control { width: 100%; padding: 0.8rem 1rem; border-radius: 10px; border: 1px solid var(--border-color); background: var(--off-white); }
+        .notification { position: fixed; top: 90px; right: 20px; padding: 1rem 1.5rem; border-radius: 10px; background: white; box-shadow: var(--shadow-lg); display: flex; align-items: center; gap: 1rem; z-index: 3000; border-left: 4px solid; max-width: 350px; }
+        .notification.success { border-left-color: var(--success); }
+        .notification.error { border-left-color: var(--danger); }
+        .main-footer { background: white; border-top: 1px solid var(--border-color); padding: 1.5rem; text-align: center; color: var(--text-secondary); font-size: 0.9rem; }
+        @media (max-width:768px) { .main-content { padding: 1rem; } .charts-container { grid-template-columns: 1fr; } .animated-title-container { display: none; } .page-header { flex-direction: column; align-items: flex-start; } }
     </style>
 </head>
 <body>
-    <!-- Fixed Header -->
-    <header class="main-header">
-        <div class="logo">
-            <div class="logo-icon">
-                <i class="fas fa-star"></i>
-            </div>
-            <h2>HR-Admin Pro</h2>
-        </div>
-        
-        <div class="animated-title-container">
-            <div class="animated-title">Financial Budget Hub | Cost Analysis | Real-time Tracking</div>
-        </div>
-        
-        <div class="header-right">
-            <!-- Notifications -->
-            <div class="notifications" id="notificationsBtn">
-                <i class="fas fa-bell"></i>
-                <span class="badge">3</span>
-            </div>
-            
-            <!-- Logout Button -->
-            <button class="logout-btn" id="logoutBtn">
-                <i class="fas fa-sign-out-alt"></i>
-                <span>Logout</span>
-            </button>
-            
-            <!-- Hamburger Menu -->
-            <div class="hamburger-menu">
-                <div class="hamburger-btn" id="hamburgerBtn">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-                
-                <!-- Navigation Dropdown -->
-                <div class="nav-dropdown" id="navDropdown">
-                    <div class="nav-grid">
-                        <a href="index.html" class="nav-item">
-                            <i class="fas fa-home"></i>
-                            <span>Dashboard</span>
-                        </a>
-                        <a href="task-centre.html" class="nav-item">
-                            <i class="fas fa-tasks"></i>
-                            <span>Task Centre</span>
-                        </a>
-                        <a href="training.html" class="nav-item">
-                            <i class="fas fa-graduation-cap"></i>
-                            <span>Training</span>
-                        </a>
-                        <a href="vendor-contracts.html" class="nav-item">
-                            <i class="fas fa-file-contract"></i>
-                            <span>Contracts</span>
-                        </a>
-                        <a href="hr-letters.html" class="nav-item">
-                            <i class="fas fa-envelope"></i>
-                            <span>HR Letters</span>
-                        </a>
-                        <a href="upcoming-events.html" class="nav-item">
-                            <i class="fas fa-calendar-alt"></i>
-                            <span>Events</span>
-                        </a>
-                        <a href="cost-analyzer.html" class="nav-item">
-                            <i class="fas fa-chart-line"></i>
-                            <span>Cost Analyzer</span>
-                        </a>
-                        <a href="financial-hub.html" class="nav-item active">
-                            <i class="fas fa-star"></i>
-                            <span>Financial Hub</span>
-                        </a>
-                        <a href="employees.html" class="nav-item">
-                            <i class="fas fa-users"></i>
-                            <span>Employees</span>
-                        </a>
-                        <a href="settings.html" class="nav-item">
-                            <i class="fas fa-cog"></i>
-                            <span>Settings</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Content -->
+    <header class="main-header"><div class="logo"><div class="logo-icon"><i class="fas fa-star"></i></div><h2>HR-Admin Pro</h2></div><div class="animated-title-container"><div class="animated-title">Financial Budget Hub | Cost Analysis | Real-time Tracking | Persistent Storage</div></div><div class="header-right"><div class="notifications" id="notificationsBtn"><i class="fas fa-bell"></i><span class="badge">3</span></div><button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i><span>Logout</span></button><div class="hamburger-menu"><div class="hamburger-btn" id="hamburgerBtn"><span></span><span></span><span></span></div><div class="nav-dropdown" id="navDropdown"><div class="nav-grid"><a href="#" class="nav-item"><i class="fas fa-home"></i><span>Dashboard</span></a><a href="#" class="nav-item"><i class="fas fa-tasks"></i><span>Task Centre</span></a><a href="#" class="nav-item active"><i class="fas fa-star"></i><span>Financial Hub</span></a><a href="#" class="nav-item"><i class="fas fa-users"></i><span>Employees</span></a></div></div></div></div></header>
     <main class="main-content">
-        <!-- Page Header -->
-        <div class="page-header">
-            <div class="header-content">
-                <h1>Financial Budget Hub</h1>
-                <p>Track and analyze costs across all programs</p>
-            </div>
-            <div class="header-actions">
-                <select class="period-selector" id="periodSelect">
-                    <option value="q1">Q1 - Jan to Mar</option>
-                    <option value="q2">Q2 - Apr to Jun</option>
-                    <option value="q3">Q3 - Jul to Sep</option>
-                    <option value="q4" selected>Q4 - Oct to Dec</option>
-                </select>
-                
-                <div class="export-menu">
-                    <button class="btn btn-primary" id="exportBtn">
-                        <i class="fas fa-download"></i> Export
-                    </button>
-                    <div class="export-options" id="exportOptions">
-                        <div class="export-option" data-format="pdf">
-                            <i class="fas fa-file-pdf"></i> PDF Document
-                        </div>
-                        <div class="export-option" data-format="ppt">
-                            <i class="fas fa-file-powerpoint"></i> PowerPoint
-                        </div>
-                        <div class="export-option" data-format="excel">
-                            <i class="fas fa-file-excel"></i> Excel Spreadsheet
-                        </div>
-                        <div class="export-option" data-format="csv">
-                            <i class="fas fa-file-csv"></i> CSV Data
-                        </div>
-                    </div>
-                </div>
-                
-                <button class="btn btn-success" id="addBudgetBtn">
-                    <i class="fas fa-plus-circle"></i> Add Budget
-                </button>
-            </div>
-        </div>
-
-        <!-- Summary Cards -->
-        <section class="cards-container">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Total Budget</h3>
-                    <div class="card-icon">
-                        <i class="fas fa-wallet"></i>
-                    </div>
-                </div>
-                <div class="card-value" id="totalBudget">Ksh 542,800</div>
-                <div class="card-change positive">
-                    <i class="fas fa-arrow-up"></i> 12% vs last period
-                </div>
-            </div>
-            
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Total Expenses</h3>
-                    <div class="card-icon">
-                        <i class="fas fa-receipt"></i>
-                    </div>
-                </div>
-                <div class="card-value" id="totalExpenses">Ksh 487,420</div>
-                <div class="card-change negative">
-                    <i class="fas fa-arrow-up"></i> 8% vs last period
-                </div>
-            </div>
-            
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Remaining Balance</h3>
-                    <div class="card-icon">
-                        <i class="fas fa-piggy-bank"></i>
-                    </div>
-                </div>
-                <div class="card-value" id="remainingBalance">Ksh 55,380</div>
-                <div class="card-change positive">
-                    <i class="fas fa-check-circle"></i> 10.2% of total budget
-                </div>
-            </div>
-            
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Utilization Rate</h3>
-                    <div class="card-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                </div>
-                <div class="card-value" id="utilizationRate">89.8%</div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 89.8%; background-color: #1e40af;"></div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Charts Section -->
-        <section class="charts-container">
-            <div class="chart-card">
-                <div class="chart-header">
-                    <h3><i class="fas fa-chart-bar"></i> Budget vs Expenses by Program</h3>
-                </div>
-                <div class="chart-container">
-                    <canvas id="budgetVsExpenseChart"></canvas>
-                </div>
-            </div>
-            
-            <div class="chart-card">
-                <div class="chart-header">
-                    <h3><i class="fas fa-chart-line"></i> Quarterly Trend Analysis</h3>
-                </div>
-                <div class="chart-container">
-                    <canvas id="quarterlyTrendChart"></canvas>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Data Table -->
-        <section class="data-table-container">
-            <div class="table-header">
-                <h3><i class="fas fa-table"></i> Program-wise Financial Analysis</h3>
-                <button class="btn btn-outline" id="refreshDataBtn">
-                    <i class="fas fa-sync-alt"></i> Refresh Data
-                </button>
-            </div>
-            
-            <table>
-                <thead>
-                    <tr>
-                        <th>Program</th>
-                        <th>Budget</th>
-                        <th>Expenses</th>
-                        <th>Variance</th>
-                        <th>Utilization</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody">
-                    <!-- Table rows will be populated by JavaScript -->
-                </tbody>
-            </table>
-        </section>
+        <div class="page-header"><div class="header-content"><h1>Financial Budget Hub</h1><p>Track, edit, and save new budgets persistently</p></div><div class="header-actions"><select class="period-selector" id="periodSelect"><option value="q1">Q1 - Jan to Mar</option><option value="q2">Q2 - Apr to Jun</option><option value="q3">Q3 - Jul to Sep</option><option value="q4" selected>Q4 - Oct to Dec</option></select><div class="export-menu"><button class="btn btn-primary" id="exportBtn"><i class="fas fa-download"></i> Export</button><div class="export-options" id="exportOptions"><div class="export-option" data-format="excel"><i class="fas fa-file-excel"></i> Excel</div><div class="export-option" data-format="csv"><i class="fas fa-file-csv"></i> CSV</div></div></div><button class="btn btn-success" id="addBudgetBtn"><i class="fas fa-plus-circle"></i> Add Budget</button><button class="btn btn-outline" id="refreshDataBtn"><i class="fas fa-sync-alt"></i> Refresh</button></div></div>
+        <section class="cards-container"><div class="card"><div class="card-header"><h3 class="card-title">Total Budget</h3><div class="card-icon"><i class="fas fa-wallet"></i></div></div><div class="card-value" id="totalBudget">Ksh 0</div><div class="card-change positive"><i class="fas fa-chart-line"></i> Real-time</div></div><div class="card"><div class="card-header"><h3 class="card-title">Total Expenses</h3><div class="card-icon"><i class="fas fa-receipt"></i></div></div><div class="card-value" id="totalExpenses">Ksh 0</div></div><div class="card"><div class="card-header"><h3 class="card-title">Remaining Balance</h3><div class="card-icon"><i class="fas fa-piggy-bank"></i></div></div><div class="card-value" id="remainingBalance">Ksh 0</div></div><div class="card"><div class="card-header"><h3 class="card-title">Utilization Rate</h3><div class="card-icon"><i class="fas fa-chart-line"></i></div></div><div class="card-value" id="utilizationRate">0%</div><div class="progress-bar"><div class="progress-fill" id="utilProgressFill" style="width:0%; background-color:#1e40af;"></div></div></div></section>
+        <section class="charts-container"><div class="chart-card"><div class="chart-header"><h3><i class="fas fa-chart-bar"></i> Budget vs Expenses by Program</h3></div><div class="chart-container"><canvas id="budgetVsExpenseChart"></canvas></div></div><div class="chart-card"><div class="chart-header"><h3><i class="fas fa-chart-line"></i> Quarterly Trend (Expenses)</h3></div><div class="chart-container"><canvas id="quarterlyTrendChart"></canvas></div></div></section>
+        <section class="data-table-container"><div class="table-header"><h3><i class="fas fa-table"></i> Program-wise Financial Analysis (Editable)</h3><span style="font-size:0.8rem; color:gray;"><i class="fas fa-pen"></i> Click on budget/expense cells to edit</span></div><table id="editableTable"><thead><tr><th>Program</th><th>Budget (Ksh)</th><th>Expenses (Ksh)</th><th>Variance</th><th>Utilization</th><th>Status</th></tr></thead><tbody id="tableBody"></tbody></table></section>
     </main>
-    
-    <!-- Footer -->
-    <footer class="main-footer">
-        <div class="footer-content">
-            <p>Manuel-Financial Budget Hub &copy; 2026 | Cost tracking across Training, Events, and Extra Programs</p>
-            <p>Data synchronized across all system pages | Last updated: <span id="lastUpdated">Today, 10:45 AM</span></p>
-        </div>
-    </footer>
-    
-    <!-- Add Budget Modal -->
-    <div class="modal" id="addBudgetModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title"><i class="fas fa-plus-circle"></i> Add New Budget</h3>
-                <button class="modal-close" id="closeModalBtn">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form id="budgetForm">
-                    <div class="form-group">
-                        <label class="form-label">Program Type</label>
-                        <select class="form-control" id="programType" required>
-                            <option value="">Select Program</option>
-                            <option value="training">Training Program</option>
-                            <option value="events">Events Program</option>
-                            <option value="extra">Extra Program</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Budget Name</label>
-                        <input type="text" class="form-control" id="budgetName" placeholder="Enter budget name" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Budget Amount (Ksh)</label>
-                        <input type="number" class="form-control" id="budgetAmount" placeholder="Enter budget amount" required min="0" step="100">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Quarter</label>
-                        <select class="form-control" id="budgetQuarter" required>
-                            <option value="q1">Q1 (Jan - Mar)</option>
-                            <option value="q2">Q2 (Apr - Jun)</option>
-                            <option value="q3">Q3 (Jul - Sep)</option>
-                            <option value="q4" selected>Q4 (Oct - Dec)</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Description</label>
-                        <textarea class="form-control" id="budgetDescription" rows="3" placeholder="Enter budget description"></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-outline" id="cancelBudgetBtn">Cancel</button>
-                <button class="btn btn-primary" id="saveBudgetBtn">Save Budget</button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Notification Container -->
+    <footer class="main-footer"><div class="footer-content"><p>Financial Budget Hub &copy; 2026 | Persistent data storage (localStorage) | Changes auto-save</p><p>Last updated: <span id="lastUpdated">Today</span></p></div></footer>
+    <div class="modal" id="addBudgetModal"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-plus-circle"></i> Add New Budget Entry</h3><button class="modal-close" id="closeModalBtn">&times;</button></div><div class="modal-body"><form id="budgetForm"><div class="form-group"><label class="form-label">Program Type</label><select class="form-control" id="programType" required><option value="">Select</option><option value="training">Training Program</option><option value="events">Events Program</option><option value="extra">Extra Program</option></select></div><div class="form-group"><label class="form-label">Budget Name (optional)</label><input type="text" class="form-control" id="budgetName" placeholder="e.g., Q4 Special Initiative"></div><div class="form-group"><label class="form-label">Budget Amount (Ksh)</label><input type="number" class="form-control" id="budgetAmount" required min="0" step="1000"></div><div class="form-group"><label class="form-label">Expenses Amount (Ksh)</label><input type="number" class="form-control" id="expenseAmount" required min="0" step="1000" value="0"></div><div class="form-group"><label class="form-label">Quarter</label><select class="form-control" id="budgetQuarter"><option value="q1">Q1</option><option value="q2">Q2</option><option value="q3">Q3</option><option value="q4" selected>Q4</option></select></div></form></div><div class="modal-footer"><button class="btn btn-outline" id="cancelBudgetBtn">Cancel</button><button class="btn btn-primary" id="saveBudgetBtn">Save Budget</button></div></div></div>
     <div id="notificationContainer"></div>
-
     <script>
-        // Financial Data
-        const financialData = {
-            q4: {
-                training: { budget: 250000, expenses: 230500 },
-                events: { budget: 185000, expenses: 172000 },
-                extra: { budget: 107800, expenses: 84920 }
-            },
-            q3: {
-                training: { budget: 220000, expenses: 205000 },
-                events: { budget: 160000, expenses: 155000 },
-                extra: { budget: 90000, expenses: 82000 }
-            },
-            q2: {
-                training: { budget: 210000, expenses: 195000 },
-                events: { budget: 150000, expenses: 148000 },
-                extra: { budget: 85000, expenses: 79000 }
-            },
-            q1: {
-                training: { budget: 200000, expenses: 185000 },
-                events: { budget: 140000, expenses: 135000 },
-                extra: { budget: 80000, expenses: 72000 }
-            }
+        // ----- PERSISTENT DATA STRUCTURE -----
+        let financialData = {
+            q1: { training: { budget: 200000, expenses: 185000 }, events: { budget: 140000, expenses: 135000 }, extra: { budget: 80000, expenses: 72000 } },
+            q2: { training: { budget: 210000, expenses: 195000 }, events: { budget: 150000, expenses: 148000 }, extra: { budget: 85000, expenses: 79000 } },
+            q3: { training: { budget: 220000, expenses: 205000 }, events: { budget: 160000, expenses: 155000 }, extra: { budget: 90000, expenses: 82000 } },
+            q4: { training: { budget: 250000, expenses: 230500 }, events: { budget: 185000, expenses: 172000 }, extra: { budget: 107800, expenses: 84920 } }
         };
+        function loadFromLocalStorage() { const stored = localStorage.getItem('hr_financial_hub'); if(stored) { financialData = JSON.parse(stored); } else { saveToLocalStorage(); } }
+        function saveToLocalStorage() { localStorage.setItem('hr_financial_hub', JSON.stringify(financialData)); }
+        loadFromLocalStorage();
 
-        // Chart instances
+        let currentPeriod = 'q4';
         let budgetVsExpenseChart, quarterlyTrendChart;
-        let activeModal = null;
 
-        document.addEventListener('DOMContentLoaded', function() {
-            // Get DOM elements
-            const periodSelect = document.getElementById('periodSelect');
-            const exportBtn = document.getElementById('exportBtn');
-            const exportOptions = document.getElementById('exportOptions');
-            const addBudgetBtn = document.getElementById('addBudgetBtn');
-            const addBudgetModal = document.getElementById('addBudgetModal');
-            const closeModalBtn = document.getElementById('closeModalBtn');
-            const cancelBudgetBtn = document.getElementById('cancelBudgetBtn');
-            const saveBudgetBtn = document.getElementById('saveBudgetBtn');
-            const budgetForm = document.getElementById('budgetForm');
-            const refreshDataBtn = document.getElementById('refreshDataBtn');
-            const hamburgerBtn = document.getElementById('hamburgerBtn');
-            const navDropdown = document.getElementById('navDropdown');
-            const logoutBtn = document.getElementById('logoutBtn');
-            const notificationsBtn = document.getElementById('notificationsBtn');
-            
-            // Current period
-            let currentPeriod = 'q4';
-            
-            // Initialize the dashboard
-            function initDashboard() {
-                updateSummaryCards(currentPeriod);
-                updateFinancialTable(currentPeriod);
-                initializeCharts();
-                updateLastUpdated();
-                animateCards();
-            }
-            
-            // Update summary cards
-            function updateSummaryCards(period) {
-                const data = financialData[period];
-                
-                let totalBudget = 0;
-                let totalExpenses = 0;
-                
-                for (const program in data) {
-                    totalBudget += data[program].budget;
-                    totalExpenses += data[program].expenses;
-                }
-                
-                const remainingBalance = totalBudget - totalExpenses;
-                const utilizationRate = ((totalExpenses / totalBudget) * 100).toFixed(1);
-                
-                document.getElementById('totalBudget').textContent = 'Ksh ' + numberWithCommas(totalBudget);
-                document.getElementById('totalExpenses').textContent = 'Ksh ' + numberWithCommas(totalExpenses);
-                document.getElementById('remainingBalance').textContent = 'Ksh ' + numberWithCommas(remainingBalance);
-                document.getElementById('utilizationRate').textContent = utilizationRate + '%';
-                
-                const progressFill = document.querySelector('.card:last-child .progress-fill');
-                if (progressFill) {
-                    progressFill.style.width = utilizationRate + '%';
-                    
-                    if (parseFloat(utilizationRate) > 95) {
-                        progressFill.style.backgroundColor = '#ef4444';
-                    } else if (parseFloat(utilizationRate) > 85) {
-                        progressFill.style.backgroundColor = '#f59e0b';
-                    } else {
-                        progressFill.style.backgroundColor = '#1e40af';
-                    }
-                }
-            }
-            
-            // Update financial table
-            function updateFinancialTable(period) {
-                const data = financialData[period];
-                const tableBody = document.getElementById('tableBody');
-                
-                if (!tableBody) return;
-                
-                tableBody.innerHTML = '';
-                
-                for (const program in data) {
-                    const programData = data[program];
-                    const variance = programData.budget - programData.expenses;
-                    const utilization = ((programData.expenses / programData.budget) * 100).toFixed(1);
-                    
-                    let status = '';
-                    let statusClass = '';
-                    
-                    if (utilization > 95) {
-                        status = 'Over Budget';
-                        statusClass = 'status-danger';
-                    } else if (utilization > 85) {
-                        status = 'Watch';
-                        statusClass = 'status-warning';
-                    } else {
-                        status = 'On Track';
-                        statusClass = 'status-success';
-                    }
-                    
-                    const programName = program.charAt(0).toUpperCase() + program.slice(1) + ' Program';
-                    
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${programName}</td>
-                        <td>Ksh ${numberWithCommas(programData.budget)}</td>
-                        <td>Ksh ${numberWithCommas(programData.expenses)}</td>
-                        <td>Ksh ${numberWithCommas(variance)}</td>
-                        <td>
-                            <div style="display: flex; align-items: center; gap: 10px;">
-                                <span>${utilization}%</span>
-                                <div class="progress-bar" style="flex-grow: 1;">
-                                    <div class="progress-fill" style="width: ${utilization}%; background-color: ${getStatusColor(utilization)};"></div>
-                                </div>
-                            </div>
-                        </td>
-                        <td><span class="${statusClass}">${status}</span></td>
-                    `;
-                    
-                    tableBody.appendChild(row);
-                }
-            }
-            
-            function getStatusColor(utilization) {
-                if (parseFloat(utilization) > 95) return '#ef4444';
-                if (parseFloat(utilization) > 85) return '#f59e0b';
-                return '#1e40af';
-            }
-            
-            function initializeCharts() {
-                const budgetCtx = document.getElementById('budgetVsExpenseChart')?.getContext('2d');
-                if (budgetCtx) {
-                    budgetVsExpenseChart = new Chart(budgetCtx, {
-                        type: 'bar',
-                        data: {
-                            labels: ['Training', 'Events', 'Extra'],
-                            datasets: [
-                                {
-                                    label: 'Budget',
-                                    data: [
-                                        financialData.q4.training.budget,
-                                        financialData.q4.events.budget,
-                                        financialData.q4.extra.budget
-                                    ],
-                                    backgroundColor: 'rgba(30, 64, 175, 0.7)',
-                                    borderColor: '#1e40af',
-                                    borderWidth: 1
-                                },
-                                {
-                                    label: 'Expenses',
-                                    data: [
-                                        financialData.q4.training.expenses,
-                                        financialData.q4.events.expenses,
-                                        financialData.q4.extra.expenses
-                                    ],
-                                    backgroundColor: 'rgba(185, 28, 28, 0.7)',
-                                    borderColor: '#b91c1c',
-                                    borderWidth: 1
-                                }
-                            ]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            scales: {
-                                y: {
-                                    beginAtZero: true,
-                                    ticks: {
-                                        callback: function(value) {
-                                            return 'Ksh ' + numberWithCommas(value);
-                                        }
-                                    },
-                                    grid: { color: 'rgba(0,0,0,0.05)' }
-                                },
-                                x: { grid: { display: false } }
-                            },
-                            plugins: {
-                                legend: { labels: { color: '#475569' } },
-                                tooltip: {
-                                    callbacks: {
-                                        label: function(context) {
-                                            return context.dataset.label + ': Ksh ' + numberWithCommas(context.parsed.y);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    });
-                }
-                
-                const trendCtx = document.getElementById('quarterlyTrendChart')?.getContext('2d');
-                if (trendCtx) {
-                    quarterlyTrendChart = new Chart(trendCtx, {
-                        type: 'line',
-                        data: {
-                            labels: ['Q1', 'Q2', 'Q3', 'Q4'],
-                            datasets: [
-                                {
-                                    label: 'Training',
-                                    data: [
-                                        financialData.q1.training.expenses,
-                                        financialData.q2.training.expenses,
-                                        financialData.q3.training.expenses,
-                                        financialData.q4.training.expenses
-                                    ],
-                                    borderColor: '#1e40af',
-                                    backgroundColor: 'rgba(30, 64, 175, 0.1)',
-                                    borderWidth: 3,
-                                    tension: 0.3,
-                                    fill: true
-                                },
-                                {
-                                    label: 'Events',
-                                    data: [
-                                        financialData.q1.events.expenses,
-                                        financialData.q2.events.expenses,
-                                        financialData.q3.events.expenses,
-                                        financialData.q4.events.expenses
-                                    ],
-                                    borderColor: '#b91c1c',
-                                    backgroundColor: 'rgba(185, 28, 28, 0.1)',
-                                    borderWidth: 3,
-                                    tension: 0.3,
-                                    fill: true
-                                },
-                                {
-                                    label: 'Extra',
-                                    data: [
-                                        financialData.q1.extra.expenses,
-                                        financialData.q2.extra.expenses,
-                                        financialData.q3.extra.expenses,
-                                        financialData.q4.extra.expenses
-                                    ],
-                                    borderColor: '#3b82f6',
-                                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                                    borderWidth: 3,
-                                    tension: 0.3,
-                                    fill: true
-                                }
-                            ]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            scales: {
-                                y: {
-                                    beginAtZero: true,
-                                    ticks: {
-                                        callback: function(value) {
-                                            return 'Ksh ' + numberWithCommas(value);
-                                        }
-                                    },
-                                    grid: { color: 'rgba(0,0,0,0.05)' }
-                                },
-                                x: { grid: { display: false } }
-                            },
-                            plugins: {
-                                legend: { labels: { color: '#475569' } },
-                                tooltip: {
-                                    callbacks: {
-                                        label: function(context) {
-                                            return context.dataset.label + ': Ksh ' + numberWithCommas(context.parsed.y);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    });
-                }
-            }
-            
-            function updateCharts(period) {
-                if (budgetVsExpenseChart) {
-                    budgetVsExpenseChart.data.datasets[0].data = [
-                        financialData[period].training.budget,
-                        financialData[period].events.budget,
-                        financialData[period].extra.budget
-                    ];
-                    budgetVsExpenseChart.data.datasets[1].data = [
-                        financialData[period].training.expenses,
-                        financialData[period].events.expenses,
-                        financialData[period].extra.expenses
-                    ];
-                    budgetVsExpenseChart.update();
-                }
-            }
-            
-            function saveBudget() {
-                const programType = document.getElementById('programType')?.value;
-                const budgetName = document.getElementById('budgetName')?.value;
-                const budgetAmount = document.getElementById('budgetAmount')?.value;
-                
-                if (!programType || !budgetName || !budgetAmount) {
-                    showNotification('Please fill in all required fields', 'error');
-                    return;
-                }
-                
-                showNotification(`Budget "${budgetName}" added successfully!`, 'success');
-                closeModal('addBudgetModal');
-                if (budgetForm) budgetForm.reset();
-                updateLastUpdated();
-            }
-            
-            function refreshData() {
-                const refreshBtn = document.getElementById('refreshDataBtn');
-                refreshBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Refreshing...';
-                refreshBtn.disabled = true;
-                
-                setTimeout(() => {
-                    updateLastUpdated();
-                    refreshBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh Data';
-                    refreshBtn.disabled = false;
-                    showNotification('Data refreshed successfully!', 'success');
-                }, 1500);
-            }
-            
-            function exportReport(format) {
-                switch(format) {
-                    case 'excel': generateExcel(); break;
-                    case 'csv': generateCSV(); break;
-                    default: showNotification(`${format.toUpperCase()} export started!`, 'info');
-                }
-            }
-            
-            function generateExcel() {
-                const currentPeriod = document.getElementById('periodSelect')?.value || 'q4';
-                const data = financialData[currentPeriod];
-                
-                const wsData = [
-                    ['Program', 'Budget (Ksh)', 'Expenses (Ksh)', 'Variance (Ksh)', 'Utilization %', 'Status'],
-                ];
-                
-                for (const program in data) {
-                    const programData = data[program];
-                    const variance = programData.budget - programData.expenses;
-                    const utilization = ((programData.expenses / programData.budget) * 100).toFixed(1);
-                    let status = utilization > 95 ? 'Over Budget' : (utilization > 85 ? 'Watch' : 'On Track');
-                    
-                    wsData.push([
-                        program.charAt(0).toUpperCase() + program.slice(1) + ' Program',
-                        programData.budget,
-                        programData.expenses,
-                        variance,
-                        utilization,
-                        status
-                    ]);
-                }
-                
-                const ws = XLSX.utils.aoa_to_sheet(wsData);
-                const wb = XLSX.utils.book_new();
-                XLSX.utils.book_append_sheet(wb, ws, "Budget Analysis");
-                XLSX.writeFile(wb, `budget_analysis_${currentPeriod}.xlsx`);
-            }
-            
-            function generateCSV() {
-                const currentPeriod = document.getElementById('periodSelect')?.value || 'q4';
-                const data = financialData[currentPeriod];
-                
-                let csvContent = "Program,Budget (Ksh),Expenses (Ksh),Variance (Ksh),Utilization %,Status\n";
-                
-                for (const program in data) {
-                    const programData = data[program];
-                    const variance = programData.budget - programData.expenses;
-                    const utilization = ((programData.expenses / programData.budget) * 100).toFixed(1);
-                    let status = utilization > 95 ? 'Over Budget' : (utilization > 85 ? 'Watch' : 'On Track');
-                    
-                    csvContent += `"${program.charAt(0).toUpperCase() + program.slice(1)} Program",${programData.budget},${programData.expenses},${variance},${utilization},"${status}"\n`;
-                }
-                
-                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-                const url = URL.createObjectURL(blob);
-                const link = document.createElement('a');
-                link.href = url;
-                link.setAttribute('download', `budget_analysis_${currentPeriod}.csv`);
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            }
-            
-            function openModal(modalId) {
-                const modal = document.getElementById(modalId);
-                if (modal) {
-                    modal.classList.add('active');
-                    activeModal = modalId;
-                    document.body.style.overflow = 'hidden';
-                }
-            }
-            
-            function closeModal(modalId) {
-                const modal = document.getElementById(modalId);
-                if (modal) {
-                    modal.classList.remove('active');
-                    activeModal = null;
-                    document.body.style.overflow = 'auto';
-                }
-            }
-            
-            function toggleHamburger() {
-                if (hamburgerBtn && navDropdown) {
-                    hamburgerBtn.classList.toggle('active');
-                    navDropdown.classList.toggle('active');
-                }
-            }
-            
-            function closeHamburger() {
-                if (hamburgerBtn && navDropdown) {
-                    hamburgerBtn.classList.remove('active');
-                    navDropdown.classList.remove('active');
-                }
-            }
-            
-            function logout() {
-                if (confirm('Are you sure you want to logout?')) {
-                    showNotification('Logging out...', 'info');
-                    setTimeout(() => {
-                        window.location.href = 'login.html';
-                    }, 1000);
-                }
-            }
-            
-            function updateLastUpdated() {
-                const lastUpdatedEl = document.getElementById('lastUpdated');
-                if (lastUpdatedEl) {
-                    const now = new Date();
-                    lastUpdatedEl.textContent = now.toLocaleDateString('en-US', { 
-                        weekday: 'long', 
-                        hour: '2-digit', 
-                        minute: '2-digit'
-                    });
-                }
-            }
-            
-            function showNotification(message, type = 'info') {
-                const container = document.getElementById('notificationContainer');
-                if (!container) return;
-                
-                const existingNotifications = container.querySelectorAll('.notification');
-                existingNotifications.forEach(notif => notif.remove());
-                
-                const notification = document.createElement('div');
-                notification.className = `notification ${type}`;
-                
-                let icon = 'info-circle';
-                if (type === 'success') icon = 'check-circle';
-                if (type === 'error') icon = 'exclamation-circle';
-                
-                notification.innerHTML = `<i class="fas fa-${icon}"></i><span>${message}</span>`;
-                container.appendChild(notification);
-                
-                setTimeout(() => {
-                    notification.remove();
-                }, 3000);
-            }
-            
-            function animateCards() {
-                const cards = document.querySelectorAll('.card');
-                cards.forEach((card, index) => {
-                    card.style.opacity = '0';
-                    card.style.transform = 'translateY(20px)';
-                    
-                    setTimeout(() => {
-                        card.style.transition = 'opacity 0.5s, transform 0.5s';
-                        card.style.opacity = '1';
-                        card.style.transform = 'translateY(0)';
-                    }, 100 * index);
-                });
-            }
-            
-            function numberWithCommas(x) {
-                return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            }
-            
-            // Event Listeners
-            if (periodSelect) {
-                periodSelect.addEventListener('change', function() {
-                    currentPeriod = this.value;
-                    updateSummaryCards(currentPeriod);
-                    updateFinancialTable(currentPeriod);
-                    updateCharts(currentPeriod);
-                });
-            }
-            
-            if (exportBtn && exportOptions) {
-                exportBtn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    exportOptions.classList.toggle('show');
-                });
-                
-                document.querySelectorAll('.export-option').forEach(option => {
-                    option.addEventListener('click', function() {
-                        const format = this.getAttribute('data-format');
-                        exportReport(format);
-                        exportOptions.classList.remove('show');
-                    });
-                });
-            }
-            
-            if (addBudgetBtn) {
-                addBudgetBtn.addEventListener('click', () => openModal('addBudgetModal'));
-            }
-            
-            if (closeModalBtn) {
-                closeModalBtn.addEventListener('click', () => closeModal('addBudgetModal'));
-            }
-            
-            if (cancelBudgetBtn) {
-                cancelBudgetBtn.addEventListener('click', () => {
-                    closeModal('addBudgetModal');
-                    if (budgetForm) budgetForm.reset();
-                });
-            }
-            
-            if (saveBudgetBtn) {
-                saveBudgetBtn.addEventListener('click', saveBudget);
-            }
-            
-            if (refreshDataBtn) {
-                refreshDataBtn.addEventListener('click', refreshData);
-            }
-            
-            if (hamburgerBtn) {
-                hamburgerBtn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    toggleHamburger();
-                });
-            }
-            
-            if (logoutBtn) {
-                logoutBtn.addEventListener('click', logout);
-            }
-            
-            if (notificationsBtn) {
-                notificationsBtn.addEventListener('click', function() {
-                    showNotification('No new notifications', 'info');
-                });
-            }
-            
-            // Close dropdowns when clicking outside
-            document.addEventListener('click', function(event) {
-                if (hamburgerBtn && navDropdown) {
-                    if (!hamburgerBtn.contains(event.target) && !navDropdown.contains(event.target)) {
-                        closeHamburger();
-                    }
-                }
-                
-                if (exportBtn && exportOptions) {
-                    if (!exportBtn.contains(event.target) && !exportOptions.contains(event.target)) {
-                        exportOptions.classList.remove('show');
-                    }
-                }
+        // Helper functions
+        function numberWithCommas(x) { return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
+        function showNotification(msg, type='info') { const cont = document.getElementById('notificationContainer'); if(!cont) return; const notif = document.createElement('div'); notif.className = `notification ${type}`; let icon = 'info-circle'; if(type==='success') icon='check-circle'; if(type==='error') icon='exclamation-circle'; notif.innerHTML = `<i class="fas fa-${icon}"></i><span>${msg}</span>`; cont.appendChild(notif); setTimeout(()=>notif.remove(), 3000); }
+
+        function updateAllUI() {
+            updateSummaryCards(currentPeriod);
+            updateFinancialTable(currentPeriod);
+            updateChartsForPeriod(currentPeriod);
+            updateLastUpdatedTime();
+        }
+        function updateSummaryCards(period) {
+            const data = financialData[period];
+            let totalBudget=0, totalExpenses=0;
+            for(let prog in data) { totalBudget += data[prog].budget; totalExpenses += data[prog].expenses; }
+            const remaining = totalBudget - totalExpenses;
+            const util = totalBudget === 0 ? 0 : ((totalExpenses/totalBudget)*100).toFixed(1);
+            document.getElementById('totalBudget').innerHTML = `Ksh ${numberWithCommas(totalBudget)}`;
+            document.getElementById('totalExpenses').innerHTML = `Ksh ${numberWithCommas(totalExpenses)}`;
+            document.getElementById('remainingBalance').innerHTML = `Ksh ${numberWithCommas(remaining)}`;
+            document.getElementById('utilizationRate').innerHTML = `${util}%`;
+            const fill = document.getElementById('utilProgressFill');
+            if(fill) { fill.style.width = `${util}%`; fill.style.backgroundColor = parseFloat(util) > 90 ? '#ef4444' : (parseFloat(util) > 75 ? '#f59e0b' : '#1e40af'); }
+        }
+        function updateFinancialTable(period) {
+            const data = financialData[period];
+            const tbody = document.getElementById('tableBody');
+            if(!tbody) return;
+            tbody.innerHTML = '';
+            const programs = ['training','events','extra'];
+            programs.forEach(prog => {
+                const progData = data[prog];
+                const variance = progData.budget - progData.expenses;
+                const utilization = progData.budget === 0 ? 0 : ((progData.expenses / progData.budget)*100).toFixed(1);
+                let statusClass = 'status-success', statusText = 'On Track';
+                if(utilization > 95) { statusClass = 'status-danger'; statusText = 'Over Budget'; }
+                else if(utilization > 85) { statusClass = 'status-warning'; statusText = 'Watch'; }
+                const row = document.createElement('tr');
+                row.setAttribute('data-program', prog);
+                row.innerHTML = `
+                    <td>${prog.charAt(0).toUpperCase() + prog.slice(1)} Program</td>
+                    <td class="editable-budget" contenteditable="true" data-field="budget">${numberWithCommas(progData.budget)}</td>
+                    <td class="editable-expenses" contenteditable="true" data-field="expenses">${numberWithCommas(progData.expenses)}</td>
+                    <td>Ksh ${numberWithCommas(variance)}</td>
+                    <td><div style="display:flex; align-items:center; gap:8px;"><span>${utilization}%</span><div class="progress-bar" style="flex:1"><div class="progress-fill" style="width:${utilization}%; background-color:${getStatusColor(utilization)};"></div></div></div></td>
+                    <td><span class="${statusClass}">${statusText}</span></td>
+                `;
+                tbody.appendChild(row);
             });
-            
-            // Close modal when clicking outside
-            document.querySelectorAll('.modal').forEach(modal => {
-                modal.addEventListener('click', function(e) {
-                    if (e.target === modal) {
-                        closeModal(modal.id);
-                    }
-                });
+            attachInlineEditors();
+        }
+        function getStatusColor(util) { if(util>95) return '#ef4444'; if(util>85) return '#f59e0b'; return '#1e40af'; }
+        function attachInlineEditors() {
+            document.querySelectorAll('.editable-budget, .editable-expenses').forEach(cell => {
+                cell.removeEventListener('blur', handleInlineEdit);
+                cell.addEventListener('blur', handleInlineEdit);
             });
-            
-            // Keyboard events
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    if (activeModal) {
-                        closeModal(activeModal);
-                    }
-                    closeHamburger();
-                }
-            });
-            
-            // Initialize
-            initDashboard();
+        }
+        function handleInlineEdit(e) {
+            const cell = e.target;
+            const rawValue = cell.innerText.replace(/,/g, '').trim();
+            let newValue = parseInt(rawValue, 10);
+            if(isNaN(newValue)) newValue = 0;
+            const field = cell.getAttribute('data-field'); // budget or expenses
+            const row = cell.closest('tr');
+            const program = row.getAttribute('data-program');
+            if(!program || !financialData[currentPeriod]?.[program]) return;
+            if(field === 'budget') financialData[currentPeriod][program].budget = newValue;
+            else if(field === 'expenses') financialData[currentPeriod][program].expenses = newValue;
+            saveToLocalStorage();
+            updateAllUI();
+            showNotification(`${program} ${field} updated to Ksh ${numberWithCommas(newValue)}`, 'success');
+        }
+        function updateChartsForPeriod(period) {
+            const data = financialData[period];
+            if(budgetVsExpenseChart) {
+                budgetVsExpenseChart.data.datasets[0].data = [data.training.budget, data.events.budget, data.extra.budget];
+                budgetVsExpenseChart.data.datasets[1].data = [data.training.expenses, data.events.expenses, data.extra.expenses];
+                budgetVsExpenseChart.update();
+            }
+        }
+        function initializeCharts() {
+            const ctxBar = document.getElementById('budgetVsExpenseChart').getContext('2d');
+            const data = financialData.q4;
+            budgetVsExpenseChart = new Chart(ctxBar, { type:'bar', data:{ labels:['Training','Events','Extra'], datasets:[{ label:'Budget', data:[data.training.budget, data.events.budget, data.extra.budget], backgroundColor:'rgba(30,64,175,0.7)', borderColor:'#1e40af', borderWidth:1 },{ label:'Expenses', data:[data.training.expenses, data.events.expenses, data.extra.expenses], backgroundColor:'rgba(185,28,28,0.7)', borderColor:'#b91c1c' }] }, options:{ responsive:true, maintainAspectRatio:false, scales:{ y:{ ticks:{ callback:(val)=>'Ksh '+numberWithCommas(val) } } } } });
+            const ctxLine = document.getElementById('quarterlyTrendChart').getContext('2d');
+            quarterlyTrendChart = new Chart(ctxLine, { type:'line', data:{ labels:['Q1','Q2','Q3','Q4'], datasets:[{ label:'Training', data:[financialData.q1.training.expenses, financialData.q2.training.expenses, financialData.q3.training.expenses, financialData.q4.training.expenses], borderColor:'#1e40af', tension:0.3, fill:false },{ label:'Events', data:[financialData.q1.events.expenses, financialData.q2.events.expenses, financialData.q3.events.expenses, financialData.q4.events.expenses], borderColor:'#b91c1c', tension:0.3 },{ label:'Extra', data:[financialData.q1.extra.expenses, financialData.q2.extra.expenses, financialData.q3.extra.expenses, financialData.q4.extra.expenses], borderColor:'#3b82f6', tension:0.3 }] }, options:{ responsive:true, maintainAspectRatio:false, scales:{ y:{ ticks:{ callback:(val)=>'Ksh '+numberWithCommas(val) } } } } });
+        }
+        function updateFullTrendChart() {
+            if(quarterlyTrendChart) {
+                quarterlyTrendChart.data.datasets[0].data = [financialData.q1.training.expenses, financialData.q2.training.expenses, financialData.q3.training.expenses, financialData.q4.training.expenses];
+                quarterlyTrendChart.data.datasets[1].data = [financialData.q1.events.expenses, financialData.q2.events.expenses, financialData.q3.events.expenses, financialData.q4.events.expenses];
+                quarterlyTrendChart.data.datasets[2].data = [financialData.q1.extra.expenses, financialData.q2.extra.expenses, financialData.q3.extra.expenses, financialData.q4.extra.expenses];
+                quarterlyTrendChart.update();
+            }
+        }
+        function updateLastUpdatedTime() { const now = new Date(); document.getElementById('lastUpdated').innerText = now.toLocaleString(); }
+        function addNewBudgetEntry() {
+            const program = document.getElementById('programType').value;
+            const budgetAmount = parseFloat(document.getElementById('budgetAmount').value);
+            const expenseAmount = parseFloat(document.getElementById('expenseAmount').value);
+            const quarter = document.getElementById('budgetQuarter').value;
+            if(!program || isNaN(budgetAmount) || budgetAmount<0 || isNaN(expenseAmount)) { showNotification('Please select program and enter valid numbers', 'error'); return false; }
+            if(!financialData[quarter]) financialData[quarter] = { training:{budget:0,expenses:0}, events:{budget:0,expenses:0}, extra:{budget:0,expenses:0} };
+            if(!financialData[quarter][program]) financialData[quarter][program] = { budget:0, expenses:0 };
+            financialData[quarter][program].budget = budgetAmount;
+            financialData[quarter][program].expenses = expenseAmount;
+            saveToLocalStorage();
+            if(currentPeriod === quarter) updateAllUI();
+            else { updateSummaryCards(currentPeriod); updateFinancialTable(currentPeriod); updateChartsForPeriod(currentPeriod); }
+            updateFullTrendChart();
+            showNotification(`Added ${program} budget: Ksh ${numberWithCommas(budgetAmount)} for ${quarter.toUpperCase()}`, 'success');
+            return true;
+        }
+        function generateExcel() { const data = financialData[currentPeriod]; const wsData = [['Program','Budget (Ksh)','Expenses (Ksh)','Variance','Utilization %','Status']]; for(let prog in data){ const d=data[prog]; const varian=d.budget-d.expenses; const util=((d.expenses/d.budget)*100).toFixed(1); let status=util>95?'Over Budget':(util>85?'Watch':'On Track'); wsData.push([prog.charAt(0).toUpperCase()+prog.slice(1), d.budget, d.expenses, varian, util, status]); } const wb=XLSX.utils.book_new(); const ws=XLSX.utils.aoa_to_sheet(wsData); XLSX.utils.book_append_sheet(wb,ws,'Budget'); XLSX.writeFile(wb,`budget_${currentPeriod}.xlsx`); showNotification('Excel exported','success'); }
+        function generateCSV(){ const data=financialData[currentPeriod]; let csv="Program,Budget,Expenses,Variance,Utilization%,Status\n"; for(let prog in data){ const d=data[prog]; const varian=d.budget-d.expenses; const util=((d.expenses/d.budget)*100).toFixed(1); let status=util>95?'Over Budget':(util>85?'Watch':'On Track'); csv+=`${prog},${d.budget},${d.expenses},${varian},${util},${status}\n`; } const blob=new Blob([csv],{type:'text/csv'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`budget_${currentPeriod}.csv`; a.click(); showNotification('CSV exported','success'); }
+        function openModal(){ document.getElementById('addBudgetModal').classList.add('active'); document.body.style.overflow='hidden'; }
+        function closeModal(){ document.getElementById('addBudgetModal').classList.remove('active'); document.body.style.overflow='auto'; document.getElementById('budgetForm').reset(); }
+        function refreshData(){ updateAllUI(); updateFullTrendChart(); showNotification('Data refreshed from storage','success'); }
+        let activeModal=false;
+        document.addEventListener('DOMContentLoaded',()=>{
+            initializeCharts(); updateAllUI(); updateFullTrendChart();
+            document.getElementById('periodSelect').addEventListener('change',(e)=>{ currentPeriod=e.target.value; updateAllUI(); });
+            document.getElementById('exportBtn').addEventListener('click',(e)=>{ e.stopPropagation(); document.getElementById('exportOptions').classList.toggle('show'); });
+            document.querySelectorAll('.export-option').forEach(opt=>{ opt.addEventListener('click',()=>{ const fmt=opt.getAttribute('data-format'); if(fmt==='excel') generateExcel(); else if(fmt==='csv') generateCSV(); document.getElementById('exportOptions').classList.remove('show'); }); });
+            document.getElementById('addBudgetBtn').addEventListener('click',openModal);
+            document.getElementById('closeModalBtn').addEventListener('click',closeModal);
+            document.getElementById('cancelBudgetBtn').addEventListener('click',closeModal);
+            document.getElementById('saveBudgetBtn').addEventListener('click',()=>{ if(addNewBudgetEntry()) closeModal(); });
+            document.getElementById('refreshDataBtn').addEventListener('click',refreshData);
+            document.getElementById('logoutBtn').addEventListener('click',()=>{ if(confirm('Logout?')) showNotification('Logged out (demo)','info'); });
+            document.getElementById('notificationsBtn').addEventListener('click',()=>showNotification('All financial data synced','info'));
+            const hamburgerBtn=document.getElementById('hamburgerBtn'),navDropdown=document.getElementById('navDropdown');
+            hamburgerBtn.addEventListener('click',(e)=>{ e.stopPropagation(); hamburgerBtn.classList.toggle('active'); navDropdown.classList.toggle('active'); });
+            document.addEventListener('click',(e)=>{ if(!hamburgerBtn.contains(e.target)&&!navDropdown.contains(e.target)){ hamburgerBtn.classList.remove('active'); navDropdown.classList.remove('active'); } if(!document.getElementById('exportBtn')?.contains(e.target)&&!document.getElementById('exportOptions')?.contains(e.target)) document.getElementById('exportOptions')?.classList.remove('show'); });
+            document.querySelectorAll('.modal').forEach(modal=>{ modal.addEventListener('click',(e)=>{ if(e.target===modal) closeModal(); }); });
+            document.addEventListener('keydown',(e)=>{ if(e.key==='Escape') closeModal(); });
         });
     </script>
 </body>
