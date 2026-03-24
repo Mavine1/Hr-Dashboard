@@ -47,91 +47,374 @@
         .logout-btn { background: var(--primary-blue); color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 10px; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; cursor: pointer; transition: 0.2s; }
         .logout-btn:hover { background: var(--dark-blue); transform: translateY(-2px); }
         .hamburger-menu { position: relative; }
-        .hamburger-btn { width: 40px; height: 40px; background: var(--off-white); border: 1px solid var(--border-color); border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer; }
-        .hamburger-btn span { width: 18px; height: 2px; background: var(--primary-blue); border-radius: 2px; transition: 0.3s; }
+        .hamburger-btn { width: 40px; height: 40px; background: var(--off-white); border: 1px solid var(--border-color); border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer; transition: all 0.2s; }
+        .hamburger-btn:hover { background: var(--light-blue); border-color: var(--primary-blue); }
+        .hamburger-btn span { width: 18px; height: 2px; background: var(--primary-blue); border-radius: 2px; transition: all 0.3s; }
         .hamburger-btn.active span:nth-child(1) { transform: rotate(45deg) translate(4px,4px); }
         .hamburger-btn.active span:nth-child(2) { opacity: 0; }
         .hamburger-btn.active span:nth-child(3) { transform: rotate(-45deg) translate(4px,-4px); }
         .nav-dropdown { position: absolute; top: 50px; right: 0; width: 280px; background: white; border-radius: 16px; padding: 1rem; box-shadow: var(--shadow-lg); border: 1px solid var(--border-color); opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.3s; z-index: 1000; }
         .nav-dropdown.active { opacity: 1; visibility: visible; transform: translateY(0); }
         .nav-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 0.5rem; }
-        .nav-item { background: var(--off-white); border: 1px solid var(--border-color); border-radius: 10px; padding: 1rem 0.5rem; text-align: center; cursor: pointer; transition: 0.2s; text-decoration: none; color: var(--text-secondary); }
+        .nav-item { background: var(--off-white); border: 1px solid var(--border-color); border-radius: 10px; padding: 1rem 0.5rem; text-align: center; cursor: pointer; transition: all 0.2s; text-decoration: none; color: var(--text-secondary); }
+        .nav-item:hover { background: var(--light-blue); border-color: var(--primary-blue); transform: translateY(-2px); }
         .nav-item i { font-size: 1.2rem; color: var(--primary-blue); margin-bottom: 0.3rem; display: block; }
-        .nav-item span { font-size: 0.75rem; font-weight: 500; }
+        .nav-item span { font-size: 0.75rem; font-weight: 500; display: block; line-height: 1.3; }
         .nav-item.active { background: var(--primary-blue); color: white; }
         .nav-item.active i { color: white; }
         .main-content { margin-top: 90px; padding: 2rem; }
-        .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding: 1.5rem 2rem; background: white; border-radius: 16px; border: 1px solid var(--border-color); flex-wrap: wrap; gap: 1rem; }
-        .header-content h1 { font-size: 1.8rem; font-weight: 700; }
-        .header-content p { color: var(--text-secondary); }
+        .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding: 1.5rem 2rem; background: white; border-radius: 16px; border: 1px solid var(--border-color); flex-wrap: wrap; gap: 1rem; box-shadow: var(--shadow-sm); }
+        .header-content h1 { font-size: 1.8rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.3rem; }
+        .header-content p { color: var(--text-secondary); font-size: 0.95rem; }
         .header-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-        .btn { padding: 0.7rem 1.5rem; border-radius: 10px; font-weight: 600; font-size: 0.9rem; cursor: pointer; display: inline-flex; align-items: center; gap: 0.6rem; background: white; border: 1px solid var(--border-color); transition: 0.2s; }
+        .btn { padding: 0.7rem 1.5rem; border-radius: 10px; font-weight: 600; font-size: 0.9rem; cursor: pointer; display: inline-flex; align-items: center; gap: 0.6rem; background: white; border: 1px solid var(--border-color); transition: all 0.2s ease; }
         .btn-primary { background: var(--primary-blue); color: white; border: none; }
-        .btn-primary:hover { background: var(--dark-blue); transform: translateY(-2px); }
+        .btn-primary:hover { background: var(--dark-blue); transform: translateY(-2px); box-shadow: var(--shadow-md); }
         .btn-success { background: var(--success); color: white; border: none; }
+        .btn-success:hover { background: #0b8e5e; transform: translateY(-2px); }
         .btn-outline { background: transparent; }
+        .btn-outline:hover { background: var(--off-white); border-color: var(--medium-gray); }
         .period-selector { padding: 0.6rem 1.2rem; border-radius: 10px; border: 1px solid var(--border-color); background: var(--off-white); font-weight: 500; cursor: pointer; }
         .export-menu { position: relative; }
-        .export-options { position: absolute; top: 100%; right: 0; background: white; border-radius: 10px; padding: 0.5rem; min-width: 200px; box-shadow: var(--shadow-lg); display: none; z-index: 100; margin-top: 0.5rem; }
+        .export-options { position: absolute; top: 100%; right: 0; background: white; border-radius: 10px; padding: 0.5rem; min-width: 200px; box-shadow: var(--shadow-lg); display: none; z-index: 100; margin-top: 0.5rem; border: 1px solid var(--border-color); }
         .export-options.show { display: block; }
-        .export-option { display: flex; align-items: center; gap: 0.8rem; padding: 0.8rem 1rem; cursor: pointer; border-radius: 8px; color: var(--text-secondary); }
+        .export-option { display: flex; align-items: center; gap: 0.8rem; padding: 0.8rem 1rem; cursor: pointer; border-radius: 8px; transition: all 0.2s; color: var(--text-secondary); }
         .export-option:hover { background: var(--light-blue); color: var(--primary-blue); }
+        .export-option i { color: var(--primary-blue); }
         .cards-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 1.5rem; margin-bottom: 2rem; }
-        .card { background: white; border-radius: 16px; padding: 1.5rem; border: 1px solid var(--border-color); transition: 0.3s; }
-        .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+        .card { background: white; border-radius: 16px; padding: 1.5rem; border: 1px solid var(--border-color); transition: all 0.3s ease; box-shadow: var(--shadow-sm); }
+        .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--primary-blue); }
         .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
-        .card-title { font-weight: 600; color: var(--text-secondary); }
+        .card-title { font-weight: 600; color: var(--text-secondary); font-size: 1rem; }
         .card-icon { width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; background: var(--light-blue); }
         .card-icon i { font-size: 1.3rem; color: var(--primary-blue); }
-        .card-value { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .card-value { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-primary); }
+        .card-change { font-size: 0.85rem; display: flex; align-items: center; gap: 0.3rem; }
+        .positive { color: var(--success); }
+        .negative { color: var(--danger); }
         .progress-bar { width: 100%; height: 8px; background: var(--light-gray); border-radius: 4px; overflow: hidden; margin-top: 0.5rem; }
-        .progress-fill { height: 100%; border-radius: 4px; transition: width 0.3s; }
+        .progress-fill { height: 100%; border-radius: 4px; transition: width 0.3s ease; }
         .charts-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(500px,1fr)); gap: 1.5rem; margin-bottom: 2rem; }
-        .chart-card { background: white; border-radius: 16px; padding: 1.5rem; border: 1px solid var(--border-color); }
+        .chart-card { background: white; border-radius: 16px; padding: 1.5rem; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); }
+        .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .chart-header h3 { font-size: 1.1rem; font-weight: 600; color: var(--text-primary); display: flex; align-items: center; gap: 0.5rem; }
+        .chart-header h3 i { color: var(--primary-blue); }
         .chart-container { height: 300px; position: relative; }
-        .data-table-container { background: white; border-radius: 16px; padding: 1.5rem; border: 1px solid var(--border-color); margin-bottom: 2rem; overflow-x: auto; }
+        .data-table-container { background: white; border-radius: 16px; padding: 1.5rem; border: 1px solid var(--border-color); margin-bottom: 2rem; overflow-x: auto; box-shadow: var(--shadow-sm); }
         .table-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
+        .table-header h3 { font-size: 1.1rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
+        .table-header h3 i { color: var(--primary-blue); }
         table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
         th { text-align: left; padding: 1rem; background: var(--light-blue); color: var(--primary-blue); font-weight: 600; border-bottom: 2px solid var(--primary-blue); }
-        td { padding: 1rem; border-bottom: 1px solid var(--border-color); }
+        td { padding: 1rem; border-bottom: 1px solid var(--border-color); color: var(--text-secondary); }
         tr:hover { background: var(--off-white); }
         .status-success { color: var(--success); font-weight: 600; }
         .status-warning { color: var(--warning); font-weight: 600; }
         .status-danger { color: var(--danger); font-weight: 600; }
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 2000; align-items: center; justify-content: center; }
-        .modal.active { display: flex; }
-        .modal-content { background: white; border-radius: 20px; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; animation: modalSlideUp 0.3s ease; }
-        .modal-header { padding: 1.5rem 2rem; background: var(--light-blue); border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; }
-        .modal-close { background: none; border: none; font-size: 1.5rem; cursor: pointer; width: 36px; height: 36px; border-radius: 8px; }
-        .modal-body { padding: 2rem; }
-        .modal-footer { padding: 1.5rem 2rem; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end; gap: 1rem; background: var(--off-white); }
-        .form-group { margin-bottom: 1.5rem; }
-        .form-label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
-        .form-control { width: 100%; padding: 0.8rem 1rem; border-radius: 10px; border: 1px solid var(--border-color); background: var(--off-white); }
-        .notification { position: fixed; top: 90px; right: 20px; padding: 1rem 1.5rem; border-radius: 10px; background: white; box-shadow: var(--shadow-lg); display: flex; align-items: center; gap: 1rem; z-index: 3000; border-left: 4px solid; max-width: 350px; }
-        .notification.success { border-left-color: var(--success); }
-        .notification.error { border-left-color: var(--danger); }
-        .main-footer { background: white; border-top: 1px solid var(--border-color); padding: 1.5rem; text-align: center; color: var(--text-secondary); font-size: 0.9rem; }
         .delete-program-btn { background: none; border: none; color: var(--danger); cursor: pointer; padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; transition: 0.2s; }
         .delete-program-btn:hover { background: var(--light-red); }
         .add-program-hint { font-size: 0.8rem; color: var(--primary-blue); margin-top: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
-        @media (max-width:768px) { .main-content { padding: 1rem; } .charts-container { grid-template-columns: 1fr; } .animated-title-container { display: none; } }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 2000; align-items: center; justify-content: center; padding: 1.5rem; }
+        .modal.active { display: flex; }
+        .modal-content { background: white; border-radius: 20px; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; animation: modalSlideUp 0.3s ease; border: 1px solid var(--border-color); box-shadow: var(--shadow-lg); }
+        @keyframes modalSlideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .modal-header { padding: 1.5rem 2rem; background: var(--light-blue); border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+        .modal-header h3 { font-size: 1.2rem; font-weight: 600; color: var(--primary-blue); display: flex; align-items: center; gap: 0.8rem; }
+        .modal-close { background: none; border: none; font-size: 1.5rem; cursor: pointer; width: 36px; height: 36px; border-radius: 8px; transition: all 0.2s; color: var(--primary-blue); }
+        .modal-close:hover { background: var(--primary-red); color: white; }
+        .modal-body { padding: 2rem; }
+        .modal-footer { padding: 1.5rem 2rem; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end; gap: 1rem; background: var(--off-white); }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-label { display: block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.9rem; color: var(--text-primary); }
+        .form-control { width: 100%; padding: 0.8rem 1rem; border-radius: 10px; border: 1px solid var(--border-color); background: var(--off-white); font-size: 0.95rem; transition: all 0.2s; }
+        .form-control:focus { outline: none; border-color: var(--primary-blue); background: var(--pure-white); box-shadow: 0 0 0 3px var(--light-blue); }
+        .notification { position: fixed; top: 90px; right: 20px; padding: 1rem 1.5rem; border-radius: 10px; background: white; box-shadow: var(--shadow-lg); display: flex; align-items: center; gap: 1rem; z-index: 3000; border-left: 4px solid; max-width: 350px; animation: notificationSlideIn 0.3s ease; }
+        .notification.success { border-left-color: var(--success); }
+        .notification.success i { color: var(--success); }
+        .notification.error { border-left-color: var(--danger); }
+        .notification.error i { color: var(--danger); }
+        .notification.info { border-left-color: var(--primary-blue); }
+        @keyframes notificationSlideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        .main-footer { background: white; border-top: 1px solid var(--border-color); padding: 1.5rem; text-align: center; color: var(--text-secondary); font-size: 0.9rem; }
+        .footer-content p { margin-bottom: 0.3rem; }
+        @media (max-width:1024px) { .charts-container { grid-template-columns: 1fr; } .animated-title-container { display: none; } }
+        @media (max-width:768px) { .main-header { padding: 0 1rem; } .logo h2 { display: none; } .main-content { padding: 1rem; } .page-header { flex-direction: column; align-items: flex-start; } .header-actions { width: 100%; flex-wrap: wrap; } .cards-container { grid-template-columns: 1fr; } .nav-dropdown { width: 260px; right: 10px; } .modal-content { width: 95%; } }
+        @media (max-width:576px) { .logout-btn span { display: none; } .logout-btn { padding: 0.6rem; width: 40px; height: 40px; justify-content: center; } .btn { padding: 0.5rem 1rem; } }
     </style>
 </head>
 <body>
-    <header class="main-header"><div class="logo"><div class="logo-icon"><i class="fas fa-star"></i></div><h2>HR-Admin Pro</h2></div><div class="animated-title-container"><div class="animated-title">Financial Budget Hub | Dynamic Programs | Real-time Tracking | Persistent Storage</div></div><div class="header-right"><div class="notifications" id="notificationsBtn"><i class="fas fa-bell"></i><span class="badge">3</span></div><button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i><span>Logout</span></button><div class="hamburger-menu"><div class="hamburger-btn" id="hamburgerBtn"><span></span><span></span><span></span></div><div class="nav-dropdown" id="navDropdown"><div class="nav-grid"><a href="#" class="nav-item"><i class="fas fa-home"></i><span>Dashboard</span></a><a href="#" class="nav-item"><i class="fas fa-tasks"></i><span>Task Centre</span></a><a href="#" class="nav-item active"><i class="fas fa-star"></i><span>Financial Hub</span></a><a href="#" class="nav-item"><i class="fas fa-users"></i><span>Employees</span></a></div></div></div></div></header>
+    <!-- Fixed Header -->
+    <header class="main-header">
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-star"></i>
+            </div>
+            <h2>HR-Admin Pro</h2>
+        </div>
+        
+        <div class="animated-title-container">
+            <div class="animated-title">Financial Budget Hub | Cost Analysis | Real-time Tracking | Dynamic Programs</div>
+        </div>
+        
+        <div class="header-right">
+            <!-- Notifications -->
+            <div class="notifications" id="notificationsBtn">
+                <i class="fas fa-bell"></i>
+                <span class="badge">3</span>
+            </div>
+            
+            <!-- Logout Button -->
+            <button class="logout-btn" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </button>
+            
+            <!-- Hamburger Menu -->
+            <div class="hamburger-menu">
+                <div class="hamburger-btn" id="hamburgerBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                
+                <!-- Navigation Dropdown -->
+                <div class="nav-dropdown" id="navDropdown">
+                    <div class="nav-grid">
+                        <a href="index.html" class="nav-item">
+                            <i class="fas fa-home"></i>
+                            <span>Dashboard</span>
+                        </a>
+                        <a href="task-centre.html" class="nav-item">
+                            <i class="fas fa-tasks"></i>
+                            <span>Task Centre</span>
+                        </a>
+                        <a href="training.html" class="nav-item">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span>Training</span>
+                        </a>
+                        <a href="vendor-contracts.html" class="nav-item">
+                            <i class="fas fa-file-contract"></i>
+                            <span>Contracts</span>
+                        </a>
+                        <a href="hr-letters.html" class="nav-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>HR Letters</span>
+                        </a>
+                        <a href="upcoming-events.html" class="nav-item">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Events</span>
+                        </a>
+                        <a href="cost-analyzer.html" class="nav-item">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Cost Analyzer</span>
+                        </a>
+                        <a href="financial-hub.html" class="nav-item active">
+                            <i class="fas fa-star"></i>
+                            <span>Financial Hub</span>
+                        </a>
+                        <a href="employees.html" class="nav-item">
+                            <i class="fas fa-users"></i>
+                            <span>Employees</span>
+                        </a>
+                        <a href="settings.html" class="nav-item">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
     <main class="main-content">
-        <div class="page-header"><div class="header-content"><h1>Financial Budget Hub</h1><p>Add custom programs • Dynamic dashboard • Editable budgets & expenses</p></div><div class="header-actions"><select class="period-selector" id="periodSelect"><option value="q1">Q1 - Jan to Mar</option><option value="q2">Q2 - Apr to Jun</option><option value="q3">Q3 - Jul to Sep</option><option value="q4" selected>Q4 - Oct to Dec</option></select><div class="export-menu"><button class="btn btn-primary" id="exportBtn"><i class="fas fa-download"></i> Export</button><div class="export-options" id="exportOptions"><div class="export-option" data-format="excel"><i class="fas fa-file-excel"></i> Excel</div><div class="export-option" data-format="csv"><i class="fas fa-file-csv"></i> CSV</div></div></div><button class="btn btn-success" id="addBudgetBtn"><i class="fas fa-plus-circle"></i> Add Program / Budget</button><button class="btn btn-outline" id="refreshDataBtn"><i class="fas fa-sync-alt"></i> Refresh</button></div></div>
-        <section class="cards-container"><div class="card"><div class="card-header"><h3 class="card-title">Total Budget</h3><div class="card-icon"><i class="fas fa-wallet"></i></div></div><div class="card-value" id="totalBudget">Ksh 0</div></div><div class="card"><div class="card-header"><h3 class="card-title">Total Expenses</h3><div class="card-icon"><i class="fas fa-receipt"></i></div></div><div class="card-value" id="totalExpenses">Ksh 0</div></div><div class="card"><div class="card-header"><h3 class="card-title">Remaining Balance</h3><div class="card-icon"><i class="fas fa-piggy-bank"></i></div></div><div class="card-value" id="remainingBalance">Ksh 0</div></div><div class="card"><div class="card-header"><h3 class="card-title">Utilization Rate</h3><div class="card-icon"><i class="fas fa-chart-line"></i></div></div><div class="card-value" id="utilizationRate">0%</div><div class="progress-bar"><div class="progress-fill" id="utilProgressFill" style="width:0%; background-color:#1e40af;"></div></div></div></section>
-        <section class="charts-container"><div class="chart-card"><div class="chart-header"><h3><i class="fas fa-chart-bar"></i> Budget vs Expenses by Program</h3></div><div class="chart-container"><canvas id="budgetVsExpenseChart"></canvas></div></div><div class="chart-card"><div class="chart-header"><h3><i class="fas fa-chart-line"></i> Quarterly Trend (Expenses)</h3></div><div class="chart-container"><canvas id="quarterlyTrendChart"></canvas></div></div></section>
-        <section class="data-table-container"><div class="table-header"><h3><i class="fas fa-table"></i> Program-wise Financial Analysis</h3><span style="font-size:0.8rem; color:gray;"><i class="fas fa-pen"></i> Click budget/expense cells to edit | <i class="fas fa-trash"></i> Delete custom programs</span></div><table id="editableTable"><thead><tr><th>Program</th><th>Budget (Ksh)</th><th>Expenses (Ksh)</th><th>Variance</th><th>Utilization</th><th>Status</th><th style="width:60px">Action</th></tr></thead><tbody id="tableBody"></tbody></table></section>
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="header-content">
+                <h1>Financial Budget Hub</h1>
+                <p>Add custom programs • Dynamic dashboard • Editable budgets & expenses</p>
+            </div>
+            <div class="header-actions">
+                <select class="period-selector" id="periodSelect">
+                    <option value="q1">Q1 - Jan to Mar</option>
+                    <option value="q2">Q2 - Apr to Jun</option>
+                    <option value="q3">Q3 - Jul to Sep</option>
+                    <option value="q4" selected>Q4 - Oct to Dec</option>
+                </select>
+                
+                <div class="export-menu">
+                    <button class="btn btn-primary" id="exportBtn">
+                        <i class="fas fa-download"></i> Export
+                    </button>
+                    <div class="export-options" id="exportOptions">
+                        <div class="export-option" data-format="excel">
+                            <i class="fas fa-file-excel"></i> Excel Spreadsheet
+                        </div>
+                        <div class="export-option" data-format="csv">
+                            <i class="fas fa-file-csv"></i> CSV Data
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn btn-success" id="addBudgetBtn">
+                    <i class="fas fa-plus-circle"></i> Add Program / Budget
+                </button>
+                
+                <button class="btn btn-outline" id="refreshDataBtn">
+                    <i class="fas fa-sync-alt"></i> Refresh Data
+                </button>
+            </div>
+        </div>
+
+        <!-- Summary Cards -->
+        <section class="cards-container">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Total Budget</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                </div>
+                <div class="card-value" id="totalBudget">Ksh 0</div>
+                <div class="card-change positive">
+                    <i class="fas fa-chart-line"></i> Real-time tracking
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Total Expenses</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-receipt"></i>
+                    </div>
+                </div>
+                <div class="card-value" id="totalExpenses">Ksh 0</div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Remaining Balance</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-piggy-bank"></i>
+                    </div>
+                </div>
+                <div class="card-value" id="remainingBalance">Ksh 0</div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Utilization Rate</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                </div>
+                <div class="card-value" id="utilizationRate">0%</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="utilProgressFill" style="width:0%; background-color:#1e40af;"></div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Charts Section -->
+        <section class="charts-container">
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3><i class="fas fa-chart-bar"></i> Budget vs Expenses by Program</h3>
+                </div>
+                <div class="chart-container">
+                    <canvas id="budgetVsExpenseChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3><i class="fas fa-chart-line"></i> Quarterly Trend Analysis (Expenses)</h3>
+                </div>
+                <div class="chart-container">
+                    <canvas id="quarterlyTrendChart"></canvas>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Data Table -->
+        <section class="data-table-container">
+            <div class="table-header">
+                <h3><i class="fas fa-table"></i> Program-wise Financial Analysis</h3>
+                <span style="font-size:0.8rem; color:gray;"><i class="fas fa-pen"></i> Click budget/expense cells to edit | <i class="fas fa-trash"></i> Delete custom programs</span>
+            </div>
+            <table id="editableTable">
+                <thead>
+                    <tr>
+                        <th>Program</th>
+                        <th>Budget (Ksh)</th>
+                        <th>Expenses (Ksh)</th>
+                        <th>Variance</th>
+                        <th>Utilization</th>
+                        <th>Status</th>
+                        <th style="width:70px">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                </tbody>
+            </table>
+        </section>
     </main>
-    <footer class="main-footer"><div class="footer-content"><p>Financial Budget Hub &copy; 2026 | Custom programs persist automatically | Changes auto-save</p><p>Last updated: <span id="lastUpdated">Today</span></p></div></footer>
-    <div class="modal" id="addBudgetModal"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-plus-circle"></i> Add New Program / Update Budget</h3><button class="modal-close" id="closeModalBtn">&times;</button></div><div class="modal-body"><form id="budgetForm"><div class="form-group"><label class="form-label">Program Name (NEW or Existing)</label><input type="text" class="form-control" id="programName" placeholder="e.g., Marketing, R&D, IT Infrastructure" required></div><div class="form-group"><label class="form-label">Quarter</label><select class="form-control" id="budgetQuarter"><option value="q1">Q1</option><option value="q2">Q2</option><option value="q3">Q3</option><option value="q4" selected>Q4</option></select></div><div class="form-group"><label class="form-label">Budget Amount (Ksh)</label><input type="number" class="form-control" id="budgetAmount" required min="0" step="1000" placeholder="0"></div><div class="form-group"><label class="form-label">Expenses Amount (Ksh)</label><input type="number" class="form-control" id="expenseAmount" required min="0" step="1000" placeholder="0"></div><div class="add-program-hint"><i class="fas fa-info-circle"></i> Enter a new program name to add it dynamically. Existing programs will be updated.</div></form></div><div class="modal-footer"><button class="btn btn-outline" id="cancelBudgetBtn">Cancel</button><button class="btn btn-primary" id="saveBudgetBtn">Save Program Budget</button></div></div></div>
+    
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <p>Financial Budget Hub &copy; 2026 | Custom programs persist automatically | Changes auto-save</p>
+            <p>Last updated: <span id="lastUpdated">Today</span></p>
+        </div>
+    </footer>
+    
+    <!-- Add Budget Modal -->
+    <div class="modal" id="addBudgetModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-plus-circle"></i> Add New Program / Update Budget</h3>
+                <button class="modal-close" id="closeModalBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="budgetForm">
+                    <div class="form-group">
+                        <label class="form-label">Program Name (NEW or Existing)</label>
+                        <input type="text" class="form-control" id="programName" placeholder="e.g., Marketing, R&D, IT Infrastructure" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Quarter</label>
+                        <select class="form-control" id="budgetQuarter">
+                            <option value="q1">Q1 (Jan - Mar)</option>
+                            <option value="q2">Q2 (Apr - Jun)</option>
+                            <option value="q3">Q3 (Jul - Sep)</option>
+                            <option value="q4" selected>Q4 (Oct - Dec)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Budget Amount (Ksh)</label>
+                        <input type="number" class="form-control" id="budgetAmount" required min="0" step="1000" placeholder="0">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Expenses Amount (Ksh)</label>
+                        <input type="number" class="form-control" id="expenseAmount" required min="0" step="1000" placeholder="0">
+                    </div>
+                    <div class="add-program-hint">
+                        <i class="fas fa-info-circle"></i> Enter a new program name to add it dynamically. Existing programs will be updated.
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="cancelBudgetBtn">Cancel</button>
+                <button class="btn btn-primary" id="saveBudgetBtn">Save Program Budget</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Notification Container -->
     <div id="notificationContainer"></div>
+
     <script>
-        // ----- PERSISTENT DATA STRUCTURE (Supports dynamic programs) -----
-        // Default programs: training, events, extra (core)
+        // PERSISTENT DATA STRUCTURE (Supports dynamic programs)
         let financialData = {
             q1: { training: { budget: 200000, expenses: 185000 }, events: { budget: 140000, expenses: 135000 }, extra: { budget: 80000, expenses: 72000 } },
             q2: { training: { budget: 210000, expenses: 195000 }, events: { budget: 150000, expenses: 148000 }, extra: { budget: 85000, expenses: 79000 } },
@@ -140,16 +423,15 @@
         };
         
         function loadFromLocalStorage() { 
-            const stored = localStorage.getItem('hr_financial_hub_dynamic'); 
+            const stored = localStorage.getItem('hr_financial_hub_dynamic_v2'); 
             if(stored) { 
                 financialData = JSON.parse(stored); 
-                // Ensure all quarters exist
                 ['q1','q2','q3','q4'].forEach(q => { if(!financialData[q]) financialData[q] = {}; });
             } else { 
                 saveToLocalStorage(); 
             }
         }
-        function saveToLocalStorage() { localStorage.setItem('hr_financial_hub_dynamic', JSON.stringify(financialData)); }
+        function saveToLocalStorage() { localStorage.setItem('hr_financial_hub_dynamic_v2', JSON.stringify(financialData)); }
         loadFromLocalStorage();
 
         let currentPeriod = 'q4';
@@ -158,8 +440,6 @@
         function numberWithCommas(x) { return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
         function showNotification(msg, type='info') { const cont = document.getElementById('notificationContainer'); if(!cont) return; const notif = document.createElement('div'); notif.className = `notification ${type}`; let icon = 'info-circle'; if(type==='success') icon='check-circle'; if(type==='error') icon='exclamation-circle'; notif.innerHTML = `<i class="fas fa-${icon}"></i><span>${msg}</span>`; cont.appendChild(notif); setTimeout(()=>notif.remove(), 3000); }
 
-        function getAllProgramsForPeriod(period) { return financialData[period] || {}; }
-        
         function updateSummaryCards(period) {
             const data = financialData[period] || {};
             let totalBudget = 0, totalExpenses = 0;
@@ -269,7 +549,7 @@
             const allProgramsSet = new Set();
             ['q1','q2','q3','q4'].forEach(q => { if(financialData[q]) Object.keys(financialData[q]).forEach(p => allProgramsSet.add(p)); });
             const programs = Array.from(allProgramsSet);
-            const colors = ['#1e40af','#b91c1c','#3b82f6','#10b981','#f59e0b','#8b5cf6','#ec489a'];
+            const colors = ['#1e40af','#b91c1c','#3b82f6','#10b981','#f59e0b','#8b5cf6','#ec489a','#06b6d4'];
             const datasets = programs.map((prog, idx) => ({
                 label: prog.charAt(0).toUpperCase() + prog.slice(1),
                 data: ['q1','q2','q3','q4'].map(q => financialData[q]?.[prog]?.expenses || 0),
@@ -347,7 +627,6 @@
         function closeModal(){ document.getElementById('addBudgetModal').classList.remove('active'); document.body.style.overflow='auto'; document.getElementById('budgetForm').reset(); }
         function refreshData(){ updateAllUI(); showNotification('Dashboard refreshed from persistent storage','success'); }
         
-        let activeModalFlag = false;
         document.addEventListener('DOMContentLoaded',()=>{
             initializeCharts(); updateAllUI();
             document.getElementById('periodSelect').addEventListener('change',(e)=>{ currentPeriod=e.target.value; updateAllUI(); });
