@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HR Letters | HR Admin Pro - Gmail Integration</title>
+    <title>HR Letters | HR Admin Pro</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -43,7 +43,7 @@
             overflow-x: hidden;
         }
 
-        /* Modern Fixed Header */
+        /* Modern Fixed Header - Same as Index */
         .main-header {
             position: fixed;
             top: 0;
@@ -181,28 +181,6 @@
             box-shadow: var(--shadow-md);
         }
 
-        .gmail-auth-btn {
-            background: #ea4335;
-            color: white;
-            border: none;
-            padding: 0.6rem 1.2rem;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .gmail-auth-btn:hover {
-            background: #c5221f;
-            transform: translateY(-2px);
-        }
-        .gmail-auth-btn.connected {
-            background: #0f9d58;
-        }
-
         .hamburger-menu {
             position: relative;
         }
@@ -318,7 +296,7 @@
             color: white;
         }
 
-        /* Sidebar */
+        /* Sidebar - Hidden by default, shown when hamburger clicked */
         .sidebar {
             position: fixed;
             top: 70px;
@@ -443,6 +421,7 @@
             transition: margin-left 0.3s ease;
         }
 
+        /* Page Header */
         .page-header {
             display: flex;
             justify-content: space-between;
@@ -455,6 +434,74 @@
             box-shadow: var(--shadow-sm);
         }
 
+        .header-content h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+
+        .header-content p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border-radius: 10px;
+            border: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--dark-blue);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background: var(--pure-white);
+            color: var(--primary-blue);
+            border: 1px solid var(--primary-blue);
+        }
+
+        .btn-secondary:hover {
+            background: var(--light-blue);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-outline:hover {
+            background: var(--off-white);
+        }
+
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+        }
+
+        /* Stats Cards */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -491,11 +538,47 @@
             font-size: 1.8rem;
             color: white;
         }
-        .stat-icon.blue { background: var(--primary-blue); }
-        .stat-icon.green { background: #10b981; }
-        .stat-icon.yellow { background: #f59e0b; }
-        .stat-icon.red { background: var(--primary-red); }
 
+        .stat-icon.blue {
+            background: var(--primary-blue);
+        }
+
+        .stat-icon.green {
+            background: #10b981;
+        }
+
+        .stat-icon.yellow {
+            background: #f59e0b;
+        }
+
+        .stat-icon.red {
+            background: var(--primary-red);
+        }
+
+        .stat-info h3 {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-info .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.2rem;
+        }
+
+        .stat-info .stat-trend {
+            font-size: 0.8rem;
+        }
+
+        .positive {
+            color: #10b981;
+            font-weight: 600;
+        }
+
+        /* Content Card */
         .content-card {
             background: var(--pure-white);
             border-radius: 16px;
@@ -514,90 +597,532 @@
             border-bottom: 2px solid var(--light-blue);
         }
 
-        .btn {
-            padding: 0.7rem 1.5rem;
-            border-radius: 10px;
-            border: none;
+        .card-header h3 {
+            font-size: 1.2rem;
             font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: inline-flex;
+            color: var(--text-primary);
+            display: flex;
             align-items: center;
             gap: 0.5rem;
         }
-        .btn-primary { background: var(--primary-blue); color: white; }
-        .btn-primary:hover { background: var(--dark-blue); transform: translateY(-2px); }
-        .btn-secondary { background: var(--pure-white); color: var(--primary-blue); border: 1px solid var(--primary-blue); }
-        .btn-outline { background: transparent; border: 1px solid var(--border-color); }
-        .btn-success { background: #10b981; color: white; }
-        .btn-sm { padding: 0.5rem 1rem; font-size: 0.85rem; }
 
-        .data-table { width: 100%; border-collapse: collapse; }
-        .data-table th { text-align: left; padding: 1rem; background: var(--light-blue); color: var(--primary-blue); border-bottom: 2px solid var(--primary-blue); }
-        .data-table td { padding: 1rem; border-bottom: 1px solid var(--border-color); color: var(--text-secondary); }
-        .data-table tbody tr:hover { background: var(--off-white); }
-        .status-badge { padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; display: inline-block; }
-        .status-sent { background: var(--light-blue); color: var(--primary-blue); }
-        .status-draft { background: #fff3cd; color: #856404; }
-        .status-pending { background: var(--light-red); color: var(--primary-red); }
-        .table-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .card-header i {
+            color: var(--primary-blue);
+        }
 
-        .categories-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
-        .category-item { background: var(--off-white); border-radius: 12px; padding: 1.5rem; text-align: center; cursor: pointer; transition: all 0.2s; border: 1px solid var(--border-color); }
-        .category-item:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--primary-blue); }
+        .chart-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
 
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 2000; align-items: center; justify-content: center; padding: 1.5rem; }
-        .modal.active { display: flex; }
-        .modal-content { background: var(--pure-white); border-radius: 20px; width: 100%; max-width: 900px; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg); border: 1px solid var(--border-color); animation: modalSlideUp 0.3s ease; }
-        @keyframes modalSlideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .modal-header { padding: 1.5rem 2rem; background: var(--light-blue); border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
-        .modal-close { background: none; border: none; font-size: 1.5rem; cursor: pointer; width: 36px; height: 36px; border-radius: 8px; }
-        .modal-close:hover { background: var(--primary-red); color: white; }
-        .modal-body { padding: 2rem; }
-        .modal-footer { padding: 1.5rem 2rem; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end; gap: 1rem; background: var(--off-white); }
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--off-white);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 0.5rem 1rem;
+        }
 
-        .form-group { margin-bottom: 1.5rem; }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-        label { display: block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.9rem; }
-        .form-control { width: 100%; padding: 0.8rem 1rem; border-radius: 10px; border: 1px solid var(--border-color); font-size: 0.95rem; background: var(--off-white); }
-        textarea.form-control { resize: vertical; min-height: 150px; }
-        .editor-toolbar { display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 1rem; background: var(--off-white); border-radius: 10px; margin-bottom: 1rem; border: 1px solid var(--border-color); }
-        .tool-btn { background: var(--pure-white); border: 1px solid var(--border-color); padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; }
-        .search-box { display: flex; align-items: center; gap: 0.5rem; background: var(--off-white); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.5rem 1rem; }
-        .search-box input { border: none; background: transparent; outline: none; min-width: 200px; }
-        select { padding: 0.5rem 1rem; border-radius: 10px; border: 1px solid var(--border-color); background: var(--off-white); }
+        .search-box input {
+            border: none;
+            background: transparent;
+            outline: none;
+            min-width: 200px;
+            font-size: 0.9rem;
+        }
 
-        .file-upload-area { border: 2px dashed var(--border-color); border-radius: 12px; padding: 2rem; text-align: center; cursor: pointer; transition: all 0.2s; background: var(--off-white); }
-        .file-upload-area:hover { border-color: var(--primary-blue); background: var(--light-blue); }
+        select {
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--off-white);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
 
-        .toast { position: fixed; top: 100px; right: 20px; padding: 1rem 1.5rem; border-radius: 10px; background: white; box-shadow: var(--shadow-lg); display: flex; align-items: center; gap: 1rem; z-index: 3000; border-left: 4px solid; animation: slideIn 0.3s ease; }
-        .toast.success { border-left-color: #10b981; }
-        .toast.error { border-left-color: var(--primary-red); }
-        .toast.info { border-left-color: var(--primary-blue); }
-        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        /* Table */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
 
-        .report-container { background: var(--off-white); border-radius: 12px; padding: 1.5rem; margin-top: 1rem; }
-        .report-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1rem 0; }
-        .report-stat { text-align: center; padding: 1rem; background: white; border-radius: 12px; }
+        .data-table th {
+            text-align: left;
+            padding: 1rem;
+            background: var(--light-blue);
+            color: var(--primary-blue);
+            font-weight: 600;
+            border-bottom: 2px solid var(--primary-blue);
+        }
+
+        .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        .data-table tbody tr:hover {
+            background: var(--off-white);
+        }
+
+        /* Status Badges */
+        .status-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .status-sent {
+            background: var(--light-blue);
+            color: var(--primary-blue);
+        }
+
+        .status-draft {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-pending {
+            background: var(--light-red);
+            color: var(--primary-red);
+        }
+
+        /* Table Actions */
+        .table-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Categories Grid */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+
+        .category-item {
+            background: var(--off-white);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid var(--border-color);
+        }
+
+        .category-item:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-blue);
+        }
+
+        .category-count {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .category-item h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .category-item p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--pure-white);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+            animation: modalSlideUp 0.3s ease;
+        }
+
+        @keyframes modalSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            padding: 1.5rem 2rem;
+            background: var(--light-blue);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary-blue);
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .modal-close:hover {
+            background: var(--primary-red);
+            color: white;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-footer {
+            padding: 1.5rem 2rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            background: var(--off-white);
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            background: var(--off-white);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            background: var(--pure-white);
+            box-shadow: 0 0 0 3px var(--light-blue);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        /* Editor Toolbar */
+        .editor-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: var(--off-white);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .tool-btn {
+            background: var(--pure-white);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        .tool-btn:hover {
+            background: var(--light-blue);
+            border-color: var(--primary-blue);
+        }
+
+        /* File Upload */
+        .file-upload-area {
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: var(--off-white);
+        }
+
+        .file-upload-area:hover {
+            border-color: var(--primary-blue);
+            background: var(--light-blue);
+        }
+
+        .file-upload-area i {
+            font-size: 2rem;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .file-list {
+            margin-top: 1rem;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem;
+            background: var(--off-white);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            background: white;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 3000;
+            animation: slideIn 0.3s ease;
+            border-left: 4px solid;
+        }
+
+        .toast.success {
+            border-left-color: #10b981;
+        }
+
+        .toast.error {
+            border-left-color: var(--primary-red);
+        }
+
+        .toast.info {
+            border-left-color: var(--primary-blue);
+        }
+
+        .toast.warning {
+            border-left-color: #f59e0b;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Loading */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
 
         @media (max-width: 768px) {
-            .stats-grid, .categories-grid, .form-row { grid-template-columns: 1fr; }
-            .animated-title-container { display: none; }
-            .main-content { padding: 1rem; margin-top: 80px; }
+            .animated-title-container {
+                display: none;
+            }
+            
+            .main-header {
+                padding: 0 1rem;
+            }
+            
+            .logo h2 {
+                font-size: 1rem;
+            }
+            
+            .main-content {
+                padding: 1rem;
+                margin-top: 80px;
+            }
+            
+            .page-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+            
+            .header-actions {
+                width: 100%;
+                flex-wrap: wrap;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-dropdown {
+                width: 260px;
+                right: 10px;
+            }
+            
+            .chart-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-box {
+                width: 100%;
+            }
+            
+            .search-box input {
+                width: 100%;
+            }
+            
+            select {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .logout-btn span {
+                display: none;
+            }
+            
+            .logout-btn {
+                padding: 0.6rem;
+                width: 40px;
+                height: 40px;
+                justify-content: center;
+            }
+            
+            .header-actions {
+                gap: 0.5rem;
+            }
+            
+            .btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.85rem;
+            }
+            
+            .table-actions {
+                flex-direction: column;
+            }
+            
+            .btn-sm {
+                padding: 0.4rem 0.8rem;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Modern Fixed Header -->
+    <!-- Modern Fixed Header - Same as Index -->
     <header class="main-header">
         <div class="logo">
-            <div class="logo-icon"><i class="fas fa-briefcase"></i></div>
+            <div class="logo-icon">
+                <i class="fas fa-briefcase"></i>
+            </div>
             <h2>HR-Admin Pro</h2>
         </div>
         
         <div class="animated-title-container">
-            <div class="animated-title">HR Letters Management | Templates | Employee Communications | Gmail Integration</div>
+            <div class="animated-title">HR Letters Management | Templates | Employee Communications</div>
         </div>
         
         <div class="header-right">
@@ -609,11 +1134,6 @@
                     <span></span>
                 </div>
             </div>
-            
-            <!-- Gmail Connect Button -->
-            <button id="gmailAuthBtn" class="gmail-auth-btn" onclick="connectGmail()">
-                <i class="fab fa-google"></i> <span>Connect Gmail</span>
-            </button>
             
             <!-- Notifications -->
             <div class="notifications" onclick="showToast('No new notifications', 'info')">
@@ -638,21 +1158,45 @@
                 <!-- Navigation Dropdown -->
                 <div class="nav-dropdown" id="navDropdown">
                     <div class="nav-grid">
-                        <a href="#" class="nav-item active">
-                            <i class="fas fa-envelope"></i>
-                            <span>HR Letters</span>
-                        </a>
-                        <a href="#" class="nav-item" onclick="showToast('Dashboard coming soon', 'info')">
+                        <a href="index.html" class="nav-item">
                             <i class="fas fa-home"></i>
                             <span>Dashboard</span>
                         </a>
-                        <a href="#" class="nav-item" onclick="showToast('Employees coming soon', 'info')">
+                        <a href="task-centre.html" class="nav-item">
+                            <i class="fas fa-tasks"></i>
+                            <span>Task Centre</span>
+                        </a>
+                        <a href="training.html" class="nav-item">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span>Training</span>
+                        </a>
+                        <a href="vendor-contracts.html" class="nav-item">
+                            <i class="fas fa-file-contract"></i>
+                            <span>Contracts</span>
+                        </a>
+                        <a href="hr-letters.html" class="nav-item active">
+                            <i class="fas fa-envelope"></i>
+                            <span>HR Letters</span>
+                        </a>
+                        <a href="upcoming-events.html" class="nav-item">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Events</span>
+                        </a>
+                        <a href="cost-analyzer.html" class="nav-item">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Cost Analyzer</span>
+                        </a>
+                        <a href="financial-hub.html" class="nav-item">
+                            <i class="fas fa-star"></i>
+                            <span>Financial Hub</span>
+                        </a>
+                        <a href="employees.html" class="nav-item">
                             <i class="fas fa-users"></i>
                             <span>Employees</span>
                         </a>
-                        <a href="#" class="nav-item" onclick="showToast('Reports coming soon', 'info')">
-                            <i class="fas fa-chart-bar"></i>
-                            <span>Reports</span>
+                        <a href="settings.html" class="nav-item">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
                         </a>
                     </div>
                 </div>
@@ -666,11 +1210,16 @@
             <h3><i class="fas fa-briefcase"></i> Navigation Menu</h3>
         </div>
         <ul class="sidebar-menu">
-            <li><a href="#" class="active"><i class="fas fa-envelope"></i> HR Letters</a></li>
-            <li><a href="#" onclick="showToast('Dashboard coming soon', 'info')"><i class="fas fa-home"></i> Dashboard</a></li>
-            <li><a href="#" onclick="showToast('Employees coming soon', 'info')"><i class="fas fa-users"></i> Employees</a></li>
-            <li><a href="#" onclick="showToast('Reports coming soon', 'info')"><i class="fas fa-chart-bar"></i> Reports</a></li>
-            <li><a href="#" onclick="showToast('Settings coming soon', 'info')"><i class="fas fa-cog"></i> Settings</a></li>
+            <li><a href="index.html"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="task-centre.html"><i class="fas fa-tasks"></i> Task Centre</a></li>
+            <li><a href="training.html"><i class="fas fa-graduation-cap"></i> Training</a></li>
+            <li><a href="vendor-contracts.html"><i class="fas fa-file-contract"></i> Contracts</a></li>
+            <li><a href="hr-letters.html" class="active"><i class="fas fa-envelope"></i> HR Letters</a></li>
+            <li><a href="upcoming-events.html"><i class="fas fa-calendar-alt"></i> Events</a></li>
+            <li><a href="cost-analyzer.html"><i class="fas fa-chart-line"></i> Cost Analyzer</a></li>
+            <li><a href="financial-hub.html"><i class="fas fa-star"></i> Financial Hub</a></li>
+            <li><a href="employees.html"><i class="fas fa-users"></i> Employees</a></li>
+            <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
         </ul>
         <div class="sidebar-footer">
             <img src="https://ui-avatars.com/api/?name=Admin+User&background=1e40af&color=fff" alt="User">
@@ -690,7 +1239,7 @@
         <div class="page-header">
             <div class="header-content">
                 <h1>HR Letters & Templates</h1>
-                <p>Manage HR letters, templates, and employee communications with Gmail</p>
+                <p>Manage HR letters, templates, and employee communications</p>
             </div>
             <div class="header-actions">
                 <button class="btn btn-primary" onclick="showModal('letterModal')">
@@ -705,20 +1254,44 @@
         <!-- Quick Stats -->
         <div class="stats-grid">
             <div class="stat-card" onclick="filterLetters('sent')">
-                <div class="stat-icon blue"><i class="fas fa-envelope"></i></div>
-                <div class="stat-info"><h3>Letters Sent</h3><div class="stat-value" id="sentCount">0</div></div>
+                <div class="stat-icon blue">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Letters Sent</h3>
+                    <div class="stat-value" id="sentCount">156</div>
+                    <div class="stat-trend positive">+12% this month</div>
+                </div>
             </div>
-            <div class="stat-card" onclick="filterLetters('draft')">
-                <div class="stat-icon yellow"><i class="fas fa-pen"></i></div>
-                <div class="stat-info"><h3>Drafts</h3><div class="stat-value" id="draftCount">0</div></div>
+            <div class="stat-card" onclick="filterLetters('delivered')">
+                <div class="stat-icon green">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Delivered</h3>
+                    <div class="stat-value" id="deliveredCount">142</div>
+                    <div class="stat-trend">91% success rate</div>
+                </div>
             </div>
             <div class="stat-card" onclick="filterLetters('pending')">
-                <div class="stat-icon red"><i class="fas fa-clock"></i></div>
-                <div class="stat-info"><h3>Pending</h3><div class="stat-value" id="pendingCount">0</div></div>
+                <div class="stat-icon yellow">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Pending</h3>
+                    <div class="stat-value" id="pendingCount">8</div>
+                    <div class="stat-trend">Requires action</div>
+                </div>
             </div>
-            <div class="stat-card" onclick="filterLetters('all')">
-                <div class="stat-icon green"><i class="fas fa-file-alt"></i></div>
-                <div class="stat-info"><h3>Total Letters</h3><div class="stat-value" id="totalCount">0</div></div>
+            <div class="stat-card" onclick="filterLetters('failed')">
+                <div class="stat-icon red">
+                    <i class="fas fa-times-circle"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Failed</h3>
+                    <div class="stat-value" id="failedCount">6</div>
+                    <div class="stat-trend">Needs resending</div>
+                </div>
             </div>
         </div>
 
@@ -740,22 +1313,32 @@
                     <button class="btn btn-outline btn-sm" onclick="exportToExcel()">
                         <i class="fas fa-download"></i> Export
                     </button>
-                    <button class="btn btn-primary btn-sm" onclick="generateAndShowReport()">
-                        <i class="fas fa-chart-bar"></i> Report
-                    </button>
                 </div>
             </div>
             
-            <table class="data-table">
+            <table class="data-table" id="lettersTable">
                 <thead>
-                    <tr><th>Ref No.</th><th>Employee</th><th>Letter Type</th><th>Subject</th><th>Date</th><th>Status</th><th>Actions</th></tr>
+                    <tr>
+                        <th>Ref No.</th>
+                        <th>Employee</th>
+                        <th>Letter Type</th>
+                        <th>Subject</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
                 </thead>
-                <tbody id="lettersTableBody"></tbody>
+                <tbody id="lettersTableBody">
+                    <!-- Letters will be loaded here -->
+                </tbody>
             </table>
             
             <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
                 <button class="btn btn-outline" onclick="showArchivedLetters()">
                     <i class="fas fa-archive"></i> View Archive
+                </button>
+                <button class="btn btn-primary" onclick="generateReport()">
+                    <i class="fas fa-chart-bar"></i> Generate Report
                 </button>
             </div>
         </div>
@@ -766,10 +1349,26 @@
                 <h3><i class="fas fa-tags"></i> Letter Categories</h3>
             </div>
             <div class="categories-grid">
-                <div class="category-item" onclick="useTemplate('appointment')"><div class="category-count">45</div><h4>Appointment Letters</h4><p>New hires and appointments</p></div>
-                <div class="category-item" onclick="useTemplate('promotion')"><div class="category-count">28</div><h4>Promotion Letters</h4><p>Employee promotions</p></div>
-                <div class="category-item" onclick="useTemplate('warning')"><div class="category-count">15</div><h4>Warning Letters</h4><p>Disciplinary actions</p></div>
-                <div class="category-item" onclick="useTemplate('termination')"><div class="category-count">8</div><h4>Termination Letters</h4><p>Employment termination</p></div>
+                <div class="category-item" onclick="useTemplate('appointment')">
+                    <div class="category-count">45</div>
+                    <h4>Appointment Letters</h4>
+                    <p>New hires and appointments</p>
+                </div>
+                <div class="category-item" onclick="useTemplate('promotion')">
+                    <div class="category-count">28</div>
+                    <h4>Promotion Letters</h4>
+                    <p>Employee promotions</p>
+                </div>
+                <div class="category-item" onclick="useTemplate('warning')">
+                    <div class="category-count">15</div>
+                    <h4>Warning Letters</h4>
+                    <p>Disciplinary actions</p>
+                </div>
+                <div class="category-item" onclick="useTemplate('termination')">
+                    <div class="category-count">8</div>
+                    <h4>Termination Letters</h4>
+                    <p>Employment termination</p>
+                </div>
             </div>
         </div>
     </main>
@@ -777,29 +1376,80 @@
     <!-- Create Letter Modal -->
     <div id="letterModal" class="modal">
         <div class="modal-content">
-            <div class="modal-header"><h3><i class="fas fa-plus-circle"></i> Create New HR Letter</h3><button class="modal-close" onclick="closeModal('letterModal')">&times;</button></div>
+            <div class="modal-header">
+                <h3><i class="fas fa-plus-circle"></i> Create New HR Letter</h3>
+                <button class="modal-close" onclick="closeModal('letterModal')">&times;</button>
+            </div>
             <div class="modal-body">
                 <form id="letterForm">
                     <div class="form-row">
-                        <div class="form-group"><label>Letter Type</label><select class="form-control" id="letterType" required><option value="">Select Letter Type</option><option value="appointment">Appointment Letter</option><option value="promotion">Promotion Letter</option><option value="warning">Warning Letter</option><option value="termination">Termination Letter</option><option value="experience">Experience Letter</option><option value="salary">Salary Revision Letter</option></select></div>
-                        <div class="form-group"><label>Employee</label><select class="form-control" id="employeeSelect" required><option value="">Select Employee</option><option value="John Doe">John Doe (IT)</option><option value="Jane Smith">Jane Smith (HR)</option><option value="Mike Johnson">Mike Johnson (Sales)</option><option value="Sarah Williams">Sarah Williams (Marketing)</option><option value="Robert Brown">Robert Brown (Finance)</option></select></div>
+                        <div class="form-group">
+                            <label>Letter Type</label>
+                            <select class="form-control" id="letterType" required>
+                                <option value="">Select Letter Type</option>
+                                <option value="appointment">Appointment Letter</option>
+                                <option value="promotion">Promotion Letter</option>
+                                <option value="warning">Warning Letter</option>
+                                <option value="termination">Termination Letter</option>
+                                <option value="experience">Experience Letter</option>
+                                <option value="salary">Salary Revision Letter</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Employee</label>
+                            <select class="form-control" id="employeeSelect" required>
+                                <option value="">Select Employee</option>
+                                <option value="John Doe">John Doe (IT)</option>
+                                <option value="Jane Smith">Jane Smith (HR)</option>
+                                <option value="Mike Johnson">Mike Johnson (Sales)</option>
+                                <option value="Sarah Williams">Sarah Williams (Marketing)</option>
+                            </select>
+                        </div>
                     </div>
+                    
                     <div class="form-row">
-                        <div class="form-group"><label>Letter Date</label><input type="date" class="form-control" id="letterDate" required></div>
-                        <div class="form-group"><label>Reference Number</label><input type="text" class="form-control" id="refNumber" placeholder="Auto-generated"></div>
+                        <div class="form-group">
+                            <label>Letter Date</label>
+                            <input type="date" class="form-control" id="letterDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Reference Number</label>
+                            <input type="text" class="form-control" id="refNumber" placeholder="e.g., HR/LTR/2024/001">
+                        </div>
                     </div>
-                    <div class="form-group"><label>Subject</label><input type="text" class="form-control" id="letterSubject" required></div>
+                    
+                    <div class="form-group">
+                        <label>Subject</label>
+                        <input type="text" class="form-control" id="letterSubject" required>
+                    </div>
+                    
                     <div class="form-group">
                         <label>Content</label>
                         <div class="editor-toolbar">
-                            <button type="button" class="tool-btn" onclick="insertVariable('{employee_name}')"><i class="fas fa-user"></i> Name</button>
-                            <button type="button" class="tool-btn" onclick="insertVariable('{date}')"><i class="fas fa-calendar"></i> Date</button>
-                            <button type="button" class="tool-btn" onclick="insertVariable('{position}')"><i class="fas fa-briefcase"></i> Position</button>
+                            <button type="button" class="tool-btn" onclick="insertVariable('{employee_name}')">
+                                <i class="fas fa-user"></i> Name
+                            </button>
+                            <button type="button" class="tool-btn" onclick="insertVariable('{date}')">
+                                <i class="fas fa-calendar"></i> Date
+                            </button>
+                            <button type="button" class="tool-btn" onclick="insertVariable('{position}')">
+                                <i class="fas fa-briefcase"></i> Position
+                            </button>
+                            <button type="button" class="tool-btn" onclick="insertVariable('{salary}')">
+                                <i class="fas fa-money-bill"></i> Salary
+                            </button>
                         </div>
                         <textarea class="form-control" id="letterContent" rows="10" required></textarea>
                     </div>
+                    
                     <div class="form-group">
-                        <div class="file-upload-area" onclick="document.getElementById('fileInput').click()"><i class="fas fa-cloud-upload-alt"></i><p>Click to upload files</p><small>PDF, DOC, JPG (Max 5MB)</small><input type="file" id="fileInput" style="display: none;" multiple></div>
+                        <label>Attachments</label>
+                        <div class="file-upload-area" onclick="document.getElementById('fileInput').click()">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Click to upload files</p>
+                            <small>PDF, DOC, JPG (Max 5MB)</small>
+                            <input type="file" id="fileInput" style="display: none;" multiple>
+                        </div>
                         <div id="fileList" class="file-list"></div>
                     </div>
                 </form>
@@ -815,10 +1465,19 @@
     <!-- Template Gallery Modal -->
     <div id="templateModal" class="modal">
         <div class="modal-content">
-            <div class="modal-header"><h3><i class="fas fa-layer-group"></i> Template Gallery</h3><button class="modal-close" onclick="closeModal('templateModal')">&times;</button></div>
+            <div class="modal-header">
+                <h3><i class="fas fa-layer-group"></i> Template Gallery</h3>
+                <button class="modal-close" onclick="closeModal('templateModal')">&times;</button>
+            </div>
             <div class="modal-body">
-                <div class="search-box" style="margin-bottom: 1.5rem; width: 100%;"><i class="fas fa-search"></i><input type="text" placeholder="Search templates..." id="templateSearch" onkeyup="searchTemplates()"></div>
-                <div class="categories-grid" id="templatesContainer"></div>
+                <div class="search-box" style="margin-bottom: 1.5rem; width: 100%;">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search templates..." id="templateSearch" onkeyup="searchTemplates()">
+                </div>
+                
+                <div class="categories-grid" id="templatesContainer">
+                    <!-- Templates will be loaded here -->
+                </div>
             </div>
         </div>
     </div>
@@ -826,32 +1485,19 @@
     <!-- Preview Modal -->
     <div id="previewModal" class="modal">
         <div class="modal-content">
-            <div class="modal-header"><h3><i class="fas fa-eye"></i> Letter Preview</h3><button class="modal-close" onclick="closeModal('previewModal')">&times;</button></div>
+            <div class="modal-header">
+                <h3><i class="fas fa-eye"></i> Letter Preview</h3>
+                <button class="modal-close" onclick="closeModal('previewModal')">&times;</button>
+            </div>
             <div class="modal-body">
-                <div id="previewContent" style="white-space: pre-line; line-height: 1.8; min-height: 300px;"></div>
-                <div class="form-group" style="margin-top: 1rem;">
-                    <label><i class="fas fa-envelope"></i> Recipient Email</label>
-                    <input type="email" id="emailRecipient" class="form-control" placeholder="recipient@example.com">
-                </div>
-                <div class="form-group">
-                    <label><i class="fab fa-google"></i> Gmail Account (Sender)</label>
-                    <input type="email" id="senderEmail" class="form-control" placeholder="your.email@gmail.com" readonly>
-                    <small id="gmailStatus" style="color: #10b981;"></small>
+                <div id="previewContent" style="white-space: pre-line; line-height: 1.8; min-height: 300px;">
+                    <!-- Preview content will be inserted here -->
                 </div>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-outline" onclick="closeModal('previewModal')">Close</button>
-                <button class="btn btn-success" id="sendGmailBtn" onclick="sendWithGmail()"><i class="fab fa-google"></i> Open in Gmail App</button>
+                <button class="btn btn-primary" onclick="sendLetter()">Send Letter</button>
             </div>
-        </div>
-    </div>
-
-    <!-- Report Modal -->
-    <div id="reportModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header"><h3><i class="fas fa-chart-bar"></i> HR Letters Report</h3><button class="modal-close" onclick="closeModal('reportModal')">&times;</button></div>
-            <div class="modal-body" id="reportContent"></div>
-            <div class="modal-footer"><button class="btn btn-primary" onclick="saveReport()"><i class="fas fa-save"></i> Save Report</button><button class="btn btn-outline" onclick="closeModal('reportModal')">Close</button></div>
         </div>
     </div>
 
@@ -859,353 +1505,438 @@
     <div id="toastContainer"></div>
 
     <script>
-        // Data Management
-        let letters = [];
-        let currentPreviewLetter = null;
-        let gmailConnected = false;
-        let currentUserEmail = '';
-
-        function loadLetters() {
-            const stored = localStorage.getItem('hr_letters_data');
-            if (stored) {
-                letters = JSON.parse(stored);
-            } else {
-                letters = [
-                    { id: 1, ref: 'HR/LTR/2024/156', employee: 'John Doe', type: 'Promotion Letter', subject: 'Promotion to Senior Manager', date: '2024-12-01', status: 'sent', content: 'Dear John,\n\nCongratulations on your promotion to Senior Manager! Your dedication and hard work have been outstanding.\n\nBest regards,\nHR Department', emailSent: true },
-                    { id: 2, ref: 'HR/LTR/2024/157', employee: 'Jane Smith', type: 'Appointment Letter', subject: 'Appointment as Project Lead', date: '2024-12-03', status: 'draft', content: 'Dear Jane,\n\nWe are pleased to appoint you as Project Lead effective immediately.\n\nWelcome to the team!\n\nHR Department', emailSent: false },
-                    { id: 3, ref: 'HR/LTR/2024/158', employee: 'Mike Johnson', type: 'Warning Letter', subject: 'Attendance Warning Notice', date: '2024-12-04', status: 'pending', content: 'Dear Mike,\n\nThis is a formal warning regarding your attendance record.\n\nPlease improve immediately.\n\nHR Department', emailSent: false },
-                    { id: 4, ref: 'HR/LTR/2024/159', employee: 'Sarah Williams', type: 'Experience Letter', subject: 'Work Experience Certificate', date: '2024-11-28', status: 'sent', content: 'To Whom It May Concern,\n\nThis certifies that Sarah Williams worked as Marketing Manager from 2022 to 2024.\n\nHR Department', emailSent: true },
-                    { id: 5, ref: 'HR/LTR/2024/160', employee: 'Robert Brown', type: 'Salary Revision', subject: 'Salary Increment Confirmation', date: '2024-12-05', status: 'sent', content: 'Dear Robert,\n\nYour salary has been revised to $95,000 per annum effective January 2025.\n\nHR Department', emailSent: true }
-                ];
-                saveLetters();
-            }
-            updateStatsAndTable();
-        }
-
-        function saveLetters() { localStorage.setItem('hr_letters_data', JSON.stringify(letters)); }
-
-        function updateStatsAndTable() {
-            document.getElementById('sentCount').textContent = letters.filter(l => l.status === 'sent').length;
-            document.getElementById('draftCount').textContent = letters.filter(l => l.status === 'draft').length;
-            document.getElementById('pendingCount').textContent = letters.filter(l => l.status === 'pending').length;
-            document.getElementById('totalCount').textContent = letters.length;
-            renderLettersTable();
-        }
-
-        function renderLettersTable() {
-            const searchTerm = document.getElementById('searchInput')?.value.toLowerCase() || '';
-            const statusFilter = document.getElementById('statusFilter')?.value || 'all';
-            const filtered = letters.filter(l => {
-                const matchesSearch = l.employee.toLowerCase().includes(searchTerm) || l.subject.toLowerCase().includes(searchTerm) || l.ref.toLowerCase().includes(searchTerm);
-                const matchesStatus = statusFilter === 'all' || l.status === statusFilter;
-                return matchesSearch && matchesStatus;
-            });
-            const tbody = document.getElementById('lettersTableBody');
-            tbody.innerHTML = '';
-            filtered.forEach(letter => {
-                tbody.innerHTML += `<tr data-status="${letter.status}">
-                    <td>${letter.ref}</td><td>${letter.employee}</td><td>${letter.type}</td><td>${letter.subject}</td><td>${letter.date}</td>
-                    <td><span class="status-badge status-${letter.status}">${letter.status}</span></td>
-                    <td><div class="table-actions">
-                        <button class="btn btn-sm btn-primary" onclick="viewLetter(${letter.id})"><i class="fas fa-eye"></i></button>
-                        <button class="btn btn-sm btn-outline" onclick="editLetter(${letter.id})"><i class="fas fa-edit"></i></button>
-                        ${letter.status !== 'sent' ? `<button class="btn btn-sm btn-success" onclick="sendLetterDirect(${letter.id})"><i class="fas fa-paper-plane"></i></button>` : ''}
-                        <button class="btn btn-sm btn-outline" onclick="deleteLetterPrompt(${letter.id})"><i class="fas fa-trash"></i></button>
-                    </div></td>
-                </tr>`;
-            });
-        }
-
-        function generateRef() { return `HR/LTR/${new Date().getFullYear()}/${String(letters.length + 1).padStart(3, '0')}`; }
-
-        function saveLetterToStorage(isSend = false) {
-            const editId = document.getElementById('editId')?.value;
-            const typeMap = { appointment: 'Appointment Letter', promotion: 'Promotion Letter', warning: 'Warning Letter', termination: 'Termination Letter', experience: 'Experience Letter', salary: 'Salary Revision Letter' };
-            const type = typeMap[document.getElementById('letterType').value] || 'General Letter';
-            const employee = document.getElementById('employeeSelect').value;
-            const subject = document.getElementById('letterSubject').value;
-            const content = document.getElementById('letterContent').value;
-            const date = document.getElementById('letterDate').value;
-            let ref = document.getElementById('refNumber').value;
-            if (!document.getElementById('letterType').value || !employee || !subject || !content) { showToast('Please fill all required fields', 'warning'); return false; }
-            if (!ref) ref = generateRef();
-            const status = isSend ? 'sent' : 'draft';
-            if (editId) {
-                const index = letters.findIndex(l => l.id == editId);
-                if (index !== -1) letters[index] = { ...letters[index], type, employee, subject, content, date, ref, status, emailSent: isSend };
-            } else {
-                letters.push({ id: Date.now(), ref, employee, type, subject, date, status, content, emailSent: isSend });
-            }
-            saveLetters(); updateStatsAndTable(); return true;
-        }
-
-        function previewLetter() {
-            const content = document.getElementById('letterContent').value;
-            const subject = document.getElementById('letterSubject').value;
-            const employee = document.getElementById('employeeSelect').value;
-            if (!content || !subject || !employee) { showToast('Please fill all required fields', 'warning'); return; }
-            currentPreviewLetter = { content, subject, employee };
-            document.getElementById('previewContent').innerHTML = `<h3 style="color: var(--primary-blue); margin-bottom: 1rem;">${subject}</h3><p><strong>To:</strong> ${employee}</p><div style="border-bottom: 1px solid var(--border-color); margin: 1rem 0;"></div><div style="white-space: pre-line;">${content}</div>`;
-            document.getElementById('emailRecipient').value = `${employee.toLowerCase().replace(/\s/g, '.')}@company.com`;
-            closeModal('letterModal');
-            showModal('previewModal');
-        }
-
-        // Gmail Integration - Opens Gmail App
-        function connectGmail() {
-            const email = prompt('Enter your Gmail address for sending emails:', 'your.email@gmail.com');
-            if (email && email.includes('@') && email.includes('gmail')) {
-                currentUserEmail = email;
-                gmailConnected = true;
-                document.getElementById('senderEmail').value = currentUserEmail;
-                document.getElementById('gmailStatus').innerHTML = '<i class="fas fa-check-circle"></i> Gmail connected';
-                document.getElementById('gmailAuthBtn').innerHTML = '<i class="fab fa-google"></i> Gmail Connected';
-                document.getElementById('gmailAuthBtn').classList.add('connected');
-                localStorage.setItem('gmail_user', currentUserEmail);
-                showToast(`✅ Gmail connected: ${currentUserEmail}`, 'success');
-            } else {
-                showToast('Please enter a valid Gmail address', 'warning');
-            }
-        }
-
-        function sendWithGmail() {
-            if (!currentPreviewLetter) { showToast('No letter to send', 'error'); return; }
-            const recipient = document.getElementById('emailRecipient').value;
-            if (!recipient) { showToast('Please enter recipient email', 'warning'); return; }
-            
-            const subject = encodeURIComponent(currentPreviewLetter.subject);
-            const body = encodeURIComponent(currentPreviewLetter.content + '\n\n---\nSent from HR Admin Pro');
-            
-            // Open Gmail compose window (web or app)
-            const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(recipient)}&su=${subject}&body=${body}`;
-            window.open(gmailUrl, '_blank');
-            
-            showToast(`📧 Opening Gmail app to send to ${recipient}...`, 'success');
-            
-            // Save as sent
-            const success = saveLetterToStorage(true);
-            if (success) {
-                closeModal('previewModal');
-                document.getElementById('letterForm').reset();
-                document.getElementById('editId')?.removeAttribute('value');
-                document.getElementById('refNumber').value = generateRef();
-                document.getElementById('letterDate').valueAsDate = new Date();
-            }
-            currentPreviewLetter = null;
-        }
-
-        function sendLetterDirect(id) {
-            const letter = letters.find(l => l.id === id);
-            if (letter && confirm(`Send "${letter.subject}" to ${letter.employee} via Gmail?`)) {
-                const recipient = `${letter.employee.toLowerCase().replace(/\s/g, '.')}@company.com`;
-                const subject = encodeURIComponent(letter.subject);
-                const body = encodeURIComponent(letter.content + '\n\n---\nSent from HR Admin Pro');
-                const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(recipient)}&su=${subject}&body=${body}`;
-                window.open(gmailUrl, '_blank');
-                letter.status = 'sent';
-                letter.emailSent = true;
-                saveLetters();
-                updateStatsAndTable();
-                showToast(`📧 Opening Gmail for ${letter.employee}`, 'success');
-            }
-        }
-
-        function deleteLetterPrompt(id) {
-            const letter = letters.find(l => l.id === id);
-            if (letter && confirm(`⚠️ Are you sure you want to delete letter "${letter.ref}" for ${letter.employee}? This action cannot be undone.`)) {
-                letters = letters.filter(l => l.id !== id);
-                saveLetters();
-                updateStatsAndTable();
-                showToast(`Letter "${letter.ref}" deleted`, 'success');
-            }
-        }
-
-        function editLetter(id) {
-            const letter = letters.find(l => l.id === id);
-            if (letter) {
-                if (!document.getElementById('editId')) {
-                    const input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.id = 'editId';
-                    document.getElementById('letterForm').appendChild(input);
-                }
-                document.getElementById('editId').value = id;
-                const typeReverse = { 'Appointment Letter': 'appointment', 'Promotion Letter': 'promotion', 'Warning Letter': 'warning', 'Termination Letter': 'termination', 'Experience Letter': 'experience', 'Salary Revision Letter': 'salary' };
-                document.getElementById('letterType').value = typeReverse[letter.type] || '';
-                document.getElementById('employeeSelect').value = letter.employee;
-                document.getElementById('letterSubject').value = letter.subject;
-                document.getElementById('letterContent').value = letter.content;
-                document.getElementById('letterDate').value = letter.date;
-                document.getElementById('refNumber').value = letter.ref;
-                showModal('letterModal');
-            }
-        }
-
-        function viewLetter(id) {
-            const letter = letters.find(l => l.id === id);
-            if (letter) {
-                document.getElementById('previewContent').innerHTML = `<h3 style="color: var(--primary-blue); margin-bottom: 1rem;">${letter.subject}</h3><p><strong>To:</strong> ${letter.employee}</p><p><strong>Ref:</strong> ${letter.ref}</p><p><strong>Date:</strong> ${letter.date}</p><p><strong>Status:</strong> <span class="status-badge status-${letter.status}">${letter.status}</span></p><div style="border-bottom: 1px solid var(--border-color); margin: 1rem 0;"></div><div style="white-space: pre-line;">${letter.content}</div>${letter.emailSent ? '<p style="margin-top:1rem; color:#10b981;"><i class="fas fa-check-circle"></i> Email sent</p>' : ''}`;
-                document.getElementById('emailRecipient').value = `${letter.employee.toLowerCase().replace(/\s/g, '.')}@company.com`;
-                currentPreviewLetter = letter;
-                showModal('previewModal');
-                const sendBtn = document.getElementById('sendGmailBtn');
-                if (sendBtn) sendBtn.onclick = () => sendLetterDirect(letter.id);
-            }
-        }
-
-        function saveAsDraft() {
-            if (saveLetterToStorage(false)) {
-                showToast('Letter saved as draft', 'success');
-                closeModal('letterModal');
-                document.getElementById('letterForm').reset();
-                const editInput = document.getElementById('editId');
-                if (editInput) editInput.removeAttribute('value');
-                document.getElementById('refNumber').value = generateRef();
-                document.getElementById('letterDate').valueAsDate = new Date();
-            }
-        }
-
-        // Templates
-        const templatesData = [
-            { id: 'appointment', name: 'Appointment Letter', icon: 'fas fa-user-plus', color: '#1e40af', usage: 45, content: 'Dear {employee_name},\n\nWe are pleased to offer you the position of {position} at our company, effective {date}.\n\nWe look forward to your valuable contributions.\n\nSincerely,\nHR Department' },
-            { id: 'promotion', name: 'Promotion Letter', icon: 'fas fa-chart-line', color: '#10b981', usage: 28, content: 'Dear {employee_name},\n\nCongratulations! We are pleased to promote you to the position of {position}, effective {date}.\n\nBest regards,\nHR Department' },
-            { id: 'warning', name: 'Warning Letter', icon: 'fas fa-exclamation-triangle', color: '#f59e0b', usage: 15, content: 'Dear {employee_name},\n\nThis letter serves as an official warning regarding your recent conduct.\n\nSincerely,\nHR Department' },
-            { id: 'termination', name: 'Termination Letter', icon: 'fas fa-user-minus', color: '#b91c1c', usage: 8, content: 'Dear {employee_name},\n\nThis letter is to inform you that your employment will be terminated effective {date}.\n\nSincerely,\nHR Department' }
+        // Sample data
+        const lettersData = [
+            { id: 1, ref: 'HR/LTR/2024/156', employee: 'John Doe', type: 'Promotion Letter', subject: 'Promotion to Senior Manager', date: '2024-12-01', status: 'sent' },
+            { id: 2, ref: 'HR/LTR/2024/157', employee: 'Jane Smith', type: 'Appointment Letter', subject: 'Appointment as Project Lead', date: '2024-12-03', status: 'draft' },
+            { id: 3, ref: 'HR/LTR/2024/158', employee: 'Mike Johnson', type: 'Warning Letter', subject: 'Attendance Warning Notice', date: '2024-12-04', status: 'pending' },
+            { id: 4, ref: 'HR/LTR/2024/159', employee: 'Sarah Williams', type: 'Experience Letter', subject: 'Work Experience Certificate', date: '2024-11-28', status: 'sent' },
+            { id: 5, ref: 'HR/LTR/2024/160', employee: 'Robert Brown', type: 'Salary Revision', subject: 'Salary Increment Confirmation', date: '2024-12-05', status: 'sent' }
         ];
 
+        const templatesData = [
+            { id: 'appointment', name: 'Appointment Letter', icon: 'fas fa-user-plus', color: '#1e40af', usage: 45, lastUsed: '2 days ago' },
+            { id: 'promotion', name: 'Promotion Letter', icon: 'fas fa-chart-line', color: '#10b981', usage: 28, lastUsed: '1 week ago' },
+            { id: 'warning', name: 'Warning Letter', icon: 'fas fa-exclamation-triangle', color: '#f59e0b', usage: 15, lastUsed: '3 days ago' },
+            { id: 'termination', name: 'Termination Letter', icon: 'fas fa-user-minus', color: '#b91c1c', usage: 8, lastUsed: '2 weeks ago' },
+            { id: 'experience', name: 'Experience Letter', icon: 'fas fa-award', color: '#3b82f6', usage: 32, lastUsed: 'Yesterday' },
+            { id: 'salary', name: 'Salary Revision', icon: 'fas fa-money-bill', color: '#8b5cf6', usage: 24, lastUsed: '5 days ago' }
+        ];
+
+        const templateContent = {
+            'appointment': 'Dear {employee_name},\n\nWe are pleased to offer you the position of {position} at our company, effective {date}.\n\nYour appointment details and compensation package will be provided separately. Please review and sign the attached documents.\n\nWe look forward to your valuable contributions.\n\nSincerely,\nHR Department',
+            'promotion': 'Dear {employee_name},\n\nCongratulations! We are pleased to promote you to the position of {position}, effective {date}.\n\nThis promotion is in recognition of your exceptional performance and dedication. Your new responsibilities and compensation will be detailed separately.\n\nBest regards,\nHR Department',
+            'warning': 'Dear {employee_name},\n\nThis letter serves as an official warning regarding your recent conduct/performance.\n\nYou are expected to improve immediately. Further incidents may result in disciplinary action.\n\nSincerely,\nHR Department',
+            'termination': 'Dear {employee_name},\n\nThis letter is to inform you that your employment with our company will be terminated effective {date}.\n\nPlease complete the exit formalities by [date].\n\nSincerely,\nHR Department',
+            'experience': 'To Whom It May Concern,\n\nThis is to certify that {employee_name} worked with our organization from [start date] to [end date] in the capacity of {position}.\n\nWe wish {employee_name} all the best in future endeavors.\n\nSincerely,\nHR Department',
+            'salary': 'Dear {employee_name},\n\nWe are pleased to inform you that your salary has been revised effective {date}.\n\nYour new monthly salary will be {salary}. This increment is in recognition of your outstanding performance.\n\nSincerely,\nHR Department'
+        };
+
+        let activeModal = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadLettersTable();
+            loadTemplates();
+            setCurrentDate();
+            updateStats();
+            
+            document.getElementById('letterDate').valueAsDate = new Date();
+            
+            document.getElementById('fileInput').addEventListener('change', handleFileUpload);
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(event) {
+                const hamburgerBtn = document.getElementById('hamburgerBtn');
+                const navDropdown = document.getElementById('navDropdown');
+                
+                if (hamburgerBtn && navDropdown) {
+                    if (!hamburgerBtn.contains(event.target) && !navDropdown.contains(event.target)) {
+                        hamburgerBtn.classList.remove('active');
+                        navDropdown.classList.remove('active');
+                    }
+                }
+            });
+        });
+
+        // Load letters table
+        function loadLettersTable() {
+            const tbody = document.getElementById('lettersTableBody');
+            tbody.innerHTML = '';
+            
+            lettersData.forEach(letter => {
+                const row = document.createElement('tr');
+                row.dataset.status = letter.status;
+                
+                row.innerHTML = `
+                    <td>${letter.ref}</td>
+                    <td>${letter.employee}</td>
+                    <td>${letter.type}</td>
+                    <td>${letter.subject}</td>
+                    <td>${letter.date}</td>
+                    <td><span class="status-badge status-${letter.status}">${letter.status}</span></td>
+                    <td>
+                        <div class="table-actions">
+                            <button class="btn btn-sm btn-primary" onclick="viewLetter(${letter.id})">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline" onclick="editLetter(${letter.id})">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline" onclick="deleteLetter(${letter.id})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Load templates
         function loadTemplates() {
             const container = document.getElementById('templatesContainer');
             container.innerHTML = '';
+            
             templatesData.forEach(template => {
                 const card = document.createElement('div');
                 card.className = 'category-item';
                 card.onclick = () => useTemplate(template.id);
-                card.innerHTML = `<div style="width:60px;height:60px;background:${template.color}20;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;"><i class="${template.icon}" style="color:${template.color};font-size:1.8rem;"></i></div><h4>${template.name}</h4><p>Used ${template.usage} times</p>`;
+                
+                card.innerHTML = `
+                    <div style="width: 60px; height: 60px; background: ${template.color}20; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                        <i class="${template.icon}" style="color: ${template.color}; font-size: 1.8rem;"></i>
+                    </div>
+                    <h4>${template.name}</h4>
+                    <p style="margin: 0.5rem 0;">Used ${template.usage} times</p>
+                    <small style="color: var(--medium-gray);">Last: ${template.lastUsed}</small>
+                `;
                 container.appendChild(card);
             });
         }
 
-        function useTemplate(templateId) {
-            const template = templatesData.find(t => t.id === templateId);
-            if (template) {
-                document.getElementById('letterType').value = templateId;
-                document.getElementById('letterSubject').value = template.name;
-                document.getElementById('letterContent').value = template.content;
-                closeModal('templateModal');
-                showModal('letterModal');
-                showToast(`Template loaded: ${template.name}`, 'success');
+        // Sidebar functions
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            const menuBtn = document.getElementById('menuToggle');
+            
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+            menuBtn.classList.toggle('active');
+        }
+
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            const menuBtn = document.getElementById('menuToggle');
+            
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+            menuBtn.classList.remove('active');
+        }
+
+        // Hamburger menu functions
+        function toggleHamburger() {
+            const btn = document.getElementById('hamburgerBtn');
+            const dropdown = document.getElementById('navDropdown');
+            btn.classList.toggle('active');
+            dropdown.classList.toggle('active');
+        }
+
+        // Logout
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                showToast('Logging out...', 'info');
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1000);
             }
         }
 
+        // Modal functions
+        function showModal(modalId) {
+            if (activeModal) closeModal(activeModal);
+            
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('active');
+                activeModal = modalId;
+                document.body.style.overflow = 'hidden';
+                closeSidebar();
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('active');
+                activeModal = null;
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Template functions
+        function useTemplate(templateId) {
+            document.getElementById('letterType').value = templateId;
+            
+            const templateNames = {
+                'appointment': 'Appointment Letter',
+                'promotion': 'Promotion Letter',
+                'warning': 'Warning Letter',
+                'termination': 'Termination Letter',
+                'experience': 'Experience Letter',
+                'salary': 'Salary Revision Letter'
+            };
+            
+            document.getElementById('letterSubject').value = templateNames[templateId];
+            document.getElementById('letterContent').value = templateContent[templateId];
+            
+            closeModal('templateModal');
+            showModal('letterModal');
+            showToast(`Template loaded: ${templateNames[templateId]}`, 'success');
+        }
+
+        // Insert variable
         function insertVariable(variable) {
             const textarea = document.getElementById('letterContent');
             const start = textarea.selectionStart;
-            textarea.value = textarea.value.substring(0, start) + variable + textarea.value.substring(start);
+            const end = textarea.selectionEnd;
+            const text = textarea.value;
+            
+            textarea.value = text.substring(0, start) + variable + text.substring(end);
+            textarea.selectionStart = textarea.selectionEnd = start + variable.length;
             textarea.focus();
         }
 
-        // Report Generation
-        function generateAndShowReport() {
-            const sent = letters.filter(l => l.status === 'sent').length;
-            const drafts = letters.filter(l => l.status === 'draft').length;
-            const pending = letters.filter(l => l.status === 'pending').length;
-            const byType = {};
-            letters.forEach(l => { byType[l.type] = (byType[l.type] || 0) + 1; });
+        // Preview letter
+        function previewLetter() {
+            const content = document.getElementById('letterContent').value;
+            const subject = document.getElementById('letterSubject').value;
             
-            const reportHTML = `
-                <div class="report-container">
-                    <h3><i class="fas fa-chart-line"></i> HR Letters Summary Report</h3>
-                    <p><strong>Generated:</strong> ${new Date().toLocaleString()}</p>
-                    <div class="report-stats">
-                        <div class="report-stat"><h4>Total Letters</h4><div style="font-size:2rem; font-weight:700;">${letters.length}</div></div>
-                        <div class="report-stat"><h4>Sent</h4><div style="font-size:2rem; color:#10b981;">${sent}</div></div>
-                        <div class="report-stat"><h4>Drafts</h4><div style="font-size:2rem; color:#f59e0b;">${drafts}</div></div>
-                        <div class="report-stat"><h4>Pending</h4><div style="font-size:2rem; color:#b91c1c;">${pending}</div></div>
-                    </div>
-                    <h4>Letters by Type:</h4>
-                    <ul>${Object.entries(byType).map(([type, count]) => `<li><strong>${type}:</strong> ${count}</li>`).join('')}</ul>
-                    <h4>Recent Letters (Last 5):</h4>
-                    <ul>${letters.slice(-5).reverse().map(l => `<li>${l.ref} - ${l.subject} (${l.status})</li>`).join('')}</ul>
-                    <hr>
-                    <p><i class="fas fa-info-circle"></i> Report includes all letters stored in local storage.</p>
-                </div>
+            if (!content || !subject) {
+                showToast('Please fill in all required fields', 'warning');
+                return;
+            }
+            
+            document.getElementById('previewContent').innerHTML = `
+                <h3 style="color: var(--primary-blue); margin-bottom: 1rem;">${subject}</h3>
+                <div style="border-bottom: 1px solid var(--border-color); margin-bottom: 1rem; padding-bottom: 1rem;"></div>
+                <div style="white-space: pre-line;">${content}</div>
             `;
-            document.getElementById('reportContent').innerHTML = reportHTML;
-            showModal('reportModal');
+            
+            closeModal('letterModal');
+            showModal('previewModal');
         }
 
-        function saveReport() {
-            const reportData = {
-                generatedAt: new Date().toISOString(),
-                totalLetters: letters.length,
-                sent: letters.filter(l => l.status === 'sent').length,
-                drafts: letters.filter(l => l.status === 'draft').length,
-                pending: letters.filter(l => l.status === 'pending').length,
-                lettersByType: {},
-                recentLetters: letters.slice(-10).map(l => ({ ref: l.ref, subject: l.subject, status: l.status, date: l.date }))
-            };
-            letters.forEach(l => { reportData.lettersByType[l.type] = (reportData.lettersByType[l.type] || 0) + 1; });
-            
-            const blob = new Blob([JSON.stringify(reportData, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `hr_report_${new Date().toISOString().slice(0,19).replace(/:/g, '-')}.json`;
-            a.click();
-            URL.revokeObjectURL(url);
-            
-            const textReport = `HR LETTERS REPORT\n================\nGenerated: ${new Date().toLocaleString()}\nTotal Letters: ${letters.length}\nSent: ${reportData.sent}\nDrafts: ${reportData.drafts}\nPending: ${reportData.pending}\n\nBy Type:\n${Object.entries(reportData.lettersByType).map(([k,v]) => `  ${k}: ${v}`).join('\n')}`;
-            const textBlob = new Blob([textReport], { type: 'text/plain' });
-            const textUrl = URL.createObjectURL(textBlob);
-            const textA = document.createElement('a');
-            textA.href = textUrl;
-            textA.download = `hr_report_${new Date().toISOString().slice(0,10)}.txt`;
-            textA.click();
-            URL.revokeObjectURL(textUrl);
-            
-            showToast('Report saved successfully! (JSON + TXT)', 'success');
+        // Send letter
+        function sendLetter() {
+            showToast('Letter sent successfully!', 'success');
+            closeModal('previewModal');
         }
 
-        // UI Helpers
-        let activeModal = null;
-        function showModal(modalId) { const m = document.getElementById(modalId); if(m) { m.classList.add('active'); activeModal = modalId; document.body.style.overflow = 'hidden'; } }
-        function closeModal(modalId) { const m = document.getElementById(modalId); if(m) { m.classList.remove('active'); activeModal = null; document.body.style.overflow = 'auto'; } }
-        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); document.getElementById('overlay').classList.toggle('active'); document.getElementById('menuToggle').classList.toggle('active'); }
-        function closeSidebar() { document.getElementById('sidebar').classList.remove('active'); document.getElementById('overlay').classList.remove('active'); document.getElementById('menuToggle').classList.remove('active'); }
-        function toggleHamburger() { document.getElementById('hamburgerBtn').classList.toggle('active'); document.getElementById('navDropdown').classList.toggle('active'); }
-        function filterLetters(status) { document.getElementById('statusFilter').value = status; renderLettersTable(); showToast(`Filtered: ${status}`, 'info'); }
-        function searchLetters() { renderLettersTable(); }
-        function searchTemplates() { const term = document.getElementById('templateSearch').value.toLowerCase(); document.querySelectorAll('#templatesContainer .category-item').forEach(c => c.style.display = c.textContent.toLowerCase().includes(term) ? '' : 'none'); }
-        function handleFileUpload(e) { const files = e.target.files; const fl = document.getElementById('fileList'); fl.innerHTML = ''; Array.from(files).forEach(f => { fl.innerHTML += `<div class="file-item"><i class="fas fa-file"></i><div><p>${f.name}</p><small>${(f.size/1024).toFixed(1)} KB</small></div></div>`; }); if(files.length) showToast(`${files.length} file(s) uploaded`, 'success'); }
-        function setCurrentDate() { document.getElementById('letterDate').valueAsDate = new Date(); document.getElementById('refNumber').value = generateRef(); }
-        function showArchivedLetters() { showToast('Showing all letters', 'info'); filterLetters('all'); }
-        function exportToExcel() { const csv = ['Ref,Employee,Type,Subject,Date,Status', ...letters.map(l => `"${l.ref}","${l.employee}","${l.type}","${l.subject}","${l.date}","${l.status}"`)].join('\n'); const blob = new Blob([csv], { type: 'text/csv' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'hr_letters_export.csv'; a.click(); URL.revokeObjectURL(blob); showToast('Export completed!', 'success'); }
-        function logout() { if(confirm('Logout?')) showToast('Logged out', 'info'); }
-        function showToast(msg, type) { const toast = document.createElement('div'); toast.className = `toast ${type}`; toast.innerHTML = `<i class="fas fa-${type==='success'?'check-circle':type==='warning'?'exclamation-triangle':'info-circle'}"></i><span>${msg}</span>`; document.getElementById('toastContainer').appendChild(toast); setTimeout(() => toast.remove(), 3000); }
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            loadLetters(); loadTemplates(); setCurrentDate();
-            document.getElementById('fileInput').addEventListener('change', handleFileUpload);
-            const savedGmail = localStorage.getItem('gmail_user');
-            if(savedGmail) { currentUserEmail = savedGmail; gmailConnected = true; document.getElementById('senderEmail').value = currentUserEmail; document.getElementById('gmailStatus').innerHTML = '<i class="fas fa-check-circle"></i> Gmail connected'; document.getElementById('gmailAuthBtn').innerHTML = '<i class="fab fa-google"></i> Gmail Connected'; document.getElementById('gmailAuthBtn').classList.add('connected'); }
-            document.querySelectorAll('.modal').forEach(m => m.addEventListener('click', e => { if(e.target === m) closeModal(m.id); }));
-            document.addEventListener('keydown', e => { if(e.key === 'Escape' && activeModal) closeModal(activeModal); });
-            document.addEventListener('click', function(event) {
-                const hamburgerBtn = document.getElementById('hamburgerBtn');
-                const navDropdown = document.getElementById('navDropdown');
-                if (hamburgerBtn && navDropdown && !hamburgerBtn.contains(event.target) && !navDropdown.contains(event.target)) {
-                    hamburgerBtn.classList.remove('active');
-                    navDropdown.classList.remove('active');
+        // Save as draft
+        function saveAsDraft() {
+            showToast('Letter saved as draft', 'info');
+            closeModal('letterModal');
+            document.getElementById('letterForm').reset();
+        }
+
+        // View letter
+        function viewLetter(id) {
+            const letter = lettersData.find(l => l.id === id);
+            if (letter) {
+                document.getElementById('previewContent').innerHTML = `
+                    <h3 style="color: var(--primary-blue); margin-bottom: 1rem;">${letter.subject}</h3>
+                    <div style="border-bottom: 1px solid var(--border-color); margin-bottom: 1rem; padding-bottom: 1rem;"></div>
+                    <p><strong>To:</strong> ${letter.employee}</p>
+                    <p><strong>Ref:</strong> ${letter.ref}</p>
+                    <p><strong>Date:</strong> ${letter.date}</p>
+                    <div style="margin-top: 1.5rem; white-space: pre-line;">Sample letter content for ${letter.type}...</div>
+                `;
+                showModal('previewModal');
+            }
+        }
+
+        // Edit letter
+        function editLetter(id) {
+            const letter = lettersData.find(l => l.id === id);
+            if (letter) {
+                showModal('letterModal');
+                document.getElementById('letterSubject').value = letter.subject;
+                document.getElementById('letterType').value = letter.type.toLowerCase().includes('promotion') ? 'promotion' : 'appointment';
+                showToast(`Editing letter: ${letter.ref}`, 'info');
+            }
+        }
+
+        // Delete letter
+        function deleteLetter(id) {
+            if (confirm('Are you sure you want to delete this letter?')) {
+                showToast('Letter deleted', 'info');
+            }
+        }
+
+        // Search letters
+        function searchLetters() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const rows = document.querySelectorAll('#lettersTableBody tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        }
+
+        // Filter letters
+        function filterLetters(status) {
+            const rows = document.querySelectorAll('#lettersTableBody tr');
+            
+            rows.forEach(row => {
+                if (status === 'all') {
+                    row.style.display = '';
+                } else {
+                    row.style.display = row.dataset.status === status ? '' : 'none';
+                }
+            });
+            
+            showToast(`Filtered by: ${status}`, 'info');
+        }
+
+        // Search templates
+        function searchTemplates() {
+            const searchTerm = document.getElementById('templateSearch').value.toLowerCase();
+            const cards = document.querySelectorAll('#templatesContainer .category-item');
+            
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                card.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        }
+
+        // Handle file upload
+        function handleFileUpload(e) {
+            const files = e.target.files;
+            const fileList = document.getElementById('fileList');
+            fileList.innerHTML = '';
+            
+            for (let file of files) {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.innerHTML = `
+                    <i class="fas fa-file" style="color: var(--primary-blue);"></i>
+                    <div style="flex: 1;">
+                        <p style="font-weight: 600;">${file.name}</p>
+                        <small style="color: var(--medium-gray);">${(file.size/1024).toFixed(1)} KB</small>
+                    </div>
+                    <i class="fas fa-check-circle" style="color: #10b981;"></i>
+                `;
+                fileList.appendChild(fileItem);
+            }
+            
+            if (files.length > 0) {
+                showToast(`${files.length} file(s) uploaded`, 'success');
+            }
+        }
+
+        // Set current date
+        function setCurrentDate() {
+            const today = new Date();
+            document.getElementById('letterDate').valueAsDate = today;
+            
+            // Auto-generate reference number
+            const randomNum = Math.floor(Math.random() * 1000);
+            document.getElementById('refNumber').value = `HR/LTR/2024/${randomNum}`;
+        }
+
+        // Update stats
+        function updateStats() {
+            document.getElementById('sentCount').textContent = '156';
+            document.getElementById('deliveredCount').textContent = '142';
+            document.getElementById('pendingCount').textContent = '8';
+            document.getElementById('failedCount').textContent = '6';
+        }
+
+        // Show archived letters
+        function showArchivedLetters() {
+            showToast('Showing archived letters', 'info');
+        }
+
+        // Generate report
+        function generateReport() {
+            showToast('Report generated successfully!', 'success');
+        }
+
+        // Export to Excel
+        function exportToExcel() {
+            showToast('Export started...', 'info');
+            setTimeout(() => {
+                showToast('Export completed!', 'success');
+            }, 1500);
+        }
+
+        // Toast notification
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            
+            let icon = 'info-circle';
+            if (type === 'success') icon = 'check-circle';
+            if (type === 'warning') icon = 'exclamation-triangle';
+            
+            toast.innerHTML = `
+                <i class="fas fa-${icon}"></i>
+                <span>${message}</span>
+            `;
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+
+        // Close modals with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                if (activeModal) {
+                    closeModal(activeModal);
+                }
+                closeSidebar();
+            }
+        });
+
+        // Close modal when clicking outside
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeModal(modal.id);
                 }
             });
         });
-        
-        window.showModal = showModal; window.closeModal = closeModal; window.toggleSidebar = toggleSidebar; window.closeSidebar = closeSidebar; window.toggleHamburger = toggleHamburger;
-        window.filterLetters = filterLetters; window.searchLetters = searchLetters; window.searchTemplates = searchTemplates; window.useTemplate = useTemplate;
-        window.insertVariable = insertVariable; window.previewLetter = previewLetter; window.sendWithGmail = sendWithGmail; window.saveAsDraft = saveAsDraft;
-        window.viewLetter = viewLetter; window.editLetter = editLetter; window.deleteLetterPrompt = deleteLetterPrompt; window.sendLetterDirect = sendLetterDirect;
-        window.showArchivedLetters = showArchivedLetters; window.generateAndShowReport = generateAndShowReport; window.saveReport = saveReport;
-        window.exportToExcel = exportToExcel; window.connectGmail = connectGmail; window.logout = logout; window.showToast = showToast;
+
+        // Make functions global
+        window.showModal = showModal;
+        window.closeModal = closeModal;
+        window.toggleSidebar = toggleSidebar;
+        window.closeSidebar = closeSidebar;
+        window.toggleHamburger = toggleHamburger;
+        window.logout = logout;
+        window.filterLetters = filterLetters;
+        window.searchLetters = searchLetters;
+        window.searchTemplates = searchTemplates;
+        window.useTemplate = useTemplate;
+        window.insertVariable = insertVariable;
+        window.previewLetter = previewLetter;
+        window.sendLetter = sendLetter;
+        window.saveAsDraft = saveAsDraft;
+        window.viewLetter = viewLetter;
+        window.editLetter = editLetter;
+        window.deleteLetter = deleteLetter;
+        window.showArchivedLetters = showArchivedLetters;
+        window.generateReport = generateReport;
+        window.exportToExcel = exportToExcel;
+        window.showToast = showToast;
     </script>
 </body>
 </html>
