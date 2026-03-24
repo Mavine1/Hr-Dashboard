@@ -500,6 +500,14 @@
             padding: 0.5rem 1rem;
             font-size: 0.85rem;
         }
+        
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+        .btn-success:hover {
+            background: #059669;
+        }
 
         /* Stats Cards */
         .stats-grid {
@@ -697,6 +705,7 @@
         .table-actions {
             display: flex;
             gap: 0.5rem;
+            flex-wrap: wrap;
         }
 
         /* Categories Grid */
@@ -1259,38 +1268,38 @@
                 </div>
                 <div class="stat-info">
                     <h3>Letters Sent</h3>
-                    <div class="stat-value" id="sentCount">156</div>
-                    <div class="stat-trend positive">+12% this month</div>
+                    <div class="stat-value" id="sentCount">0</div>
+                    <div class="stat-trend positive">Updated live</div>
                 </div>
             </div>
-            <div class="stat-card" onclick="filterLetters('delivered')">
-                <div class="stat-icon green">
-                    <i class="fas fa-check-circle"></i>
+            <div class="stat-card" onclick="filterLetters('draft')">
+                <div class="stat-icon yellow">
+                    <i class="fas fa-pen"></i>
                 </div>
                 <div class="stat-info">
-                    <h3>Delivered</h3>
-                    <div class="stat-value" id="deliveredCount">142</div>
-                    <div class="stat-trend">91% success rate</div>
+                    <h3>Drafts</h3>
+                    <div class="stat-value" id="draftCount">0</div>
+                    <div class="stat-trend">In progress</div>
                 </div>
             </div>
             <div class="stat-card" onclick="filterLetters('pending')">
-                <div class="stat-icon yellow">
+                <div class="stat-icon red">
                     <i class="fas fa-clock"></i>
                 </div>
                 <div class="stat-info">
                     <h3>Pending</h3>
-                    <div class="stat-value" id="pendingCount">8</div>
-                    <div class="stat-trend">Requires action</div>
+                    <div class="stat-value" id="pendingCount">0</div>
+                    <div class="stat-trend">Awaiting send</div>
                 </div>
             </div>
-            <div class="stat-card" onclick="filterLetters('failed')">
-                <div class="stat-icon red">
-                    <i class="fas fa-times-circle"></i>
+            <div class="stat-card" onclick="filterLetters('all')">
+                <div class="stat-icon green">
+                    <i class="fas fa-file-alt"></i>
                 </div>
                 <div class="stat-info">
-                    <h3>Failed</h3>
-                    <div class="stat-value" id="failedCount">6</div>
-                    <div class="stat-trend">Needs resending</div>
+                    <h3>Total Letters</h3>
+                    <div class="stat-value" id="totalCount">0</div>
+                    <div class="stat-trend">All records</div>
                 </div>
             </div>
         </div>
@@ -1403,6 +1412,7 @@
                                 <option value="Jane Smith">Jane Smith (HR)</option>
                                 <option value="Mike Johnson">Mike Johnson (Sales)</option>
                                 <option value="Sarah Williams">Sarah Williams (Marketing)</option>
+                                <option value="Robert Brown">Robert Brown (Finance)</option>
                             </select>
                         </div>
                     </div>
@@ -1414,7 +1424,7 @@
                         </div>
                         <div class="form-group">
                             <label>Reference Number</label>
-                            <input type="text" class="form-control" id="refNumber" placeholder="e.g., HR/LTR/2024/001">
+                            <input type="text" class="form-control" id="refNumber" placeholder="Auto-generated">
                         </div>
                     </div>
                     
@@ -1493,10 +1503,16 @@
                 <div id="previewContent" style="white-space: pre-line; line-height: 1.8; min-height: 300px;">
                     <!-- Preview content will be inserted here -->
                 </div>
+                <div class="form-group" style="margin-top: 1rem;">
+                    <label>Email Address (for sending)</label>
+                    <input type="email" id="emailRecipient" class="form-control" placeholder="recipient@company.com" value="hr@company.com">
+                </div>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-outline" onclick="closeModal('previewModal')">Close</button>
-                <button class="btn btn-primary" onclick="sendLetter()">Send Letter</button>
+                <button class="btn btn-success" onclick="sendLetterViaEmail()">
+                    <i class="fas fa-paper-plane"></i> Send via Email
+                </button>
             </div>
         </div>
     </div>
@@ -1505,69 +1521,58 @@
     <div id="toastContainer"></div>
 
     <script>
-        // Sample data
-        const lettersData = [
-            { id: 1, ref: 'HR/LTR/2024/156', employee: 'John Doe', type: 'Promotion Letter', subject: 'Promotion to Senior Manager', date: '2024-12-01', status: 'sent' },
-            { id: 2, ref: 'HR/LTR/2024/157', employee: 'Jane Smith', type: 'Appointment Letter', subject: 'Appointment as Project Lead', date: '2024-12-03', status: 'draft' },
-            { id: 3, ref: 'HR/LTR/2024/158', employee: 'Mike Johnson', type: 'Warning Letter', subject: 'Attendance Warning Notice', date: '2024-12-04', status: 'pending' },
-            { id: 4, ref: 'HR/LTR/2024/159', employee: 'Sarah Williams', type: 'Experience Letter', subject: 'Work Experience Certificate', date: '2024-11-28', status: 'sent' },
-            { id: 5, ref: 'HR/LTR/2024/160', employee: 'Robert Brown', type: 'Salary Revision', subject: 'Salary Increment Confirmation', date: '2024-12-05', status: 'sent' }
-        ];
-
-        const templatesData = [
-            { id: 'appointment', name: 'Appointment Letter', icon: 'fas fa-user-plus', color: '#1e40af', usage: 45, lastUsed: '2 days ago' },
-            { id: 'promotion', name: 'Promotion Letter', icon: 'fas fa-chart-line', color: '#10b981', usage: 28, lastUsed: '1 week ago' },
-            { id: 'warning', name: 'Warning Letter', icon: 'fas fa-exclamation-triangle', color: '#f59e0b', usage: 15, lastUsed: '3 days ago' },
-            { id: 'termination', name: 'Termination Letter', icon: 'fas fa-user-minus', color: '#b91c1c', usage: 8, lastUsed: '2 weeks ago' },
-            { id: 'experience', name: 'Experience Letter', icon: 'fas fa-award', color: '#3b82f6', usage: 32, lastUsed: 'Yesterday' },
-            { id: 'salary', name: 'Salary Revision', icon: 'fas fa-money-bill', color: '#8b5cf6', usage: 24, lastUsed: '5 days ago' }
-        ];
-
-        const templateContent = {
-            'appointment': 'Dear {employee_name},\n\nWe are pleased to offer you the position of {position} at our company, effective {date}.\n\nYour appointment details and compensation package will be provided separately. Please review and sign the attached documents.\n\nWe look forward to your valuable contributions.\n\nSincerely,\nHR Department',
-            'promotion': 'Dear {employee_name},\n\nCongratulations! We are pleased to promote you to the position of {position}, effective {date}.\n\nThis promotion is in recognition of your exceptional performance and dedication. Your new responsibilities and compensation will be detailed separately.\n\nBest regards,\nHR Department',
-            'warning': 'Dear {employee_name},\n\nThis letter serves as an official warning regarding your recent conduct/performance.\n\nYou are expected to improve immediately. Further incidents may result in disciplinary action.\n\nSincerely,\nHR Department',
-            'termination': 'Dear {employee_name},\n\nThis letter is to inform you that your employment with our company will be terminated effective {date}.\n\nPlease complete the exit formalities by [date].\n\nSincerely,\nHR Department',
-            'experience': 'To Whom It May Concern,\n\nThis is to certify that {employee_name} worked with our organization from [start date] to [end date] in the capacity of {position}.\n\nWe wish {employee_name} all the best in future endeavors.\n\nSincerely,\nHR Department',
-            'salary': 'Dear {employee_name},\n\nWe are pleased to inform you that your salary has been revised effective {date}.\n\nYour new monthly salary will be {salary}. This increment is in recognition of your outstanding performance.\n\nSincerely,\nHR Department'
-        };
-
-        let activeModal = null;
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            loadLettersTable();
-            loadTemplates();
-            setCurrentDate();
-            updateStats();
-            
-            document.getElementById('letterDate').valueAsDate = new Date();
-            
-            document.getElementById('fileInput').addEventListener('change', handleFileUpload);
-            
-            // Close dropdown when clicking outside
-            document.addEventListener('click', function(event) {
-                const hamburgerBtn = document.getElementById('hamburgerBtn');
-                const navDropdown = document.getElementById('navDropdown');
-                
-                if (hamburgerBtn && navDropdown) {
-                    if (!hamburgerBtn.contains(event.target) && !navDropdown.contains(event.target)) {
-                        hamburgerBtn.classList.remove('active');
-                        navDropdown.classList.remove('active');
-                    }
-                }
+        // Enhanced letter management with persistent storage
+        let letters = [];
+        let currentPreviewLetter = null;
+        
+        // Load from localStorage
+        function loadLetters() {
+            const stored = localStorage.getItem('hr_letters_data');
+            if (stored) {
+                letters = JSON.parse(stored);
+            } else {
+                // Initialize with sample data
+                letters = [
+                    { id: 1, ref: 'HR/LTR/2024/156', employee: 'John Doe', type: 'Promotion Letter', subject: 'Promotion to Senior Manager', date: '2024-12-01', status: 'sent', content: 'Dear John, Congratulations on your promotion to Senior Manager!', emailSent: true },
+                    { id: 2, ref: 'HR/LTR/2024/157', employee: 'Jane Smith', type: 'Appointment Letter', subject: 'Appointment as Project Lead', date: '2024-12-03', status: 'draft', content: 'Dear Jane, We are pleased to appoint you as Project Lead.', emailSent: false },
+                    { id: 3, ref: 'HR/LTR/2024/158', employee: 'Mike Johnson', type: 'Warning Letter', subject: 'Attendance Warning Notice', date: '2024-12-04', status: 'pending', content: 'This is a formal warning regarding attendance.', emailSent: false },
+                    { id: 4, ref: 'HR/LTR/2024/159', employee: 'Sarah Williams', type: 'Experience Letter', subject: 'Work Experience Certificate', date: '2024-11-28', status: 'sent', content: 'Certifying employment experience.', emailSent: true },
+                    { id: 5, ref: 'HR/LTR/2024/160', employee: 'Robert Brown', type: 'Salary Revision', subject: 'Salary Increment Confirmation', date: '2024-12-05', status: 'sent', content: 'Salary increment confirmed.', emailSent: true }
+                ];
+                saveLetters();
+            }
+            updateStatsAndTable();
+        }
+        
+        function saveLetters() {
+            localStorage.setItem('hr_letters_data', JSON.stringify(letters));
+        }
+        
+        function updateStatsAndTable() {
+            const sent = letters.filter(l => l.status === 'sent').length;
+            const drafts = letters.filter(l => l.status === 'draft').length;
+            const pending = letters.filter(l => l.status === 'pending').length;
+            document.getElementById('sentCount').textContent = sent;
+            document.getElementById('draftCount').textContent = drafts;
+            document.getElementById('pendingCount').textContent = pending;
+            document.getElementById('totalCount').textContent = letters.length;
+            renderLettersTable();
+        }
+        
+        function renderLettersTable() {
+            const searchTerm = document.getElementById('searchInput')?.value.toLowerCase() || '';
+            const statusFilter = document.getElementById('statusFilter')?.value || 'all';
+            const filtered = letters.filter(l => {
+                const matchesSearch = l.employee.toLowerCase().includes(searchTerm) || l.subject.toLowerCase().includes(searchTerm) || l.ref.toLowerCase().includes(searchTerm);
+                const matchesStatus = statusFilter === 'all' || l.status === statusFilter;
+                return matchesSearch && matchesStatus;
             });
-        });
-
-        // Load letters table
-        function loadLettersTable() {
+            
             const tbody = document.getElementById('lettersTableBody');
             tbody.innerHTML = '';
-            
-            lettersData.forEach(letter => {
-                const row = document.createElement('tr');
+            filtered.forEach(letter => {
+                const row = tbody.insertRow();
                 row.dataset.status = letter.status;
-                
                 row.innerHTML = `
                     <td>${letter.ref}</td>
                     <td>${letter.employee}</td>
@@ -1577,366 +1582,259 @@
                     <td><span class="status-badge status-${letter.status}">${letter.status}</span></td>
                     <td>
                         <div class="table-actions">
-                            <button class="btn btn-sm btn-primary" onclick="viewLetter(${letter.id})">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                            <button class="btn btn-sm btn-outline" onclick="editLetter(${letter.id})">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button class="btn btn-sm btn-outline" onclick="deleteLetter(${letter.id})">
-                                <i class="fas fa-trash"></i>
-                            </button>
+                            <button class="btn btn-sm btn-primary" onclick="viewLetter(${letter.id})" title="View"><i class="fas fa-eye"></i></button>
+                            <button class="btn btn-sm btn-outline" onclick="editLetter(${letter.id})" title="Edit"><i class="fas fa-edit"></i></button>
+                            ${letter.status !== 'sent' ? `<button class="btn btn-sm btn-success" onclick="sendLetterDirect(${letter.id})" title="Send via Email"><i class="fas fa-paper-plane"></i></button>` : ''}
+                            <button class="btn btn-sm btn-outline" onclick="deleteLetterPrompt(${letter.id})" title="Delete"><i class="fas fa-trash"></i></button>
                         </div>
                     </td>
                 `;
-                tbody.appendChild(row);
             });
         }
-
-        // Load templates
+        
+        function generateRef() {
+            const nextNum = letters.length + 1;
+            const year = new Date().getFullYear();
+            return `HR/LTR/${year}/${String(nextNum).padStart(3, '0')}`;
+        }
+        
+        function saveLetterToStorage(isSend = false) {
+            const editId = document.getElementById('editId')?.value;
+            const typeSelect = document.getElementById('letterType');
+            const typeMap = { 'appointment': 'Appointment Letter', 'promotion': 'Promotion Letter', 'warning': 'Warning Letter', 'termination': 'Termination Letter', 'experience': 'Experience Letter', 'salary': 'Salary Revision Letter' };
+            const type = typeMap[typeSelect.value] || typeSelect.options[typeSelect.selectedIndex]?.text || 'General Letter';
+            const employee = document.getElementById('employeeSelect').value;
+            const subject = document.getElementById('letterSubject').value;
+            const content = document.getElementById('letterContent').value;
+            const date = document.getElementById('letterDate').value;
+            let ref = document.getElementById('refNumber').value;
+            
+            if (!typeSelect.value || !employee || !subject || !content) {
+                showToast('Please fill all required fields', 'warning');
+                return false;
+            }
+            
+            if (!ref) ref = generateRef();
+            
+            const status = isSend ? 'sent' : 'draft';
+            
+            if (editId) {
+                const index = letters.findIndex(l => l.id == editId);
+                if (index !== -1) {
+                    letters[index] = { ...letters[index], type, employee, subject, content, date, ref, status, emailSent: isSend ? true : letters[index].emailSent };
+                }
+            } else {
+                const newId = Date.now();
+                letters.push({ id: newId, ref, employee, type, subject, date, status, content, emailSent: isSend });
+            }
+            saveLetters();
+            updateStatsAndTable();
+            return true;
+        }
+        
+        function previewLetter() {
+            const content = document.getElementById('letterContent').value;
+            const subject = document.getElementById('letterSubject').value;
+            const employee = document.getElementById('employeeSelect').value;
+            
+            if (!content || !subject || !employee) {
+                showToast('Please fill all required fields', 'warning');
+                return;
+            }
+            
+            currentPreviewLetter = { content, subject, employee };
+            document.getElementById('previewContent').innerHTML = `
+                <h3 style="color: var(--primary-blue); margin-bottom: 1rem;">${subject}</h3>
+                <p><strong>To:</strong> ${employee}</p>
+                <div style="border-bottom: 1px solid var(--border-color); margin: 1rem 0;"></div>
+                <div style="white-space: pre-line;">${content}</div>
+            `;
+            document.getElementById('emailRecipient').value = `${employee.toLowerCase().replace(/\s/g, '.')}@company.com`;
+            closeModal('letterModal');
+            showModal('previewModal');
+        }
+        
+        function sendLetterViaEmail() {
+            if (!currentPreviewLetter) {
+                showToast('No letter to send', 'error');
+                return;
+            }
+            const email = document.getElementById('emailRecipient').value;
+            if (!email) {
+                showToast('Please enter recipient email', 'warning');
+                return;
+            }
+            
+            // Simulate email sending
+            showToast(`📧 Sending email to ${email}...`, 'info');
+            setTimeout(() => {
+                const success = saveLetterToStorage(true);
+                if (success) {
+                    showToast(`✅ Letter "${currentPreviewLetter.subject}" sent successfully to ${email}!`, 'success');
+                    closeModal('previewModal');
+                    document.getElementById('letterForm').reset();
+                    document.getElementById('editId')?.removeAttribute('value');
+                }
+                currentPreviewLetter = null;
+            }, 800);
+        }
+        
+        function sendLetterDirect(id) {
+            const letter = letters.find(l => l.id === id);
+            if (letter && confirm(`Send "${letter.subject}" to ${letter.employee} via email?`)) {
+                const email = `${letter.employee.toLowerCase().replace(/\s/g, '.')}@company.com`;
+                showToast(`📧 Sending to ${email}...`, 'info');
+                setTimeout(() => {
+                    letter.status = 'sent';
+                    letter.emailSent = true;
+                    saveLetters();
+                    updateStatsAndTable();
+                    showToast(`✅ Letter sent to ${letter.employee}`, 'success');
+                }, 600);
+            }
+        }
+        
+        function deleteLetterPrompt(id) {
+            const letter = letters.find(l => l.id === id);
+            if (letter && confirm(`⚠️ Are you sure you want to delete letter "${letter.ref}" for ${letter.employee}? This action cannot be undone.`)) {
+                letters = letters.filter(l => l.id !== id);
+                saveLetters();
+                updateStatsAndTable();
+                showToast(`Letter "${letter.ref}" deleted`, 'success');
+            }
+        }
+        
+        function editLetter(id) {
+            const letter = letters.find(l => l.id === id);
+            if (letter) {
+                document.getElementById('editId')?.setAttribute('value', id);
+                const typeReverse = { 'Appointment Letter': 'appointment', 'Promotion Letter': 'promotion', 'Warning Letter': 'warning', 'Termination Letter': 'termination', 'Experience Letter': 'experience', 'Salary Revision': 'salary' };
+                document.getElementById('letterType').value = typeReverse[letter.type] || '';
+                document.getElementById('employeeSelect').value = letter.employee;
+                document.getElementById('letterSubject').value = letter.subject;
+                document.getElementById('letterContent').value = letter.content;
+                document.getElementById('letterDate').value = letter.date;
+                document.getElementById('refNumber').value = letter.ref;
+                showModal('letterModal');
+            }
+        }
+        
+        function viewLetter(id) {
+            const letter = letters.find(l => l.id === id);
+            if (letter) {
+                document.getElementById('previewContent').innerHTML = `
+                    <h3 style="color: var(--primary-blue); margin-bottom: 1rem;">${letter.subject}</h3>
+                    <p><strong>To:</strong> ${letter.employee}</p>
+                    <p><strong>Ref:</strong> ${letter.ref}</p>
+                    <p><strong>Date:</strong> ${letter.date}</p>
+                    <p><strong>Status:</strong> <span class="status-badge status-${letter.status}">${letter.status}</span></p>
+                    <div style="border-bottom: 1px solid var(--border-color); margin: 1rem 0;"></div>
+                    <div style="white-space: pre-line;">${letter.content}</div>
+                    ${letter.emailSent ? '<p style="margin-top:1rem; color:#10b981;"><i class="fas fa-check-circle"></i> Email sent</p>' : ''}
+                `;
+                document.getElementById('emailRecipient').value = `${letter.employee.toLowerCase().replace(/\s/g, '.')}@company.com`;
+                currentPreviewLetter = letter;
+                showModal('previewModal');
+                // Change button behavior for view mode
+                const sendBtn = document.querySelector('#previewModal .btn-success');
+                if (sendBtn) {
+                    sendBtn.onclick = () => sendLetterDirect(letter.id);
+                }
+            }
+        }
+        
+        function saveAsDraft() {
+            if (saveLetterToStorage(false)) {
+                showToast('Letter saved as draft', 'success');
+                closeModal('letterModal');
+                document.getElementById('letterForm').reset();
+                document.getElementById('editId')?.removeAttribute('value');
+                document.getElementById('refNumber').value = generateRef();
+                document.getElementById('letterDate').valueAsDate = new Date();
+            }
+        }
+        
+        // Template and UI functions
+        const templatesData = [
+            { id: 'appointment', name: 'Appointment Letter', icon: 'fas fa-user-plus', color: '#1e40af', usage: 45 },
+            { id: 'promotion', name: 'Promotion Letter', icon: 'fas fa-chart-line', color: '#10b981', usage: 28 },
+            { id: 'warning', name: 'Warning Letter', icon: 'fas fa-exclamation-triangle', color: '#f59e0b', usage: 15 },
+            { id: 'termination', name: 'Termination Letter', icon: 'fas fa-user-minus', color: '#b91c1c', usage: 8 },
+            { id: 'experience', name: 'Experience Letter', icon: 'fas fa-award', color: '#3b82f6', usage: 32 },
+            { id: 'salary', name: 'Salary Revision', icon: 'fas fa-money-bill', color: '#8b5cf6', usage: 24 }
+        ];
+        
+        const templateContent = {
+            'appointment': 'Dear {employee_name},\n\nWe are pleased to offer you the position of {position} at our company, effective {date}.\n\nWe look forward to your valuable contributions.\n\nSincerely,\nHR Department',
+            'promotion': 'Dear {employee_name},\n\nCongratulations! We are pleased to promote you to the position of {position}, effective {date}.\n\nBest regards,\nHR Department',
+            'warning': 'Dear {employee_name},\n\nThis letter serves as an official warning regarding your recent conduct.\n\nSincerely,\nHR Department',
+            'termination': 'Dear {employee_name},\n\nThis letter is to inform you that your employment will be terminated effective {date}.\n\nSincerely,\nHR Department',
+            'experience': 'To Whom It May Concern,\n\nThis is to certify that {employee_name} worked with us in the capacity of {position}.\n\nSincerely,\nHR Department',
+            'salary': 'Dear {employee_name},\n\nWe are pleased to inform you that your salary has been revised effective {date} to {salary}.\n\nSincerely,\nHR Department'
+        };
+        
         function loadTemplates() {
             const container = document.getElementById('templatesContainer');
             container.innerHTML = '';
-            
             templatesData.forEach(template => {
                 const card = document.createElement('div');
                 card.className = 'category-item';
                 card.onclick = () => useTemplate(template.id);
-                
-                card.innerHTML = `
-                    <div style="width: 60px; height: 60px; background: ${template.color}20; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
-                        <i class="${template.icon}" style="color: ${template.color}; font-size: 1.8rem;"></i>
-                    </div>
-                    <h4>${template.name}</h4>
-                    <p style="margin: 0.5rem 0;">Used ${template.usage} times</p>
-                    <small style="color: var(--medium-gray);">Last: ${template.lastUsed}</small>
-                `;
+                card.innerHTML = `<div style="width:60px;height:60px;background:${template.color}20;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;"><i class="${template.icon}" style="color:${template.color};font-size:1.8rem;"></i></div><h4>${template.name}</h4><p>Used ${template.usage} times</p>`;
                 container.appendChild(card);
             });
         }
-
-        // Sidebar functions
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('overlay');
-            const menuBtn = document.getElementById('menuToggle');
-            
-            sidebar.classList.toggle('active');
-            overlay.classList.toggle('active');
-            menuBtn.classList.toggle('active');
-        }
-
-        function closeSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('overlay');
-            const menuBtn = document.getElementById('menuToggle');
-            
-            sidebar.classList.remove('active');
-            overlay.classList.remove('active');
-            menuBtn.classList.remove('active');
-        }
-
-        // Hamburger menu functions
-        function toggleHamburger() {
-            const btn = document.getElementById('hamburgerBtn');
-            const dropdown = document.getElementById('navDropdown');
-            btn.classList.toggle('active');
-            dropdown.classList.toggle('active');
-        }
-
-        // Logout
-        function logout() {
-            if (confirm('Are you sure you want to logout?')) {
-                showToast('Logging out...', 'info');
-                setTimeout(() => {
-                    window.location.href = 'login.html';
-                }, 1000);
-            }
-        }
-
-        // Modal functions
-        function showModal(modalId) {
-            if (activeModal) closeModal(activeModal);
-            
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                modal.classList.add('active');
-                activeModal = modalId;
-                document.body.style.overflow = 'hidden';
-                closeSidebar();
-            }
-        }
-
-        function closeModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                modal.classList.remove('active');
-                activeModal = null;
-                document.body.style.overflow = 'auto';
-            }
-        }
-
-        // Template functions
+        
         function useTemplate(templateId) {
             document.getElementById('letterType').value = templateId;
-            
-            const templateNames = {
-                'appointment': 'Appointment Letter',
-                'promotion': 'Promotion Letter',
-                'warning': 'Warning Letter',
-                'termination': 'Termination Letter',
-                'experience': 'Experience Letter',
-                'salary': 'Salary Revision Letter'
-            };
-            
-            document.getElementById('letterSubject').value = templateNames[templateId];
+            const names = { appointment: 'Appointment Letter', promotion: 'Promotion Letter', warning: 'Warning Letter', termination: 'Termination Letter', experience: 'Experience Letter', salary: 'Salary Revision Letter' };
+            document.getElementById('letterSubject').value = names[templateId];
             document.getElementById('letterContent').value = templateContent[templateId];
-            
             closeModal('templateModal');
             showModal('letterModal');
-            showToast(`Template loaded: ${templateNames[templateId]}`, 'success');
+            showToast(`Template loaded: ${names[templateId]}`, 'success');
         }
-
-        // Insert variable
+        
         function insertVariable(variable) {
             const textarea = document.getElementById('letterContent');
             const start = textarea.selectionStart;
-            const end = textarea.selectionEnd;
-            const text = textarea.value;
-            
-            textarea.value = text.substring(0, start) + variable + text.substring(end);
-            textarea.selectionStart = textarea.selectionEnd = start + variable.length;
+            textarea.value = textarea.value.substring(0, start) + variable + textarea.value.substring(start);
             textarea.focus();
         }
-
-        // Preview letter
-        function previewLetter() {
-            const content = document.getElementById('letterContent').value;
-            const subject = document.getElementById('letterSubject').value;
-            
-            if (!content || !subject) {
-                showToast('Please fill in all required fields', 'warning');
-                return;
-            }
-            
-            document.getElementById('previewContent').innerHTML = `
-                <h3 style="color: var(--primary-blue); margin-bottom: 1rem;">${subject}</h3>
-                <div style="border-bottom: 1px solid var(--border-color); margin-bottom: 1rem; padding-bottom: 1rem;"></div>
-                <div style="white-space: pre-line;">${content}</div>
-            `;
-            
-            closeModal('letterModal');
-            showModal('previewModal');
-        }
-
-        // Send letter
-        function sendLetter() {
-            showToast('Letter sent successfully!', 'success');
-            closeModal('previewModal');
-        }
-
-        // Save as draft
-        function saveAsDraft() {
-            showToast('Letter saved as draft', 'info');
-            closeModal('letterModal');
-            document.getElementById('letterForm').reset();
-        }
-
-        // View letter
-        function viewLetter(id) {
-            const letter = lettersData.find(l => l.id === id);
-            if (letter) {
-                document.getElementById('previewContent').innerHTML = `
-                    <h3 style="color: var(--primary-blue); margin-bottom: 1rem;">${letter.subject}</h3>
-                    <div style="border-bottom: 1px solid var(--border-color); margin-bottom: 1rem; padding-bottom: 1rem;"></div>
-                    <p><strong>To:</strong> ${letter.employee}</p>
-                    <p><strong>Ref:</strong> ${letter.ref}</p>
-                    <p><strong>Date:</strong> ${letter.date}</p>
-                    <div style="margin-top: 1.5rem; white-space: pre-line;">Sample letter content for ${letter.type}...</div>
-                `;
-                showModal('previewModal');
-            }
-        }
-
-        // Edit letter
-        function editLetter(id) {
-            const letter = lettersData.find(l => l.id === id);
-            if (letter) {
-                showModal('letterModal');
-                document.getElementById('letterSubject').value = letter.subject;
-                document.getElementById('letterType').value = letter.type.toLowerCase().includes('promotion') ? 'promotion' : 'appointment';
-                showToast(`Editing letter: ${letter.ref}`, 'info');
-            }
-        }
-
-        // Delete letter
-        function deleteLetter(id) {
-            if (confirm('Are you sure you want to delete this letter?')) {
-                showToast('Letter deleted', 'info');
-            }
-        }
-
-        // Search letters
-        function searchLetters() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const rows = document.querySelectorAll('#lettersTableBody tr');
-            
-            rows.forEach(row => {
-                const text = row.textContent.toLowerCase();
-                row.style.display = text.includes(searchTerm) ? '' : 'none';
-            });
-        }
-
-        // Filter letters
-        function filterLetters(status) {
-            const rows = document.querySelectorAll('#lettersTableBody tr');
-            
-            rows.forEach(row => {
-                if (status === 'all') {
-                    row.style.display = '';
-                } else {
-                    row.style.display = row.dataset.status === status ? '' : 'none';
-                }
-            });
-            
-            showToast(`Filtered by: ${status}`, 'info');
-        }
-
-        // Search templates
-        function searchTemplates() {
-            const searchTerm = document.getElementById('templateSearch').value.toLowerCase();
-            const cards = document.querySelectorAll('#templatesContainer .category-item');
-            
-            cards.forEach(card => {
-                const text = card.textContent.toLowerCase();
-                card.style.display = text.includes(searchTerm) ? '' : 'none';
-            });
-        }
-
-        // Handle file upload
-        function handleFileUpload(e) {
-            const files = e.target.files;
-            const fileList = document.getElementById('fileList');
-            fileList.innerHTML = '';
-            
-            for (let file of files) {
-                const fileItem = document.createElement('div');
-                fileItem.className = 'file-item';
-                fileItem.innerHTML = `
-                    <i class="fas fa-file" style="color: var(--primary-blue);"></i>
-                    <div style="flex: 1;">
-                        <p style="font-weight: 600;">${file.name}</p>
-                        <small style="color: var(--medium-gray);">${(file.size/1024).toFixed(1)} KB</small>
-                    </div>
-                    <i class="fas fa-check-circle" style="color: #10b981;"></i>
-                `;
-                fileList.appendChild(fileItem);
-            }
-            
-            if (files.length > 0) {
-                showToast(`${files.length} file(s) uploaded`, 'success');
-            }
-        }
-
-        // Set current date
-        function setCurrentDate() {
-            const today = new Date();
-            document.getElementById('letterDate').valueAsDate = today;
-            
-            // Auto-generate reference number
-            const randomNum = Math.floor(Math.random() * 1000);
-            document.getElementById('refNumber').value = `HR/LTR/2024/${randomNum}`;
-        }
-
-        // Update stats
-        function updateStats() {
-            document.getElementById('sentCount').textContent = '156';
-            document.getElementById('deliveredCount').textContent = '142';
-            document.getElementById('pendingCount').textContent = '8';
-            document.getElementById('failedCount').textContent = '6';
-        }
-
-        // Show archived letters
-        function showArchivedLetters() {
-            showToast('Showing archived letters', 'info');
-        }
-
-        // Generate report
-        function generateReport() {
-            showToast('Report generated successfully!', 'success');
-        }
-
-        // Export to Excel
-        function exportToExcel() {
-            showToast('Export started...', 'info');
-            setTimeout(() => {
-                showToast('Export completed!', 'success');
-            }, 1500);
-        }
-
-        // Toast notification
-        function showToast(message, type = 'info') {
-            const container = document.getElementById('toastContainer');
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            
-            let icon = 'info-circle';
-            if (type === 'success') icon = 'check-circle';
-            if (type === 'warning') icon = 'exclamation-triangle';
-            
-            toast.innerHTML = `
-                <i class="fas fa-${icon}"></i>
-                <span>${message}</span>
-            `;
-            
-            container.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.remove();
-            }, 3000);
-        }
-
-        // Close modals with Escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                if (activeModal) {
-                    closeModal(activeModal);
-                }
-                closeSidebar();
-            }
+        
+        // UI Helpers
+        let activeModal = null;
+        function showModal(modalId) { const m = document.getElementById(modalId); if(m) { m.classList.add('active'); activeModal = modalId; document.body.style.overflow = 'hidden'; } }
+        function closeModal(modalId) { const m = document.getElementById(modalId); if(m) { m.classList.remove('active'); activeModal = null; document.body.style.overflow = 'auto'; } }
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); document.getElementById('overlay').classList.toggle('active'); }
+        function closeSidebar() { document.getElementById('sidebar').classList.remove('active'); document.getElementById('overlay').classList.remove('active'); }
+        function toggleHamburger() { document.getElementById('hamburgerBtn').classList.toggle('active'); document.getElementById('navDropdown').classList.toggle('active'); }
+        function filterLetters(status) { document.getElementById('statusFilter').value = status; renderLettersTable(); showToast(`Filtered: ${status}`, 'info'); }
+        function searchLetters() { renderLettersTable(); }
+        function searchTemplates() { const term = document.getElementById('templateSearch').value.toLowerCase(); document.querySelectorAll('#templatesContainer .category-item').forEach(c => c.style.display = c.textContent.toLowerCase().includes(term) ? '' : 'none'); }
+        function handleFileUpload(e) { const files = e.target.files; const fl = document.getElementById('fileList'); fl.innerHTML = ''; Array.from(files).forEach(f => { fl.innerHTML += `<div class="file-item"><i class="fas fa-file"></i><div><p>${f.name}</p><small>${(f.size/1024).toFixed(1)} KB</small></div></div>`; }); if(files.length) showToast(`${files.length} file(s) uploaded`, 'success'); }
+        function setCurrentDate() { document.getElementById('letterDate').valueAsDate = new Date(); document.getElementById('refNumber').value = generateRef(); }
+        function showArchivedLetters() { showToast('Archive feature - showing all letters', 'info'); filterLetters('all'); }
+        function generateReport() { showToast('Report generated (PDF simulation)', 'success'); }
+        function exportToExcel() { showToast('Exporting letters data...', 'info'); setTimeout(() => showToast('Export completed!', 'success'), 1000); }
+        function logout() { if(confirm('Logout?')) showToast('Logged out', 'info'); }
+        function showToast(msg, type) { const toast = document.createElement('div'); toast.className = `toast ${type}`; toast.innerHTML = `<i class="fas fa-${type==='success'?'check-circle':type==='warning'?'exclamation-triangle':'info-circle'}"></i><span>${msg}</span>`; document.getElementById('toastContainer').appendChild(toast); setTimeout(() => toast.remove(), 3000); }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            loadLetters();
+            loadTemplates();
+            setCurrentDate();
+            document.getElementById('fileInput').addEventListener('change', handleFileUpload);
+            document.addEventListener('click', e => { const btn = document.getElementById('hamburgerBtn'), drop = document.getElementById('navDropdown'); if(btn && drop && !btn.contains(e.target) && !drop.contains(e.target)) { btn.classList.remove('active'); drop.classList.remove('active'); } });
+            document.querySelectorAll('.modal').forEach(m => m.addEventListener('click', e => { if(e.target === m) closeModal(m.id); }));
+            document.addEventListener('keydown', e => { if(e.key === 'Escape' && activeModal) closeModal(activeModal); });
         });
-
-        // Close modal when clicking outside
-        document.querySelectorAll('.modal').forEach(modal => {
-            modal.addEventListener('click', function(e) {
-                if (e.target === modal) {
-                    closeModal(modal.id);
-                }
-            });
-        });
-
-        // Make functions global
-        window.showModal = showModal;
-        window.closeModal = closeModal;
-        window.toggleSidebar = toggleSidebar;
-        window.closeSidebar = closeSidebar;
-        window.toggleHamburger = toggleHamburger;
-        window.logout = logout;
-        window.filterLetters = filterLetters;
-        window.searchLetters = searchLetters;
-        window.searchTemplates = searchTemplates;
-        window.useTemplate = useTemplate;
-        window.insertVariable = insertVariable;
-        window.previewLetter = previewLetter;
-        window.sendLetter = sendLetter;
-        window.saveAsDraft = saveAsDraft;
-        window.viewLetter = viewLetter;
-        window.editLetter = editLetter;
-        window.deleteLetter = deleteLetter;
-        window.showArchivedLetters = showArchivedLetters;
-        window.generateReport = generateReport;
-        window.exportToExcel = exportToExcel;
-        window.showToast = showToast;
+        
+        window.showModal = showModal; window.closeModal = closeModal; window.toggleSidebar = toggleSidebar; window.closeSidebar = closeSidebar; window.toggleHamburger = toggleHamburger;
+        window.filterLetters = filterLetters; window.searchLetters = searchLetters; window.searchTemplates = searchTemplates; window.useTemplate = useTemplate;
+        window.insertVariable = insertVariable; window.previewLetter = previewLetter; window.sendLetterViaEmail = sendLetterViaEmail; window.saveAsDraft = saveAsDraft;
+        window.viewLetter = viewLetter; window.editLetter = editLetter; window.deleteLetterPrompt = deleteLetterPrompt; window.sendLetterDirect = sendLetterDirect;
+        window.showArchivedLetters = showArchivedLetters; window.generateReport = generateReport; window.exportToExcel = exportToExcel; window.showToast = showToast; window.logout = logout;
     </script>
 </body>
 </html>
