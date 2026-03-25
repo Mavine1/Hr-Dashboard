@@ -210,7 +210,7 @@
         /* MODERN MODAL - Compact & Modern */
         .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 2000; align-items: center; justify-content: center; }
         .modal.active { display: flex; }
-        .modal-content { background: white; border-radius: 28px; max-width: 520px; width: 90%; max-height: 85vh; overflow-y: auto; box-shadow: 0 25px 40px rgba(0,0,0,0.2); border: none; }
+        .modal-content { background: white; border-radius: 28px; max-width: 600px; width: 90%; max-height: 85vh; overflow-y: auto; box-shadow: 0 25px 40px rgba(0,0,0,0.2); border: none; }
         .modal-header { padding: 1rem 1.5rem; background: var(--primary-soft); border-radius: 28px 28px 0 0; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.05); }
         .modal-title { font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; color: var(--primary); }
         .modal-close { background: rgba(0,0,0,0.1); border: none; font-size: 1.2rem; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; transition: 0.2s; color: var(--primary); display: flex; align-items: center; justify-content: center; }
@@ -228,6 +228,11 @@
         .btn-submit { background: var(--primary); color: white; border: none; padding: 0.7rem; width: 100%; border-radius: 40px; font-weight: 600; cursor: pointer; transition: 0.2s; margin-top: 0.5rem; }
         .btn-submit:hover { background: var(--primary-light); transform: translateY(-1px); }
         .btn-cancel { background: var(--gray-100); border: 1px solid var(--gray-200); padding: 0.6rem; border-radius: 40px; font-weight: 500; width: 100%; cursor: pointer; }
+        .summary-box { background: var(--primary-soft); border-radius: 16px; padding: 1rem; margin: 1rem 0; text-align: center; }
+        .summary-box h4 { font-size: 0.85rem; margin-bottom: 0.5rem; color: var(--primary); }
+        .summary-numbers { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 0.5rem; }
+        .summary-number { text-align: center; }
+        .summary-number .value { font-size: 1.2rem; font-weight: 800; color: var(--primary); }
         .notification { position: fixed; top: 80px; right: 20px; background: white; border-radius: 12px; padding: 0.7rem 1.2rem; box-shadow: 0 6px 14px rgba(0,0,0,0.1); border-left: 4px solid; z-index: 3000; animation: slideIn 0.2s ease; font-size: 0.8rem; }
         .notification.success { border-left-color: #10b981; }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
@@ -248,13 +253,13 @@
             </div>
         </div>
         <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i><span>Exit</span></button>
-        <div class="hamburger-menu"><div class="hamburger-btn" id="hamburgerBtn"><span></span><span></span><span></span></div><div class="nav-dropdown" id="navDropdown"><a href="index.html" class="home-nav-link"><i class="fas fa-home"></i> Home Dashboard</a></div></div>
+        <div class="hamburger-menu"><div class="hamburger-btn" id="hamburgerBtn"><span></span><span></span><span></span></div><div class="nav-dropdown" id="navDropdown"><a href="dashboard.html" class="home-nav-link"><i class="fas fa-home"></i> Home Dashboard</a></div></div>
     </div>
 </header>
 <main class="main-content">
-    <div class="page-header"><div class="header-content"><h1>📊 Service Cost Analyzer</h1><p>Persistent provider costs & real-time analytics</p></div><div class="header-actions"><button class="btn btn-primary" id="addServiceProviderBtn"><i class="fas fa-plus-circle"></i> Add Provider</button><button class="btn btn-secondary" id="analysisBtn"><i class="fas fa-chart-bar"></i> Analysis</button><button class="btn" id="servicesListBtn"><i class="fas fa-list"></i> List View</button><div class="dropdown" style="position:relative;"><button class="btn"><i class="fas fa-download"></i> Export</button><div class="dropdown-content" id="generalExportDropdown" style="position:absolute;right:0;background:white;border-radius:12px;padding:0.3rem;display:none;flex-direction:column;gap:0.2rem;z-index:99;"><div class="dropdown-item" data-export="pdf"><i class="fas fa-file-pdf"></i> PDF</div><div class="dropdown-item" data-export="excel"><i class="fas fa-file-excel"></i> Excel</div><div class="dropdown-item" data-export="csv"><i class="fas fa-file-csv"></i> CSV</div></div></div></div></div>
+    <div class="page-header"><div class="header-content"><h1>📊 Service Cost Analyzer</h1><p>Persistent provider costs & real-time analytics</p></div><div class="header-actions"><button class="btn btn-primary" id="addServiceProviderBtn"><i class="fas fa-plus-circle"></i> Add Provider</button><button class="btn btn-secondary" id="analysisBtn"><i class="fas fa-chart-bar"></i> Analysis</button><button class="btn" id="servicesListBtn"><i class="fas fa-list"></i> List View</button><button class="btn" id="reportBtn"><i class="fas fa-file-alt"></i> Reports</button><div class="dropdown" style="position:relative;"><button class="btn"><i class="fas fa-download"></i> Export</button><div class="dropdown-content" id="generalExportDropdown" style="position:absolute;right:0;background:white;border-radius:12px;padding:0.3rem;display:none;flex-direction:column;gap:0.2rem;z-index:99;"><div class="dropdown-item" data-export="pdf"><i class="fas fa-file-pdf"></i> PDF</div><div class="dropdown-item" data-export="excel"><i class="fas fa-file-excel"></i> Excel</div><div class="dropdown-item" data-export="csv"><i class="fas fa-file-csv"></i> CSV</div></div></div></div></div>
 
-    <div id="servicesListView"><div class="card"><div class="card-header"><div class="card-title"><i class="fas fa-tools"></i> Service Providers</div></div><div class="table-container"><table id="servicesTable"><thead><tr><th>Provider</th><th>Category</th><th>Branch</th><th>Date</th><th>Quoted</th><th>Approved</th><th>Status</th><th>Actions</th> </tr></thead><tbody id="servicesTableBody"></tbody></table></div></div><div class="stats-grid"><div class="stat-box"><h3 id="totalProviders">0</h3><p>Total Providers</p></div><div class="stat-box"><h3 id="totalQuoted">Ksh 0</h3><p>Total Quoted</p></div><div class="stat-box"><h3 id="totalApproved">Ksh 0</h3><p>Total Approved</p></div><div class="stat-box"><h3 id="avgSavings">0%</h3><p>Avg Savings</p></div></div></div>
+    <div id="servicesListView"><div class="card"><div class="card-header"><div class="card-title"><i class="fas fa-tools"></i> Service Providers</div></div><div class="table-container"><table id="servicesTable"><thead>运转<th>Provider</th><th>Category</th><th>Branch</th><th>Date</th><th>Quoted</th><th>Approved</th><th>Status</th><th>Actions</th>  </thead><tbody id="servicesTableBody"></tbody>  </table></div></div><div class="stats-grid"><div class="stat-box"><h3 id="totalProviders">0</h3><p>Total Providers</p></div><div class="stat-box"><h3 id="totalQuoted">Ksh 0</h3><p>Total Quoted</p></div><div class="stat-box"><h3 id="totalApproved">Ksh 0</h3><p>Total Approved</p></div><div class="stat-box"><h3 id="avgSavings">0%</h3><p>Avg Savings</p></div></div></div>
 
     <div id="chartBoard" class="chart-board" style="display:none;"><div class="card"><div class="card-header"><div class="card-title"><i class="fas fa-chart-pie"></i> Cost Analysis Dashboard</div><button class="btn btn-sm" id="exportChartsBtn"><i class="fas fa-download"></i> Charts Image</button></div><div class="charts-grid"><div class="chart-card"><h3><i class="fas fa-chart-bar"></i> Costs by Category</h3><canvas id="categoryChart" style="height:230px; width:100%"></canvas></div><div class="chart-card"><h3><i class="fas fa-chart-line"></i> Monthly Trend</h3><canvas id="trendChart" style="height:230px"></canvas></div><div class="chart-card"><h3><i class="fas fa-balance-scale"></i> Quoted vs Approved</h3><canvas id="comparisonChart" style="height:230px"></canvas></div><div class="chart-card"><h3><i class="fas fa-building"></i> Branch Costs</h3><canvas id="branchChart" style="height:230px"></canvas></div></div></div></div>
 </main>
@@ -293,6 +298,58 @@
     </div>
 </div>
 
+<!-- Reports Modal -->
+<div class="modal" id="reportModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="modal-title"><i class="fas fa-chart-line"></i><span>Cost Reports</span></div>
+            <button class="modal-close" id="closeReportModalBtn">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Service Provider</label>
+                    <select id="reportProvider" class="form-control">
+                        <option value="all">All Providers</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Year</label>
+                    <select id="reportYear" class="form-control">
+                        <option value="all">All Years</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Category (optional)</label>
+                <select id="reportCategory" class="form-control">
+                    <option value="all">All Categories</option>
+                    <option value="plumbing">Plumbing</option>
+                    <option value="electricals">Electricals</option>
+                    <option value="metalwork">Metalwork</option>
+                    <option value="seats">Seats</option>
+                    <option value="woodwork">Woodwork</option>
+                    <option value="others">Others</option>
+                </select>
+            </div>
+            <div id="reportSummary" class="summary-box" style="display: none;">
+                <h4>📈 Report Summary</h4>
+                <div class="summary-numbers">
+                    <div class="summary-number"><div class="value" id="summaryTotalQuoted">Ksh 0</div><div>Total Quoted</div></div>
+                    <div class="summary-number"><div class="value" id="summaryTotalApproved">Ksh 0</div><div>Total Approved</div></div>
+                    <div class="summary-number"><div class="value" id="summaryTotalSavings">Ksh 0</div><div>Total Savings</div></div>
+                    <div class="summary-number"><div class="value" id="summaryAvgDiscount">0%</div><div>Avg Discount</div></div>
+                </div>
+            </div>
+            <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                <button id="generateReportBtn" class="btn-submit"><i class="fas fa-calculator"></i> Analyze & Preview</button>
+                <button id="exportReportPdfBtn" class="btn-cancel"><i class="fas fa-file-pdf"></i> Export PDF</button>
+                <button id="exportReportExcelBtn" class="btn-cancel"><i class="fas fa-file-excel"></i> Export Excel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="notificationContainer"></div>
 <script>
     // ---------- PERSISTENCE & STATE ----------
@@ -323,6 +380,7 @@
         }
         renderNotificationsPanel();
         updateNotifBadge();
+        populateReportFilters();
     }
 
     function saveProvidersToLocal() { localStorage.setItem(STORAGE_PROVIDERS, JSON.stringify(serviceProviders)); }
@@ -374,6 +432,7 @@
         renderServicesTable();
         updateStats();
         if(document.getElementById("chartBoard").style.display !== "none") renderAllCharts();
+        populateReportFilters(); // refresh report dropdowns
     }
 
     function deleteProviderById(id) {
@@ -385,6 +444,7 @@
             renderServicesTable();
             updateStats();
             if(document.getElementById("chartBoard").style.display !== "none") renderAllCharts();
+            populateReportFilters();
         }
     }
 
@@ -397,7 +457,16 @@
             const formattedDate = new Date(p.date).toLocaleDateString();
             const savings = p.quotation - p.approved;
             const statusHtml = p.status === 'approved' ? `<span style="color:#10b981;">✔ Approved</span><br><small>Saved: Ksh ${savings.toFixed(0)}</small>` : `<span style="color:#f97316;">⏳ Pending</span>`;
-            const row = `<tr><td><strong>${escapeHtml(p.name)}</strong></td><td><span class="badge ${badgeClass}">${categoryNames[p.category]}</span></td><td>${escapeHtml(p.branch)}</td><td>${formattedDate}</td><td>Ksh ${p.quotation.toLocaleString()}</td><td>Ksh ${p.approved.toLocaleString()}</td><td>${statusHtml}</td><td><div class="actions"><button class="btn btn-sm" onclick="editProvider(${p.id})"><i class="fas fa-edit"></i></button> <button class="btn btn-sm" onclick="deleteProviderById(${p.id})"><i class="fas fa-trash"></i></button> <button class="btn btn-sm" onclick="exportSingle(${p.id})"><i class="fas fa-download"></i></button></div></td></tr>`;
+            const row = `<tr>
+                <td><strong>${escapeHtml(p.name)}</strong></td>
+                <td><span class="badge ${badgeClass}">${categoryNames[p.category]}</span></td>
+                <td>${escapeHtml(p.branch)}</td>
+                <td>${formattedDate}</td>
+                <td>Ksh ${p.quotation.toLocaleString()}</td>
+                <td>Ksh ${p.approved.toLocaleString()}</td>
+                <td>${statusHtml}</td>
+                <td><div class="actions"><button class="btn btn-sm" onclick="editProvider(${p.id})"><i class="fas fa-edit"></i></button> <button class="btn btn-sm" onclick="deleteProviderById(${p.id})"><i class="fas fa-trash"></i></button> <button class="btn btn-sm" onclick="exportSingle(${p.id})"><i class="fas fa-download"></i></button></div></td>
+            </tr>`;
             tbody.insertAdjacentHTML('beforeend', row);
         });
     }
@@ -441,6 +510,132 @@
         charts.branch = new Chart(document.getElementById('branchChart'), { type:'doughnut', data:{ labels:branchLabels, datasets:[{ data:branchVals, backgroundColor:['#1e40af','#3b82f6','#60a5fa','#93c5fd'] }] }, options:{ responsive:true, maintainAspectRatio:true } });
     }
 
+    // Report functions
+    function populateReportFilters() {
+        const providerSelect = document.getElementById('reportProvider');
+        const yearSelect = document.getElementById('reportYear');
+        // Providers
+        providerSelect.innerHTML = '<option value="all">All Providers</option>';
+        const uniqueProviders = [...new Map(serviceProviders.map(p => [p.name, p.name])).values()];
+        uniqueProviders.forEach(name => {
+            providerSelect.innerHTML += `<option value="${escapeHtml(name)}">${escapeHtml(name)}</option>`;
+        });
+        // Years
+        yearSelect.innerHTML = '<option value="all">All Years</option>';
+        const years = [...new Set(serviceProviders.map(p => new Date(p.date).getFullYear()))].sort();
+        years.forEach(y => {
+            yearSelect.innerHTML += `<option value="${y}">${y}</option>`;
+        });
+    }
+
+    function getFilteredReportData() {
+        let filtered = [...serviceProviders];
+        const provider = document.getElementById('reportProvider').value;
+        const year = document.getElementById('reportYear').value;
+        const category = document.getElementById('reportCategory').value;
+        if (provider !== 'all') {
+            filtered = filtered.filter(p => p.name === provider);
+        }
+        if (year !== 'all') {
+            filtered = filtered.filter(p => new Date(p.date).getFullYear() === parseInt(year));
+        }
+        if (category !== 'all') {
+            filtered = filtered.filter(p => p.category === category);
+        }
+        return filtered;
+    }
+
+    function updateReportSummary() {
+        const data = getFilteredReportData();
+        const totalQuoted = data.reduce((s,p)=>s+p.quotation,0);
+        const totalApproved = data.reduce((s,p)=>s+p.approved,0);
+        const savings = totalQuoted - totalApproved;
+        const avgDiscount = totalQuoted ? ((savings/totalQuoted)*100).toFixed(1) : 0;
+        document.getElementById('summaryTotalQuoted').innerText = `Ksh ${totalQuoted.toLocaleString()}`;
+        document.getElementById('summaryTotalApproved').innerText = `Ksh ${totalApproved.toLocaleString()}`;
+        document.getElementById('summaryTotalSavings').innerText = `Ksh ${savings.toLocaleString()}`;
+        document.getElementById('summaryAvgDiscount').innerText = `${avgDiscount}%`;
+        document.getElementById('reportSummary').style.display = 'block';
+        return data;
+    }
+
+    function exportReportPDF() {
+        const data = getFilteredReportData();
+        if (data.length === 0) {
+            showToast("No data matches the selected filters.", "danger");
+            return;
+        }
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        doc.setFontSize(16);
+        doc.setTextColor(30,64,175);
+        doc.text("Service Cost Report", 20, 20);
+        doc.setFontSize(10);
+        doc.setTextColor(0,0,0);
+        const filters = [];
+        const provider = document.getElementById('reportProvider').value;
+        const year = document.getElementById('reportYear').value;
+        const category = document.getElementById('reportCategory').value;
+        if (provider !== 'all') filters.push(`Provider: ${provider}`);
+        if (year !== 'all') filters.push(`Year: ${year}`);
+        if (category !== 'all') filters.push(`Category: ${category}`);
+        doc.text(`Filters: ${filters.join(' | ') || 'All'}`, 20, 30);
+        doc.text(`Generated: ${new Date().toLocaleString()}`, 20, 36);
+        // Summary
+        const totalQuoted = data.reduce((s,p)=>s+p.quotation,0);
+        const totalApproved = data.reduce((s,p)=>s+p.approved,0);
+        const savings = totalQuoted - totalApproved;
+        const avgDiscount = totalQuoted ? ((savings/totalQuoted)*100).toFixed(1) : 0;
+        doc.setFontSize(11);
+        doc.text(`Summary:`, 20, 45);
+        doc.setFontSize(9);
+        doc.text(`Total Quoted: Ksh ${totalQuoted.toLocaleString()}`, 20, 52);
+        doc.text(`Total Approved: Ksh ${totalApproved.toLocaleString()}`, 20, 58);
+        doc.text(`Total Savings: Ksh ${savings.toLocaleString()} (${avgDiscount}%)`, 20, 64);
+        // Table
+        const tableData = data.map(p => [
+            p.name,
+            p.category,
+            p.branch,
+            new Date(p.date).toLocaleDateString(),
+            `Ksh ${p.quotation.toLocaleString()}`,
+            `Ksh ${p.approved.toLocaleString()}`,
+            p.status
+        ]);
+        doc.autoTable({
+            head: [['Provider','Category','Branch','Date','Quoted','Approved','Status']],
+            body: tableData,
+            startY: 72,
+            headStyles: { fillColor: [30,64,175] }
+        });
+        doc.save(`cost_report_${Date.now()}.pdf`);
+        addNotification("PDF report generated", "success");
+    }
+
+    function exportReportExcel() {
+        const data = getFilteredReportData();
+        if (data.length === 0) {
+            showToast("No data matches the selected filters.", "danger");
+            return;
+        }
+        const wsData = data.map(p => ({
+            Provider: p.name,
+            Category: p.category,
+            Branch: p.branch,
+            Date: p.date,
+            Description: p.description || '',
+            Quoted: p.quotation,
+            Approved: p.approved,
+            Savings: p.quotation - p.approved,
+            Status: p.status
+        }));
+        const ws = XLSX.utils.json_to_sheet(wsData);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Cost Report");
+        XLSX.writeFile(wb, `cost_report_${Date.now()}.xlsx`);
+        addNotification("Excel report exported", "success");
+    }
+
     // form handling
     function openModal(modalId) { const modal=document.getElementById(modalId); if(modal) { modal.classList.add('active'); document.body.style.overflow='hidden'; } }
     function closeModal(modalId) { const modal=document.getElementById(modalId); if(modal) { modal.classList.remove('active'); document.body.style.overflow='auto'; } }
@@ -467,6 +662,16 @@
     document.getElementById("markAllReadBtn").addEventListener("click",markAllRead);
     function toggleHamburger(){ document.getElementById("hamburgerBtn").classList.toggle("active"); document.getElementById("navDropdown").classList.toggle("active"); }
     document.getElementById("hamburgerBtn").onclick = toggleHamburger;
+    // Report button handlers
+    document.getElementById("reportBtn").onclick = () => {
+        populateReportFilters();
+        document.getElementById('reportSummary').style.display = 'none';
+        openModal("reportModal");
+    };
+    document.getElementById("closeReportModalBtn").onclick = () => closeModal("reportModal");
+    document.getElementById("generateReportBtn").onclick = () => updateReportSummary();
+    document.getElementById("exportReportPdfBtn").onclick = () => exportReportPDF();
+    document.getElementById("exportReportExcelBtn").onclick = () => exportReportExcel();
     window.showNotification = showToast;
     loadData();
     renderServicesTable();
