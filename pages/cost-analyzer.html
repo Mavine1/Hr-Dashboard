@@ -155,15 +155,26 @@
         }
         .hamburger-btn span { width: 16px; height: 2px; background: var(--primary); border-radius: 2px; }
         .nav-dropdown {
-            position: absolute; top: 52px; right: 0; width: 260px; background: white; border-radius: 16px; padding: 0.8rem;
+            position: absolute; top: 52px; right: 0; width: 200px; background: white; border-radius: 16px; padding: 0.8rem;
             box-shadow: 0 12px 28px rgba(0,0,0,0.1); border: 1px solid var(--gray-200); opacity: 0; visibility: hidden; transition: 0.2s; z-index: 1000;
         }
         .nav-dropdown.active { opacity: 1; visibility: visible; }
-        .nav-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 0.5rem; }
-        .nav-item { background: var(--gray-100); border-radius: 10px; padding: 0.6rem 0.3rem; text-align: center; text-decoration: none; font-size: 0.7rem; color: var(--gray-500); }
-        .nav-item i { font-size: 1rem; display: block; margin-bottom: 0.2rem; color: var(--primary); }
-        .nav-item.active { background: var(--primary); color: white; }
-        .nav-item.active i { color: white; }
+        /* Single home button style */
+        .home-nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.7rem 1rem;
+            background: var(--primary-soft);
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+        .home-nav-link i { font-size: 1.1rem; }
+        .home-nav-link:hover { background: var(--primary); color: white; transform: translateY(-1px); }
 
         .main-content { margin-top: 80px; padding: 1.2rem 1.5rem; }
         .page-header { background: white; border-radius: 16px; padding: 1rem 1.5rem; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--gray-200); }
@@ -196,18 +207,31 @@
         .chart-card h3 { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.4rem; color: var(--primary); }
         .chart-card canvas { max-height: 230px; height: 230px !important; width: 100% !important; }
 
-        .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(3px); z-index: 2000; align-items: center; justify-content: center; }
+        /* MODERN MODAL - Compact & Modern */
+        .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 2000; align-items: center; justify-content: center; }
         .modal.active { display: flex; }
-        .modal-content { background: white; border-radius: 24px; max-width: 650px; width: 90%; max-height: 85vh; overflow-y: auto; }
-        .modal-header { padding: 1rem 1.5rem; background: var(--primary-soft); border-radius: 24px 24px 0 0; display: flex; justify-content: space-between; }
+        .modal-content { background: white; border-radius: 28px; max-width: 520px; width: 90%; max-height: 85vh; overflow-y: auto; box-shadow: 0 25px 40px rgba(0,0,0,0.2); border: none; }
+        .modal-header { padding: 1rem 1.5rem; background: var(--primary-soft); border-radius: 28px 28px 0 0; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .modal-title { font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; color: var(--primary); }
+        .modal-close { background: rgba(0,0,0,0.1); border: none; font-size: 1.2rem; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; transition: 0.2s; color: var(--primary); display: flex; align-items: center; justify-content: center; }
+        .modal-close:hover { background: var(--danger); color: white; }
+        .modal-body { padding: 1.5rem; }
         .form-group { margin-bottom: 1rem; }
-        .form-control { width: 100%; padding: 0.6rem 0.8rem; border-radius: 12px; border: 1px solid var(--gray-200); font-size: 0.8rem; background: var(--gray-100); }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
-        .file-upload { border: 1px dashed var(--gray-500); border-radius: 12px; padding: 0.8rem; text-align: center; cursor: pointer; background: var(--gray-100); }
+        .form-group label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; color: var(--gray-500); margin-bottom: 0.25rem; display: block; }
+        .form-control { width: 100%; padding: 0.6rem 0.9rem; border-radius: 14px; border: 1px solid var(--gray-200); font-size: 0.85rem; background: var(--gray-100); transition: 0.2s; }
+        .form-control:focus { outline: none; border-color: var(--primary); background: white; box-shadow: 0 0 0 3px rgba(30,64,175,0.1); }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .file-upload { border: 1px dashed var(--gray-400); border-radius: 16px; padding: 0.6rem; text-align: center; cursor: pointer; background: var(--gray-100); transition: 0.2s; margin-top: 0.5rem; }
+        .file-upload i { font-size: 1.2rem; color: var(--primary); margin-bottom: 0.2rem; }
+        .file-upload p { font-size: 0.7rem; color: var(--gray-500); }
+        .file-upload:hover { border-color: var(--primary); background: var(--primary-soft); }
+        .btn-submit { background: var(--primary); color: white; border: none; padding: 0.7rem; width: 100%; border-radius: 40px; font-weight: 600; cursor: pointer; transition: 0.2s; margin-top: 0.5rem; }
+        .btn-submit:hover { background: var(--primary-light); transform: translateY(-1px); }
+        .btn-cancel { background: var(--gray-100); border: 1px solid var(--gray-200); padding: 0.6rem; border-radius: 40px; font-weight: 500; width: 100%; cursor: pointer; }
         .notification { position: fixed; top: 80px; right: 20px; background: white; border-radius: 12px; padding: 0.7rem 1.2rem; box-shadow: 0 6px 14px rgba(0,0,0,0.1); border-left: 4px solid; z-index: 3000; animation: slideIn 0.2s ease; font-size: 0.8rem; }
         .notification.success { border-left-color: #10b981; }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-        @media (max-width: 760px) { .charts-grid { grid-template-columns: 1fr; } .stats-grid { grid-template-columns: repeat(2,1fr); } .animated-title-container { display: none; } .main-content { padding: 1rem; } }
+        @media (max-width: 760px) { .charts-grid { grid-template-columns: 1fr; } .stats-grid { grid-template-columns: repeat(2,1fr); } .animated-title-container { display: none; } .main-content { padding: 1rem; } .modal-content { max-width: 95%; } .form-row { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -224,18 +248,50 @@
             </div>
         </div>
         <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i><span>Exit</span></button>
-        <div class="hamburger-menu"><div class="hamburger-btn" id="hamburgerBtn"><span></span><span></span><span></span></div><div class="nav-dropdown" id="navDropdown"><div class="nav-grid"><a href="#" class="nav-item"><i class="fas fa-home"></i><span>Home</span></a><a href="#" class="nav-item"><i class="fas fa-tasks"></i><span>Tasks</span></a><a href="#" class="nav-item active"><i class="fas fa-chart-line"></i><span>Cost Analyzer</span></a><a href="#" class="nav-item"><i class="fas fa-users"></i><span>Employees</span></a></div></div></div>
+        <div class="hamburger-menu"><div class="hamburger-btn" id="hamburgerBtn"><span></span><span></span><span></span></div><div class="nav-dropdown" id="navDropdown"><a href="index.html" class="home-nav-link"><i class="fas fa-home"></i> Home Dashboard</a></div></div>
     </div>
 </header>
 <main class="main-content">
     <div class="page-header"><div class="header-content"><h1>📊 Service Cost Analyzer</h1><p>Persistent provider costs & real-time analytics</p></div><div class="header-actions"><button class="btn btn-primary" id="addServiceProviderBtn"><i class="fas fa-plus-circle"></i> Add Provider</button><button class="btn btn-secondary" id="analysisBtn"><i class="fas fa-chart-bar"></i> Analysis</button><button class="btn" id="servicesListBtn"><i class="fas fa-list"></i> List View</button><div class="dropdown" style="position:relative;"><button class="btn"><i class="fas fa-download"></i> Export</button><div class="dropdown-content" id="generalExportDropdown" style="position:absolute;right:0;background:white;border-radius:12px;padding:0.3rem;display:none;flex-direction:column;gap:0.2rem;z-index:99;"><div class="dropdown-item" data-export="pdf"><i class="fas fa-file-pdf"></i> PDF</div><div class="dropdown-item" data-export="excel"><i class="fas fa-file-excel"></i> Excel</div><div class="dropdown-item" data-export="csv"><i class="fas fa-file-csv"></i> CSV</div></div></div></div></div>
 
-    <div id="servicesListView"><div class="card"><div class="card-header"><div class="card-title"><i class="fas fa-tools"></i> Service Providers</div></div><div class="table-container"><table id="servicesTable"><thead><tr><th>Provider</th><th>Category</th><th>Branch</th><th>Date</th><th>Quoted</th><th>Approved</th><th>Status</th><th>Actions</th></tr></thead><tbody id="servicesTableBody"></tbody></table></div></div><div class="stats-grid"><div class="stat-box"><h3 id="totalProviders">0</h3><p>Total Providers</p></div><div class="stat-box"><h3 id="totalQuoted">Ksh 0</h3><p>Total Quoted</p></div><div class="stat-box"><h3 id="totalApproved">Ksh 0</h3><p>Total Approved</p></div><div class="stat-box"><h3 id="avgSavings">0%</h3><p>Avg Savings</p></div></div></div>
+    <div id="servicesListView"><div class="card"><div class="card-header"><div class="card-title"><i class="fas fa-tools"></i> Service Providers</div></div><div class="table-container"><table id="servicesTable"><thead><tr><th>Provider</th><th>Category</th><th>Branch</th><th>Date</th><th>Quoted</th><th>Approved</th><th>Status</th><th>Actions</th> </tr></thead><tbody id="servicesTableBody"></tbody></table></div></div><div class="stats-grid"><div class="stat-box"><h3 id="totalProviders">0</h3><p>Total Providers</p></div><div class="stat-box"><h3 id="totalQuoted">Ksh 0</h3><p>Total Quoted</p></div><div class="stat-box"><h3 id="totalApproved">Ksh 0</h3><p>Total Approved</p></div><div class="stat-box"><h3 id="avgSavings">0%</h3><p>Avg Savings</p></div></div></div>
 
     <div id="chartBoard" class="chart-board" style="display:none;"><div class="card"><div class="card-header"><div class="card-title"><i class="fas fa-chart-pie"></i> Cost Analysis Dashboard</div><button class="btn btn-sm" id="exportChartsBtn"><i class="fas fa-download"></i> Charts Image</button></div><div class="charts-grid"><div class="chart-card"><h3><i class="fas fa-chart-bar"></i> Costs by Category</h3><canvas id="categoryChart" style="height:230px; width:100%"></canvas></div><div class="chart-card"><h3><i class="fas fa-chart-line"></i> Monthly Trend</h3><canvas id="trendChart" style="height:230px"></canvas></div><div class="chart-card"><h3><i class="fas fa-balance-scale"></i> Quoted vs Approved</h3><canvas id="comparisonChart" style="height:230px"></canvas></div><div class="chart-card"><h3><i class="fas fa-building"></i> Branch Costs</h3><canvas id="branchChart" style="height:230px"></canvas></div></div></div></div>
 </main>
 
-<div class="modal" id="addServiceModal"><div class="modal-content"><div class="modal-header"><div class="modal-title"><i class="fas fa-plus-circle"></i><span id="modalTitle">Add Provider</span></div><button class="modal-close" id="closeModalBtn">&times;</button></div><div class="modal-body"><form id="serviceProviderForm"><input type="hidden" id="providerId"><div class="form-row"><div class="form-group"><label>Provider Name *</label><input type="text" id="providerName" class="form-control" required></div><div class="form-group"><label>Category *</label><select id="serviceCategory" class="form-control"><option value="plumbing">Plumbing</option><option value="electricals">Electricals</option><option value="metalwork">Metalwork</option><option value="seats">Seats</option><option value="woodwork">Woodwork</option><option value="others">Others</option></select></div></div><div class="form-row"><div class="form-group"><label>Branch</label><input type="text" id="branch" class="form-control" required></div><div class="form-group"><label>Date</label><input type="date" id="date" class="form-control" required></div></div><div class="form-group"><label>Description</label><textarea id="description" rows="2" class="form-control"></textarea></div><div class="form-row"><div class="form-group"><label>Quoted (Ksh)</label><input type="number" id="quotationAmount" class="form-control" step="0.01" required></div><div class="form-group"><label>Approved (Ksh)</label><input type="number" id="approvedAmount" class="form-control" step="0.01" required></div></div><div class="file-upload" id="fileUploadArea"><i class="fas fa-cloud-upload-alt"></i><p>Upload doc (mock)</p><input type="file" id="quotationFile" style="display:none;"></div><div id="fileName" style="font-size:0.7rem;"></div><div class="form-row" style="margin-top:1rem;"><button type="submit" class="btn btn-primary">Save</button><button type="button" id="cancelFormBtn" class="btn">Cancel</button></div></form></div></div></div>
+<!-- MODERN MODAL -->
+<div class="modal" id="addServiceModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="modal-title"><i class="fas fa-plus-circle"></i><span id="modalTitle">Add New Provider</span></div>
+            <button class="modal-close" id="closeModalBtn">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="serviceProviderForm">
+                <input type="hidden" id="providerId">
+                <div class="form-row">
+                    <div class="form-group"><label>Provider Name</label><input type="text" id="providerName" class="form-control" placeholder="e.g., Apex Plumbing" required></div>
+                    <div class="form-group"><label>Category</label><select id="serviceCategory" class="form-control"><option value="plumbing">Plumbing</option><option value="electricals">Electricals</option><option value="metalwork">Metalwork</option><option value="seats">Seats</option><option value="woodwork">Woodwork</option><option value="others">Others</option></select></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Branch</label><input type="text" id="branch" class="form-control" placeholder="Branch location" required></div>
+                    <div class="form-group"><label>Date</label><input type="date" id="date" class="form-control" required></div>
+                </div>
+                <div class="form-group"><label>Description (optional)</label><textarea id="description" rows="2" class="form-control" placeholder="Brief description of work..."></textarea></div>
+                <div class="form-row">
+                    <div class="form-group"><label>Quoted Amount (Ksh)</label><input type="number" id="quotationAmount" class="form-control" step="0.01" placeholder="0.00" required></div>
+                    <div class="form-group"><label>Approved Amount (Ksh)</label><input type="number" id="approvedAmount" class="form-control" step="0.01" placeholder="0.00" required></div>
+                </div>
+                <div class="file-upload" id="fileUploadArea"><i class="fas fa-cloud-upload-alt"></i><p>Click to attach quotation (mock)</p><input type="file" id="quotationFile" style="display:none;"></div>
+                <div id="fileName" style="font-size:0.7rem; margin-top: 0.3rem; color: var(--primary);"></div>
+                <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                    <button type="submit" class="btn-submit"><i class="fas fa-save"></i> Save Provider</button>
+                    <button type="button" id="cancelFormBtn" class="btn-cancel">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <div id="notificationContainer"></div>
 <script>
@@ -388,7 +444,7 @@
     // form handling
     function openModal(modalId) { const modal=document.getElementById(modalId); if(modal) { modal.classList.add('active'); document.body.style.overflow='hidden'; } }
     function closeModal(modalId) { const modal=document.getElementById(modalId); if(modal) { modal.classList.remove('active'); document.body.style.overflow='auto'; } }
-    document.getElementById("addServiceProviderBtn").onclick = () => { document.getElementById("providerId").value=""; document.getElementById("serviceProviderForm").reset(); document.getElementById("modalTitle").innerText="Add New Provider"; openModal("addServiceModal"); };
+    document.getElementById("addServiceProviderBtn").onclick = () => { document.getElementById("providerId").value=""; document.getElementById("serviceProviderForm").reset(); document.getElementById("modalTitle").innerText="Add New Provider"; document.getElementById("date").valueAsDate = new Date(); openModal("addServiceModal"); };
     document.getElementById("closeModalBtn").onclick = () => closeModal("addServiceModal");
     document.getElementById("cancelFormBtn").onclick = () => closeModal("addServiceModal");
     document.getElementById("serviceProviderForm").onsubmit = (e) => { e.preventDefault(); const id = document.getElementById("providerId").value; const provider = { name:document.getElementById("providerName").value, category:document.getElementById("serviceCategory").value, branch:document.getElementById("branch").value, date:document.getElementById("date").value, description:document.getElementById("description").value, quotation:parseFloat(document.getElementById("quotationAmount").value), approved:parseFloat(document.getElementById("approvedAmount").value) }; if(isNaN(provider.quotation)) provider.quotation=0; if(isNaN(provider.approved)) provider.approved=0; if(id) { provider.id=parseInt(id); saveProvider(provider, true); } else { saveProvider(provider, false); } closeModal("addServiceModal"); };
@@ -416,7 +472,6 @@
     renderServicesTable();
     updateStats();
     renderAllCharts();
-    document.getElementById("date").valueAsDate = new Date();
     const fileArea = document.getElementById("fileUploadArea");
     fileArea.onclick = () => document.getElementById("quotationFile").click();
     document.getElementById("quotationFile").onchange = (e) => { if(e.target.files.length) document.getElementById("fileName").innerText = `📎 ${e.target.files[0].name}`; };
