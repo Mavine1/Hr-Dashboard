@@ -2,39 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Service Cost Analyzer | HR Admin Pro</title>
-    <link rel="stylesheet" href="../css/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Cost Analyzer | HR Admin Pro</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pptxgenjs/3.10.0/pptxgen.bundle.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
     <style>
-        :root {
-            --primary-blue: #1e40af;
-            --secondary-blue: #3b82f6;
-            --light-blue: #dbeafe;
-            --sky-blue: #eff6ff;
-            --dark-blue: #1e3a8a;
-            --primary-red: #b91c1c;
-            --light-red: #fee2e2;
-            --soft-red: #fef2f2;
-            --pure-white: #ffffff;
-            --off-white: #f8fafc;
-            --light-gray: #e2e8f0;
-            --medium-gray: #94a3b8;
-            --dark-gray: #334155;
-            --text-primary: #0f172a;
-            --text-secondary: #475569;
-            --border-color: #e2e8f0;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
-            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
-        }
-
         * {
             margin: 0;
             padding: 0;
@@ -43,1767 +19,407 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: var(--off-white);
-            color: var(--text-primary);
-            line-height: 1.5;
+            background: #f1f5f9;
+            color: #0f172a;
+            font-size: 14px;
+            line-height: 1.45;
         }
 
-        /* Modern Fixed Header - Same as Dashboard */
+        :root {
+            --primary: #1e40af;
+            --primary-light: #3b82f6;
+            --primary-soft: #dbeafe;
+            --danger: #b91c1c;
+            --gray-100: #f8fafc;
+            --gray-200: #e2e8f0;
+            --gray-500: #64748b;
+            --shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        /* HEADER (compact) */
         .main-header {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            height: 70px;
-            background: var(--pure-white);
-            border-bottom: 1px solid var(--border-color);
+            height: 64px;
+            background: white;
+            border-bottom: 1px solid var(--gray-200);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 2rem;
+            padding: 0 1.5rem;
             z-index: 1000;
-            box-shadow: var(--shadow-sm);
+            box-shadow: var(--shadow);
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.75rem;
         }
 
         .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--primary-blue);
+            width: 34px;
+            height: 34px;
+            background: var(--primary);
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 10px rgba(30, 64, 175, 0.2);
         }
 
-        .logo-icon i {
-            color: white;
-            font-size: 1.2rem;
-        }
-
-        .logo h2 {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            letter-spacing: -0.01em;
-        }
+        .logo-icon i { color: white; font-size: 1rem; }
+        .logo h2 { font-size: 1.1rem; font-weight: 700; }
 
         .animated-title-container {
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
-            background: var(--light-blue);
-            padding: 0.4rem 1.5rem;
+            background: var(--primary-soft);
+            padding: 0.25rem 1.2rem;
             border-radius: 40px;
-            border: 1px solid var(--primary-blue);
+            border: 1px solid var(--primary);
         }
+        .animated-title { font-size: 0.75rem; font-weight: 500; color: var(--primary); white-space: nowrap; animation: slideText 20s linear infinite; }
+        @keyframes slideText { 0% { transform: translateX(100%); opacity: 0; } 5% { transform: translateX(0); opacity: 1; } 95% { transform: translateX(0); opacity: 1; } 100% { transform: translateX(-100%); opacity: 0; } }
 
-        .animated-title {
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--primary-blue);
-            white-space: nowrap;
-            animation: slideText 20s linear infinite;
-        }
-
-        @keyframes slideText {
-            0% { transform: translateX(100%); opacity: 0; }
-            5% { transform: translateX(0); opacity: 1; }
-            95% { transform: translateX(0); opacity: 1; }
-            100% { transform: translateX(-100%); opacity: 0; }
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
+        .header-right { display: flex; align-items: center; gap: 0.8rem; }
         .notifications {
             position: relative;
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
+            background: var(--gray-100);
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: var(--off-white);
-            border-radius: 10px;
             cursor: pointer;
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--gray-200);
         }
-
-        .notifications:hover {
-            background: var(--light-blue);
-            border-color: var(--primary-blue);
-        }
-
-        .notifications i {
-            color: var(--primary-blue);
-            font-size: 1.1rem;
-        }
-
-        .badge {
+        .notifications i { color: var(--primary); font-size: 1rem; }
+        .badge-count {
             position: absolute;
-            top: -4px;
-            right: -4px;
-            background: var(--primary-red);
+            top: -5px;
+            right: -6px;
+            background: var(--danger);
             color: white;
             width: 18px;
             height: 18px;
             border-radius: 50%;
+            font-size: 0.65rem;
+            font-weight: 700;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.7rem;
-            font-weight: 600;
             border: 2px solid white;
         }
+        .notif-panel {
+            position: absolute;
+            top: 48px;
+            right: 0;
+            width: 320px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+            border: 1px solid var(--gray-200);
+            z-index: 1100;
+            display: none;
+            flex-direction: column;
+            max-height: 380px;
+            overflow-y: auto;
+        }
+        .notif-panel.show { display: flex; }
+        .notif-header { padding: 0.8rem 1rem; border-bottom: 1px solid var(--gray-200); font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
+        .notif-item { padding: 0.75rem 1rem; border-bottom: 1px solid var(--gray-200); font-size: 0.8rem; transition: background 0.1s; cursor: pointer; }
+        .notif-item.unread { background: #eff6ff; border-left: 3px solid var(--primary); }
+        .notif-item:hover { background: var(--gray-100); }
+        .notif-time { font-size: 0.65rem; color: var(--gray-500); margin-top: 0.2rem; }
 
         .logout-btn {
-            background: var(--primary-blue);
+            background: var(--primary);
             color: white;
             border: none;
-            padding: 0.6rem 1.2rem;
+            padding: 0.45rem 1rem;
             border-radius: 10px;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             font-weight: 500;
             display: flex;
             align-items: center;
             gap: 0.5rem;
             cursor: pointer;
-            transition: all 0.2s;
         }
-
-        .logout-btn:hover {
-            background: var(--dark-blue);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .hamburger-menu {
-            position: relative;
-        }
-
         .hamburger-btn {
-            width: 40px;
-            height: 40px;
-            background: var(--off-white);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-            cursor: pointer;
-            transition: all 0.2s;
+            width: 36px; height: 36px; background: var(--gray-100); border: 1px solid var(--gray-200); border-radius: 10px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer;
         }
-
-        .hamburger-btn:hover {
-            background: var(--light-blue);
-            border-color: var(--primary-blue);
-        }
-
-        .hamburger-btn span {
-            width: 18px;
-            height: 2px;
-            background: var(--primary-blue);
-            border-radius: 2px;
-            transition: all 0.3s;
-        }
-
-        .hamburger-btn.active span:nth-child(1) {
-            transform: rotate(45deg) translate(4px, 4px);
-        }
-
-        .hamburger-btn.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger-btn.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(4px, -4px);
-        }
-
-        /* Navigation Dropdown */
+        .hamburger-btn span { width: 16px; height: 2px; background: var(--primary); border-radius: 2px; }
         .nav-dropdown {
-            position: absolute;
-            top: 50px;
-            right: 0;
-            width: 280px;
-            background: white;
-            border-radius: 16px;
-            padding: 1rem;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--border-color);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.3s;
-            z-index: 1000;
-        }
-
-        .nav-dropdown.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .nav-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.5rem;
-        }
-
-        .nav-item {
-            background: var(--off-white);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 1rem 0.5rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
-            color: var(--text-secondary);
-        }
-
-        .nav-item:hover {
-            background: var(--light-blue);
-            border-color: var(--primary-blue);
-            transform: translateY(-2px);
-        }
-
-        .nav-item i {
-            font-size: 1.2rem;
-            color: var(--primary-blue);
-            margin-bottom: 0.3rem;
-            display: block;
-        }
-
-        .nav-item span {
-            font-size: 0.75rem;
-            font-weight: 500;
-            display: block;
-            line-height: 1.3;
-        }
-
-        .nav-item.active {
-            background: var(--primary-blue);
-            color: white;
-        }
-
-        .nav-item.active i {
-            color: white;
-        }
-
-        /* Main Content */
-        .main-content {
-            margin-top: 90px;
-            padding: 2rem;
-        }
-
-        /* Page Header */
-        .page-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding: 1.5rem 2rem;
-            background: var(--pure-white);
-            border-radius: 16px;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .header-content h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.3rem;
-        }
-
-        .header-content p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-
-        .header-actions {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        /* Buttons */
-        .btn {
-            padding: 0.7rem 1.5rem;
-            border-radius: 10px;
-            border: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            background: var(--pure-white);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-        }
-
-        .btn i {
-            font-size: 1rem;
-        }
-
-        .btn-primary {
-            background: var(--primary-blue);
-            color: white;
-            border: none;
-        }
-
-        .btn-primary:hover {
-            background: var(--dark-blue);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .btn-secondary {
-            background: var(--pure-white);
-            color: var(--primary-blue);
-            border: 1px solid var(--primary-blue);
-        }
-
-        .btn-secondary:hover {
-            background: var(--light-blue);
-            transform: translateY(-2px);
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 1px solid var(--border-color);
-        }
-
-        .btn-outline:hover {
-            background: var(--off-white);
-            border-color: var(--medium-gray);
-        }
-
-        .btn-sm {
-            padding: 0.5rem 1rem;
-            font-size: 0.85rem;
-        }
-
-        /* Cards */
-        .card {
-            background: var(--pure-white);
-            border-radius: 16px;
-            box-shadow: var(--shadow-sm);
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border: 1px solid var(--border-color);
-            transition: all 0.3s ease;
-        }
-
-        .card:hover {
-            box-shadow: var(--shadow-md);
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid var(--light-blue);
-        }
-
-        .card-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-
-        .card-title i {
-            color: var(--primary-blue);
-            font-size: 1.3rem;
-        }
-
-        /* Table */
-        .table-container {
-            overflow-x: auto;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            background: var(--pure-white);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.9rem;
-        }
-
-        thead {
-            background: var(--light-blue);
-            border-bottom: 2px solid var(--primary-blue);
-        }
-
-        th {
-            padding: 1rem 1.2rem;
-            text-align: left;
-            font-weight: 600;
-            color: var(--primary-blue);
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        td {
-            padding: 1rem 1.2rem;
-            border-bottom: 1px solid var(--border-color);
-            color: var(--text-secondary);
-        }
-
-        tbody tr:hover {
-            background: var(--off-white);
-        }
-
-        /* Badges */
-        .badge {
-            display: inline-block;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-        }
-
-        .badge-plumbing {
-            background: var(--light-blue);
-            color: var(--primary-blue);
-        }
-
-        .badge-electricals {
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        .badge-metalwork {
-            background: #e2e3e5;
-            color: #383d41;
-        }
-
-        .badge-seats {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .badge-woodwork {
-            background: #cce5ff;
-            color: #004085;
-        }
-
-        .badge-others {
-            background: var(--light-red);
-            color: var(--primary-red);
-        }
-
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .stat-box {
-            text-align: center;
-            padding: 1.2rem;
-            background: var(--light-blue);
-            border-radius: 12px;
-            border: 1px solid var(--primary-blue);
-        }
-
-        .stat-box h3 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary-blue);
-            margin-bottom: 0.3rem;
-        }
-
-        .stat-box p {
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            font-weight: 500;
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-            padding: 1.5rem;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: var(--pure-white);
-            border-radius: 20px;
-            width: 100%;
-            max-width: 700px;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--border-color);
-            animation: modalSlideUp 0.3s ease;
-        }
-
-        @keyframes modalSlideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .modal-header {
-            padding: 1.5rem 2rem;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--light-blue);
-        }
-
-        .modal-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--primary-blue);
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: var(--primary-blue);
-            cursor: pointer;
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-        }
-
-        .modal-close:hover {
-            background: var(--primary-red);
-            color: white;
-        }
-
-        .modal-body {
-            padding: 2rem;
-        }
-
-        /* Forms */
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: var(--text-primary);
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 0.8rem 1rem;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            font-size: 0.95rem;
-            transition: all 0.2s;
-            background: var(--off-white);
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary-blue);
-            background: var(--pure-white);
-            box-shadow: 0 0 0 3px var(--light-blue);
-        }
-
-        select.form-control {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%231e40af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 1rem center;
-            background-size: 1rem;
-        }
-
-        .file-upload {
-            border: 2px dashed var(--border-color);
-            border-radius: 12px;
-            padding: 1.5rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            background: var(--off-white);
-        }
-
-        .file-upload:hover {
-            border-color: var(--primary-blue);
-            background: var(--light-blue);
-        }
-
-        .file-upload i {
-            font-size: 2rem;
-            color: var(--primary-blue);
-            margin-bottom: 0.5rem;
-        }
-
-        /* Charts Board */
-        .chart-board {
-            display: none;
-        }
-
-        .chart-board.active {
-            display: block;
-        }
-
-        .charts-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-        }
-
-        .chart-card {
-            background: var(--pure-white);
-            border-radius: 16px;
-            padding: 1.5rem;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .chart-card h3 {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--primary-blue);
-            margin-bottom: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding-bottom: 0.8rem;
-            border-bottom: 1px solid var(--light-blue);
-        }
-
-        /* Dropdown */
-        .dropdown {
-            position: relative;
-        }
-
-        .dropdown-content {
-            position: absolute;
-            right: 0;
-            top: 100%;
-            background: var(--pure-white);
-            min-width: 180px;
-            border-radius: 12px;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--border-color);
-            padding: 0.5rem;
-            display: none;
-            z-index: 100;
-            margin-top: 0.5rem;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        .dropdown-item {
-            padding: 0.7rem 1rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            border-radius: 8px;
-            transition: all 0.2s;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        .dropdown-item:hover {
-            background: var(--light-blue);
-            color: var(--primary-blue);
-        }
-
-        /* Actions Dropdown */
-        .actions-dropdown {
-            position: relative;
-        }
-
-        .actions-menu {
-            position: absolute;
-            right: 0;
-            background: var(--pure-white);
-            min-width: 160px;
-            border-radius: 10px;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--border-color);
-            padding: 0.3rem;
-            display: none;
-            z-index: 100;
-        }
-
-        .actions-dropdown.active .actions-menu {
-            display: block;
-        }
-
-        /* Notifications */
-        .notification {
-            position: fixed;
-            top: 100px;
-            right: 20px;
-            padding: 1rem 1.5rem;
-            border-radius: 10px;
-            background: white;
-            box-shadow: var(--shadow-lg);
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            z-index: 10000;
-            animation: slideIn 0.3s ease;
-            border-left: 4px solid;
-        }
-
-        .notification.success {
-            border-left-color: #10b981;
-            color: #065f46;
-        }
-
-        .notification.success i {
-            color: #10b981;
-        }
-
-        .notification.danger {
-            border-left-color: var(--primary-red);
-            color: var(--primary-red);
-        }
-
-        .notification i {
-            font-size: 1.2rem;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .charts-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .animated-title-container {
-                display: none;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .main-header {
-                padding: 0 1rem;
-            }
-            
-            .logo h2 {
-                display: none;
-            }
-            
-            .main-content {
-                padding: 1rem;
-            }
-            
-            .page-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
-            }
-            
-            .header-actions {
-                width: 100%;
-                flex-wrap: wrap;
-            }
-            
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-            
-            .btn {
-                padding: 0.6rem 1rem;
-                font-size: 0.85rem;
-            }
-            
-            .nav-dropdown {
-                width: 260px;
-                right: 10px;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .logout-btn span {
-                display: none;
-            }
-            
-            .logout-btn {
-                padding: 0.6rem;
-                width: 40px;
-                height: 40px;
-                justify-content: center;
-            }
-            
-            th, td {
-                padding: 0.8rem;
-                font-size: 0.85rem;
-            }
-        }
+            position: absolute; top: 52px; right: 0; width: 260px; background: white; border-radius: 16px; padding: 0.8rem;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.1); border: 1px solid var(--gray-200); opacity: 0; visibility: hidden; transition: 0.2s; z-index: 1000;
+        }
+        .nav-dropdown.active { opacity: 1; visibility: visible; }
+        .nav-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 0.5rem; }
+        .nav-item { background: var(--gray-100); border-radius: 10px; padding: 0.6rem 0.3rem; text-align: center; text-decoration: none; font-size: 0.7rem; color: var(--gray-500); }
+        .nav-item i { font-size: 1rem; display: block; margin-bottom: 0.2rem; color: var(--primary); }
+        .nav-item.active { background: var(--primary); color: white; }
+        .nav-item.active i { color: white; }
+
+        .main-content { margin-top: 80px; padding: 1.2rem 1.5rem; }
+        .page-header { background: white; border-radius: 16px; padding: 1rem 1.5rem; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--gray-200); }
+        .header-content h1 { font-size: 1.35rem; font-weight: 700; }
+        .header-content p { font-size: 0.75rem; color: var(--gray-500); }
+        .btn { padding: 0.45rem 1rem; border-radius: 10px; font-weight: 500; font-size: 0.75rem; cursor: pointer; border: 1px solid var(--gray-200); background: white; transition: 0.1s; display: inline-flex; align-items: center; gap: 0.5rem; }
+        .btn-primary { background: var(--primary); color: white; border: none; }
+        .btn-secondary { border-color: var(--primary); color: var(--primary); }
+        .btn-sm { padding: 0.35rem 0.8rem; font-size: 0.7rem; }
+        .card { background: white; border-radius: 18px; padding: 1rem 1.2rem; margin-bottom: 1.2rem; border: 1px solid var(--gray-200); box-shadow: var(--shadow); }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--primary-soft); }
+        .card-title { font-size: 1rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; }
+        .card-title i { color: var(--primary); font-size: 1rem; }
+
+        .table-container { overflow-x: auto; border-radius: 14px; border: 1px solid var(--gray-200); }
+        table { width: 100%; font-size: 0.75rem; border-collapse: collapse; }
+        th { background: var(--primary-soft); padding: 0.7rem 0.8rem; text-align: left; font-weight: 600; color: var(--primary); }
+        td { padding: 0.7rem 0.8rem; border-bottom: 1px solid var(--gray-200); color: #1e293b; }
+        .badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.65rem; font-weight: 600; }
+        .badge-plumbing { background: var(--primary-soft); color: var(--primary); }
+        .badge-electricals { background: #fff3cd; color: #856404; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 0.8rem; margin-top: 0.8rem; }
+        .stat-box { background: var(--primary-soft); border-radius: 14px; padding: 0.7rem; text-align: center; border: 1px solid var(--primary-light); }
+        .stat-box h3 { font-size: 1.3rem; font-weight: 800; color: var(--primary); margin-bottom: 0.2rem; }
+        .stat-box p { font-size: 0.7rem; font-weight: 500; }
+
+        /* CHARTS - fixed height, no stretch */
+        .charts-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
+        .chart-card { background: white; border-radius: 20px; padding: 1rem; border: 1px solid var(--gray-200); }
+        .chart-card h3 { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.4rem; color: var(--primary); }
+        .chart-card canvas { max-height: 230px; height: 230px !important; width: 100% !important; }
+
+        .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(3px); z-index: 2000; align-items: center; justify-content: center; }
+        .modal.active { display: flex; }
+        .modal-content { background: white; border-radius: 24px; max-width: 650px; width: 90%; max-height: 85vh; overflow-y: auto; }
+        .modal-header { padding: 1rem 1.5rem; background: var(--primary-soft); border-radius: 24px 24px 0 0; display: flex; justify-content: space-between; }
+        .form-group { margin-bottom: 1rem; }
+        .form-control { width: 100%; padding: 0.6rem 0.8rem; border-radius: 12px; border: 1px solid var(--gray-200); font-size: 0.8rem; background: var(--gray-100); }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+        .file-upload { border: 1px dashed var(--gray-500); border-radius: 12px; padding: 0.8rem; text-align: center; cursor: pointer; background: var(--gray-100); }
+        .notification { position: fixed; top: 80px; right: 20px; background: white; border-radius: 12px; padding: 0.7rem 1.2rem; box-shadow: 0 6px 14px rgba(0,0,0,0.1); border-left: 4px solid; z-index: 3000; animation: slideIn 0.2s ease; font-size: 0.8rem; }
+        .notification.success { border-left-color: #10b981; }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @media (max-width: 760px) { .charts-grid { grid-template-columns: 1fr; } .stats-grid { grid-template-columns: repeat(2,1fr); } .animated-title-container { display: none; } .main-content { padding: 1rem; } }
     </style>
 </head>
 <body>
-    <!-- Modern Fixed Header - Same as Dashboard -->
-    <header class="main-header">
-        <div class="logo">
-            <div class="logo-icon">
-                <i class="fas fa-chart-line"></i>
-            </div>
-            <h2>HR-Admin Pro</h2>
-        </div>
-        
-        <div class="animated-title-container">
-            <div class="animated-title">Service Cost Analyzer | Track Provider Costs | Real-time Analytics</div>
-        </div>
-        
-        <div class="header-right">
-            <!-- Notifications -->
-            <div class="notifications" onclick="showNotification('No new notifications', 'info')">
-                <i class="fas fa-bell"></i>
-                <span class="badge">3</span>
-            </div>
-            
-            <!-- Logout Button -->
-            <button class="logout-btn" onclick="logout()">
-                <i class="fas fa-sign-out-alt"></i>
-                <span>Logout</span>
-            </button>
-            
-            <!-- Hamburger Menu -->
-            <div class="hamburger-menu">
-                <div class="hamburger-btn" id="hamburgerBtn" onclick="toggleHamburger()">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-                
-                <!-- Navigation Dropdown -->
-                <div class="nav-dropdown" id="navDropdown">
-                    <div class="nav-grid">
-                        <a href="index.html" class="nav-item">
-                            <i class="fas fa-home"></i>
-                            <span>Dashboard</span>
-                        </a>
-                        <a href="task-centre.html" class="nav-item">
-                            <i class="fas fa-tasks"></i>
-                            <span>Task Centre</span>
-                        </a>
-                        <a href="training.html" class="nav-item">
-                            <i class="fas fa-graduation-cap"></i>
-                            <span>Training</span>
-                        </a>
-                        <a href="vendor-contracts.html" class="nav-item">
-                            <i class="fas fa-file-contract"></i>
-                            <span>Contracts</span>
-                        </a>
-                        <a href="hr-letters.html" class="nav-item">
-                            <i class="fas fa-envelope"></i>
-                            <span>HR Letters</span>
-                        </a>
-                        <a href="upcoming-events.html" class="nav-item">
-                            <i class="fas fa-calendar-alt"></i>
-                            <span>Events</span>
-                        </a>
-                        <a href="cost-analyzer.html" class="nav-item active">
-                            <i class="fas fa-chart-line"></i>
-                            <span>Cost Analyzer</span>
-                        </a>
-                        <a href="financial-hub.html" class="nav-item">
-                            <i class="fas fa-star"></i>
-                            <span>Financial Hub</span>
-                        </a>
-                        <a href="employees.html" class="nav-item">
-                            <i class="fas fa-users"></i>
-                            <span>Employees</span>
-                        </a>
-                        <a href="settings.html" class="nav-item">
-                            <i class="fas fa-cog"></i>
-                            <span>Settings</span>
-                        </a>
-                    </div>
-                </div>
+<header class="main-header">
+    <div class="logo"><div class="logo-icon"><i class="fas fa-chart-line"></i></div><h2>HR-Admin Pro</h2></div>
+    <div class="animated-title-container"><div class="animated-title">⚡ Service Cost Analyzer | Live Notifications | Persistent Data</div></div>
+    <div class="header-right">
+        <div class="notifications" id="notificationBell">
+            <i class="fas fa-bell"></i>
+            <span class="badge-count" id="notifBadge">0</span>
+            <div class="notif-panel" id="notifPanel">
+                <div class="notif-header"><span>🔔 Notifications</span><button id="markAllReadBtn" style="background:none;border:none;font-size:0.7rem;color:var(--primary);cursor:pointer;">Mark all read</button></div>
+                <div id="notifListContainer"></div>
             </div>
         </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="main-content">
-        <!-- Page Header -->
-        <div class="page-header">
-            <div class="header-content">
-                <h1>Service Cost Analyzer</h1>
-                <p>Track and analyze service provider costs</p>
-            </div>
-            <div class="header-actions">
-                <button class="btn btn-primary" id="addServiceProviderBtn">
-                    <i class="fas fa-plus-circle"></i> Add Provider
-                </button>
-                <button class="btn btn-secondary" id="analysisBtn">
-                    <i class="fas fa-chart-bar"></i> Analysis
-                </button>
-                <button class="btn btn-outline" id="servicesListBtn">
-                    <i class="fas fa-list"></i> List View
-                </button>
-                <div class="dropdown">
-                    <button class="btn btn-outline">
-                        <i class="fas fa-download"></i> Export
-                    </button>
-                    <div class="dropdown-content" id="generalExportDropdown">
-                        <div class="dropdown-item" data-export="pdf">
-                            <i class="fas fa-file-pdf"></i> PDF Report
-                        </div>
-                        <div class="dropdown-item" data-export="excel">
-                            <i class="fas fa-file-excel"></i> Excel
-                        </div>
-                        <div class="dropdown-item" data-export="csv">
-                            <i class="fas fa-file-csv"></i> CSV
-                        </div>
-                        <div class="dropdown-item" data-export="ppt">
-                            <i class="fas fa-file-powerpoint"></i> PowerPoint
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Services List View -->
-        <div id="servicesListView">
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-title">
-                        <i class="fas fa-tools"></i> Service Providers
-                    </div>
-                </div>
-                <div class="table-container">
-                    <table id="servicesTable">
-                        <thead>
-                            <tr>
-                                <th>Provider</th>
-                                <th>Category</th>
-                                <th>Branch</th>
-                                <th>Date</th>
-                                <th>Quoted</th>
-                                <th>Approved</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="servicesTableBody">
-                            <!-- Service rows will be added here -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            
-            <div class="stats-grid">
-                <div class="stat-box">
-                    <h3 id="totalProviders">0</h3>
-                    <p>Total Providers</p>
-                </div>
-                <div class="stat-box">
-                    <h3 id="totalQuoted">Ksh 0</h3>
-                    <p>Total Quoted</p>
-                </div>
-                <div class="stat-box">
-                    <h3 id="totalApproved">Ksh 0</h3>
-                    <p>Total Approved</p>
-                </div>
-                <div class="stat-box">
-                    <h3 id="avgSavings">0%</h3>
-                    <p>Avg Savings</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Chart Board View -->
-        <div id="chartBoard" class="chart-board">
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-title">
-                        <i class="fas fa-chart-pie"></i> Cost Analysis Dashboard
-                    </div>
-                    <button class="btn btn-outline btn-sm" id="exportChartsBtn">
-                        <i class="fas fa-download"></i> Export Charts
-                    </button>
-                </div>
-                
-                <div class="charts-grid">
-                    <div class="chart-card">
-                        <h3><i class="fas fa-chart-bar"></i> Costs by Service Category</h3>
-                        <canvas id="categoryChart"></canvas>
-                    </div>
-                    
-                    <div class="chart-card">
-                        <h3><i class="fas fa-chart-line"></i> Monthly Cost Trends</h3>
-                        <canvas id="trendChart"></canvas>
-                    </div>
-                    
-                    <div class="chart-card">
-                        <h3><i class="fas fa-balance-scale"></i> Quoted vs Approved</h3>
-                        <canvas id="comparisonChart"></canvas>
-                    </div>
-                    
-                    <div class="chart-card">
-                        <h3><i class="fas fa-building"></i> Costs by Branch</h3>
-                        <canvas id="branchChart"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- Add/Edit Modal -->
-    <div class="modal" id="addServiceModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title">
-                    <i class="fas fa-plus-circle"></i>
-                    <span id="modalTitle">Add New Service Provider</span>
-                </div>
-                <button class="modal-close" id="closeModalBtn">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form id="serviceProviderForm">
-                    <input type="hidden" id="providerId" value="">
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Provider Name *</label>
-                            <input type="text" id="providerName" class="form-control" placeholder="Enter provider name" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Category *</label>
-                            <select id="serviceCategory" class="form-control" required>
-                                <option value="">Select category</option>
-                                <option value="plumbing">Plumbing</option>
-                                <option value="electricals">Electricals</option>
-                                <option value="metalwork">Metalwork</option>
-                                <option value="seats">Seats Upholstery</option>
-                                <option value="woodwork">Woodwork</option>
-                                <option value="others">Others</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Branch *</label>
-                            <input type="text" id="branch" class="form-control" placeholder="Enter branch" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Date *</label>
-                            <input type="date" id="date" class="form-control" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Description</label>
-                        <textarea id="description" class="form-control" rows="3" placeholder="Project description"></textarea>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Quoted (Ksh) *</label>
-                            <input type="number" id="quotationAmount" class="form-control" min="0" step="0.01" placeholder="0.00" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Approved (Ksh) *</label>
-                            <input type="number" id="approvedAmount" class="form-control" min="0" step="0.01" placeholder="0.00" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Quotation Document</label>
-                        <div class="file-upload" id="fileUploadArea">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <p>Drag & drop or click to upload</p>
-                            <p style="font-size: 12px; color: var(--medium-gray);">PDF, DOC, JPG (Max 5MB)</p>
-                            <input type="file" id="quotationFile" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" style="display: none;">
-                        </div>
-                        <div id="fileName" style="margin-top: 0.8rem; font-size: 0.9rem; color: var(--primary-blue);"></div>
-                    </div>
-                    
-                    <div class="form-row" style="margin-top: 2rem;">
-                        <button type="submit" class="btn btn-primary" style="flex: 1;" id="saveProviderBtn">
-                            <i class="fas fa-save"></i> Save
-                        </button>
-                        <button type="button" class="btn btn-outline" id="cancelFormBtn" style="flex: 1;">
-                            <i class="fas fa-times"></i> Cancel
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
+        <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i><span>Exit</span></button>
+        <div class="hamburger-menu"><div class="hamburger-btn" id="hamburgerBtn"><span></span><span></span><span></span></div><div class="nav-dropdown" id="navDropdown"><div class="nav-grid"><a href="#" class="nav-item"><i class="fas fa-home"></i><span>Home</span></a><a href="#" class="nav-item"><i class="fas fa-tasks"></i><span>Tasks</span></a><a href="#" class="nav-item active"><i class="fas fa-chart-line"></i><span>Cost Analyzer</span></a><a href="#" class="nav-item"><i class="fas fa-users"></i><span>Employees</span></a></div></div></div>
     </div>
+</header>
+<main class="main-content">
+    <div class="page-header"><div class="header-content"><h1>📊 Service Cost Analyzer</h1><p>Persistent provider costs & real-time analytics</p></div><div class="header-actions"><button class="btn btn-primary" id="addServiceProviderBtn"><i class="fas fa-plus-circle"></i> Add Provider</button><button class="btn btn-secondary" id="analysisBtn"><i class="fas fa-chart-bar"></i> Analysis</button><button class="btn" id="servicesListBtn"><i class="fas fa-list"></i> List View</button><div class="dropdown" style="position:relative;"><button class="btn"><i class="fas fa-download"></i> Export</button><div class="dropdown-content" id="generalExportDropdown" style="position:absolute;right:0;background:white;border-radius:12px;padding:0.3rem;display:none;flex-direction:column;gap:0.2rem;z-index:99;"><div class="dropdown-item" data-export="pdf"><i class="fas fa-file-pdf"></i> PDF</div><div class="dropdown-item" data-export="excel"><i class="fas fa-file-excel"></i> Excel</div><div class="dropdown-item" data-export="csv"><i class="fas fa-file-csv"></i> CSV</div></div></div></div></div>
 
-    <!-- Export Modal -->
-    <div class="modal" id="exportModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title">
-                    <i class="fas fa-download"></i>
-                    <span id="exportModalTitle">Export Report</span>
-                </div>
-                <button class="modal-close" id="closeExportModalBtn">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>Select Format</label>
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.8rem; margin-top: 1rem;">
-                        <button class="btn btn-outline" id="exportPdfBtn">
-                            <i class="fas fa-file-pdf"></i> PDF
-                        </button>
-                        <button class="btn btn-outline" id="exportExcelBtn">
-                            <i class="fas fa-file-excel"></i> Excel
-                        </button>
-                        <button class="btn btn-outline" id="exportCsvBtn">
-                            <i class="fas fa-file-csv"></i> CSV
-                        </button>
-                        <button class="btn btn-outline" id="exportPptBtn">
-                            <i class="fas fa-file-powerpoint"></i> PPT
-                        </button>
-                    </div>
-                </div>
-                <div id="exportProviderInfo" style="display: none; margin-top: 1.5rem; padding: 1rem; background: var(--light-blue); border-radius: 10px;">
-                    <p style="font-weight: 600; color: var(--primary-blue);">Exporting for:</p>
-                    <p id="exportProviderName" style="color: var(--text-secondary);"></p>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div id="servicesListView"><div class="card"><div class="card-header"><div class="card-title"><i class="fas fa-tools"></i> Service Providers</div></div><div class="table-container"><table id="servicesTable"><thead><tr><th>Provider</th><th>Category</th><th>Branch</th><th>Date</th><th>Quoted</th><th>Approved</th><th>Status</th><th>Actions</th></tr></thead><tbody id="servicesTableBody"></tbody></table></div></div><div class="stats-grid"><div class="stat-box"><h3 id="totalProviders">0</h3><p>Total Providers</p></div><div class="stat-box"><h3 id="totalQuoted">Ksh 0</h3><p>Total Quoted</p></div><div class="stat-box"><h3 id="totalApproved">Ksh 0</h3><p>Total Approved</p></div><div class="stat-box"><h3 id="avgSavings">0%</h3><p>Avg Savings</p></div></div></div>
 
-    <!-- Notification Container -->
-    <div id="notificationContainer"></div>
+    <div id="chartBoard" class="chart-board" style="display:none;"><div class="card"><div class="card-header"><div class="card-title"><i class="fas fa-chart-pie"></i> Cost Analysis Dashboard</div><button class="btn btn-sm" id="exportChartsBtn"><i class="fas fa-download"></i> Charts Image</button></div><div class="charts-grid"><div class="chart-card"><h3><i class="fas fa-chart-bar"></i> Costs by Category</h3><canvas id="categoryChart" style="height:230px; width:100%"></canvas></div><div class="chart-card"><h3><i class="fas fa-chart-line"></i> Monthly Trend</h3><canvas id="trendChart" style="height:230px"></canvas></div><div class="chart-card"><h3><i class="fas fa-balance-scale"></i> Quoted vs Approved</h3><canvas id="comparisonChart" style="height:230px"></canvas></div><div class="chart-card"><h3><i class="fas fa-building"></i> Branch Costs</h3><canvas id="branchChart" style="height:230px"></canvas></div></div></div></div>
+</main>
 
-    <script>
-        // Sample data
-        let serviceProviders = [
-            {
-                id: 1,
-                name: "PlumbPro Services",
-                category: "plumbing",
-                branch: "Nairobi West",
-                date: "2023-10-15",
-                description: "Fix leaking pipes",
-                quotation: 125000.00,
-                approved: 115000.00,
-                document: "quotation.pdf",
-                status: "approved"
-            },
-            {
-                id: 2,
-                name: "ElectroFix Inc.",
-                category: "electricals",
-                branch: "Mombasa Road",
-                date: "2023-10-20",
-                description: "Install new lighting",
-                quotation: 320000.00,
-                approved: 280000.00,
-                document: "quote.pdf",
-                status: "approved"
-            },
-            {
-                id: 3,
-                name: "MetalCraft Builders",
-                category: "metalwork",
-                branch: "Thika Branch",
-                date: "2023-10-25",
-                description: "Metal staircase",
-                quotation: 540000.00,
-                approved: 520000.00,
-                document: "proposal.pdf",
-                status: "pending"
+<div class="modal" id="addServiceModal"><div class="modal-content"><div class="modal-header"><div class="modal-title"><i class="fas fa-plus-circle"></i><span id="modalTitle">Add Provider</span></div><button class="modal-close" id="closeModalBtn">&times;</button></div><div class="modal-body"><form id="serviceProviderForm"><input type="hidden" id="providerId"><div class="form-row"><div class="form-group"><label>Provider Name *</label><input type="text" id="providerName" class="form-control" required></div><div class="form-group"><label>Category *</label><select id="serviceCategory" class="form-control"><option value="plumbing">Plumbing</option><option value="electricals">Electricals</option><option value="metalwork">Metalwork</option><option value="seats">Seats</option><option value="woodwork">Woodwork</option><option value="others">Others</option></select></div></div><div class="form-row"><div class="form-group"><label>Branch</label><input type="text" id="branch" class="form-control" required></div><div class="form-group"><label>Date</label><input type="date" id="date" class="form-control" required></div></div><div class="form-group"><label>Description</label><textarea id="description" rows="2" class="form-control"></textarea></div><div class="form-row"><div class="form-group"><label>Quoted (Ksh)</label><input type="number" id="quotationAmount" class="form-control" step="0.01" required></div><div class="form-group"><label>Approved (Ksh)</label><input type="number" id="approvedAmount" class="form-control" step="0.01" required></div></div><div class="file-upload" id="fileUploadArea"><i class="fas fa-cloud-upload-alt"></i><p>Upload doc (mock)</p><input type="file" id="quotationFile" style="display:none;"></div><div id="fileName" style="font-size:0.7rem;"></div><div class="form-row" style="margin-top:1rem;"><button type="submit" class="btn btn-primary">Save</button><button type="button" id="cancelFormBtn" class="btn">Cancel</button></div></form></div></div></div>
+
+<div id="notificationContainer"></div>
+<script>
+    // ---------- PERSISTENCE & STATE ----------
+    let serviceProviders = [];
+    let notifications = [];
+    let charts = { category: null, trend: null, comparison: null, branch: null };
+    
+    const STORAGE_PROVIDERS = "cost_analyzer_providers";
+    const STORAGE_NOTIFS = "cost_analyzer_notifications";
+
+    function loadData() {
+        const storedProviders = localStorage.getItem(STORAGE_PROVIDERS);
+        if(storedProviders) {
+            serviceProviders = JSON.parse(storedProviders);
+        } else {
+            serviceProviders = [
+                { id:1, name:"PlumbPro Services", category:"plumbing", branch:"Nairobi West", date:"2023-10-15", description:"Pipe repair", quotation:125000, approved:115000, document:"quote.pdf", status:"approved" },
+                { id:2, name:"ElectroFix Inc.", category:"electricals", branch:"Mombasa Road", date:"2023-10-20", description:"Lighting", quotation:320000, approved:280000, document:"electro.pdf", status:"approved" },
+                { id:3, name:"MetalCraft Ltd", category:"metalwork", branch:"Thika Branch", date:"2023-10-25", description:"Staircase", quotation:540000, approved:520000, document:"metal.pdf", status:"pending" }
+            ];
+            saveProvidersToLocal();
+        }
+        const storedNotifs = localStorage.getItem(STORAGE_NOTIFS);
+        if(storedNotifs) notifications = JSON.parse(storedNotifs);
+        else {
+            notifications = [];
+            addNotification("Welcome! Data persists locally. Add providers to track costs.", "info");
+        }
+        renderNotificationsPanel();
+        updateNotifBadge();
+    }
+
+    function saveProvidersToLocal() { localStorage.setItem(STORAGE_PROVIDERS, JSON.stringify(serviceProviders)); }
+    function saveNotificationsToLocal() { localStorage.setItem(STORAGE_NOTIFS, JSON.stringify(notifications)); }
+
+    function addNotification(message, type="info") {
+        const newNotif = { id: Date.now(), message, type, timestamp: new Date().toISOString(), read: false };
+        notifications.unshift(newNotif);
+        if(notifications.length > 50) notifications.pop();
+        saveNotificationsToLocal();
+        renderNotificationsPanel();
+        updateNotifBadge();
+        showToast(message, type);
+    }
+
+    function renderNotificationsPanel() {
+        const container = document.getElementById("notifListContainer");
+        if(!container) return;
+        if(notifications.length === 0) { container.innerHTML = "<div style='padding:0.8rem;text-align:center;color:gray;'>No notifications</div>"; return; }
+        container.innerHTML = notifications.map(n => `<div class="notif-item ${!n.read ? 'unread' : ''}" data-id="${n.id}"><div>${n.message}</div><div class="notif-time">${new Date(n.timestamp).toLocaleString()}</div></div>`).join('');
+        document.querySelectorAll('.notif-item').forEach(el => {
+            el.addEventListener('click', (e) => {
+                const id = parseInt(el.dataset.id);
+                const notif = notifications.find(n=>n.id===id);
+                if(notif && !notif.read) { notif.read = true; saveNotificationsToLocal(); renderNotificationsPanel(); updateNotifBadge(); }
+            });
+        });
+    }
+    function updateNotifBadge() { const unread = notifications.filter(n=>!n.read).length; document.getElementById("notifBadge").innerText = unread; }
+    function markAllRead() { notifications.forEach(n=>n.read=true); saveNotificationsToLocal(); renderNotificationsPanel(); updateNotifBadge(); showToast("All notifications marked read","success"); }
+
+    // CRUD operations with notifications
+    function saveProvider(providerData, isEdit=false) {
+        if(!isEdit) {
+            const newId = serviceProviders.length ? Math.max(...serviceProviders.map(p=>p.id)) + 1 : 4;
+            const newProv = { id:newId, ...providerData, status:"approved", document:"uploaded.mock" };
+            serviceProviders.push(newProv);
+            saveProvidersToLocal();
+            addNotification(`➕ New provider: ${newProv.name} (${newProv.category})`, "success");
+        } else {
+            const index = serviceProviders.findIndex(p=>p.id === providerData.id);
+            if(index!==-1) {
+                const old = serviceProviders[index];
+                serviceProviders[index] = { ...old, ...providerData };
+                saveProvidersToLocal();
+                addNotification(`✏️ Updated: ${providerData.name}`, "info");
             }
-        ];
+        }
+        renderServicesTable();
+        updateStats();
+        if(document.getElementById("chartBoard").style.display !== "none") renderAllCharts();
+    }
 
-        // DOM Elements
-        const servicesTableBody = document.getElementById('servicesTableBody');
-        const addServiceModal = document.getElementById('addServiceModal');
-        const exportModal = document.getElementById('exportModal');
-        const addServiceProviderBtn = document.getElementById('addServiceProviderBtn');
-        const analysisBtn = document.getElementById('analysisBtn');
-        const servicesListBtn = document.getElementById('servicesListBtn');
-        const closeModalBtn = document.getElementById('closeModalBtn');
-        const closeExportModalBtn = document.getElementById('closeExportModalBtn');
-        const cancelFormBtn = document.getElementById('cancelFormBtn');
-        const serviceProviderForm = document.getElementById('serviceProviderForm');
-        const fileUploadArea = document.getElementById('fileUploadArea');
-        const quotationFile = document.getElementById('quotationFile');
-        const fileName = document.getElementById('fileName');
-        const exportChartsBtn = document.getElementById('exportChartsBtn');
-        const providerIdInput = document.getElementById('providerId');
-        const modalTitle = document.getElementById('modalTitle');
-        const saveProviderBtn = document.getElementById('saveProviderBtn');
-        
-        // Chart variables
-        let categoryChart, trendChart, comparisonChart, branchChart;
-        let activeModal = null;
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('date').valueAsDate = new Date();
+    function deleteProviderById(id) {
+        const provider = serviceProviders.find(p=>p.id===id);
+        if(provider && confirm(`Delete ${provider.name}?`)) {
+            serviceProviders = serviceProviders.filter(p=>p.id !== id);
+            saveProvidersToLocal();
+            addNotification(`🗑️ Removed: ${provider.name}`, "danger");
             renderServicesTable();
             updateStats();
-            setupEventListeners();
+            if(document.getElementById("chartBoard").style.display !== "none") renderAllCharts();
+        }
+    }
+
+    function renderServicesTable() {
+        const tbody = document.getElementById("servicesTableBody");
+        tbody.innerHTML = "";
+        const categoryNames = { plumbing:"Plumbing", electricals:"Electricals", metalwork:"Metalwork", seats:"Seats", woodwork:"Woodwork", others:"Others" };
+        serviceProviders.forEach(p => {
+            const badgeClass = `badge-${p.category}`;
+            const formattedDate = new Date(p.date).toLocaleDateString();
+            const savings = p.quotation - p.approved;
+            const statusHtml = p.status === 'approved' ? `<span style="color:#10b981;">✔ Approved</span><br><small>Saved: Ksh ${savings.toFixed(0)}</small>` : `<span style="color:#f97316;">⏳ Pending</span>`;
+            const row = `<tr><td><strong>${escapeHtml(p.name)}</strong></td><td><span class="badge ${badgeClass}">${categoryNames[p.category]}</span></td><td>${escapeHtml(p.branch)}</td><td>${formattedDate}</td><td>Ksh ${p.quotation.toLocaleString()}</td><td>Ksh ${p.approved.toLocaleString()}</td><td>${statusHtml}</td><td><div class="actions"><button class="btn btn-sm" onclick="editProvider(${p.id})"><i class="fas fa-edit"></i></button> <button class="btn btn-sm" onclick="deleteProviderById(${p.id})"><i class="fas fa-trash"></i></button> <button class="btn btn-sm" onclick="exportSingle(${p.id})"><i class="fas fa-download"></i></button></div></td></tr>`;
+            tbody.insertAdjacentHTML('beforeend', row);
         });
+    }
 
-        // Hamburger menu
-        function toggleHamburger() {
-            const btn = document.getElementById('hamburgerBtn');
-            const dropdown = document.getElementById('navDropdown');
-            btn.classList.toggle('active');
-            dropdown.classList.toggle('active');
-        }
+    function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
+    
+    function updateStats() {
+        const total = serviceProviders.length;
+        const quoted = serviceProviders.reduce((s,p)=>s+p.quotation,0);
+        const approved = serviceProviders.reduce((s,p)=>s+p.approved,0);
+        const savings = quoted - approved;
+        const avg = quoted ? ((savings/quoted)*100).toFixed(1) : 0;
+        document.getElementById("totalProviders").innerText = total;
+        document.getElementById("totalQuoted").innerText = "Ksh " + quoted.toLocaleString();
+        document.getElementById("totalApproved").innerText = "Ksh " + approved.toLocaleString();
+        document.getElementById("avgSavings").innerText = avg+"%";
+    }
 
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(event) {
-            const btn = document.getElementById('hamburgerBtn');
-            const dropdown = document.getElementById('navDropdown');
-            if (!btn.contains(event.target) && !dropdown.contains(event.target)) {
-                btn.classList.remove('active');
-                dropdown.classList.remove('active');
-            }
-        });
+    function renderAllCharts() {
+        if(charts.category) charts.category.destroy();
+        if(charts.trend) charts.trend.destroy();
+        if(charts.comparison) charts.comparison.destroy();
+        if(charts.branch) charts.branch.destroy();
+        const categories = ["Plumbing","Electricals","Metalwork","Seats","Woodwork","Others"];
+        const catKeys = ["plumbing","electricals","metalwork","seats","woodwork","others"];
+        const catData = catKeys.map(k => serviceProviders.filter(p=>p.category===k).reduce((s,p)=>s+p.approved,0));
+        const ctxCat = document.getElementById('categoryChart').getContext('2d');
+        charts.category = new Chart(ctxCat, { type:'bar', data:{ labels:categories, datasets:[{ label:'Approved (Ksh)', data:catData, backgroundColor:'#3b82f6', borderRadius:8 }] }, options:{ responsive:true, maintainAspectRatio:true, plugins:{legend:{display:false}} } });
+        const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        let monthly = new Array(12).fill(0);
+        serviceProviders.forEach(p => { if(p.date) { const m = new Date(p.date).getMonth(); monthly[m] += p.approved; } });
+        charts.trend = new Chart(document.getElementById('trendChart'), { type:'line', data:{ labels:months, datasets:[{ label:'Approved', data:monthly, borderColor:'#1e40af', tension:0.2, fill:true, backgroundColor:'rgba(59,130,246,0.1)' }] }, options:{ responsive:true, maintainAspectRatio:true } });
+        const compLabels = serviceProviders.slice(0,6).map(p=>p.name.length>12?p.name.slice(0,10)+'..':p.name);
+        const quotedData = serviceProviders.slice(0,6).map(p=>p.quotation);
+        const approvedData = serviceProviders.slice(0,6).map(p=>p.approved);
+        charts.comparison = new Chart(document.getElementById('comparisonChart'), { type:'bar', data:{ labels:compLabels, datasets:[{ label:'Quoted', data:quotedData, backgroundColor:'#f59e0b'},{ label:'Approved', data:approvedData, backgroundColor:'#1e40af'}] }, options:{ responsive:true, maintainAspectRatio:true } });
+        const branchMap = new Map();
+        serviceProviders.forEach(p=>{ branchMap.set(p.branch, (branchMap.get(p.branch)||0)+p.approved); });
+        const branchLabels = [...branchMap.keys()];
+        const branchVals = [...branchMap.values()];
+        charts.branch = new Chart(document.getElementById('branchChart'), { type:'doughnut', data:{ labels:branchLabels, datasets:[{ data:branchVals, backgroundColor:['#1e40af','#3b82f6','#60a5fa','#93c5fd'] }] }, options:{ responsive:true, maintainAspectRatio:true } });
+    }
 
-        // Logout
-        function logout() {
-            if (confirm('Are you sure you want to logout?')) {
-                showNotification('Logging out...', 'info');
-                setTimeout(() => {
-                    window.location.href = 'login.html';
-                }, 1000);
-            }
-        }
-
-        function setupEventListeners() {
-            // Navigation
-            analysisBtn.addEventListener('click', function() {
-                document.getElementById('servicesListView').style.display = 'none';
-                document.getElementById('chartBoard').classList.add('active');
-                renderCharts();
-            });
-            
-            servicesListBtn.addEventListener('click', function() {
-                document.getElementById('chartBoard').classList.remove('active');
-                document.getElementById('servicesListView').style.display = 'block';
-            });
-            
-            // Modal controls
-            addServiceProviderBtn.addEventListener('click', function() {
-                modalTitle.textContent = "Add New Service Provider";
-                saveProviderBtn.innerHTML = '<i class="fas fa-save"></i> Save';
-                providerIdInput.value = '';
-                serviceProviderForm.reset();
-                fileName.textContent = '';
-                document.getElementById('date').valueAsDate = new Date();
-                openModal('addServiceModal');
-            });
-            
-            closeModalBtn.addEventListener('click', function() {
-                closeModal('addServiceModal');
-            });
-            
-            closeExportModalBtn.addEventListener('click', function() {
-                closeModal('exportModal');
-                document.getElementById('exportProviderInfo').style.display = 'none';
-            });
-            
-            cancelFormBtn.addEventListener('click', function() {
-                closeModal('addServiceModal');
-            });
-            
-            // File upload
-            fileUploadArea.addEventListener('click', function() {
-                quotationFile.click();
-            });
-            
-            quotationFile.addEventListener('change', function() {
-                if (quotationFile.files.length > 0) {
-                    fileName.textContent = `Selected: ${quotationFile.files[0].name}`;
-                }
-            });
-            
-            // Form submission
-            serviceProviderForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                saveServiceProvider();
-            });
-            
-            // Export buttons
-            document.querySelectorAll('#generalExportDropdown .dropdown-item').forEach(item => {
-                item.addEventListener('click', function() {
-                    const format = this.getAttribute('data-export');
-                    document.getElementById('exportModalTitle').textContent = "Export All Data";
-                    document.getElementById('exportProviderInfo').style.display = 'none';
-                    openModal('exportModal');
-                    
-                    // Store format for actual export
-                    window.exportFormat = format;
-                    window.exportAll = true;
-                });
-            });
-            
-            // Export modal buttons
-            document.getElementById('exportPdfBtn').addEventListener('click', function() {
-                if (window.exportAll) {
-                    generatePDFReport(serviceProviders, 'All Providers');
-                } else if (window.exportProviderId) {
-                    const provider = serviceProviders.find(p => p.id === window.exportProviderId);
-                    if (provider) generatePDFReport([provider], provider.name);
-                }
-                closeModal('exportModal');
-                showNotification('PDF report generated!', 'success');
-            });
-            
-            document.getElementById('exportExcelBtn').addEventListener('click', function() {
-                showNotification('Excel export coming soon!', 'success');
-                closeModal('exportModal');
-            });
-            
-            document.getElementById('exportCsvBtn').addEventListener('click', function() {
-                showNotification('CSV export coming soon!', 'success');
-                closeModal('exportModal');
-            });
-            
-            document.getElementById('exportPptBtn').addEventListener('click', function() {
-                showNotification('PPT export coming soon!', 'success');
-                closeModal('exportModal');
-            });
-            
-            exportChartsBtn.addEventListener('click', function() {
-                showNotification('Charts exported!', 'success');
-            });
-        }
-
-        // Modal functions
-        function openModal(modalId) {
-            if (activeModal) closeModal(activeModal);
-            
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                modal.classList.add('active');
-                activeModal = modalId;
-                document.body.style.overflow = 'hidden';
-            }
-        }
-
-        function closeModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                modal.classList.remove('active');
-                activeModal = null;
-                document.body.style.overflow = 'auto';
-            }
-        }
-
-        function renderServicesTable() {
-            servicesTableBody.innerHTML = '';
-            
-            serviceProviders.forEach(provider => {
-                const row = document.createElement('tr');
-                
-                const badgeClass = {
-                    plumbing: 'badge-plumbing',
-                    electricals: 'badge-electricals',
-                    metalwork: 'badge-metalwork',
-                    seats: 'badge-seats',
-                    woodwork: 'badge-woodwork',
-                    others: 'badge-others'
-                }[provider.category] || 'badge-others';
-                
-                const categoryNames = {
-                    plumbing: 'Plumbing',
-                    electricals: 'Electricals',
-                    metalwork: 'Metalwork',
-                    seats: 'Seats',
-                    woodwork: 'Woodwork',
-                    others: 'Others'
-                };
-                
-                const dateObj = new Date(provider.date);
-                const formattedDate = dateObj.toLocaleDateString('en-US', { 
-                    year: 'numeric', 
-                    month: 'short', 
-                    day: 'numeric' 
-                });
-                
-                const savings = provider.quotation - provider.approved;
-                const savingsPercent = provider.quotation > 0 ? ((savings / provider.quotation) * 100).toFixed(1) : 0;
-                
-                let statusHTML = provider.status === 'approved' 
-                    ? `<span style="color: #10b981; font-weight: 600;">Approved</span><br><small style="color: var(--medium-gray);">Saved: Ksh ${savings.toFixed(2)}</small>`
-                    : `<span style="color: #f59e0b; font-weight: 600;">Pending</span>`;
-                
-                const formatCurrency = (amount) => {
-                    return 'Ksh ' + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                };
-                
-                row.innerHTML = `
-                    <td><strong>${provider.name}</strong></td>
-                    <td><span class="badge ${badgeClass}">${categoryNames[provider.category]}</span></td>
-                    <td>${provider.branch}</td>
-                    <td>${formattedDate}</td>
-                    <td>${formatCurrency(provider.quotation)}</td>
-                    <td>${formatCurrency(provider.approved)}</td>
-                    <td>${statusHTML}</td>
-                    <td>
-                        <div class="actions-dropdown" id="actions-${provider.id}">
-                            <button class="btn btn-sm btn-outline" onclick="toggleActions(${provider.id})">
-                                <i class="fas fa-ellipsis-v"></i>
-                            </button>
-                            <div class="actions-menu">
-                                <div class="dropdown-item" onclick="editProvider(${provider.id})">
-                                    <i class="fas fa-edit"></i> Edit
-                                </div>
-                                <div class="dropdown-item" onclick="openExportForProvider(${provider.id}, '${provider.name}')">
-                                    <i class="fas fa-download"></i> Export
-                                </div>
-                                <div class="dropdown-item" onclick="deleteProvider(${provider.id})" style="color: var(--primary-red);">
-                                    <i class="fas fa-trash"></i> Delete
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                `;
-                
-                servicesTableBody.appendChild(row);
-            });
-        }
-
-        function toggleActions(id) {
-            document.querySelectorAll('.actions-dropdown').forEach(d => d.classList.remove('active'));
-            document.getElementById(`actions-${id}`).classList.add('active');
-        }
-
-        function updateStats() {
-            const total = serviceProviders.length;
-            const quoted = serviceProviders.reduce((sum, p) => sum + p.quotation, 0);
-            const approved = serviceProviders.reduce((sum, p) => sum + p.approved, 0);
-            const savings = quoted - approved;
-            const avgSavings = quoted > 0 ? ((savings / quoted) * 100).toFixed(1) : 0;
-            
-            document.getElementById('totalProviders').textContent = total;
-            document.getElementById('totalQuoted').textContent = 'Ksh ' + quoted.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-            document.getElementById('totalApproved').textContent = 'Ksh ' + approved.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-            document.getElementById('avgSavings').textContent = avgSavings + '%';
-        }
-
-        function saveServiceProvider() {
-            const providerId = providerIdInput.value;
-            
-            const provider = {
-                name: document.getElementById('providerName').value,
-                category: document.getElementById('serviceCategory').value,
-                branch: document.getElementById('branch').value,
-                date: document.getElementById('date').value,
-                description: document.getElementById('description').value,
-                quotation: parseFloat(document.getElementById('quotationAmount').value),
-                approved: parseFloat(document.getElementById('approvedAmount').value),
-                document: quotationFile.files[0]?.name || 'No document',
-                status: 'approved'
-            };
-            
-            if (providerId) {
-                const index = serviceProviders.findIndex(p => p.id == providerId);
-                if (index !== -1) {
-                    serviceProviders[index] = { ...serviceProviders[index], ...provider };
-                    showNotification('Provider updated!', 'success');
-                }
-            } else {
-                provider.id = serviceProviders.length > 0 ? Math.max(...serviceProviders.map(p => p.id)) + 1 : 1;
-                serviceProviders.push(provider);
-                showNotification('Provider added!', 'success');
-            }
-            
-            renderServicesTable();
-            updateStats();
-            closeModal('addServiceModal');
-            serviceProviderForm.reset();
-            fileName.textContent = '';
-        }
-
-        function editProvider(id) {
-            const provider = serviceProviders.find(p => p.id === id);
-            if (provider) {
-                modalTitle.textContent = "Edit Service Provider";
-                saveProviderBtn.innerHTML = '<i class="fas fa-save"></i> Update';
-                providerIdInput.value = provider.id;
-                document.getElementById('providerName').value = provider.name;
-                document.getElementById('serviceCategory').value = provider.category;
-                document.getElementById('branch').value = provider.branch;
-                document.getElementById('date').value = provider.date;
-                document.getElementById('description').value = provider.description;
-                document.getElementById('quotationAmount').value = provider.quotation;
-                document.getElementById('approvedAmount').value = provider.approved;
-                fileName.textContent = provider.document !== 'No document' ? `Current: ${provider.document}` : '';
-                
-                openModal('addServiceModal');
-            }
-        }
-
-        function deleteProvider(id) {
-            if (confirm('Delete this provider?')) {
-                serviceProviders = serviceProviders.filter(p => p.id !== id);
-                renderServicesTable();
-                updateStats();
-                showNotification('Provider deleted', 'danger');
-            }
-        }
-
-        function openExportForProvider(id, name) {
-            window.exportAll = false;
-            window.exportProviderId = id;
-            document.getElementById('exportModalTitle').textContent = `Export - ${name}`;
-            document.getElementById('exportProviderInfo').style.display = 'block';
-            document.getElementById('exportProviderName').textContent = name;
-            openModal('exportModal');
-        }
-
-        function renderCharts() {
-            if (categoryChart) categoryChart.destroy();
-            if (trendChart) trendChart.destroy();
-            if (comparisonChart) comparisonChart.destroy();
-            if (branchChart) branchChart.destroy();
-            
-            // Category Chart
-            const categories = ['Plumbing', 'Electricals', 'Metalwork', 'Seats', 'Woodwork', 'Others'];
-            const categoryData = categories.map(cat => {
-                const catKey = cat.toLowerCase();
-                return serviceProviders
-                    .filter(p => p.category === catKey)
-                    .reduce((sum, p) => sum + p.approved, 0);
-            });
-            
-            categoryChart = new Chart(document.getElementById('categoryChart'), {
-                type: 'bar',
-                data: {
-                    labels: categories,
-                    datasets: [{
-                        label: 'Approved Amount (Ksh)',
-                        data: categoryData,
-                        backgroundColor: 'rgba(30, 64, 175, 0.7)',
-                        borderColor: '#1e40af',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        y: { beginAtZero: true, ticks: { callback: v => 'Ksh ' + v } }
-                    }
-                }
-            });
-            
-            // Trend Chart
-            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-            const monthlyData = new Array(12).fill(0);
-            serviceProviders.forEach(p => monthlyData[new Date(p.date).getMonth()] += p.approved);
-            
-            trendChart = new Chart(document.getElementById('trendChart'), {
-                type: 'line',
-                data: {
-                    labels: months,
-                    datasets: [{
-                        label: 'Approved',
-                        data: monthlyData,
-                        borderColor: '#1e40af',
-                        backgroundColor: 'rgba(30, 64, 175, 0.1)',
-                        tension: 0.3,
-                        fill: true
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } }
-                }
-            });
-            
-            // Comparison Chart
-            comparisonChart = new Chart(document.getElementById('comparisonChart'), {
-                type: 'bar',
-                data: {
-                    labels: serviceProviders.map(p => p.name),
-                    datasets: [
-                        { label: 'Quoted', data: serviceProviders.map(p => p.quotation), backgroundColor: '#f59e0b' },
-                        { label: 'Approved', data: serviceProviders.map(p => p.approved), backgroundColor: '#1e40af' }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { position: 'top' } }
-                }
-            });
-            
-            // Branch Chart
-            const branches = [...new Set(serviceProviders.map(p => p.branch))];
-            const branchData = branches.map(b => 
-                serviceProviders.filter(p => p.branch === b).reduce((sum, p) => sum + p.approved, 0)
-            );
-            
-            branchChart = new Chart(document.getElementById('branchChart'), {
-                type: 'doughnut',
-                data: {
-                    labels: branches,
-                    datasets: [{
-                        data: branchData,
-                        backgroundColor: ['#1e40af', '#3b82f6', '#60a5fa', '#93c5fd', '#bfdbfe']
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { position: 'bottom' } }
-                }
-            });
-        }
-
-        function generatePDFReport(data, title) {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            
-            doc.setFontSize(18);
-            doc.setTextColor(30, 64, 175);
-            doc.text('Service Cost Report', 20, 20);
-            
-            doc.setFontSize(10);
-            doc.setTextColor(0, 0, 0);
-            doc.text(`Report: ${title}`, 20, 30);
-            doc.text(`Date: ${new Date().toLocaleDateString()}`, 20, 35);
-            
-            const tableData = data.map(p => [
-                p.name, p.category, p.branch, 
-                new Date(p.date).toLocaleDateString(),
-                `Ksh ${p.quotation}`,
-                `Ksh ${p.approved}`,
-                p.status
-            ]);
-            
-            doc.autoTable({
-                head: [['Provider', 'Category', 'Branch', 'Date', 'Quoted', 'Approved', 'Status']],
-                body: tableData,
-                startY: 45,
-                headStyles: { fillColor: [30, 64, 175] }
-            });
-            
-            doc.save(`service-report-${title}.pdf`);
-        }
-
-        function showNotification(message, type) {
-            const container = document.getElementById('notificationContainer');
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            notification.innerHTML = `
-                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
-                <span>${message}</span>
-            `;
-            
-            container.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.style.animation = 'slideIn 0.3s reverse';
-                setTimeout(() => notification.remove(), 300);
-            }, 3000);
-        }
-
-        // Close dropdowns when clicking outside
-        document.addEventListener('click', function(event) {
-            if (!event.target.closest('.actions-dropdown')) {
-                document.querySelectorAll('.actions-dropdown').forEach(d => d.classList.remove('active'));
-            }
-        });
-
-        // Keyboard events
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && activeModal) {
-                closeModal(activeModal);
-            }
-        });
-
-        // Make functions global
-        window.toggleActions = toggleActions;
-        window.editProvider = editProvider;
-        window.openExportForProvider = openExportForProvider;
-        window.deleteProvider = deleteProvider;
-        window.toggleHamburger = toggleHamburger;
-        window.logout = logout;
-        window.showNotification = showNotification;
-    </script>
+    // form handling
+    function openModal(modalId) { const modal=document.getElementById(modalId); if(modal) { modal.classList.add('active'); document.body.style.overflow='hidden'; } }
+    function closeModal(modalId) { const modal=document.getElementById(modalId); if(modal) { modal.classList.remove('active'); document.body.style.overflow='auto'; } }
+    document.getElementById("addServiceProviderBtn").onclick = () => { document.getElementById("providerId").value=""; document.getElementById("serviceProviderForm").reset(); document.getElementById("modalTitle").innerText="Add New Provider"; openModal("addServiceModal"); };
+    document.getElementById("closeModalBtn").onclick = () => closeModal("addServiceModal");
+    document.getElementById("cancelFormBtn").onclick = () => closeModal("addServiceModal");
+    document.getElementById("serviceProviderForm").onsubmit = (e) => { e.preventDefault(); const id = document.getElementById("providerId").value; const provider = { name:document.getElementById("providerName").value, category:document.getElementById("serviceCategory").value, branch:document.getElementById("branch").value, date:document.getElementById("date").value, description:document.getElementById("description").value, quotation:parseFloat(document.getElementById("quotationAmount").value), approved:parseFloat(document.getElementById("approvedAmount").value) }; if(isNaN(provider.quotation)) provider.quotation=0; if(isNaN(provider.approved)) provider.approved=0; if(id) { provider.id=parseInt(id); saveProvider(provider, true); } else { saveProvider(provider, false); } closeModal("addServiceModal"); };
+    window.editProvider = (id) => { const p = serviceProviders.find(p=>p.id===id); if(p){ document.getElementById("providerId").value=p.id; document.getElementById("providerName").value=p.name; document.getElementById("serviceCategory").value=p.category; document.getElementById("branch").value=p.branch; document.getElementById("date").value=p.date; document.getElementById("description").value=p.description||''; document.getElementById("quotationAmount").value=p.quotation; document.getElementById("approvedAmount").value=p.approved; document.getElementById("modalTitle").innerText="Edit Provider"; openModal("addServiceModal"); } };
+    window.deleteProviderById = deleteProviderById;
+    function exportSingle(id) { const prov = serviceProviders.find(p=>p.id===id); if(prov){ generatePDFReport([prov], prov.name); addNotification(`📄 Exported ${prov.name} report`, "info"); } }
+    function generatePDFReport(data, title) { const { jsPDF } = window.jspdf; const doc = new jsPDF(); doc.setFontSize(14); doc.text(`Service Cost Report - ${title}`, 20, 20); doc.autoTable({ head:[['Provider','Category','Branch','Quoted','Approved']], body:data.map(p=>[p.name,p.category,p.branch,`Ksh ${p.quotation}`,`Ksh ${p.approved}`]), startY:30 }); doc.save(`cost_${title}.pdf`); }
+    document.getElementById("analysisBtn").onclick = () => { document.getElementById("servicesListView").style.display="none"; document.getElementById("chartBoard").style.display="block"; renderAllCharts(); };
+    document.getElementById("servicesListBtn").onclick = () => { document.getElementById("chartBoard").style.display="none"; document.getElementById("servicesListView").style.display="block"; };
+    document.getElementById("exportChartsBtn").onclick = () => { showToast("Charts captured (screenshot manually)","success"); addNotification("Charts view exported (image ready)","info"); };
+    function showToast(msg,type){ const cont=document.getElementById("notificationContainer"); const toast=document.createElement("div"); toast.className=`notification ${type}`; toast.innerHTML=`<i class="fas fa-${type==='success'?'check-circle':'info-circle'}"></i> ${msg}`; cont.appendChild(toast); setTimeout(()=>{toast.remove()},2800); }
+    function logout(){ if(confirm("Exit session?")){ showToast("Logged out","success"); setTimeout(()=>{ window.location.reload(); },500); } }
+    // dropdown exports & toggle
+    document.querySelectorAll("#generalExportDropdown .dropdown-item").forEach(item=>{ item.addEventListener("click",(e)=>{ const format=item.getAttribute("data-export"); if(format==='pdf'){ generatePDFReport(serviceProviders,"All_Providers"); addNotification("PDF report generated","success");} else if(format==='excel'){ const ws=XLSX.utils.json_to_sheet(serviceProviders); const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,"CostData"); XLSX.writeFile(wb,"cost_analyzer.xlsx"); showToast("Excel exported","success");} else if(format==='csv'){ const csv=XLSX.utils.sheet_to_csv(XLSX.utils.json_to_sheet(serviceProviders)); const blob=new Blob([csv],{type:"text/csv"}); const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="providers.csv"; a.click(); showToast("CSV ready","success");} document.getElementById("generalExportDropdown").style.display="none"; }); });
+    document.querySelector(".dropdown .btn").addEventListener("click",(e)=>{ const drop=document.getElementById("generalExportDropdown"); drop.style.display=drop.style.display==="flex"?"none":"flex"; e.stopPropagation(); });
+    document.addEventListener("click",()=>{ document.getElementById("generalExportDropdown").style.display="none"; });
+    const notifBell = document.getElementById("notificationBell"); const notifPanel = document.getElementById("notifPanel");
+    notifBell.addEventListener("click",(e)=>{ e.stopPropagation(); notifPanel.classList.toggle("show"); });
+    document.addEventListener("click",()=>{ notifPanel.classList.remove("show"); });
+    document.getElementById("markAllReadBtn").addEventListener("click",markAllRead);
+    function toggleHamburger(){ document.getElementById("hamburgerBtn").classList.toggle("active"); document.getElementById("navDropdown").classList.toggle("active"); }
+    document.getElementById("hamburgerBtn").onclick = toggleHamburger;
+    window.showNotification = showToast;
+    loadData();
+    renderServicesTable();
+    updateStats();
+    renderAllCharts();
+    document.getElementById("date").valueAsDate = new Date();
+    const fileArea = document.getElementById("fileUploadArea");
+    fileArea.onclick = () => document.getElementById("quotationFile").click();
+    document.getElementById("quotationFile").onchange = (e) => { if(e.target.files.length) document.getElementById("fileName").innerText = `📎 ${e.target.files[0].name}`; };
+</script>
 </body>
 </html>
