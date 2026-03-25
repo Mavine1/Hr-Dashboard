@@ -2,14 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Training Management | HR System</title>
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <style>
-        /* Base Styles */
         * {
             margin: 0;
             padding: 0;
@@ -17,10 +16,10 @@
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #f5f7fb 0%, #f0f2f5 100%);
-            color: #333;
-            font-size: 12px;
+            font-family: 'Inter', sans-serif;
+            background: #f1f5f9;
+            color: #0f172a;
+            font-size: 13px;
             line-height: 1.4;
         }
 
@@ -29,101 +28,117 @@
             min-height: 100vh;
         }
 
-        /* Sidebar */
+        /* Sidebar - minimal modern */
         .sidebar {
-            width: 240px;
-            background: linear-gradient(180deg, #2c3e50 0%, #1a2530 100%);
-            box-shadow: 5px 0 20px rgba(0,0,0,0.1);
+            width: 260px;
+            background: #ffffff;
+            border-right: 1px solid #e9eef3;
             display: flex;
             flex-direction: column;
             position: fixed;
             height: 100vh;
             z-index: 1000;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.02);
         }
 
         .logo {
-            padding: 20px 15px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 24px 24px;
+            border-bottom: 1px solid #f0f2f6;
         }
 
         .logo h2 {
-            color: white;
-            font-size: 15px;
+            color: #0f2b3d;
+            font-size: 1.2rem;
             display: flex;
             align-items: center;
             gap: 10px;
             font-weight: 600;
+            letter-spacing: -0.2px;
+        }
+
+        .logo h2 i {
+            font-size: 1.2rem;
+            color: #3b82f6;
         }
 
         .nav-menu {
             list-style: none;
-            padding: 15px 0;
+            padding: 20px 16px;
             flex: 1;
         }
 
         .nav-menu li {
-            margin: 3px 0;
+            margin: 6px 0;
         }
 
         .nav-menu a {
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 10px 15px;
-            color: rgba(255,255,255,0.8);
+            padding: 10px 14px;
+            color: #4b5565;
             text-decoration: none;
-            font-size: 12px;
+            font-size: 0.85rem;
             font-weight: 500;
-            transition: all 0.3s;
-            border-left: 3px solid transparent;
+            border-radius: 12px;
+            transition: all 0.2s;
+        }
+
+        .nav-menu a i {
+            font-size: 1.1rem;
+            width: 24px;
+            text-align: center;
         }
 
         .nav-menu a:hover {
-            background: rgba(255,255,255,0.1);
-            color: white;
-            border-left-color: #4e73df;
+            background: #f0f4f9;
+            color: #1e293b;
         }
 
         .nav-menu li.active a {
-            background: rgba(78, 115, 223, 0.2);
-            color: white;
-            border-left: 3px solid #4e73df;
+            background: #eef2ff;
+            color: #3b82f6;
+            font-weight: 600;
         }
 
         .user-profile {
-            padding: 15px;
-            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 20px 20px;
+            border-top: 1px solid #eef2f6;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
         .user-profile img {
             width: 38px;
             height: 38px;
-            border-radius: 50%;
-            border: 2px solid #4e73df;
+            border-radius: 40px;
+            object-fit: cover;
+            border: 1.5px solid #e2e8f0;
         }
 
         .user-profile h4 {
-            font-size: 12px;
+            font-size: 0.8rem;
             margin-bottom: 2px;
-            color: white;
+            color: #0f172a;
+            font-weight: 600;
         }
 
         .user-profile p {
-            font-size: 10px;
-            color: rgba(255,255,255,0.7);
+            font-size: 0.7rem;
+            color: #5b6e8c;
         }
 
         /* Main Content */
         .main-content {
             flex: 1;
-            margin-left: 240px;
-            padding: 18px;
-            background: #f5f7fb;
+            margin-left: 260px;
+            padding: 24px 28px;
+            background: #f8fafc;
             min-height: 100vh;
+            max-width: calc(100% - 260px);
+            overflow-x: hidden;
         }
 
         /* Header */
@@ -131,64 +146,57 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 18px;
-            background: white;
-            padding: 15px 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+            gap: 16px;
         }
 
         .header-left h1 {
-            font-size: 20px;
-            color: #2c3e50;
-            margin-bottom: 3px;
+            font-size: 1.65rem;
             font-weight: 600;
+            color: #0f2b3d;
+            letter-spacing: -0.3px;
         }
 
         .header-left p {
-            color: #6c757d;
-            font-size: 11px;
-        }
-
-        .header-right {
-            display: flex;
-            gap: 10px;
+            color: #5b6e8c;
+            font-size: 0.8rem;
+            margin-top: 4px;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #4e73df 0%, #3a56c4 100%);
+            background: linear-gradient(105deg, #2563eb 0%, #1d4ed8 100%);
             color: white;
             border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
+            padding: 8px 18px;
+            border-radius: 40px;
             cursor: pointer;
-            font-size: 11px;
+            font-size: 0.8rem;
             font-weight: 500;
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 6px;
-            transition: all 0.3s;
-            box-shadow: 0 2px 5px rgba(78, 115, 223, 0.3);
-            position: relative;
-            overflow: hidden;
+            gap: 8px;
+            transition: all 0.2s;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(78, 115, 223, 0.4);
+            transform: translateY(-1px);
+            background: linear-gradient(105deg, #1d4ed8 0%, #1e3a8a 100%);
+            box-shadow: 0 8px 20px rgba(37,99,235,0.2);
         }
 
-        /* Flip Card Stats */
+        /* Flip Cards */
         .stats-overview {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 15px;
-            margin-bottom: 18px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 28px;
         }
 
         .stat-card {
             perspective: 1000px;
-            height: 120px;
+            height: 110px;
             cursor: pointer;
         }
 
@@ -196,11 +204,10 @@
             position: relative;
             width: 100%;
             height: 100%;
-            text-align: center;
-            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 0.5s cubic-bezier(0.2, 0.85, 0.4, 1);
             transform-style: preserve-3d;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02), 0 1px 2px rgba(0,0,0,0.03);
         }
 
         .stat-card:hover .stat-card-inner {
@@ -213,20 +220,15 @@
             height: 100%;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
-            border-radius: 10px;
+            border-radius: 20px;
             display: flex;
             align-items: center;
-            padding: 15px;
-        }
-
-        .stat-card-front {
+            padding: 12px 18px;
             background: white;
-            flex-direction: row;
-            gap: 12px;
         }
 
         .stat-card-back {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1e293b, #0f172a);
             color: white;
             transform: rotateY(180deg);
             flex-direction: column;
@@ -235,388 +237,105 @@
         }
 
         .stat-icon {
-            width: 45px;
-            height: 45px;
-            border-radius: 10px;
+            width: 44px;
+            height: 44px;
+            border-radius: 28px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
-            color: white;
+            font-size: 1.2rem;
             flex-shrink: 0;
         }
 
         .stat-info-front h3 {
-            margin: 0;
-            font-size: 10px;
-            color: #6c757d;
+            font-size: 0.7rem;
             font-weight: 500;
-            text-align: left;
+            color: #5e6f8d;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .stat-info-front h2 {
-            margin: 6px 0 0 0;
-            font-size: 20px;
+            font-size: 1.7rem;
             font-weight: 700;
-            color: #2c3e50;
-            text-align: left;
+            color: #0f172a;
+            margin-top: 4px;
         }
 
-        .stat-card-back h2 {
-            margin: 0;
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-
-        .stat-card-back p {
-            margin: 0;
-            font-size: 10px;
-            opacity: 0.9;
-        }
-
-        .trend-indicator {
-            display: inline-flex;
-            align-items: center;
-            gap: 3px;
-            padding: 3px 6px;
-            border-radius: 10px;
-            font-size: 9px;
-            font-weight: 600;
-            margin-top: 6px;
-        }
-
-        .positive {
-            background: rgba(28, 200, 138, 0.15);
-            color: #1cc88a;
-        }
-
-        .negative {
-            background: rgba(231, 74, 59, 0.15);
-            color: #e74a3b;
-        }
-
-        /* Content Cards */
-        .content-card {
-            background: white;
-            border-radius: 10px;
-            padding: 18px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-            margin-bottom: 18px;
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #e0e6ef;
-        }
-
-        .card-header h3 {
-            color: #2c3e50;
-            font-size: 14px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        /* Chart Actions - Compact */
-        .chart-actions {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .search-box {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .search-box i {
-            position: absolute;
-            left: 10px;
-            color: #6c757d;
-            font-size: 12px;
-        }
-
-        .search-box input {
-            padding: 7px 10px 7px 30px;
-            border: 1px solid #e0e6ef;
-            border-radius: 6px;
-            font-size: 11px;
-            width: 180px;
-            transition: all 0.3s;
-        }
-
-        .search-box input:focus {
-            outline: none;
-            border-color: #4e73df;
-            box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.1);
-        }
-
-        .btn-icon {
-            background: white;
-            border: 1px solid #e0e6ef;
-            padding: 7px 10px;
-            border-radius: 6px;
-            cursor: pointer;
-            color: #5a6c7d;
-            font-size: 11px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            transition: all 0.3s;
-        }
-
-        .btn-icon:hover {
-            border-color: #4e73df;
-            color: #4e73df;
-            transform: translateY(-1px);
-        }
-
-        /* Bulk Actions */
-        .bulk-actions-dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .bulk-dropdown-content {
-            display: none;
-            position: absolute;
-            right: 0;
-            top: 100%;
-            background: white;
-            min-width: 180px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-            border-radius: 8px;
-            z-index: 1000;
-            border: 1px solid #e0e6ef;
-            margin-top: 5px;
-            animation: slideDown 0.2s ease-out;
-        }
-
-        .bulk-dropdown-content.show {
-            display: block;
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .bulk-dropdown-item {
-            padding: 9px 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            color: #5a6c7d;
-            text-decoration: none;
-            font-size: 11px;
-            border-bottom: 1px solid #f0f0f0;
-            transition: all 0.2s;
-        }
-
-        .bulk-dropdown-item:last-child {
-            border-bottom: none;
-        }
-
-        .bulk-dropdown-item:hover {
-            background: #f8f9fe;
-            color: #4e73df;
-        }
-
-        .bulk-dropdown-item i {
-            width: 18px;
-            text-align: center;
-        }
-
-        /* Data Table - Ultra Compact */
+        /* Compact & Modern Table */
         .table-responsive {
             overflow-x: auto;
-            margin: 15px 0;
-            border-radius: 8px;
-            border: 1px solid #e0e6ef;
+            border-radius: 20px;
+            border: 1px solid #edf2f7;
+            background: white;
         }
 
         .data-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 10px;
-            min-width: 1200px; /* Ensure all columns fit without horizontal scroll on most screens */
-        }
-
-        .data-table thead {
-            background: #f8f9fe;
-            border-bottom: 2px solid #e0e6ef;
+            font-size: 0.75rem;
+            min-width: 880px;
         }
 
         .data-table th {
-            padding: 10px 12px;
+            padding: 12px 12px;
             text-align: left;
             font-weight: 600;
-            color: #5a6c7d;
+            color: #4a5a78;
+            background: #fcfdff;
+            border-bottom: 1px solid #eef2f8;
+            font-size: 0.7rem;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-size: 10px;
-            white-space: nowrap;
-            border-right: 1px solid #e0e6ef;
-        }
-
-        .data-table th:last-child {
-            border-right: none;
+            letter-spacing: 0.3px;
         }
 
         .data-table td {
-            padding: 10px 12px;
-            border-bottom: 1px solid #f0f0f0;
+            padding: 12px 12px;
+            border-bottom: 1px solid #f0f4fa;
             vertical-align: middle;
-            border-right: 1px solid #f0f0f0;
+            font-size: 0.75rem;
         }
 
-        .data-table td:last-child {
-            border-right: none;
-        }
-
-        .data-table tr:hover {
-            background: #f8f9fe;
-        }
-
-        /* Training Title Cell - Compact */
-        .training-title-cell {
-            display: flex;
-            flex-direction: column;
-            min-width: 150px;
-            max-width: 150px;
+        .data-table tr:hover td {
+            background-color: #fafcff;
         }
 
         .training-title-cell strong {
-            font-size: 11px;
+            font-size: 0.8rem;
             font-weight: 600;
-            color: #2c3e50;
-            line-height: 1.3;
-            margin-bottom: 3px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .training-title-cell small {
-            font-size: 9px;
-            color: #6c757d;
             display: block;
-            line-height: 1.2;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+            margin-bottom: 2px;
         }
 
-        /* Created Date Cell */
-        .created-date-cell {
-            font-size: 9px;
-            color: #6c757d;
-            white-space: nowrap;
-        }
-
-        .date-icon {
-            color: #4e73df;
-            margin-right: 4px;
-            font-size: 9px;
-        }
-
-        /* Status Badges */
         .status-badge {
-            padding: 3px 6px;
-            border-radius: 10px;
-            font-size: 9px;
+            padding: 4px 8px;
+            border-radius: 30px;
+            font-size: 0.65rem;
             font-weight: 600;
-            color: white;
             display: inline-block;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
             white-space: nowrap;
         }
 
-        /* Category Tags */
         .category-tag {
-            padding: 2px 6px;
-            border-radius: 10px;
-            font-size: 9px;
+            padding: 2px 10px;
+            border-radius: 30px;
+            font-size: 0.65rem;
             font-weight: 500;
-            display: inline-block;
-            white-space: nowrap;
-        }
-
-        /* Progress Bar */
-        .progress-bar-small {
-            width: 50px;
-            height: 4px;
-            background: #e0e6ef;
-            border-radius: 2px;
-            overflow: hidden;
-            margin-top: 4px;
-        }
-
-        .progress-fill {
-            height: 100%;
-            border-radius: 2px;
-            transition: width 0.3s;
-        }
-
-        /* Table Actions */
-        .table-actions {
-            display: flex;
-            gap: 4px;
-            align-items: center;
-            flex-wrap: nowrap;
+            background: #eef2ff;
+            color: #2563eb;
         }
 
         .btn-sm {
-            padding: 4px 6px;
-            border-radius: 4px;
-            font-size: 9px;
+            padding: 5px 8px;
+            border-radius: 30px;
+            font-size: 0.65rem;
             border: none;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 3px;
-            font-weight: 500;
-            transition: all 0.3s;
-            min-width: 28px;
-            justify-content: center;
+            background: #f1f4f9;
+            transition: 0.1s;
         }
 
-        .btn-sm:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .btn-success {
-            background: linear-gradient(135deg, #1cc88a 0%, #17a673 100%);
-            color: white;
-        }
-
-        .btn-danger {
-            background: linear-gradient(135deg, #e74a3b 0%, #d62c1a 100%);
-            color: white;
-        }
-
-        /* Modal Styles */
+        /* Modern Modal */
         .modal {
             display: none;
             position: fixed;
@@ -624,2311 +343,390 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(6px);
             z-index: 2000;
             align-items: center;
             justify-content: center;
-            animation: fadeIn 0.3s ease;
-            overflow-y: auto;
             padding: 20px;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
         .modal-content {
-            background: white;
-            border-radius: 12px;
+            background: #ffffff;
+            border-radius: 32px;
             width: 90%;
             max-width: 800px;
             max-height: 90vh;
             overflow-y: auto;
-            animation: slideUp 0.3s ease;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
         .modal-header {
-            padding: 20px;
-            border-bottom: 1px solid #e0e6ef;
+            padding: 20px 28px;
+            border-bottom: 1px solid #edf2f7;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 12px 12px 0 0;
+            background: white;
+            border-radius: 32px 32px 0 0;
         }
 
         .modal-header h3 {
-            font-size: 15px;
+            font-size: 1.25rem;
             font-weight: 600;
+            background: linear-gradient(135deg, #1e293b, #2563eb);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         .close-modal {
-            background: rgba(255,255,255,0.2);
+            background: #f1f5f9;
             border: none;
-            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 40px;
             cursor: pointer;
-            font-size: 18px;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-        }
-
-        .close-modal:hover {
-            background: rgba(255,255,255,0.3);
-            transform: rotate(90deg);
-        }
-
-        .modal-body {
-            padding: 20px;
+            transition: 0.2s;
         }
 
         .form-row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-
-        .form-group {
-            margin-bottom: 12px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 16px;
         }
 
         .form-group label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 6px;
             display: block;
-            margin-bottom: 5px;
-            font-weight: 500;
-            color: #5a6c7d;
-            font-size: 11px;
         }
 
         .form-control {
             width: 100%;
-            padding: 8px 10px;
-            border: 1px solid #e0e6ef;
-            border-radius: 6px;
-            font-size: 11px;
-            transition: all 0.3s;
-            background: white;
+            padding: 10px 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            font-size: 0.8rem;
+            transition: 0.2s;
+            background: #fff;
         }
 
         .form-control:focus {
+            border-color: #3b82f6;
             outline: none;
-            border-color: #4e73df;
-            box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.1);
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
         }
 
-        select.form-control {
-            appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236c757d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right 10px center;
-            background-size: 10px;
-            padding-right: 30px;
-        }
-
-        textarea.form-control {
-            min-height: 70px;
-            resize: vertical;
+        .file-upload {
+            border: 1px dashed #cbd5e1;
+            border-radius: 20px;
+            padding: 14px;
+            text-align: center;
+            background: #fafcff;
         }
 
         .modal-footer {
-            padding: 15px 20px;
-            border-top: 1px solid #e0e6ef;
+            padding: 20px 28px;
+            border-top: 1px solid #edf2f7;
             display: flex;
             justify-content: flex-end;
-            gap: 8px;
+            gap: 12px;
         }
 
-        /* File Upload */
-        .file-upload {
-            border: 2px dashed #e0e6ef;
-            border-radius: 8px;
-            padding: 15px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            background: #f8f9fe;
-        }
-
-        .file-upload:hover {
-            border-color: #4e73df;
-            background: #f0f3ff;
-        }
-
-        .file-upload i {
-            font-size: 20px;
-            color: #6c757d;
-            margin-bottom: 8px;
-        }
-
-        .file-upload p {
-            margin: 0 0 5px 0;
-            color: #5a6c7d;
-            font-weight: 500;
-            font-size: 11px;
-        }
-
-        .file-upload small {
-            color: #6c757d;
-            font-size: 9px;
-        }
-
-        /* File Preview */
-        .file-preview {
-            margin-top: 12px;
-        }
-
-        .file-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px;
-            background: #f8f9fe;
-            border-radius: 6px;
-            margin-bottom: 4px;
-            font-size: 11px;
-        }
-
-        .file-item i {
-            font-size: 14px;
-            color: #e74a3b;
-        }
-
-        .file-info {
-            flex: 1;
-        }
-
-        .file-info p {
-            margin: 0;
-            font-size: 11px;
+        .btn-success {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 8px 24px;
+            border-radius: 40px;
             font-weight: 500;
         }
 
-        .file-info small {
-            color: #6c757d;
-            font-size: 9px;
-        }
-
-        /* Bulk Actions Bar */
-        .bulk-actions-bar {
-            background: linear-gradient(135deg, #f8f9fe 0%, #e9ecef 100%);
-            padding: 10px 12px;
-            border-radius: 8px;
-            margin: 12px 0;
-            display: none;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid #e0e6ef;
-            font-size: 11px;
-            animation: slideInDown 0.3s ease;
-        }
-
-        @keyframes slideInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .bulk-info {
-            font-weight: 600;
-            color: #4e73df;
-        }
-
-        .bulk-buttons {
-            display: flex;
-            gap: 6px;
-        }
-
-        /* Toast Notification */
+        /* toast */
         .toast {
             position: fixed;
-            top: 20px;
-            right: 20px;
+            bottom: 24px;
+            right: 24px;
             background: white;
-            border-radius: 8px;
-            padding: 10px 16px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border-radius: 60px;
+            padding: 10px 20px;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
             z-index: 3000;
             display: flex;
             align-items: center;
-            gap: 8px;
-            transform: translateX(150%);
-            transition: transform 0.3s ease;
-            border-left: 4px solid #4e73df;
+            gap: 10px;
+            transform: translateY(120%);
+            transition: 0.2s;
         }
 
-        .toast.show {
-            transform: translateX(0);
+        @media (max-width: 900px) {
+            .sidebar { width: 220px; }
+            .main-content { margin-left: 220px; padding: 20px; }
+            .form-row { grid-template-columns: 1fr; }
         }
-
-        .toast i {
-            font-size: 16px;
+        @media (max-width: 680px) {
+            .sidebar { display: none; }
+            .main-content { margin-left: 0; max-width: 100%; }
         }
-
-        .toast-success i { color: #1cc88a; }
-        .toast-error i { color: #e74a3b; }
-        .toast-info i { color: #4e73df; }
-        .toast-warning i { color: #f6c23e; }
-
-        .toast-content {
-            font-size: 11px;
-            font-weight: 500;
-        }
-
-        /* Loading Animation */
-        .loading {
-            display: inline-block;
-            width: 18px;
-            height: 18px;
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #4e73df;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Pagination */
-        .table-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 15px;
-            padding-top: 12px;
-            border-top: 1px solid #e0e6ef;
-        }
-
-        .pagination {
-            display: flex;
-            gap: 4px;
-            align-items: center;
-        }
-
-        .table-summary {
-            font-size: 11px;
-            color: #6c757d;
-        }
-
-        /* Charts */
-        .stats-charts {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .chart-container {
-            background: white;
-            padding: 12px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            height: 250px;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            .sidebar {
-                width: 200px;
-            }
-            
-            .main-content {
-                margin-left: 200px;
-            }
-            
-            .stats-overview {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .data-table {
-                min-width: 1100px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-            }
-            
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
-            }
-            
-            .nav-menu {
-                display: flex;
-                overflow-x: auto;
-                padding: 10px;
-                gap: 5px;
-                flex-wrap: nowrap;
-            }
-            
-            .nav-menu li {
-                flex-shrink: 0;
-            }
-            
-            .nav-menu a {
-                padding: 8px 10px;
-                font-size: 11px;
-            }
-            
-            .main-content {
-                margin-left: 0;
-                padding: 15px;
-            }
-            
-            .header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-            
-            .header-right {
-                width: 100%;
-                justify-content: space-between;
-            }
-            
-            .stats-overview {
-                grid-template-columns: 1fr;
-            }
-            
-            .data-table {
-                min-width: 1000px;
-            }
-            
-            .chart-actions {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .search-box input {
-                width: 100%;
-            }
-            
-            .modal-content {
-                width: 95%;
-                margin: 10px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-            
-            .modal-footer {
-                flex-direction: column;
-            }
-            
-            .btn-success, .btn-secondary {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .bulk-buttons {
-                flex-direction: column;
-            }
-            
-            .stats-charts {
-                grid-template-columns: 1fr;
-            }
-            
-            .data-table {
-                min-width: 900px;
-            }
-        }
-
-        /* Category Tag Colors */
-        .category-technical { background: #e8f4ff; color: #4e73df; border: 1px solid #4e73df; }
-        .category-soft-skills { background: #d1f7e4; color: #1cc88a; border: 1px solid #1cc88a; }
-        .category-compliance { background: #fff3cd; color: #856404; border: 1px solid #f6c23e; }
-        .category-leadership { background: #f8d7da; color: #721c24; border: 1px solid #e74a3b; }
-        .category-safety { background: #e2e3e5; color: #383d41; border: 1px solid #6c757d; }
-        .category-other { background: #f8f0e3; color: #856404; border: 1px solid #f6ad55; }
-
-        /* Status Badge Colors */
-        .status-upcoming { background: #4e73df; }
-        .status-ongoing { background: #f6c23e; }
-        .status-completed { background: #1cc88a; }
-        .status-cancelled { background: #e74a3b; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Sidebar Navigation -->
-        <nav class="sidebar">
-            <div class="logo">
-                <h2><i class="fas fa-briefcase"></i> HR-Admin Pro</h2>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="../index.html"><i class="fas fa-home"></i> Dashboard</a></li>
-                <li class="active"><a href="training.html"><i class="fas fa-graduation-cap"></i> Training</a></li>
-                <li><a href="vendor-contracts.html"><i class="fas fa-file-contract"></i> Vendor Contracts</a></li>
-                <li><a href="hr-letters.html"><i class="fas fa-envelope"></i> HR Letters</a></li>
-                <li><a href="upcoming-events.html"><i class="fas fa-calendar-alt"></i> Upcoming Events</a></li>
-                <li><a href="task-centre.html"><i class="fas fa-tasks"></i> Task Centre</a></li>
-            </ul>
-            <div class="user-profile">
-                <img src="https://ui-avatars.com/api/?name=Admin+User&background=667eea&color=fff" alt="User">
-                <div>
-                    <h4>Admin User</h4>
-                    <p>HR Manager</p>
-                </div>
-            </div>
-        </nav>
-
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Header -->
-            <header class="header">
-                <div class="header-left">
-                    <h1>Training Management</h1>
-                    <p>Manage employee training programs, schedules, and records</p>
-                </div>
-                <div class="header-right">
-                    <button class="btn-primary" id="addTrainingBtn">
-                        <i class="fas fa-plus"></i> Add New Training
-                    </button>
-                    <div class="bulk-actions-dropdown">
-                        <button class="btn-secondary" id="bulkActionBtn">
-                            <i class="fas fa-tasks"></i> Bulk Actions <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div class="bulk-dropdown-content" id="bulkDropdown">
-                            <a href="#" class="bulk-dropdown-item" onclick="selectAllTrainings()">
-                                <i class="fas fa-check-square"></i> Select All
-                            </a>
-                            <a href="#" class="bulk-dropdown-item" onclick="deselectAll()">
-                                <i class="fas fa-square"></i> Deselect All
-                            </a>
-                            <a href="#" class="bulk-dropdown-item" onclick="exportSelectedToExcel()">
-                                <i class="fas fa-file-excel"></i> Export Selected
-                            </a>
-                            <a href="#" class="bulk-dropdown-item" onclick="sendBulkReminders()">
-                                <i class="fas fa-bell"></i> Send Reminders
-                            </a>
-                            <a href="#" class="bulk-dropdown-item" onclick="bulkStatusUpdate('completed')">
-                                <i class="fas fa-check-circle"></i> Mark as Completed
-                            </a>
-                            <a href="#" class="bulk-dropdown-item" onclick="bulkStatusUpdate('cancelled')">
-                                <i class="fas fa-ban"></i> Mark as Cancelled
-                            </a>
-                            <a href="#" class="bulk-dropdown-item" onclick="deleteSelected()" style="color: #e74a3b;">
-                                <i class="fas fa-trash"></i> Delete Selected
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </header>
-
-            <!-- Flip Card Stats -->
-            <div class="stats-overview">
-                <div class="stat-card">
-                    <div class="stat-card-inner">
-                        <div class="stat-card-front">
-                            <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                                <i class="fas fa-graduation-cap"></i>
-                            </div>
-                            <div class="stat-info-front">
-                                <h3>Total Trainings</h3>
-                                <h2 id="totalTrainings">0</h2>
-                                <div class="trend-indicator positive">
-                                    <i class="fas fa-arrow-up"></i>
-                                    <span>+12%</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="stat-card-back">
-                            <h2 id="totalTrainingsBack">0</h2>
-                            <p>Training Programs</p>
-                            <small>Active in system</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-card-inner">
-                        <div class="stat-card-front">
-                            <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <div class="stat-info-front">
-                                <h3>Active Participants</h3>
-                                <h2 id="activeParticipants">0</h2>
-                                <div class="trend-indicator positive">
-                                    <i class="fas fa-arrow-up"></i>
-                                    <span>+8%</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="stat-card-back">
-                            <h2 id="activeParticipantsBack">0</h2>
-                            <p>Participants Enrolled</p>
-                            <small>Currently active</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-card-inner">
-                        <div class="stat-card-front">
-                            <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
-                                <i class="fas fa-calendar-check"></i>
-                            </div>
-                            <div class="stat-info-front">
-                                <h3>Upcoming</h3>
-                                <h2 id="upcomingTrainings">0</h2>
-                                <div class="trend-indicator negative">
-                                    <i class="fas fa-arrow-down"></i>
-                                    <span>-3%</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="stat-card-back">
-                            <h2 id="upcomingTrainingsBack">0</h2>
-                            <p>Upcoming Sessions</p>
-                            <small>Next 30 days</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-card-inner">
-                        <div class="stat-card-front">
-                            <div class="stat-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
-                                <i class="fas fa-chart-line"></i>
-                            </div>
-                            <div class="stat-info-front">
-                                <h3>Completion Rate</h3>
-                                <h2 id="completionRate">0%</h2>
-                                <div class="trend-indicator positive">
-                                    <i class="fas fa-arrow-up"></i>
-                                    <span>+5%</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="stat-card-back">
-                            <h2 id="completionRateBack">0%</h2>
-                            <p>Success Rate</p>
-                            <small>Average completion</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Training Programs List -->
-            <div class="content-card">
-                <div class="card-header">
-                    <h3><i class="fas fa-list"></i> Training Programs</h3>
-                    <div class="chart-actions">
-                        <div class="search-box">
-                            <i class="fas fa-search"></i>
-                            <input type="text" id="searchInput" placeholder="Search trainings..." onkeyup="filterTrainings()">
-                        </div>
-                        <button class="btn-icon" onclick="exportAllToExcel()">
-                            <i class="fas fa-file-excel"></i> Export All
-                        </button>
-                        <select id="statusFilter" class="form-control" style="width: auto; padding: 6px 10px; font-size: 11px;" onchange="filterTrainings()">
-                            <option value="all">All Status</option>
-                            <option value="upcoming">Upcoming</option>
-                            <option value="ongoing">Ongoing</option>
-                            <option value="completed">Completed</option>
-                            <option value="cancelled">Cancelled</option>
-                        </select>
-                        <select id="categoryFilter" class="form-control" style="width: auto; padding: 6px 10px; font-size: 11px;" onchange="filterTrainings()">
-                            <option value="all">All Categories</option>
-                            <option value="technical">Technical Skills</option>
-                            <option value="soft-skills">Soft Skills</option>
-                            <option value="compliance">Compliance</option>
-                            <option value="leadership">Leadership</option>
-                            <option value="safety">Safety</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-                </div>
-                
-                <!-- Bulk Actions Bar -->
-                <div id="bulkActionsBar" class="bulk-actions-bar">
-                    <div class="bulk-info">
-                        <span id="selectedCount">0</span> training(s) selected
-                    </div>
-                    <div class="bulk-buttons">
-                        <button class="btn-sm btn-danger" onclick="deleteSelected()">
-                            <i class="fas fa-trash"></i> Delete
-                        </button>
-                        <button class="btn-sm btn-success" onclick="bulkStatusUpdate('completed')">
-                            <i class="fas fa-check"></i> Mark Completed
-                        </button>
-                        <button class="btn-sm" style="background: #f6c23e; color: white;" onclick="bulkStatusUpdate('cancelled')">
-                            <i class="fas fa-ban"></i> Mark Cancelled
-                        </button>
-                        <button class="btn-sm btn-secondary" onclick="deselectAll()">
-                            <i class="fas fa-times"></i> Clear
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="table-responsive">
-                    <table class="data-table" id="trainingTable">
-                        <thead>
-                            <tr>
-                                <th style="width: 30px;">
-                                    <input type="checkbox" id="selectAll" onchange="toggleSelectAll(this)">
-                                </th>
-                                <th style="width: 180px;">Training Title</th>
-                                <th style="width: 100px;">Category</th>
-                                <th style="width: 120px;">Trainer</th>
-                                <th style="width: 130px;">Date & Time</th>
-                                <th style="width: 100px;">Participants</th>
-                                <th style="width: 100px;">Cost</th>
-                                <th style="width: 90px;">Organizer</th>
-                                <th style="width: 80px;">Status</th>
-                                <th style="width: 100px;">Created Date</th>
-                                <th style="width: 150px;">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="trainingTableBody">
-                            <!-- Data will be populated by JavaScript -->
-                        </tbody>
-                    </table>
-                </div>
-                
-                <div class="table-footer">
-                    <div class="pagination">
-                        <button class="btn-sm btn-secondary" onclick="previousPage()" id="prevBtn">
-                            <i class="fas fa-chevron-left"></i> Previous
-                        </button>
-                        <span id="pageInfo" style="padding: 0 8px; font-size: 11px;">Page 1 of 1</span>
-                        <button class="btn-sm btn-secondary" onclick="nextPage()" id="nextBtn">
-                            Next <i class="fas fa-chevron-right"></i>
-                        </button>
-                    </div>
-                    <div class="table-summary">
-                        Showing <span id="showingCount">0</span> of <span id="totalCount">0</span> trainings
-                    </div>
-                </div>
-            </div>
-
-            <!-- Training Statistics -->
-            <div class="content-card">
-                <div class="card-header">
-                    <h3><i class="fas fa-chart-bar"></i> Training Analytics</h3>
-                    <button class="btn-icon" onclick="generateReport()">
-                        <i class="fas fa-download"></i> Download Report
-                    </button>
-                </div>
-                <div class="stats-charts">
-                    <div class="chart-container">
-                        <canvas id="attendanceChart"></canvas>
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="costChart"></canvas>
-                    </div>
-                </div>
-                
-                <div class="form-row" style="margin-top: 15px;">
-                    <div class="form-group">
-                        <h4 style="margin-bottom: 8px; font-size: 12px;">
-                            <i class="fas fa-trophy"></i> Top Performing Training
-                        </h4>
-                        <div id="topTraining" style="padding: 10px; background: #f8f9fe; border-radius: 6px; font-size: 11px;">
-                            <!-- Will be populated dynamically -->
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <h4 style="margin-bottom: 8px; font-size: 12px;">
-                            <i class="fas fa-money-bill-wave"></i> Highest Cost Training
-                        </h4>
-                        <div id="highestCostTraining" style="padding: 10px; background: #f8f9fe; border-radius: 6px; font-size: 11px;">
-                            <!-- Will be populated dynamically -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
-    </div>
-
-    <!-- Add/Edit Training Modal -->
-    <div class="modal" id="trainingModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-graduation-cap"></i> <span id="modalTitle">Add New Training</span></h3>
-                <button class="close-modal" id="closeTrainingModal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form id="trainingForm">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="trainingTitle"><i class="fas fa-heading"></i> Training Title *</label>
-                            <input type="text" id="trainingTitle" class="form-control" placeholder="e.g., Leadership Skills Development" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="trainingCategory"><i class="fas fa-tag"></i> Category *</label>
-                            <select id="trainingCategory" class="form-control" required>
-                                <option value="">Select Category</option>
-                                <option value="technical">Technical Skills</option>
-                                <option value="soft-skills">Soft Skills</option>
-                                <option value="compliance">Compliance</option>
-                                <option value="leadership">Leadership</option>
-                                <option value="safety">Safety</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="trainerName"><i class="fas fa-chalkboard-teacher"></i> Trainer Name *</label>
-                            <input type="text" id="trainerName" class="form-control" placeholder="e.g., John Smith" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="trainerEmail"><i class="fas fa-envelope"></i> Trainer Email</label>
-                            <input type="email" id="trainerEmail" class="form-control" placeholder="trainer@example.com">
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="organizerName"><i class="fas fa-user-tie"></i> Organizer Name *</label>
-                            <input type="text" id="organizerName" class="form-control" placeholder="e.g., Jane Doe" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="organizerEmail"><i class="fas fa-envelope"></i> Organizer Email *</label>
-                            <input type="email" id="organizerEmail" class="form-control" placeholder="organizer@example.com" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="startDate"><i class="fas fa-calendar-plus"></i> Start Date & Time *</label>
-                            <input type="datetime-local" id="startDate" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="endDate"><i class="fas fa-calendar-minus"></i> End Date & Time *</label>
-                            <input type="datetime-local" id="endDate" class="form-control" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="trainingLocation"><i class="fas fa-map-marker-alt"></i> Location *</label>
-                            <input type="text" id="trainingLocation" class="form-control" placeholder="e.g., Conference Room A" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="maxParticipants"><i class="fas fa-users"></i> Max Participants</label>
-                            <input type="number" id="maxParticipants" class="form-control" placeholder="e.g., 20" min="1">
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="trainingCost"><i class="fas fa-money-bill-wave"></i> Training Cost (Ksh)</label>
-                            <input type="number" id="trainingCost" class="form-control" placeholder="e.g., 500" min="0">
-                        </div>
-                        <div class="form-group">
-                            <label for="trainingStatus"><i class="fas fa-chart-line"></i> Status</label>
-                            <select id="trainingStatus" class="form-control">
-                                <option value="upcoming">Upcoming</option>
-                                <option value="ongoing">Ongoing</option>
-                                <option value="completed">Completed</option>
-                                <option value="cancelled">Cancelled</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="trainingDescription"><i class="fas fa-align-left"></i> Description</label>
-                        <textarea id="trainingDescription" class="form-control" rows="3" placeholder="Describe the training program..."></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="trainingObjectives"><i class="fas fa-bullseye"></i> Learning Objectives (one per line)</label>
-                        <textarea id="trainingObjectives" class="form-control" rows="2" placeholder="Objective 1&#10;Objective 2&#10;Objective 3"></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label><i class="fas fa-file-upload"></i> Training Materials</label>
-                        <div class="file-upload" onclick="triggerFileUpload('trainingFiles')">
-                            <i class="fas fa-file-pdf"></i>
-                            <p>Click to upload training materials</p>
-                            <small>PDF, PPT, DOC up to 50MB</small>
-                        </div>
-                        <input type="file" id="trainingFiles" style="display: none;" accept=".pdf,.ppt,.pptx,.doc,.docx" multiple onchange="handleFileUpload(event)">
-                        <div class="file-preview" id="filePreview"></div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>
-                            <input type="checkbox" id="sendReminder" checked>
-                            <span style="margin-left: 5px; font-size: 11px;">Send automatic reminders to organizer and participants</span>
-                        </label>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>
-                            <input type="checkbox" id="sendDailyDigest" checked>
-                            <span style="margin-left: 5px; font-size: 11px;">Send daily digest to organizer</span>
-                        </label>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn-secondary" id="cancelTrainingBtn">
-                    <i class="fas fa-times"></i> Cancel
-                </button>
-                <button type="button" class="btn-success" id="saveTrainingBtn">
-                    <i class="fas fa-save"></i> Save Training
-                </button>
-                <button type="button" class="btn-primary" id="downloadExcelBtn" style="display: none;">
-                    <i class="fas fa-file-excel"></i> Download Excel Template
-                </button>
+<div class="container">
+    <nav class="sidebar">
+        <div class="logo">
+            <h2><i class="fas fa-briefcase"></i> HR-Admin</h2>
+        </div>
+        <ul class="nav-menu">
+            <li class="active"><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+            <!-- Only dashboard remains -->
+        </ul>
+        <div class="user-profile">
+            <img src="https://ui-avatars.com/api/?name=Admin+User&background=3b82f6&color=fff" alt="User">
+            <div>
+                <h4>Admin User</h4>
+                <p>HR Manager</p>
             </div>
         </div>
-    </div>
+    </nav>
 
-    <!-- Preview Modal -->
-    <div class="modal" id="previewModal">
-        <div class="modal-content" style="max-width: 700px;">
-            <div class="modal-header">
-                <h3><i class="fas fa-eye"></i> Training Preview</h3>
-                <button class="close-modal" id="closePreviewModal">&times;</button>
+    <main class="main-content">
+        <header class="header">
+            <div class="header-left">
+                <h1>Training Management</h1>
+                <p>Manage programs, track attendance & insights</p>
             </div>
-            <div class="modal-body" id="previewContent">
-                <!-- Preview content will be populated by JavaScript -->
+            <div class="header-right">
+                <button class="btn-primary" id="addTrainingBtn"><i class="fas fa-plus"></i> Add New Training</button>
+            </div>
+        </header>
+
+        <div class="stats-overview" id="statsContainer">
+            <!-- Flip cards dynamically updated -->
+        </div>
+
+        <div class="content-card" style="background:white; border-radius:28px; padding:20px; box-shadow:0 1px 2px rgba(0,0,0,0.03);">
+            <div class="card-header" style="display:flex; justify-content:space-between; margin-bottom:18px; flex-wrap:wrap; gap:12px;">
+                <h3 style="font-size:1rem; font-weight:600;"><i class="fas fa-list"></i> Training Programs</h3>
+                <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                    <input type="text" id="searchInput" placeholder="Search trainings..." style="padding:6px 12px; border-radius:40px; border:1px solid #e2e8f0; font-size:0.75rem;">
+                    <select id="statusFilter" style="border-radius:40px; padding:6px 12px; font-size:0.7rem;"><option value="all">All Status</option><option value="upcoming">Upcoming</option><option value="ongoing">Ongoing</option><option value="completed">Completed</option><option value="cancelled">Cancelled</option></select>
+                    <select id="categoryFilter" style="border-radius:40px; padding:6px 12px; font-size:0.7rem;"><option value="all">All Categories</option><option value="technical">Technical</option><option value="soft-skills">Soft Skills</option><option value="compliance">Compliance</option><option value="leadership">Leadership</option><option value="safety">Safety</option><option value="other">Other</option></select>
+                    <button class="btn-sm" onclick="exportAllToExcel()"><i class="fas fa-file-excel"></i> Export</button>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="data-table" id="trainingTable">
+                    <thead><tr><th style="width:28px"><input type="checkbox" id="selectAll"></th><th>Title</th><th>Category</th><th>Trainer</th><th>Date & Time</th><th>Participants</th><th>Cost (Ksh)</th><th>Organizer</th><th>Status</th><th>Actions</th></tr></thead>
+                    <tbody id="trainingTableBody"></tbody>
+                </table>
+            </div>
+            <div class="table-footer" style="display:flex; justify-content:space-between; margin-top:20px; align-items:center;">
+                <div class="pagination"><button class="btn-sm" id="prevBtn"><i class="fas fa-chevron-left"></i> Prev</button><span id="pageInfo" style="margin:0 12px; font-size:0.7rem;">Page 1</span><button class="btn-sm" id="nextBtn">Next <i class="fas fa-chevron-right"></i></button></div>
+                <div class="table-summary" style="font-size:0.7rem;">Showing <span id="showingCount">0</span> of <span id="totalCount">0</span></div>
             </div>
         </div>
-    </div>
+    </main>
+</div>
 
-    <!-- Confirmation Modal -->
-    <div class="modal" id="confirmModal">
-        <div class="modal-content" style="max-width: 500px;">
-            <div class="modal-header" style="background: #e74a3b;">
-                <h3><i class="fas fa-exclamation-triangle"></i> Confirmation</h3>
-                <button class="close-modal" id="closeConfirmModal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p id="confirmMessage" style="font-size: 13px; line-height: 1.5;"></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn-secondary" id="cancelConfirmBtn">
-                    <i class="fas fa-times"></i> Cancel
-                </button>
-                <button type="button" class="btn-danger" id="confirmActionBtn">
-                    <i class="fas fa-check"></i> Confirm
-                </button>
-            </div>
+<!-- MODERN ADD/EDIT MODAL -->
+<div class="modal" id="trainingModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3><i class="fas fa-graduation-cap"></i> <span id="modalTitle">Create training program</span></h3>
+            <button class="close-modal" id="closeTrainingModal"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <form id="trainingForm">
+                <div class="form-row">
+                    <div class="form-group"><label>Training title *</label><input type="text" id="trainingTitle" class="form-control" placeholder="e.g., Agile Leadership" required></div>
+                    <div class="form-group"><label>Category *</label><select id="trainingCategory" class="form-control"><option value="">Select</option><option value="technical">Technical Skills</option><option value="soft-skills">Soft Skills</option><option value="compliance">Compliance</option><option value="leadership">Leadership</option><option value="safety">Safety</option><option value="other">Other</option></select></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Trainer name</label><input type="text" id="trainerName" class="form-control" placeholder="Full name"></div>
+                    <div class="form-group"><label>Trainer email</label><input type="email" id="trainerEmail" class="form-control" placeholder="trainer@company.com"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Organizer name *</label><input type="text" id="organizerName" class="form-control" placeholder="HR Lead" required></div>
+                    <div class="form-group"><label>Organizer email *</label><input type="email" id="organizerEmail" class="form-control" placeholder="organizer@company.com" required></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Start date & time</label><input type="datetime-local" id="startDate" class="form-control" required></div>
+                    <div class="form-group"><label>End date & time</label><input type="datetime-local" id="endDate" class="form-control" required></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Location</label><input type="text" id="trainingLocation" class="form-control" placeholder="Room / online link"></div>
+                    <div class="form-group"><label>Max participants</label><input type="number" id="maxParticipants" class="form-control" placeholder="Unlimited"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Cost (Ksh)</label><input type="number" id="trainingCost" class="form-control" value="0"></div>
+                    <div class="form-group"><label>Status</label><select id="trainingStatus" class="form-control"><option value="upcoming">Upcoming</option><option value="ongoing">Ongoing</option><option value="completed">Completed</option><option value="cancelled">Cancelled</option></select></div>
+                </div>
+                <div class="form-group"><label>Description</label><textarea id="trainingDescription" class="form-control" rows="2" placeholder="Brief overview..."></textarea></div>
+                <div class="form-group"><label>Learning objectives</label><textarea id="trainingObjectives" class="form-control" rows="2" placeholder="One per line"></textarea></div>
+                <div class="form-group"><div class="file-upload" onclick="triggerFileUpload('trainingFiles')"><i class="fas fa-cloud-upload-alt"></i><p>Upload materials (PDF, PPT)</p></div><input type="file" id="trainingFiles" style="display:none;" multiple accept=".pdf,.ppt,.pptx,.doc,.docx" onchange="handleFileUpload(event)"><div id="filePreview"></div></div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-sm" id="cancelTrainingBtn" style="background:#f1f5f9;">Cancel</button>
+            <button class="btn-success" id="saveTrainingBtn"><i class="fas fa-save"></i> Save training</button>
         </div>
     </div>
+</div>
 
-    <!-- JavaScript Libraries -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <!-- SheetJS for Excel export -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    
-    <!-- Training Management JavaScript -->
-    <script>
-        // Enhanced Training Data with Organizer Field
-        let trainings = [];
-        let selectedTrainings = new Set();
-        let currentPage = 1;
-        const itemsPerPage = 10;
-        let filteredTrainings = [];
-        let trainingToDelete = null;
-        let currentAction = 'add';
-        let currentTrainingId = null;
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script>
+    // ---------- GLOBALS ----------
+    let trainings = [];
+    let filteredTrainings = [];
+    let currentPage = 1;
+    const itemsPerPage = 8;
+    let selectedTrainingsSet = new Set();
+    let currentAction = 'add';
+    let currentTrainingId = null;
 
-        // Enhanced sample data with organizer
-        const sampleTrainings = [
-            {
-                id: 1,
-                title: "Leadership Skills Development",
-                category: "leadership",
-                trainer: "Dr. John Smith",
-                trainerEmail: "john.smith@leadership.com",
-                organizer: "Sarah Johnson",
-                organizerEmail: "sarah.j@company.com",
-                startDate: "2024-12-15T09:00",
-                endDate: "2024-12-15T17:00",
-                location: "Conference Room A",
-                maxParticipants: 20,
-                currentParticipants: 18,
-                description: "Advanced leadership training for managers and team leads focusing on strategic thinking and decision-making.",
-                objectives: ["Develop strategic thinking", "Improve team management", "Enhance decision-making skills"],
-                materials: ["leadership-guide.pdf", "case-studies.docx"],
-                status: "upcoming",
-                cost: 15000,
-                createdDate: "2024-11-20",
-                attendanceRate: 90,
-                feedbackScore: 4.8
-            },
-            {
-                id: 2,
-                title: "Cybersecurity Awareness Training",
-                category: "compliance",
-                trainer: "Mike Wilson",
-                trainerEmail: "mike.w@security.com",
-                organizer: "Robert Chen",
-                organizerEmail: "robert.c@company.com",
-                startDate: "2024-12-10T10:00",
-                endDate: "2024-12-10T12:00",
-                location: "Training Room B",
-                maxParticipants: 50,
-                currentParticipants: 48,
-                description: "Essential cybersecurity training for all employees covering phishing, data protection, and security protocols.",
-                objectives: ["Identify phishing attempts", "Secure personal data", "Follow security protocols"],
-                materials: ["security-policy.pdf", "training-video.mp4"],
-                status: "completed",
-                cost: 8000,
-                createdDate: "2024-11-15",
-                attendanceRate: 96,
-                feedbackScore: 4.5
-            },
-            {
-                id: 3,
-                title: "Advanced Excel & Data Analysis",
-                category: "technical",
-                trainer: "Emily Brown",
-                trainerEmail: "emily.b@excel.com",
-                organizer: "David Miller",
-                organizerEmail: "david.m@company.com",
-                startDate: "2024-12-20T13:00",
-                endDate: "2024-12-20T16:00",
-                location: "Computer Lab",
-                maxParticipants: 15,
-                currentParticipants: 15,
-                description: "Advanced Excel functions, pivot tables, and data analysis techniques for professionals.",
-                objectives: ["Master pivot tables", "Learn advanced formulas", "Data visualization techniques"],
-                materials: ["excel-workbook.xlsx", "cheat-sheet.pdf"],
-                status: "upcoming",
-                cost: 12000,
-                createdDate: "2024-11-25",
-                attendanceRate: 100,
-                feedbackScore: 4.9
-            },
-            {
-                id: 4,
-                title: "Customer Service Excellence",
-                category: "soft-skills",
-                trainer: "Lisa Anderson",
-                trainerEmail: "lisa.a@service.com",
-                organizer: "Alex Turner",
-                organizerEmail: "alex.t@company.com",
-                startDate: "2024-11-30T14:00",
-                endDate: "2024-11-30T16:00",
-                location: "Meeting Room 3",
-                maxParticipants: 25,
-                currentParticipants: 22,
-                description: "Improving customer service skills for front-line staff with focus on communication and conflict resolution.",
-                objectives: ["Effective communication", "Conflict resolution", "Customer satisfaction"],
-                materials: ["customer-service-handbook.pdf"],
-                status: "ongoing",
-                cost: 7500,
-                createdDate: "2024-11-10",
-                attendanceRate: 88,
-                feedbackScore: 4.7
-            },
-            {
-                id: 5,
-                title: "Workplace Safety & Emergency Procedures",
-                category: "safety",
-                trainer: "Robert Chen",
-                trainerEmail: "robert.c@safety.com",
-                organizer: "Sarah Johnson",
-                organizerEmail: "sarah.j@company.com",
-                startDate: "2024-11-28T09:00",
-                endDate: "2024-11-28T12:00",
-                location: "Main Hall",
-                maxParticipants: 100,
-                currentParticipants: 95,
-                description: "Mandatory safety training covering emergency procedures, equipment safety, and first aid basics.",
-                objectives: ["Emergency procedures", "Equipment safety", "First aid basics"],
-                materials: ["safety-manual.pdf", "emergency-contacts.pdf"],
-                status: "completed",
-                cost: 5000,
-                createdDate: "2024-11-05",
-                attendanceRate: 95,
-                feedbackScore: 4.6
-            }
-        ];
+    // sample data if localstorage empty
+    const defaultTrainings = [
+        { id: 101, title: "Leadership Skills", category: "leadership", trainer: "Dr. Jane Smith", trainerEmail: "jane@lead.com", organizer: "Sarah Johnson", organizerEmail: "sarah@hr.com", startDate: "2025-03-20T09:00", endDate: "2025-03-20T17:00", location: "Conference A", maxParticipants: 20, currentParticipants: 12, description: "Strategic leadership", objectives: ["Lead teams"], materials: [], status: "upcoming", cost: 18500, createdDate: "2025-02-01", attendanceRate: 88, feedbackScore: 4.7 },
+        { id: 102, title: "Cyber Security", category: "compliance", trainer: "Mike Wilson", trainerEmail: "mike@sec.com", organizer: "Robert Chen", organizerEmail: "robert@hr.com", startDate: "2025-03-10T10:00", endDate: "2025-03-10T13:00", location: "Virtual", maxParticipants: 50, currentParticipants: 45, description: "Security best practices", objectives: [], materials: [], status: "completed", cost: 7500, createdDate: "2025-01-15", attendanceRate: 94, feedbackScore: 4.5 }
+    ];
 
-        // Initialize Application
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeTrainingManagement();
+    // storage helpers
+    function saveToLocalStorage() { localStorage.setItem('trainingsDB', JSON.stringify(trainings)); }
+    function loadFromLocalStorage() {
+        const stored = localStorage.getItem('trainingsDB');
+        if(stored) { trainings = JSON.parse(stored); }
+        else { trainings = JSON.parse(JSON.stringify(defaultTrainings)); saveToLocalStorage(); }
+        filteredTrainings = [...trainings];
+    }
+
+    // helper UI
+    function formatDate(d, withYear=true) { if(!d) return ''; let date=new Date(d); return date.toLocaleDateString('en-US', {month:'short', day:'numeric', year: withYear ? 'numeric' : undefined}); }
+    function formatTime(d) { if(!d) return ''; return new Date(d).toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit'}); }
+
+    function renderStats() {
+        const total = trainings.length;
+        const activePart = trainings.reduce((sum,t)=>sum+(t.currentParticipants||0),0);
+        const upcoming = trainings.filter(t=>t.status==='upcoming').length;
+        const completed = trainings.filter(t=>t.status==='completed').length;
+        const completion = total?Math.round((completed/total)*100):0;
+        document.getElementById('statsContainer').innerHTML = `
+            <div class="stat-card"><div class="stat-card-inner"><div class="stat-card-front"><div class="stat-icon" style="background:#eef2ff; color:#2563eb;"><i class="fas fa-graduation-cap"></i></div><div class="stat-info-front"><h3>Total Trainings</h3><h2>${total}</h2></div></div><div class="stat-card-back"><h2>${total}</h2><p>Active programs</p></div></div></div>
+            <div class="stat-card"><div class="stat-card-inner"><div class="stat-card-front"><div class="stat-icon" style="background:#eef2ff; color:#10b981;"><i class="fas fa-users"></i></div><div class="stat-info-front"><h3>Participants</h3><h2>${activePart}</h2></div></div><div class="stat-card-back"><h2>${activePart}</h2><p>Enrolled</p></div></div></div>
+            <div class="stat-card"><div class="stat-card-inner"><div class="stat-card-front"><div class="stat-icon" style="background:#eef2ff; color:#f59e0b;"><i class="fas fa-calendar-check"></i></div><div class="stat-info-front"><h3>Upcoming</h3><h2>${upcoming}</h2></div></div><div class="stat-card-back"><h2>${upcoming}</h2><p>Next 30d</p></div></div></div>
+            <div class="stat-card"><div class="stat-card-inner"><div class="stat-card-front"><div class="stat-icon" style="background:#eef2ff; color:#8b5cf6;"><i class="fas fa-chart-line"></i></div><div class="stat-info-front"><h3>Completion Rate</h3><h2>${completion}%</h2></div></div><div class="stat-card-back"><h2>${completion}%</h2><p>Success rate</p></div></div></div>
+        `;
+    }
+
+    function renderTable() {
+        const start = (currentPage-1)*itemsPerPage;
+        const pageData = filteredTrainings.slice(start, start+itemsPerPage);
+        const tbody = document.getElementById('trainingTableBody');
+        tbody.innerHTML = '';
+        if(pageData.length===0){ tbody.innerHTML='<tr><td colspan="10" style="text-align:center;">No trainings found</td></tr>'; }
+        pageData.forEach(t=>{
+            const catMap = {technical:'Technical', 'soft-skills':'Soft Skills', compliance:'Compliance', leadership:'Leadership', safety:'Safety', other:'Other'};
+            const progress = t.maxParticipants ? ((t.currentParticipants||0)/t.maxParticipants*100) : 0;
+            const row = `<tr>
+                <td><input type="checkbox" class="training-checkbox" value="${t.id}" ${selectedTrainingsSet.has(t.id)?'checked':''} onchange="toggleSelection(${t.id}, this)"></td>
+                <td><div><strong>${escapeHtml(t.title)}</strong><br><small style="font-size:9px;">${t.description?.substring(0,40)||''}</small></div></td>
+                <td><span class="category-tag">${catMap[t.category]||t.category}</span></td>
+                <td>${t.trainer||'-'}</td>
+                <td>${formatDate(t.startDate)}<br><small>${formatTime(t.startDate)}</small></td>
+                <td><span>${t.currentParticipants||0}/${t.maxParticipants||'∞'}</span><div style="width:40px; height:3px; background:#e2e8f0; border-radius:3px; margin-top:4px;"><div style="width:${progress}%; height:3px; background:#3b82f6; border-radius:3px;"></div></div></td>
+                <td>Ksh ${(t.cost||0).toLocaleString()}</td>
+                <td>${t.organizer||'-'}</td>
+                <td><span class="status-badge status-${t.status}" style="background:${t.status==='upcoming'?'#eef2ff':t.status==='completed'?'#d1fae5':'#fee2e2'}; color:${t.status==='upcoming'?'#2563eb':t.status==='completed'?'#059669':'#dc2626'}">${t.status}</span></td>
+                <td><div style="display:flex; gap:6px;"><button class="btn-sm" onclick="editTraining(${t.id})"><i class="fas fa-edit"></i></button><button class="btn-sm" onclick="confirmDelete(${t.id})"><i class="fas fa-trash"></i></button><button class="btn-sm" onclick="downloadAttendanceSheet(${t.id})"><i class="fas fa-download"></i></button></div></td>
+            </tr>`;
+            tbody.insertAdjacentHTML('beforeend', row);
         });
+        document.getElementById('totalCount').innerText = filteredTrainings.length;
+        const showingEnd = Math.min(start+itemsPerPage, filteredTrainings.length);
+        document.getElementById('showingCount').innerText = `${filteredTrainings.length?start+1:0}-${showingEnd}`;
+        document.getElementById('pageInfo').innerText = `Page ${currentPage} of ${Math.ceil(filteredTrainings.length/itemsPerPage)||1}`;
+        document.getElementById('prevBtn').disabled = currentPage===1;
+        document.getElementById('nextBtn').disabled = currentPage===Math.ceil(filteredTrainings.length/itemsPerPage);
+    }
 
-        function initializeTrainingManagement() {
-            // Load trainings
-            trainings = [...sampleTrainings];
-            filteredTrainings = [...trainings];
-            
-            // Set default dates for new training
-            const today = new Date();
-            const tomorrow = new Date();
-            tomorrow.setDate(today.getDate() + 1);
-            tomorrow.setHours(10, 0, 0);
-            
-            const nextWeek = new Date();
-            nextWeek.setDate(today.getDate() + 7);
-            nextWeek.setHours(16, 0, 0);
-            
-            document.getElementById('startDate').value = tomorrow.toISOString().slice(0, 16);
-            document.getElementById('endDate').value = nextWeek.toISOString().slice(0, 16);
-            
-            // Initialize UI
-            renderTable();
-            updateStats();
-            initCharts();
-            setupEventListeners();
-            
-            // Check for upcoming training reminders
-            checkReminders();
-            
-            // Show welcome notification
-            setTimeout(() => {
-                showToast('Training Management loaded successfully!', 'success');
-            }, 1000);
-        }
+    function escapeHtml(str){ if(!str) return ''; return str.replace(/[&<>]/g, function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
 
-        function setupEventListeners() {
-            // Add Training Button
-            document.getElementById('addTrainingBtn').addEventListener('click', () => {
-                currentAction = 'add';
-                openTrainingModal();
-            });
+    function toggleSelection(id, cb){ if(cb.checked) selectedTrainingsSet.add(id); else selectedTrainingsSet.delete(id); }
+    document.getElementById('selectAll').addEventListener('change', (e)=>{ document.querySelectorAll('.training-checkbox').forEach(cb=>{ cb.checked=e.target.checked; if(e.target.checked) selectedTrainingsSet.add(parseInt(cb.value)); else selectedTrainingsSet.delete(parseInt(cb.value)); }); });
 
-            // Modal controls
-            document.getElementById('closeTrainingModal').addEventListener('click', hideTrainingModal);
-            document.getElementById('cancelTrainingBtn').addEventListener('click', hideTrainingModal);
-            document.getElementById('saveTrainingBtn').addEventListener('click', saveTraining);
-            document.getElementById('downloadExcelBtn').addEventListener('click', downloadAttendanceTemplate);
+    function filterTrainings(){
+        const search = document.getElementById('searchInput').value.toLowerCase();
+        const status = document.getElementById('statusFilter').value;
+        const cat = document.getElementById('categoryFilter').value;
+        filteredTrainings = trainings.filter(t=> (t.title.toLowerCase().includes(search)||t.trainer?.toLowerCase().includes(search)||t.organizer?.toLowerCase().includes(search)) && (status==='all'||t.status===status) && (cat==='all'||t.category===cat));
+        currentPage=1;
+        renderTable();
+    }
+    document.getElementById('searchInput').addEventListener('keyup', filterTrainings);
+    document.getElementById('statusFilter').addEventListener('change', filterTrainings);
+    document.getElementById('categoryFilter').addEventListener('change', filterTrainings);
 
-            document.getElementById('closePreviewModal').addEventListener('click', hidePreviewModal);
-            document.getElementById('closeConfirmModal').addEventListener('click', hideConfirmModal);
-            document.getElementById('cancelConfirmBtn').addEventListener('click', hideConfirmModal);
+    function saveTraining(){
+        const title = document.getElementById('trainingTitle').value;
+        if(!title) return showToast('Title required','error');
+        const newTraining = {
+            id: currentAction==='add' ? Date.now() : currentTrainingId,
+            title, category: document.getElementById('trainingCategory').value, trainer: document.getElementById('trainerName').value, trainerEmail: document.getElementById('trainerEmail').value,
+            organizer: document.getElementById('organizerName').value, organizerEmail: document.getElementById('organizerEmail').value,
+            startDate: document.getElementById('startDate').value, endDate: document.getElementById('endDate').value, location: document.getElementById('trainingLocation').value,
+            maxParticipants: parseInt(document.getElementById('maxParticipants').value)||null, currentParticipants: currentAction==='add'?0:(trainings.find(t=>t.id===currentTrainingId)?.currentParticipants||0),
+            description: document.getElementById('trainingDescription').value, objectives: document.getElementById('trainingObjectives').value.split('\n').filter(o=>o.trim()),
+            materials: Array.from(document.querySelectorAll('.file-item')).map(el=>el.querySelector('.file-info p')?.innerText||''),
+            status: document.getElementById('trainingStatus').value, cost: parseInt(document.getElementById('trainingCost').value)||0,
+            createdDate: currentAction==='add'?new Date().toISOString().slice(0,10):(trainings.find(t=>t.id===currentTrainingId)?.createdDate||new Date().toISOString().slice(0,10)),
+            attendanceRate: currentAction==='add'?0:(trainings.find(t=>t.id===currentTrainingId)?.attendanceRate||0),
+            feedbackScore: 0
+        };
+        if(currentAction==='add') trainings.unshift(newTraining);
+        else { const idx = trainings.findIndex(t=>t.id===currentTrainingId); if(idx!==-1) trainings[idx]=newTraining; }
+        saveToLocalStorage();
+        filteredTrainings = [...trainings];
+        renderTable(); renderStats(); filterTrainings();
+        hideTrainingModal();
+        showToast(`Training "${title}" saved`, 'success');
+    }
 
-            // Bulk Actions Dropdown
-            document.getElementById('bulkActionBtn').addEventListener('click', function(e) {
-                e.stopPropagation();
-                document.getElementById('bulkDropdown').classList.toggle('show');
-            });
+    function editTraining(id){ const t = trainings.find(x=>x.id===id); if(!t) return; currentAction='edit'; currentTrainingId=id; document.getElementById('modalTitle').innerText='Edit training'; document.getElementById('trainingTitle').value=t.title; document.getElementById('trainingCategory').value=t.category; document.getElementById('trainerName').value=t.trainer||''; document.getElementById('trainerEmail').value=t.trainerEmail||''; document.getElementById('organizerName').value=t.organizer||''; document.getElementById('organizerEmail').value=t.organizerEmail||''; document.getElementById('startDate').value=t.startDate?.slice(0,16); document.getElementById('endDate').value=t.endDate?.slice(0,16); document.getElementById('trainingLocation').value=t.location||''; document.getElementById('maxParticipants').value=t.maxParticipants||''; document.getElementById('trainingCost').value=t.cost||0; document.getElementById('trainingStatus').value=t.status; document.getElementById('trainingDescription').value=t.description||''; document.getElementById('trainingObjectives').value=(t.objectives||[]).join('\n'); document.getElementById('filePreview').innerHTML=''; openTrainingModal(); }
+    function confirmDelete(id){ if(confirm('Delete training?')){ trainings = trainings.filter(t=>t.id!==id); selectedTrainingsSet.delete(id); saveToLocalStorage(); filteredTrainings = [...trainings]; renderTable(); renderStats(); filterTrainings(); showToast('Deleted','info'); } }
+    function deleteSelectedBulk(){ if(selectedTrainingsSet.size===0) return; trainings = trainings.filter(t=>!selectedTrainingsSet.has(t.id)); selectedTrainingsSet.clear(); saveToLocalStorage(); filteredTrainings=[...trainings]; renderTable(); renderStats(); filterTrainings(); showToast('Bulk delete done','success'); }
+    window.deleteSelectedBulk = deleteSelectedBulk;
+    function downloadAttendanceSheet(id){ const t = trainings.find(x=>x.id===id); if(!t) return; const wsData=[['Attendance Sheet',t.title],[`Date: ${formatDate(t.startDate)}`],[`Trainer: ${t.trainer}`],['Name','Signature','Remarks']]; const ws=XLSX.utils.aoa_to_sheet(wsData); const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,'Attendance'); XLSX.writeFile(wb,`attendance_${t.title.replace(/\s/g,'_')}.xlsx`); showToast('Downloaded','success'); }
+    function exportAllToExcel(){ const wsData=[['Title','Category','Trainer','Organizer','Date','Status','Cost']]; trainings.forEach(t=>{ wsData.push([t.title,t.category,t.trainer,t.organizer,formatDate(t.startDate),t.status,t.cost]); }); const ws=XLSX.utils.aoa_to_sheet(wsData); const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,'Trainings'); XLSX.writeFile(wb,'trainings_export.xlsx'); }
+    function openTrainingModal(){ document.getElementById('trainingModal').style.display='flex'; if(currentAction==='add'){ document.getElementById('modalTitle').innerText='Create new training'; document.getElementById('trainingForm').reset(); const tomorrow=new Date(); tomorrow.setDate(tomorrow.getDate()+1); document.getElementById('startDate').value=tomorrow.toISOString().slice(0,16); document.getElementById('endDate').value=new Date(tomorrow.getTime()+7*86400000).toISOString().slice(0,16); document.getElementById('organizerName').value='Admin User'; document.getElementById('organizerEmail').value='admin@hr.com'; } }
+    function hideTrainingModal(){ document.getElementById('trainingModal').style.display='none'; currentTrainingId=null; }
+    function showToast(msg,type){ let t=document.createElement('div'); t.className='toast'; t.innerHTML=`<i class="fas ${type==='success'?'fa-check-circle':type==='error'?'fa-exclamation-circle':'fa-info-circle'}"></i> <span>${msg}</span>`; document.body.appendChild(t); setTimeout(()=>t.style.transform='translateY(0)',20); setTimeout(()=>{t.style.transform='translateY(120%)'; setTimeout(()=>t.remove(),300);},2800); }
+    document.getElementById('addTrainingBtn').addEventListener('click',()=>{ currentAction='add'; openTrainingModal(); });
+    document.getElementById('saveTrainingBtn').addEventListener('click',saveTraining);
+    document.getElementById('cancelTrainingBtn').addEventListener('click',hideTrainingModal);
+    document.getElementById('closeTrainingModal').addEventListener('click',hideTrainingModal);
+    document.getElementById('prevBtn').addEventListener('click',()=>{ if(currentPage>1){currentPage--; renderTable();} });
+    document.getElementById('nextBtn').addEventListener('click',()=>{ const max=Math.ceil(filteredTrainings.length/itemsPerPage); if(currentPage<max){currentPage++; renderTable();} });
+    function handleFileUpload(e){ const preview=document.getElementById('filePreview'); preview.innerHTML=''; Array.from(e.target.files).forEach(f=>{ preview.insertAdjacentHTML('beforeend',`<div class="file-item" style="display:flex; gap:6px; align-items:center;"><i class="fas fa-file-pdf"></i><div class="file-info"><p>${f.name}</p></div><button type="button" onclick="this.parentElement.remove()" style="background:none; border:none;">✕</button></div>`); }); }
+    window.triggerFileUpload = (id)=>document.getElementById(id).click();
+    window.toggleSelection = toggleSelection;
+    window.editTraining = editTraining;
+    window.confirmDelete = confirmDelete;
+    window.downloadAttendanceSheet = downloadAttendanceSheet;
+    window.exportAllToExcel = exportAllToExcel;
+    window.handleFileUpload = handleFileUpload;
 
-            // Close dropdown when clicking outside
-            document.addEventListener('click', function(e) {
-                if (!e.target.closest('.bulk-actions-dropdown')) {
-                    document.getElementById('bulkDropdown').classList.remove('show');
-                }
-            });
-
-            // Close modals on outside click
-            document.querySelectorAll('.modal').forEach(modal => {
-                modal.addEventListener('click', function(e) {
-                    if (e.target === this) {
-                        if (this.id === 'trainingModal') hideTrainingModal();
-                        if (this.id === 'previewModal') hidePreviewModal();
-                        if (this.id === 'confirmModal') hideConfirmModal();
-                    }
-                });
-            });
-
-            // Keyboard shortcuts
-            document.addEventListener('keydown', function(e) {
-                if (e.ctrlKey && e.key === 'n') {
-                    e.preventDefault();
-                    currentAction = 'add';
-                    openTrainingModal();
-                }
-                if (e.key === 'Escape') {
-                    hideTrainingModal();
-                    hidePreviewModal();
-                    hideConfirmModal();
-                }
-                if (e.ctrlKey && e.key === 'f') {
-                    e.preventDefault();
-                    document.getElementById('searchInput').focus();
-                }
-            });
-        }
-
-        function openTrainingModal() {
-            const modal = document.getElementById('trainingModal');
-            const modalTitle = document.getElementById('modalTitle');
-            const downloadBtn = document.getElementById('downloadExcelBtn');
-            
-            if (currentAction === 'add') {
-                modalTitle.textContent = 'Add New Training';
-                document.getElementById('trainingForm').reset();
-                
-                // Set default dates
-                const today = new Date();
-                const tomorrow = new Date();
-                tomorrow.setDate(today.getDate() + 1);
-                tomorrow.setHours(10, 0, 0);
-                
-                const nextWeek = new Date();
-                nextWeek.setDate(today.getDate() + 7);
-                nextWeek.setHours(16, 0, 0);
-                
-                document.getElementById('startDate').value = tomorrow.toISOString().slice(0, 16);
-                document.getElementById('endDate').value = nextWeek.toISOString().slice(0, 16);
-                document.getElementById('trainingStatus').value = 'upcoming';
-                
-                // Set default organizer (current user)
-                document.getElementById('organizerName').value = 'Admin User';
-                document.getElementById('organizerEmail').value = 'admin@hrcompany.com';
-                
-                downloadBtn.style.display = 'none';
-            } else {
-                modalTitle.textContent = 'Edit Training';
-                downloadBtn.style.display = 'inline-flex';
-            }
-            
-            modal.style.display = 'flex';
-            document.getElementById('trainingTitle').focus();
-        }
-
-        function hideTrainingModal() {
-            document.getElementById('trainingModal').style.display = 'none';
-            document.getElementById('filePreview').innerHTML = '';
-            currentTrainingId = null;
-        }
-
-        function openPreviewModal(trainingId) {
-            const training = trainings.find(t => t.id === trainingId);
-            if (!training) return;
-            
-            const previewContent = document.getElementById('previewContent');
-            const categoryNames = {
-                technical: 'Technical Skills',
-                'soft-skills': 'Soft Skills',
-                compliance: 'Compliance',
-                leadership: 'Leadership',
-                safety: 'Safety',
-                other: 'Other'
-            };
-            
-            previewContent.innerHTML = `
-                <div style="display: grid; gap: 12px;">
-                    <div style="background: #f8f9fe; padding: 12px; border-radius: 8px;">
-                        <h4 style="color: #2c3e50; margin-bottom: 8px; font-size: 14px;">${training.title}</h4>
-                        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                            <div>
-                                <small style="color: #6c757d; font-size: 10px;">Category</small>
-                                <div style="font-weight: 600; color: #4e73df; font-size: 11px;">${categoryNames[training.category] || training.category}</div>
-                            </div>
-                            <div>
-                                <small style="color: #6c757d; font-size: 10px;">Trainer</small>
-                                <div style="font-weight: 600; font-size: 11px;">${training.trainer}</div>
-                            </div>
-                            <div>
-                                <small style="color: #6c757d; font-size: 10px;">Organizer</small>
-                                <div style="font-weight: 600; font-size: 11px;">${training.organizer}</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px;">
-                        <div>
-                            <small style="color: #6c757d; font-size: 10px;">Date</small>
-                            <div style="font-weight: 600; font-size: 11px;">${formatDate(training.startDate, true)}</div>
-                        </div>
-                        <div>
-                            <small style="color: #6c757d; font-size: 10px;">Time</small>
-                            <div style="font-weight: 600; font-size: 11px;">${formatTime(training.startDate)} - ${formatTime(training.endDate)}</div>
-                        </div>
-                        <div>
-                            <small style="color: #6c757d; font-size: 10px;">Location</small>
-                            <div style="font-weight: 600; font-size: 11px;">${training.location}</div>
-                        </div>
-                        <div>
-                            <small style="color: #6c757d; font-size: 10px;">Status</small>
-                            <span class="status-badge status-${training.status}">
-                                ${training.status.charAt(0).toUpperCase() + training.status.slice(1)}
-                            </span>
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <small style="color: #6c757d; font-size: 10px;">Description</small>
-                        <div style="margin-top: 5px; line-height: 1.5; font-size: 11px;">${training.description}</div>
-                    </div>
-                    
-                    ${training.organizer ? `
-                        <div>
-                            <small style="color: #6c757d; font-size: 10px;">Organizer Details</small>
-                            <div style="margin-top: 5px; font-size: 11px;">
-                                <div><strong>Name:</strong> ${training.organizer}</div>
-                                <div><strong>Email:</strong> ${training.organizerEmail}</div>
-                            </div>
-                        </div>
-                    ` : ''}
-                    
-                    ${training.objectives && training.objectives.length > 0 ? `
-                        <div>
-                            <small style="color: #6c757d; font-size: 10px;">Learning Objectives</small>
-                            <ul style="margin-top: 5px; padding-left: 20px; font-size: 11px;">
-                                ${training.objectives.map(obj => `<li style="margin-bottom: 3px;">${obj}</li>`).join('')}
-                            </ul>
-                        </div>
-                    ` : ''}
-                    
-                    <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #e0e6ef; font-size: 10px; color: #6c757d;">
-                        Created: ${formatDate(training.createdDate, true)}
-                    </div>
-                </div>
-            `;
-            
-            document.getElementById('previewModal').style.display = 'flex';
-        }
-
-        function hidePreviewModal() {
-            document.getElementById('previewModal').style.display = 'none';
-        }
-
-        function openConfirmModal(message, callback) {
-            document.getElementById('confirmMessage').textContent = message;
-            document.getElementById('confirmActionBtn').onclick = callback;
-            document.getElementById('confirmModal').style.display = 'flex';
-        }
-
-        function hideConfirmModal() {
-            document.getElementById('confirmModal').style.display = 'none';
-        }
-
-        function saveTraining() {
-            const title = document.getElementById('trainingTitle').value;
-            const trainer = document.getElementById('trainerName').value;
-            const organizer = document.getElementById('organizerName').value;
-            const organizerEmail = document.getElementById('organizerEmail').value;
-            
-            if (!title || !trainer || !organizer || !organizerEmail) {
-                showToast('Please fill all required fields', 'error');
-                return;
-            }
-            
-            // Validate email format
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(organizerEmail)) {
-                showToast('Please enter a valid organizer email', 'error');
-                return;
-            }
-            
-            const trainingData = {
-                id: currentAction === 'add' ? Date.now() : currentTrainingId,
-                title: title,
-                category: document.getElementById('trainingCategory').value,
-                trainer: trainer,
-                trainerEmail: document.getElementById('trainerEmail').value,
-                organizer: organizer,
-                organizerEmail: organizerEmail,
-                startDate: document.getElementById('startDate').value,
-                endDate: document.getElementById('endDate').value,
-                location: document.getElementById('trainingLocation').value,
-                maxParticipants: parseInt(document.getElementById('maxParticipants').value) || null,
-                currentParticipants: currentAction === 'add' ? 0 : 
-                    trainings.find(t => t.id === currentTrainingId)?.currentParticipants || 0,
-                description: document.getElementById('trainingDescription').value,
-                objectives: document.getElementById('trainingObjectives').value.split('\n').filter(obj => obj.trim()),
-                materials: Array.from(document.querySelectorAll('.file-item')).map(item => 
-                    item.querySelector('.file-info p').textContent
-                ),
-                status: document.getElementById('trainingStatus').value,
-                cost: parseInt(document.getElementById('trainingCost').value) || 0,
-                createdDate: currentAction === 'add' ? new Date().toISOString().split('T')[0] : 
-                    trainings.find(t => t.id === currentTrainingId)?.createdDate || new Date().toISOString().split('T')[0],
-                attendanceRate: currentAction === 'add' ? 0 : 
-                    trainings.find(t => t.id === currentTrainingId)?.attendanceRate || 0,
-                feedbackScore: currentAction === 'add' ? 0 : 
-                    trainings.find(t => t.id === currentTrainingId)?.feedbackScore || 0
-            };
-            
-            if (currentAction === 'add') {
-                trainings.unshift(trainingData);
-                showToast(`Training "${title}" added successfully!`, 'success');
-                
-                // Send organizer notification if checked
-                if (document.getElementById('sendReminder').checked) {
-                    sendOrganizerNotification(trainingData);
-                }
-                
-                // Set up daily digest if checked
-                if (document.getElementById('sendDailyDigest').checked) {
-                    scheduleDailyDigest(trainingData);
-                }
-            } else {
-                const index = trainings.findIndex(t => t.id === currentTrainingId);
-                if (index > -1) {
-                    trainings[index] = trainingData;
-                    showToast(`Training "${title}" updated successfully!`, 'success');
-                }
-            }
-            
-            filteredTrainings = [...trainings];
-            renderTable();
-            updateStats();
-            initCharts();
-            hideTrainingModal();
-        }
-
-        function sendOrganizerNotification(training) {
-            // Simulate sending organizer notification
-            const notificationTime = new Date(training.startDate);
-            const now = new Date();
-            const daysUntil = Math.floor((notificationTime - now) / (1000 * 60 * 60 * 24));
-            
-            if (daysUntil > 0) {
-                const notificationTimes = [
-                    7, // 7 days before
-                    3, // 3 days before
-                    1, // 1 day before
-                    0 // Same day
-                ];
-                
-                notificationTimes.forEach(days => {
-                    if (daysUntil >= days) {
-                        setTimeout(() => {
-                            const message = days === 0 ? 
-                                `Reminder: Your training "${training.title}" is scheduled for today at ${formatTime(training.startDate)}` :
-                                `Reminder: Your training "${training.title}" is scheduled in ${days} day(s) (${formatDate(training.startDate, true)})`;
-                            
-                            showToast(`Notification sent to organizer: ${training.organizer}`, 'info');
-                            console.log(`Organizer notification sent to ${training.organizerEmail}: ${message}`);
-                        }, 1000);
-                    }
-                });
-            }
-        }
-
-        function scheduleDailyDigest(training) {
-            // Simulate daily digest for organizer
-            console.log(`Daily digest scheduled for organizer: ${training.organizer}`);
-            showToast(`Daily digest scheduled for ${training.organizer}`, 'info');
-        }
-
-        function checkReminders() {
-            const now = new Date();
-            const upcomingTrainings = trainings.filter(t => {
-                const trainingTime = new Date(t.startDate);
-                const hoursUntil = Math.floor((trainingTime - now) / (1000 * 60 * 60));
-                return hoursUntil > 0 && hoursUntil <= 24; // Within 24 hours
-            });
-            
-            if (upcomingTrainings.length > 0) {
-                showToast(`You have ${upcomingTrainings.length} training(s) starting within 24 hours`, 'warning');
-            }
-        }
-
-        function editTraining(trainingId) {
-            const training = trainings.find(t => t.id === trainingId);
-            if (!training) return;
-            
-            currentAction = 'edit';
-            currentTrainingId = trainingId;
-            
-            // Populate form
-            document.getElementById('trainingTitle').value = training.title;
-            document.getElementById('trainingCategory').value = training.category;
-            document.getElementById('trainerName').value = training.trainer;
-            document.getElementById('trainerEmail').value = training.trainerEmail || '';
-            document.getElementById('organizerName').value = training.organizer || '';
-            document.getElementById('organizerEmail').value = training.organizerEmail || '';
-            document.getElementById('startDate').value = training.startDate.slice(0, 16);
-            document.getElementById('endDate').value = training.endDate.slice(0, 16);
-            document.getElementById('trainingLocation').value = training.location;
-            document.getElementById('maxParticipants').value = training.maxParticipants || '';
-            document.getElementById('trainingCost').value = training.cost || '';
-            document.getElementById('trainingStatus').value = training.status;
-            document.getElementById('trainingDescription').value = training.description || '';
-            document.getElementById('trainingObjectives').value = training.objectives?.join('\n') || '';
-            
-            // Show files if any
-            if (training.materials && training.materials.length > 0) {
-                const preview = document.getElementById('filePreview');
-                preview.innerHTML = training.materials.map(material => `
-                    <div class="file-item">
-                        <i class="fas fa-file-pdf"></i>
-                        <div class="file-info">
-                            <p>${material}</p>
-                            <small>Uploaded</small>
-                        </div>
-                    </div>
-                `).join('');
-            }
-            
-            openTrainingModal();
-        }
-
-        function confirmDeleteTraining(trainingId) {
-            const training = trainings.find(t => t.id === trainingId);
-            if (!training) return;
-            
-            openConfirmModal(
-                `Are you sure you want to delete "${training.title}"? This action cannot be undone.`,
-                () => {
-                    deleteTraining(trainingId);
-                    hideConfirmModal();
-                }
-            );
-        }
-
-        function deleteTraining(trainingId) {
-            const index = trainings.findIndex(t => t.id === trainingId);
-            if (index > -1) {
-                const training = trainings[index];
-                trainings.splice(index, 1);
-                selectedTrainings.delete(trainingId);
-                filteredTrainings = [...trainings];
-                renderTable();
-                updateStats();
-                initCharts();
-                showToast(`Training "${training.title}" deleted successfully!`, 'success');
-            }
-        }
-
-        function handleFileUpload(event) {
-            const files = event.target.files;
-            const preview = document.getElementById('filePreview');
-            
-            if (files.length > 0) {
-                preview.innerHTML = '';
-                
-                Array.from(files).forEach(file => {
-                    const fileItem = document.createElement('div');
-                    fileItem.className = 'file-item';
-                    fileItem.innerHTML = `
-                        <i class="fas fa-file-pdf"></i>
-                        <div class="file-info">
-                            <p>${file.name}</p>
-                            <small>${(file.size / 1024 / 1024).toFixed(2)} MB</small>
-                        </div>
-                        <button type="button" onclick="removeFile(this)" class="btn-sm btn-danger" style="padding: 2px 5px;">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    `;
-                    preview.appendChild(fileItem);
-                });
-            }
-        }
-
-        function removeFile(button) {
-            button.closest('.file-item').remove();
-        }
-
-        function triggerFileUpload(inputId) {
-            document.getElementById(inputId).click();
-        }
-
-        // Bulk Actions Functions
-        function toggleSelectAll(checkbox) {
-            const checkboxes = document.querySelectorAll('.training-checkbox');
-            const startIndex = (currentPage - 1) * itemsPerPage;
-            const endIndex = startIndex + itemsPerPage;
-            const pageTrainings = filteredTrainings.slice(startIndex, endIndex);
-            
-            if (checkbox.checked) {
-                pageTrainings.forEach(training => selectedTrainings.add(training.id));
-                checkboxes.forEach(cb => cb.checked = true);
-            } else {
-                pageTrainings.forEach(training => selectedTrainings.delete(training.id));
-                checkboxes.forEach(cb => cb.checked = false);
-            }
-            
-            updateBulkActionsBar();
-        }
-
-        function toggleTrainingSelection(trainingId, checkbox) {
-            if (checkbox.checked) {
-                selectedTrainings.add(trainingId);
-            } else {
-                selectedTrainings.delete(trainingId);
-                document.getElementById('selectAll').checked = false;
-            }
-            
-            updateBulkActionsBar();
-        }
-
-        function updateBulkActionsBar() {
-            const bulkBar = document.getElementById('bulkActionsBar');
-            const selectedCount = document.getElementById('selectedCount');
-            
-            selectedCount.textContent = selectedTrainings.size;
-            
-            if (selectedTrainings.size > 0) {
-                bulkBar.style.display = 'flex';
-            } else {
-                bulkBar.style.display = 'none';
-            }
-        }
-
-        function selectAllTrainings() {
-            const checkboxes = document.querySelectorAll('.training-checkbox');
-            const startIndex = (currentPage - 1) * itemsPerPage;
-            const endIndex = startIndex + itemsPerPage;
-            const pageTrainings = filteredTrainings.slice(startIndex, endIndex);
-            
-            pageTrainings.forEach(training => selectedTrainings.add(training.id));
-            checkboxes.forEach(cb => cb.checked = true);
-            document.getElementById('selectAll').checked = true;
-            updateBulkActionsBar();
-            document.getElementById('bulkDropdown').classList.remove('show');
-        }
-
-        function deselectAll() {
-            selectedTrainings.clear();
-            const checkboxes = document.querySelectorAll('.training-checkbox');
-            checkboxes.forEach(cb => cb.checked = false);
-            document.getElementById('selectAll').checked = false;
-            updateBulkActionsBar();
-            document.getElementById('bulkDropdown').classList.remove('show');
-        }
-
-        function exportSelectedToExcel() {
-            if (selectedTrainings.size === 0) {
-                showToast('Please select trainings to export', 'warning');
-                return;
-            }
-            
-            const selectedTrainingData = trainings.filter(t => selectedTrainings.has(t.id));
-            generateExcelFile(selectedTrainingData, 'selected_trainings');
-            showToast(`${selectedTrainings.size} training(s) exported to Excel`, 'success');
-            document.getElementById('bulkDropdown').classList.remove('show');
-        }
-
-        function exportAllToExcel() {
-            generateExcelFile(trainings, 'all_trainings');
-            showToast('All trainings exported to Excel', 'success');
-        }
-
-        function generateExcelFile(data, filename) {
-            // Create worksheet data
-            const wsData = [
-                ['TRAINING ATTENDANCE SHEET', '', '', '', '', '', '', '', ''],
-                ['Generated:', new Date().toLocaleDateString(), '', '', '', '', '', '', ''],
-                ['', '', '', '', '', '', '', '', ''],
-                ['Training Title', 'Category', 'Trainer', 'Organizer', 'Organizer Email', 'Date', 'Time', 'Location', 'Cost (Ksh)', 'Max Participants', 'Status']
-            ];
-            
-            data.forEach(training => {
-                wsData.push([
-                    training.title,
-                    training.category,
-                    training.trainer,
-                    training.organizer,
-                    training.organizerEmail,
-                    formatDate(training.startDate, true),
-                    `${formatTime(training.startDate)} - ${formatTime(training.endDate)}`,
-                    training.location,
-                    training.cost,
-                    training.maxParticipants || 'Unlimited',
-                    training.status.charAt(0).toUpperCase() + training.status.slice(1)
-                ]);
-            });
-            
-            wsData.push(['', '', '', '', '', '', '', '', '', '', '']);
-            wsData.push(['ATTENDANCE REGISTER', '', '', '', '', '', '', '', '', '', '']);
-            wsData.push(['No.', 'Name', 'Payroll Number', 'Department', 'Signature', 'Remarks', '', '', '', '', '']);
-            
-            // Add empty rows for attendance
-            for (let i = 1; i <= 20; i++) {
-                wsData.push([i, '', '', '', '', '', '', '', '', '', '']);
-            }
-            
-            // Create worksheet
-            const ws = XLSX.utils.aoa_to_sheet(wsData);
-            
-            // Create workbook
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "Training Data");
-            
-            // Generate Excel file
-            XLSX.writeFile(wb, `${filename}_${new Date().toISOString().split('T')[0]}.xlsx`);
-        }
-
-        function downloadAttendanceTemplate() {
-            if (!currentTrainingId) return;
-            
-            const training = trainings.find(t => t.id === currentTrainingId);
-            if (!training) return;
-            
-            // Create worksheet data
-            const wsData = [
-                ['TRAINING ATTENDANCE SHEET', '', '', '', '', '', '', ''],
-                ['Training Title:', training.title, '', '', '', '', '', ''],
-                ['Trainer:', training.trainer, '', '', '', '', '', ''],
-                ['Organizer:', training.organizer, '', '', '', '', '', ''],
-                ['Organizer Email:', training.organizerEmail, '', '', '', '', '', ''],
-                ['Date:', formatDate(training.startDate, true), '', '', '', '', '', ''],
-                ['Time:', `${formatTime(training.startDate)} - ${formatTime(training.endDate)}`, '', '', '', '', '', ''],
-                ['Location:', training.location, '', '', '', '', '', ''],
-                ['', '', '', '', '', '', '', ''],
-                ['No.', 'Name', 'Payroll Number', 'Department', 'Signature', 'Remarks', '', '']
-            ];
-            
-            // Add empty rows for attendance
-            for (let i = 1; i <= (training.maxParticipants || 30); i++) {
-                wsData.push([i, '', '', '', '', '', '', '']);
-            }
-            
-            // Create worksheet
-            const ws = XLSX.utils.aoa_to_sheet(wsData);
-            
-            // Create workbook
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "Attendance Sheet");
-            
-            // Generate Excel file
-            XLSX.writeFile(wb, `attendance_${training.title.replace(/[^a-z0-9]/gi, '_')}_${new Date().toISOString().split('T')[0]}.xlsx`);
-            
-            showToast('Attendance template downloaded successfully!', 'success');
-        }
-
-        function sendBulkReminders() {
-            if (selectedTrainings.size === 0) {
-                showToast('Please select trainings to send reminders', 'warning');
-                return;
-            }
-
-            const selectedTrainingData = trainings.filter(t => selectedTrainings.has(t.id));
-            const trainingNames = selectedTrainingData.map(t => t.title).join(', ');
-            
-            openConfirmModal(
-                `Send email reminders for ${selectedTrainings.size} selected training(s)?`,
-                () => {
-                    // Send reminders to organizers
-                    selectedTrainingData.forEach(training => {
-                        sendOrganizerReminder(training);
-                    });
-                    
-                    showToast(`Reminders sent to ${selectedTrainings.size} organizer(s)`, 'success');
-                    document.getElementById('bulkDropdown').classList.remove('show');
-                }
-            );
-        }
-
-        function sendOrganizerReminder(training) {
-            // Simulate sending reminder to organizer
-            const message = `Reminder: Your training "${training.title}" is scheduled for ${formatDate(training.startDate, true)} at ${formatTime(training.startDate)}`;
-            console.log(`Reminder sent to ${training.organizerEmail}: ${message}`);
-        }
-
-        function bulkStatusUpdate(status) {
-            if (selectedTrainings.size === 0) {
-                showToast('Please select trainings to update status', 'warning');
-                return;
-            }
-
-            const statusName = status.charAt(0).toUpperCase() + status.slice(1);
-            openConfirmModal(
-                `Update status to "${statusName}" for ${selectedTrainings.size} selected training(s)?`,
-                () => {
-                    trainings = trainings.map(t => {
-                        if (selectedTrainings.has(t.id)) {
-                            return { ...t, status: status };
-                        }
-                        return t;
-                    });
-                    
-                    filteredTrainings = filteredTrainings.map(t => {
-                        if (selectedTrainings.has(t.id)) {
-                            return { ...t, status: status };
-                        }
-                        return t;
-                    });
-                    
-                    renderTable();
-                    updateStats();
-                    initCharts();
-                    showToast(`Status updated for ${selectedTrainings.size} training(s)`, 'success');
-                    document.getElementById('bulkDropdown').classList.remove('show');
-                }
-            );
-        }
-
-        function deleteSelected() {
-            if (selectedTrainings.size === 0) {
-                showToast('Please select trainings to delete', 'warning');
-                return;
-            }
-
-            openConfirmModal(
-                `Delete ${selectedTrainings.size} selected training(s)? This action cannot be undone.`,
-                () => {
-                    trainings = trainings.filter(t => !selectedTrainings.has(t.id));
-                    selectedTrainings.clear();
-                    filteredTrainings = [...trainings];
-                    renderTable();
-                    updateStats();
-                    initCharts();
-                    showToast(`${selectedTrainings.size} training(s) deleted`, 'success');
-                    document.getElementById('bulkDropdown').classList.remove('show');
-                }
-            );
-        }
-
-        function filterTrainings() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const statusFilter = document.getElementById('statusFilter').value;
-            const categoryFilter = document.getElementById('categoryFilter').value;
-            
-            filteredTrainings = trainings.filter(training => {
-                const matchesSearch = searchTerm === '' || 
-                    training.title.toLowerCase().includes(searchTerm) ||
-                    training.trainer.toLowerCase().includes(searchTerm) ||
-                    training.organizer.toLowerCase().includes(searchTerm) ||
-                    training.description.toLowerCase().includes(searchTerm);
-                
-                const matchesStatus = statusFilter === 'all' || training.status === statusFilter;
-                const matchesCategory = categoryFilter === 'all' || training.category === categoryFilter;
-                
-                return matchesSearch && matchesStatus && matchesCategory;
-            });
-            
-            currentPage = 1;
-            renderTable();
-        }
-
-        function renderTable() {
-            const tableBody = document.getElementById('trainingTableBody');
-            const startIndex = (currentPage - 1) * itemsPerPage;
-            const endIndex = startIndex + itemsPerPage;
-            const pageTrainings = filteredTrainings.slice(startIndex, endIndex);
-            
-            // Clear table
-            tableBody.innerHTML = '';
-            
-            if (pageTrainings.length === 0) {
-                tableBody.innerHTML = `
-                    <tr>
-                        <td colspan="11" style="text-align: center; padding: 30px; color: #6c757d; font-size: 11px;">
-                            <i class="fas fa-graduation-cap" style="font-size: 24px; color: #e0e6ef; margin-bottom: 8px;"></i>
-                            <p>No trainings found</p>
-                        </td>
-                    </tr>
-                `;
-            } else {
-                pageTrainings.forEach(training => {
-                    const row = createTableRow(training);
-                    tableBody.appendChild(row);
-                });
-            }
-            
-            // Update pagination
-            updatePagination();
-        }
-
-        function createTableRow(training) {
-            const row = document.createElement('tr');
-            const isSelected = selectedTrainings.has(training.id);
-            
-            const categoryNames = {
-                technical: 'Technical',
-                'soft-skills': 'Soft Skills',
-                compliance: 'Compliance',
-                leadership: 'Leadership',
-                safety: 'Safety',
-                other: 'Other'
-            };
-            
-            const progressPercent = training.maxParticipants ? 
-                (training.currentParticipants / training.maxParticipants * 100) : 0;
-            
-            row.innerHTML = `
-                <td>
-                    <input type="checkbox" class="training-checkbox" 
-                           value="${training.id}"
-                           ${isSelected ? 'checked' : ''}
-                           onchange="toggleTrainingSelection(${training.id}, this)">
-                </td>
-                <td>
-                    <div class="training-title-cell">
-                        <strong>${training.title}</strong>
-                        <small>${training.description.substring(0, 50)}${training.description.length > 50 ? '...' : ''}</small>
-                    </div>
-                </td>
-                <td>
-                    <span class="category-tag category-${training.category}">
-                        ${categoryNames[training.category] || training.category}
-                    </span>
-                </td>
-                <td>
-                    <div style="font-size: 10px;">
-                        ${training.trainer}
-                        ${training.trainerEmail ? `<br><small style="color:#6c757d; font-size:9px;">${training.trainerEmail}</small>` : ''}
-                    </div>
-                </td>
-                <td>
-                    <div style="font-size: 10px;">
-                        <div style="font-weight: 500;">${formatDate(training.startDate, true)}</div>
-                        <small style="color: #6c757d; font-size: 9px;">${formatTime(training.startDate)}</small>
-                    </div>
-                </td>
-                <td>
-                    <div style="font-size: 10px;">
-                        <span style="font-weight: 600;">${training.currentParticipants}</span>
-                        <span style="color: #6c757d; font-size: 9px;">/${training.maxParticipants || '∞'}</span>
-                        <div class="progress-bar-small">
-                            <div class="progress-fill" style="width: ${progressPercent}%; background: ${progressPercent > 80 ? '#1cc88a' : progressPercent > 50 ? '#f6c23e' : '#e74a3b'}"></div>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <span style="font-weight: 600; color: #2c3e50; font-size: 10px;">Ksh ${training.cost.toLocaleString()}</span>
-                </td>
-                <td>
-                    <div style="font-size: 10px;">
-                        ${training.organizer}
-                        ${training.organizerEmail ? `<br><small style="color:#6c757d; font-size:9px;">${training.organizerEmail}</small>` : ''}
-                    </div>
-                </td>
-                <td>
-                    <span class="status-badge status-${training.status}">
-                        ${training.status.charAt(0).toUpperCase() + training.status.slice(1)}
-                    </span>
-                </td>
-                <td class="created-date-cell">
-                    <i class="fas fa-calendar-plus date-icon"></i>
-                    ${formatDate(training.createdDate, true)}
-                </td>
-                <td>
-                    <div class="table-actions">
-                        <button class="btn-sm btn-primary" onclick="editTraining(${training.id})" title="Edit">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="btn-sm btn-secondary" onclick="openPreviewModal(${training.id})" title="Preview">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                        <button class="btn-sm" style="background: #6f42c1; color: white;" onclick="downloadAttendanceSheet(${training.id})" title="Attendance Sheet">
-                            <i class="fas fa-file-excel"></i>
-                        </button>
-                        <button class="btn-sm btn-danger" onclick="confirmDeleteTraining(${training.id})" title="Delete">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </td>
-            `;
-            
-            return row;
-        }
-
-        function downloadAttendanceSheet(trainingId) {
-            const training = trainings.find(t => t.id === trainingId);
-            if (!training) return;
-            
-            // Create worksheet data
-            const wsData = [
-                ['ATTENDANCE SHEET - ' + training.title.toUpperCase(), '', '', '', '', '', '', ''],
-                ['Date:', formatDate(training.startDate, true), '', '', '', '', '', ''],
-                ['Time:', `${formatTime(training.startDate)} - ${formatTime(training.endDate)}`, '', '', '', '', '', ''],
-                ['Trainer:', training.trainer, '', '', '', '', '', ''],
-                ['Organizer:', training.organizer, '', '', '', '', '', ''],
-                ['Organizer Email:', training.organizerEmail, '', '', '', '', '', ''],
-                ['Location:', training.location, '', '', '', '', '', ''],
-                ['', '', '', '', '', '', '', ''],
-                ['No.', 'Employee Name', 'Payroll Number', 'Department', 'Signature', 'Remarks', '', '']
-            ];
-            
-            // Add empty rows for attendance
-            for (let i = 1; i <= (training.maxParticipants || 30); i++) {
-                wsData.push([i, '', '', '', '', '', '', '']);
-            }
-            
-            // Create worksheet
-            const ws = XLSX.utils.aoa_to_sheet(wsData);
-            
-            // Create workbook
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "Attendance");
-            
-            // Generate Excel file
-            XLSX.writeFile(wb, `attendance_${training.title.replace(/[^a-z0-9]/gi, '_')}.xlsx`);
-            
-            showToast('Attendance sheet downloaded successfully!', 'success');
-        }
-
-        function updatePagination() {
-            const totalPages = Math.ceil(filteredTrainings.length / itemsPerPage);
-            const pageInfo = document.getElementById('pageInfo');
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
-            const showingCount = document.getElementById('showingCount');
-            const totalCount = document.getElementById('totalCount');
-            
-            pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
-            prevBtn.disabled = currentPage === 1;
-            nextBtn.disabled = currentPage === totalPages;
-            
-            const start = (currentPage - 1) * itemsPerPage + 1;
-            const end = Math.min(currentPage * itemsPerPage, filteredTrainings.length);
-            
-            showingCount.textContent = `${start}-${end}`;
-            totalCount.textContent = filteredTrainings.length;
-        }
-
-        function previousPage() {
-            if (currentPage > 1) {
-                currentPage--;
-                renderTable();
-            }
-        }
-
-        function nextPage() {
-            const totalPages = Math.ceil(filteredTrainings.length / itemsPerPage);
-            if (currentPage < totalPages) {
-                currentPage++;
-                renderTable();
-            }
-        }
-
-        function updateStats() {
-            const total = trainings.length;
-            const activeParticipants = trainings.reduce((sum, t) => sum + t.currentParticipants, 0);
-            const upcoming = trainings.filter(t => t.status === 'upcoming').length;
-            const completed = trainings.filter(t => t.status === 'completed').length;
-            const completionRate = total > 0 ? Math.round((completed / total) * 100) : 0;
-            
-            // Animate the stat updates
-            animateValue('totalTrainings', 0, total, 500);
-            animateValue('totalTrainingsBack', 0, total, 500);
-            animateValue('activeParticipants', 0, activeParticipants, 500);
-            animateValue('activeParticipantsBack', 0, activeParticipants, 500);
-            animateValue('upcomingTrainings', 0, upcoming, 500);
-            animateValue('upcomingTrainingsBack', 0, upcoming, 500);
-            animateValue('completionRate', 0, completionRate, 500);
-            animateValue('completionRateBack', 0, completionRate, 500);
-        }
-
-        function animateValue(elementId, start, end, duration) {
-            const element = document.getElementById(elementId);
-            if (!element) return;
-            
-            const range = end - start;
-            const startTime = performance.now();
-            const isPercentage = elementId.includes('Rate');
-            
-            function updateValue(currentTime) {
-                const elapsed = currentTime - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                const currentValue = Math.floor(start + (range * progress));
-                
-                element.textContent = isPercentage ? `${currentValue}%` : currentValue;
-                
-                if (progress < 1) {
-                    requestAnimationFrame(updateValue);
-                }
-            }
-            
-            requestAnimationFrame(updateValue);
-        }
-
-        function initCharts() {
-            // Attendance Chart
-            const attendanceCtx = document.getElementById('attendanceChart').getContext('2d');
-            
-            // Sort trainings by attendance rate
-            const sortedByAttendance = [...trainings].sort((a, b) => b.attendanceRate - a.attendanceRate);
-            const top5Attendance = sortedByAttendance.slice(0, 5);
-            
-            new Chart(attendanceCtx, {
-                type: 'bar',
-                data: {
-                    labels: top5Attendance.map(t => t.title.substring(0, 15) + (t.title.length > 15 ? '...' : '')),
-                    datasets: [{
-                        label: 'Attendance Rate %',
-                        data: top5Attendance.map(t => t.attendanceRate),
-                        backgroundColor: 'rgba(78, 115, 223, 0.8)',
-                        borderColor: 'rgba(78, 115, 223, 1)',
-                        borderWidth: 1,
-                        borderRadius: 6,
-                        maxBarThickness: 25
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return `Attendance: ${context.parsed.y}%`;
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 100,
-                            ticks: {
-                                callback: function(value) {
-                                    return value + '%';
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-            
-            // Cost Chart
-            const costCtx = document.getElementById('costChart').getContext('2d');
-            
-            // Sort trainings by cost
-            const sortedByCost = [...trainings].sort((a, b) => b.cost - a.cost);
-            const top5Cost = sortedByCost.slice(0, 5);
-            
-            new Chart(costCtx, {
-                type: 'bar',
-                data: {
-                    labels: top5Cost.map(t => t.title.substring(0, 15) + (t.title.length > 15 ? '...' : '')),
-                    datasets: [{
-                        label: 'Cost (Ksh)',
-                        data: top5Cost.map(t => t.cost),
-                        backgroundColor: 'rgba(28, 200, 138, 0.8)',
-                        borderColor: 'rgba(28, 200, 138, 1)',
-                        borderWidth: 1,
-                        borderRadius: 6,
-                        maxBarThickness: 25
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return `Cost: Ksh ${context.parsed.y.toLocaleString()}`;
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                callback: function(value) {
-                                    return 'Ksh ' + value.toLocaleString();
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-            
-            // Update top training displays
-            updateTopTrainingDisplays();
-        }
-
-        function updateTopTrainingDisplays() {
-            // Find top training by attendance
-            const topByAttendance = [...trainings].sort((a, b) => b.attendanceRate - a.attendanceRate)[0];
-            const topByCost = [...trainings].sort((a, b) => b.cost - a.cost)[0];
-            
-            const topTrainingElement = document.getElementById('topTraining');
-            const highestCostElement = document.getElementById('highestCostTraining');
-            
-            if (topByAttendance) {
-                topTrainingElement.innerHTML = `
-                    <div style="font-weight: 600; color: #2c3e50; margin-bottom: 3px; font-size: 11px;">${topByAttendance.title}</div>
-                    <div style="display: flex; justify-content: space-between; font-size: 10px;">
-                        <span style="color: #6c757d;">Attendance:</span>
-                        <span style="font-weight: 600; color: #1cc88a;">${topByAttendance.attendanceRate}%</span>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; font-size: 10px;">
-                        <span style="color: #6c757d;">Organizer:</span>
-                        <span>${topByAttendance.organizer}</span>
-                    </div>
-                `;
-            }
-            
-            if (topByCost) {
-                highestCostElement.innerHTML = `
-                    <div style="font-weight: 600; color: #2c3e50; margin-bottom: 3px; font-size: 11px;">${topByCost.title}</div>
-                    <div style="display: flex; justify-content: space-between; font-size: 10px;">
-                        <span style="color: #6c757d;">Cost:</span>
-                        <span style="font-weight: 600; color: #e74a3b;">Ksh ${topByCost.cost.toLocaleString()}</span>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; font-size: 10px;">
-                        <span style="color: #6c757d;">Category:</span>
-                        <span>${topByCost.category}</span>
-                    </div>
-                `;
-            }
-        }
-
-        function generateReport() {
-            // Create comprehensive report
-            const reportData = {
-                generated: new Date().toISOString(),
-                summary: {
-                    totalTrainings: trainings.length,
-                    totalParticipants: trainings.reduce((sum, t) => sum + t.currentParticipants, 0),
-                    totalCost: trainings.reduce((sum, t) => sum + t.cost, 0),
-                    averageAttendance: Math.round(trainings.reduce((sum, t) => sum + t.attendanceRate, 0) / trainings.length),
-                    upcomingTrainings: trainings.filter(t => t.status === 'upcoming').length
-                },
-                trainings: trainings.map(t => ({
-                    title: t.title,
-                    category: t.category,
-                    trainer: t.trainer,
-                    organizer: t.organizer,
-                    organizerEmail: t.organizerEmail,
-                    date: formatDate(t.startDate, true),
-                    participants: `${t.currentParticipants}/${t.maxParticipants || '∞'}`,
-                    cost: t.cost,
-                    status: t.status,
-                    attendanceRate: t.attendanceRate
-                })),
-                recommendations: [
-                    "Schedule more technical skills training due to high demand",
-                    "Consider reducing leadership training costs",
-                    "Increase safety training frequency"
-                ]
-            };
-            
-            // Create worksheet data
-            const wsData = [
-                ['TRAINING MANAGEMENT REPORT', '', '', '', '', '', '', '', ''],
-                ['Generated:', new Date().toLocaleString(), '', '', '', '', '', '', ''],
-                ['', '', '', '', '', '', '', '', ''],
-                ['SUMMARY', '', '', '', '', '', '', '', ''],
-                ['Total Trainings:', reportData.summary.totalTrainings, '', '', '', '', '', '', ''],
-                ['Total Participants:', reportData.summary.totalParticipants, '', '', '', '', '', '', ''],
-                ['Total Cost:', `Ksh ${reportData.summary.totalCost.toLocaleString()}`, '', '', '', '', '', '', ''],
-                ['Average Attendance:', `${reportData.summary.averageAttendance}%`, '', '', '', '', '', '', ''],
-                ['Upcoming Trainings:', reportData.summary.upcomingTrainings, '', '', '', '', '', '', ''],
-                ['', '', '', '', '', '', '', '', ''],
-                ['TRAINING DETAILS', '', '', '', '', '', '', '', ''],
-                ['Title', 'Category', 'Trainer', 'Organizer', 'Organizer Email', 'Date', 'Participants', 'Cost (Ksh)', 'Status', 'Attendance %']
-            ];
-            
-            reportData.trainings.forEach(t => {
-                wsData.push([
-                    t.title,
-                    t.category,
-                    t.trainer,
-                    t.organizer,
-                    t.organizerEmail,
-                    t.date,
-                    t.participants,
-                    t.cost,
-                    t.status.charAt(0).toUpperCase() + t.status.slice(1),
-                    t.attendanceRate
-                ]);
-            });
-            
-            wsData.push(['', '', '', '', '', '', '', '', '', '']);
-            wsData.push(['RECOMMENDATIONS', '', '', '', '', '', '', '', '', '']);
-            
-            reportData.recommendations.forEach((rec, i) => {
-                wsData.push([`${i + 1}. ${rec}`, '', '', '', '', '', '', '', '', '']);
-            });
-            
-            // Create worksheet
-            const ws = XLSX.utils.aoa_to_sheet(wsData);
-            
-            // Create workbook
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "Report");
-            
-            // Generate Excel file
-            XLSX.writeFile(wb, `training_report_${new Date().toISOString().split('T')[0]}.xlsx`);
-            
-            showToast('Training report generated and downloaded!', 'success');
-        }
-
-        // Utility Functions
-        function formatDate(dateString, short = false) {
-            if (!dateString) return 'N/A';
-            try {
-                const date = new Date(dateString);
-                if (short) {
-                    return date.toLocaleDateString('en-US', { 
-                        month: 'short', 
-                        day: 'numeric',
-                        year: 'numeric'
-                    });
-                }
-                return date.toLocaleDateString('en-US', { 
-                    weekday: 'short', 
-                    year: 'numeric', 
-                    month: 'short', 
-                    day: 'numeric' 
-                });
-            } catch (e) {
-                return 'Invalid Date';
-            }
-        }
-
-        function formatTime(dateString) {
-            if (!dateString) return '';
-            try {
-                const date = new Date(dateString);
-                return date.toLocaleTimeString('en-US', { 
-                    hour: '2-digit', 
-                    minute: '2-digit',
-                    hour12: true
-                });
-            } catch (e) {
-                return '';
-            }
-        }
-
-        function showToast(message, type = 'info') {
-            // Remove existing toasts
-            document.querySelectorAll('.toast').forEach(toast => toast.remove());
-            
-            // Create toast
-            const toast = document.createElement('div');
-            toast.className = `toast toast-${type}`;
-            toast.innerHTML = `
-                <i class="fas fa-${getToastIcon(type)}"></i>
-                <div class="toast-content">${message}</div>
-            `;
-            
-            document.body.appendChild(toast);
-            
-            // Show toast
-            setTimeout(() => toast.classList.add('show'), 10);
-            
-            // Remove after 3 seconds
-            setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
-        }
-
-        function getToastIcon(type) {
-            switch(type) {
-                case 'success': return 'check-circle';
-                case 'error': return 'exclamation-circle';
-                case 'warning': return 'exclamation-triangle';
-                default: return 'info-circle';
-            }
-        }
-
-        // Initialize on load
-        window.addEventListener('load', initializeTrainingManagement);
-    </script>
+    loadFromLocalStorage();
+    filteredTrainings = [...trainings];
+    renderStats();
+    renderTable();
+    filterTrainings();
+</script>
 </body>
 </html>
