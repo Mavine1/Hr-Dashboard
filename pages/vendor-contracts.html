@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Vendor Contracts | HR Admin Pro</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -16,22 +16,20 @@
         :root {
             --primary-blue: #1e40af;
             --secondary-blue: #3b82f6;
-            --light-blue: #dbeafe;
+            --light-blue: #eef2ff;
             --sky-blue: #eff6ff;
             --dark-blue: #1e3a8a;
             --primary-red: #b91c1c;
-            --light-red: #fee2e2;
             --pure-white: #ffffff;
-            --off-white: #f8fafc;
-            --light-gray: #e2e8f0;
-            --medium-gray: #94a3b8;
-            --dark-gray: #334155;
-            --text-primary: #0f172a;
-            --text-secondary: #475569;
-            --border-color: #e2e8f0;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
-            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+            --off-white: #f9fafb;
+            --light-gray: #e5e7eb;
+            --medium-gray: #6b7280;
+            --dark-gray: #1f2937;
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
+            --border-color: #e5e7eb;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.08);
             --success: #10b981;
             --warning: #f59e0b;
             --danger: #ef4444;
@@ -41,1698 +39,737 @@
             font-family: 'Inter', sans-serif;
             background: var(--off-white);
             color: var(--text-primary);
-            line-height: 1.5;
-            overflow-x: hidden;
+            font-size: 13px;
+            line-height: 1.45;
         }
 
-        /* Modern Fixed Header */
+        /* Compact header */
         .main-header {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            height: 70px;
+            height: 60px;
             background: var(--pure-white);
             border-bottom: 1px solid var(--border-color);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 2rem;
+            padding: 0 1.5rem;
             z-index: 1000;
             box-shadow: var(--shadow-sm);
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
         .logo-icon {
-            width: 40px;
-            height: 40px;
+            width: 34px;
+            height: 34px;
             background: var(--primary-blue);
-            border-radius: 10px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 10px rgba(30, 64, 175, 0.2);
         }
+        .logo-icon i { font-size: 1rem; color: white; }
+        .logo h2 { font-size: 1rem; font-weight: 700; margin-left: 0.5rem; }
+        .logo { display: flex; align-items: center; }
 
-        .logo-icon i {
-            color: white;
-            font-size: 1.2rem;
-        }
+        .animated-title-container { display: none; }
 
-        .logo h2 {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            letter-spacing: -0.01em;
-        }
-
-        .animated-title-container {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--light-blue);
-            padding: 0.4rem 1.5rem;
-            border-radius: 40px;
-            border: 1px solid var(--primary-blue);
-        }
-
-        .animated-title {
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--primary-blue);
-            white-space: nowrap;
-            animation: slideText 20s linear infinite;
-        }
-
-        @keyframes slideText {
-            0% { transform: translateX(100%); opacity: 0; }
-            5% { transform: translateX(0); opacity: 1; }
-            95% { transform: translateX(0); opacity: 1; }
-            100% { transform: translateX(-100%); opacity: 0; }
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
+        .header-right { display: flex; align-items: center; gap: 0.8rem; }
         .notifications {
-            position: relative;
-            width: 40px;
-            height: 40px;
+            width: 34px; height: 34px;
+            background: var(--off-white);
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: var(--off-white);
-            border-radius: 10px;
             cursor: pointer;
             border: 1px solid var(--border-color);
+            position: relative;
         }
-
-        .notifications:hover {
-            background: var(--light-blue);
-            border-color: var(--primary-blue);
-        }
-
-        .notifications i {
-            color: var(--primary-blue);
-            font-size: 1.1rem;
-        }
-
+        .notifications i { font-size: 1rem; color: var(--primary-blue); }
         .badge {
             position: absolute;
-            top: -4px;
-            right: -4px;
+            top: -5px;
+            right: -5px;
             background: var(--primary-red);
             color: white;
             width: 18px;
             height: 18px;
             border-radius: 50%;
+            font-size: 0.65rem;
+            font-weight: 700;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.7rem;
-            font-weight: 600;
             border: 2px solid white;
         }
-
         .logout-btn {
             background: var(--primary-blue);
             color: white;
             border: none;
-            padding: 0.6rem 1.2rem;
-            border-radius: 10px;
-            font-size: 0.9rem;
+            padding: 0.4rem 1rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
             font-weight: 500;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.4rem;
             cursor: pointer;
-            transition: all 0.2s;
         }
+        .logout-btn:hover { background: var(--dark-blue); }
 
-        .logout-btn:hover {
-            background: var(--dark-blue);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .hamburger-menu {
-            position: relative;
-        }
-
+        /* Hamburger & dropdown simplified */
+        .hamburger-menu { position: relative; }
         .hamburger-btn {
-            width: 40px;
-            height: 40px;
+            width: 34px; height: 34px;
             background: var(--off-white);
             border: 1px solid var(--border-color);
-            border-radius: 10px;
+            border-radius: 8px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 4px;
+            gap: 3px;
             cursor: pointer;
-            transition: all 0.2s;
         }
-
-        .hamburger-btn:hover {
-            background: var(--light-blue);
-            border-color: var(--primary-blue);
-        }
-
         .hamburger-btn span {
-            width: 18px;
+            width: 16px;
             height: 2px;
             background: var(--primary-blue);
             border-radius: 2px;
-            transition: all 0.3s;
         }
-
-        .hamburger-btn.active span:nth-child(1) {
-            transform: rotate(45deg) translate(4px, 4px);
-        }
-
-        .hamburger-btn.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger-btn.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(4px, -4px);
-        }
-
-        /* Navigation Dropdown */
         .nav-dropdown {
             position: absolute;
-            top: 50px;
+            top: 42px;
             right: 0;
-            width: 280px;
+            width: 180px;
             background: white;
-            border-radius: 16px;
-            padding: 1rem;
-            box-shadow: var(--shadow-lg);
+            border-radius: 12px;
+            padding: 0.6rem;
+            box-shadow: var(--shadow-md);
             border: 1px solid var(--border-color);
             opacity: 0;
             visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.3s;
+            transform: translateY(-6px);
+            transition: all 0.2s;
             z-index: 1000;
         }
-
         .nav-dropdown.active {
             opacity: 1;
             visibility: visible;
             transform: translateY(0);
         }
-
-        .nav-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.5rem;
+        .nav-single {
+            display: block;
         }
-
         .nav-item {
             background: var(--off-white);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 1rem 0.5rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
-            color: var(--text-secondary);
-        }
-
-        .nav-item:hover {
-            background: var(--light-blue);
-            border-color: var(--primary-blue);
-            transform: translateY(-2px);
-        }
-
-        .nav-item i {
-            font-size: 1.2rem;
-            color: var(--primary-blue);
-            margin-bottom: 0.3rem;
-            display: block;
-        }
-
-        .nav-item span {
-            font-size: 0.75rem;
-            font-weight: 500;
-            display: block;
-            line-height: 1.3;
-        }
-
-        .nav-item.active {
-            background: var(--primary-blue);
-            color: white;
-        }
-
-        .nav-item.active i {
-            color: white;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            position: fixed;
-            top: 70px;
-            left: -280px;
-            width: 280px;
-            height: calc(100vh - 70px);
-            background: var(--pure-white);
-            border-right: 1px solid var(--border-color);
-            box-shadow: var(--shadow-lg);
-            transition: left 0.3s ease;
-            z-index: 999;
-            overflow-y: auto;
-        }
-
-        .sidebar.active {
-            left: 0;
-        }
-
-        .sidebar-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--border-color);
-            background: var(--light-blue);
-        }
-
-        .sidebar-header h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--primary-blue);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .sidebar-menu {
-            list-style: none;
-            padding: 1rem;
-        }
-
-        .sidebar-menu li {
-            margin-bottom: 0.3rem;
-        }
-
-        .sidebar-menu li a {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 0.8rem 1rem;
-            color: var(--text-secondary);
-            text-decoration: none;
             border-radius: 8px;
-            transition: all 0.2s;
-            font-weight: 500;
-            font-size: 0.95rem;
-        }
-
-        .sidebar-menu li a:hover {
-            background: var(--light-blue);
-            color: var(--primary-blue);
-        }
-
-        .sidebar-menu li a.active {
-            background: var(--primary-blue);
-            color: white;
-        }
-
-        .sidebar-menu li a i {
-            width: 20px;
-            font-size: 1rem;
-        }
-
-        .sidebar-footer {
-            position: absolute;
-            bottom: 1rem;
-            left: 1rem;
-            right: 1rem;
-            padding: 1rem;
-            background: var(--light-blue);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-
-        .sidebar-footer img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 2px solid var(--primary-blue);
-        }
-
-        .sidebar-footer h4 {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .sidebar-footer p {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-        }
-
-        /* Overlay */
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 70px;
-            left: 0;
-            width: 100%;
-            height: calc(100vh - 70px);
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 998;
-        }
-
-        .overlay.active {
-            display: block;
-        }
-
-        /* Main Content */
-        .main-content {
-            margin-top: 90px;
-            padding: 2rem;
-            transition: margin-left 0.3s ease;
-        }
-
-        /* Page Header */
-        .page-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding: 1.5rem 2rem;
-            background: var(--pure-white);
-            border-radius: 16px;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .header-content h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.3rem;
-        }
-
-        .header-content p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-
-        .header-actions {
-            display: flex;
-            gap: 1rem;
-        }
-
-        /* Buttons */
-        .btn {
-            padding: 0.7rem 1.5rem;
-            border-radius: 10px;
-            border: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .btn-primary {
-            background: var(--primary-blue);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: var(--dark-blue);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .btn-secondary {
-            background: var(--pure-white);
-            color: var(--primary-blue);
-            border: 1px solid var(--primary-blue);
-        }
-
-        .btn-secondary:hover {
-            background: var(--light-blue);
-            transform: translateY(-2px);
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 1px solid var(--border-color);
-        }
-
-        .btn-outline:hover {
-            background: var(--off-white);
-        }
-
-        .btn-sm {
-            padding: 0.4rem 0.8rem;
-            font-size: 0.8rem;
-        }
-
-        .btn-success {
-            background: var(--success);
-            color: white;
-        }
-
-        .btn-success:hover {
-            background: #0b8e5e;
-        }
-
-        /* Stats Cards */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .stat-card {
-            background: var(--pure-white);
-            border-radius: 16px;
-            padding: 1.5rem;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-sm);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            transition: all 0.2s;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--primary-blue);
-        }
-
-        .stat-icon {
-            width: 55px;
-            height: 55px;
-            border-radius: 14px;
+            padding: 0.6rem;
+            text-align: center;
+            text-decoration: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            gap: 0.5rem;
+            color: var(--primary-blue);
+            font-weight: 500;
+            font-size: 0.8rem;
+        }
+        .nav-item i { font-size: 1rem; }
+        .nav-item:hover { background: var(--light-blue); }
+
+        /* Sidebar reduced */
+        .sidebar {
+            position: fixed;
+            top: 60px;
+            left: -260px;
+            width: 260px;
+            height: calc(100vh - 60px);
+            background: white;
+            border-right: 1px solid var(--border-color);
+            transition: left 0.25s ease;
+            z-index: 999;
+            overflow-y: auto;
+        }
+        .sidebar.active { left: 0; }
+        .sidebar-header { padding: 1rem; border-bottom: 1px solid var(--border-color); background: var(--light-blue); }
+        .sidebar-header h3 { font-size: 0.9rem; font-weight: 600; color: var(--primary-blue); }
+        .sidebar-menu { list-style: none; padding: 0.8rem; }
+        .sidebar-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            padding: 0.6rem 0.8rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            border-radius: 8px;
+            text-decoration: none;
+        }
+        .sidebar-menu li a.active { background: var(--primary-blue); color: white; }
+        .sidebar-footer { padding: 0.8rem; margin-top: 1rem; display: flex; align-items: center; gap: 0.6rem; background: var(--off-white); border-radius: 8px; }
+        .sidebar-footer img { width: 32px; height: 32px; border-radius: 50%; }
+        .sidebar-footer h4 { font-size: 0.75rem; }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            height: calc(100vh - 60px);
+            background: rgba(0,0,0,0.4);
+            z-index: 998;
+        }
+        .overlay.active { display: block; }
+
+        /* Main content */
+        .main-content {
+            margin-top: 70px;
+            padding: 1.2rem;
+            transition: margin-left 0.2s;
+        }
+        .page-header {
+            background: white;
+            border-radius: 14px;
+            padding: 1rem 1.2rem;
+            margin-bottom: 1.2rem;
+            border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .header-content h1 { font-size: 1.3rem; font-weight: 700; }
+        .header-content p { font-size: 0.75rem; color: var(--text-secondary); }
+        .btn {
+            padding: 0.45rem 1rem;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 0.75rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            border: none;
+        }
+        .btn-primary { background: var(--primary-blue); color: white; }
+        .btn-secondary { background: white; color: var(--primary-blue); border: 1px solid var(--primary-blue); }
+        .btn-sm { padding: 0.25rem 0.6rem; font-size: 0.7rem; }
+        .btn-outline { background: transparent; border: 1px solid var(--border-color); }
+
+        /* Stats grid compact */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .stat-card {
+            background: white;
+            border-radius: 14px;
+            padding: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            border: 1px solid var(--border-color);
+        }
+        .stat-icon {
+            width: 42px; height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
             color: white;
         }
+        .stat-icon.blue { background: var(--primary-blue); }
+        .stat-icon.green { background: var(--success); }
+        .stat-icon.yellow { background: var(--warning); }
+        .stat-icon.red { background: var(--danger); }
+        .stat-info h3 { font-size: 0.7rem; color: var(--text-secondary); margin-bottom: 0.2rem; }
+        .stat-info .stat-value { font-size: 1.3rem; font-weight: 700; }
+        .stat-info .stat-trend { font-size: 0.65rem; }
 
-        .stat-icon.blue {
-            background: var(--primary-blue);
-        }
-
-        .stat-icon.green {
-            background: var(--success);
-        }
-
-        .stat-icon.yellow {
-            background: var(--warning);
-        }
-
-        .stat-icon.red {
-            background: var(--danger);
-        }
-
-        .stat-info h3 {
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-            margin-bottom: 0.3rem;
-        }
-
-        .stat-info .stat-value {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.2rem;
-        }
-
-        .stat-info .stat-trend {
-            font-size: 0.75rem;
-        }
-
-        .trend-up {
-            color: var(--success);
-        }
-
-        /* Content Card */
         .content-card {
-            background: var(--pure-white);
-            border-radius: 16px;
-            padding: 1.5rem;
+            background: white;
+            border-radius: 14px;
+            padding: 1rem;
             border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-sm);
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
-
         .card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid var(--light-blue);
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
         }
-
-        .card-header h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .card-header h3 i {
-            color: var(--primary-blue);
-        }
-
-        /* Filter Tabs */
-        .filter-tabs {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-        }
-
+        .filter-tabs { display: flex; gap: 0.4rem; margin-bottom: 1rem; flex-wrap: wrap; }
         .filter-btn {
-            padding: 0.5rem 1rem;
+            padding: 0.25rem 0.7rem;
             background: var(--off-white);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.2s;
         }
-
-        .filter-btn:hover {
-            background: var(--light-blue);
-            border-color: var(--primary-blue);
-        }
-
-        .filter-btn.active {
-            background: var(--primary-blue);
-            color: white;
-            border-color: var(--primary-blue);
-        }
-
-        /* Search Box */
+        .filter-btn.active { background: var(--primary-blue); color: white; }
         .search-box {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.3rem;
             background: var(--off-white);
             border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            padding: 0.3rem 0.6rem;
         }
+        .search-box input { border: none; background: transparent; font-size: 0.75rem; width: 160px; outline: none; }
 
-        .search-box input {
-            border: none;
-            background: transparent;
-            outline: none;
-            min-width: 200px;
-            font-size: 0.9rem;
-        }
-
-        .search-box i {
-            color: var(--medium-gray);
-        }
-
-        /* Data Table */
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .data-table th {
-            text-align: left;
-            padding: 1rem;
-            background: var(--light-blue);
-            color: var(--primary-blue);
-            font-weight: 600;
-            border-bottom: 2px solid var(--primary-blue);
-        }
-
-        .data-table td {
-            padding: 1rem;
-            border-bottom: 1px solid var(--border-color);
-            color: var(--text-secondary);
-        }
-
-        .data-table tbody tr:hover {
-            background: var(--off-white);
-        }
-
-        /* Status Badges */
+        .data-table { width: 100%; border-collapse: collapse; font-size: 0.75rem; }
+        .data-table th { text-align: left; padding: 0.6rem; background: var(--light-blue); color: var(--primary-blue); font-weight: 600; }
+        .data-table td { padding: 0.6rem; border-bottom: 1px solid var(--border-color); }
         .status-badge {
-            padding: 0.3rem 0.8rem;
+            padding: 0.2rem 0.6rem;
             border-radius: 20px;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             font-weight: 600;
             display: inline-block;
         }
-
-        .status-active {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .status-pending {
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        .status-expiring {
-            background: #fee2e2;
-            color: #b91c1c;
-            animation: pulseWarning 1.5s infinite;
-        }
-
-        .status-terminated {
-            background: #e2e3e5;
-            color: #383d41;
-        }
-
-        @keyframes pulseWarning {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
-        }
-
-        /* Table Actions */
-        .table-actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        /* Activity List */
-        .activity-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
+        .status-active { background: #d1fae5; color: #065f46; }
+        .status-expiring { background: #fed7aa; color: #9b2c1d; }
+        .status-terminated { background: #e5e7eb; color: #374151; }
+        .status-pending { background: #fff3cd; color: #856404; }
+        .table-actions { display: flex; gap: 0.3rem; }
         .activity-item {
             display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            padding: 1rem;
-            background: var(--off-white);
-            border-radius: 10px;
-            transition: all 0.2s;
-        }
-
-        .activity-item:hover {
-            background: var(--light-blue);
-        }
-
-        .activity-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            display: flex;
             align-items: center;
-            justify-content: center;
-            background: var(--light-blue);
-        }
-
-        .activity-content p {
-            font-size: 0.85rem;
-            margin-bottom: 0.2rem;
-        }
-
-        .activity-content small {
+            gap: 0.7rem;
+            padding: 0.6rem;
+            background: var(--off-white);
+            border-radius: 8px;
             font-size: 0.7rem;
-            color: var(--text-secondary);
         }
-
-        /* Modal */
         .modal {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(2px);
             z-index: 2000;
             align-items: center;
             justify-content: center;
-            padding: 1.5rem;
         }
-
-        .modal.active {
-            display: flex;
-        }
-
+        .modal.active { display: flex; }
         .modal-content {
-            background: var(--pure-white);
+            background: white;
             border-radius: 20px;
-            width: 100%;
-            max-width: 700px;
-            max-height: 90vh;
+            width: 90%;
+            max-width: 600px;
+            max-height: 85vh;
             overflow-y: auto;
-            box-shadow: var(--shadow-lg);
-            animation: modalSlideUp 0.3s ease;
         }
-
-        @keyframes modalSlideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .modal-header {
-            padding: 1.5rem 2rem;
-            background: var(--light-blue);
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-header h3 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--primary-blue);
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: var(--primary-blue);
-            cursor: pointer;
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-        }
-
-        .modal-close:hover {
-            background: var(--primary-red);
-            color: white;
-        }
-
-        .modal-body {
-            padding: 2rem;
-        }
-
-        .modal-footer {
-            padding: 1.5rem 2rem;
-            border-top: 1px solid var(--border-color);
-            display: flex;
-            justify-content: flex-end;
-            gap: 1rem;
-            background: var(--off-white);
-        }
-
-        /* Forms */
-        .form-group {
-            margin-bottom: 1.2rem;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 0.4rem;
-            font-weight: 500;
-            font-size: 0.85rem;
-            color: var(--text-primary);
-        }
-
+        .modal-header { padding: 1rem; background: var(--light-blue); border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+        .modal-header h3 { font-size: 1rem; }
+        .modal-body { padding: 1.2rem; }
+        .form-group { margin-bottom: 0.8rem; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+        label { font-size: 0.7rem; font-weight: 500; margin-bottom: 0.2rem; display: block; }
         .form-control {
             width: 100%;
-            padding: 0.7rem 1rem;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            font-size: 0.9rem;
-            transition: all 0.2s;
-            background: var(--off-white);
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary-blue);
-            background: var(--pure-white);
-            box-shadow: 0 0 0 3px var(--light-blue);
-        }
-
-        select.form-control {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%231e40af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 1rem center;
-        }
-
-        textarea.form-control {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        /* File Upload */
-        .file-upload {
-            border: 2px dashed var(--border-color);
-            border-radius: 12px;
-            padding: 1.5rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            background: var(--off-white);
-        }
-
-        .file-upload:hover {
-            border-color: var(--primary-blue);
-            background: var(--light-blue);
-        }
-
-        .file-upload i {
-            font-size: 2rem;
-            color: var(--primary-blue);
-            margin-bottom: 0.5rem;
-        }
-
-        .file-preview {
-            margin-top: 1rem;
-        }
-
-        .file-item {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            padding: 0.8rem;
-            background: var(--off-white);
+            padding: 0.5rem 0.7rem;
             border-radius: 8px;
-            border-left: 3px solid var(--primary-blue);
-        }
-
-        /* Alert List */
-        .alert-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .alert-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
+            border: 1px solid var(--border-color);
+            font-size: 0.75rem;
             background: var(--off-white);
+        }
+        .file-upload {
+            border: 1px dashed var(--border-color);
+            padding: 0.8rem;
+            text-align: center;
             border-radius: 10px;
-            border-left: 4px solid;
+            font-size: 0.7rem;
+            cursor: pointer;
         }
-
-        .alert-warning {
-            border-left-color: var(--warning);
-        }
-
-        .alert-info {
-            border-left-color: var(--primary-blue);
-        }
-
-        /* Toast */
         .toast {
             position: fixed;
-            top: 100px;
+            bottom: 20px;
             right: 20px;
-            padding: 1rem 1.5rem;
-            border-radius: 10px;
             background: white;
-            box-shadow: var(--shadow-lg);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            z-index: 3000;
-            animation: slideIn 0.3s ease;
+            border-radius: 10px;
+            padding: 0.6rem 1rem;
+            box-shadow: var(--shadow-md);
             border-left: 4px solid;
+            font-size: 0.75rem;
+            z-index: 3000;
+            animation: slideIn 0.2s ease;
         }
-
-        .toast.success { border-left-color: var(--success); }
-        .toast.error { border-left-color: var(--danger); }
-        .toast.info { border-left-color: var(--primary-blue); }
-
         @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
-
-        /* Loading */
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 0.8s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
         @media (max-width: 768px) {
-            .animated-title-container {
-                display: none;
-            }
-            
-            .main-header {
-                padding: 0 1rem;
-            }
-            
-            .logo h2 {
-                display: none;
-            }
-            
-            .main-content {
-                padding: 1rem;
-            }
-            
-            .page-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
-            }
-            
-            .header-actions {
-                width: 100%;
-                flex-wrap: wrap;
-            }
-            
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .logout-btn span {
-                display: none;
-            }
-            
-            .logout-btn {
-                padding: 0.6rem;
-                width: 40px;
-                height: 40px;
-                justify-content: center;
-            }
-            
-            .filter-tabs {
-                flex-direction: column;
-            }
-            
-            .table-actions {
-                flex-direction: column;
-            }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+            .page-header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
         }
     </style>
 </head>
 <body>
-    <!-- Modern Fixed Header -->
     <header class="main-header">
         <div class="logo">
-            <div class="logo-icon">
-                <i class="fas fa-briefcase"></i>
-            </div>
+            <div class="logo-icon"><i class="fas fa-briefcase"></i></div>
             <h2>HR-Admin Pro</h2>
         </div>
-        
-        <div class="animated-title-container">
-            <div class="animated-title">Vendor Contracts | Manage Agreements & Renewals</div>
-        </div>
-        
         <div class="header-right">
-            <!-- Menu Toggle Button for Sidebar -->
-            <div class="hamburger-menu" style="margin-right: 0.5rem;">
-                <div class="hamburger-btn" id="menuToggle" onclick="toggleSidebar()">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </div>
-            
-            <!-- Notifications -->
-            <div class="notifications" onclick="showToast('No new notifications', 'info')">
-                <i class="fas fa-bell"></i>
-                <span class="badge" id="notificationBadge">3</span>
-            </div>
-            
-            <!-- Logout Button -->
-            <button class="logout-btn" onclick="logout()">
-                <i class="fas fa-sign-out-alt"></i>
-                <span>Logout</span>
-            </button>
-            
-            <!-- Hamburger Menu for Navigation Dropdown -->
             <div class="hamburger-menu">
-                <div class="hamburger-btn" id="hamburgerBtn" onclick="toggleHamburger()">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-                
-                <!-- Navigation Dropdown -->
+                <div class="hamburger-btn" id="hamburgerBtn"><span></span><span></span><span></span></div>
                 <div class="nav-dropdown" id="navDropdown">
-                    <div class="nav-grid">
-                        <a href="index.html" class="nav-item">
-                            <i class="fas fa-home"></i>
-                            <span>Dashboard</span>
-                        </a>
-                        <a href="task-centre.html" class="nav-item">
-                            <i class="fas fa-tasks"></i>
-                            <span>Task Centre</span>
-                        </a>
-                        <a href="training.html" class="nav-item">
-                            <i class="fas fa-graduation-cap"></i>
-                            <span>Training</span>
-                        </a>
-                        <a href="vendor-contracts.html" class="nav-item active">
-                            <i class="fas fa-file-contract"></i>
-                            <span>Contracts</span>
-                        </a>
-                        <a href="hr-letters.html" class="nav-item">
-                            <i class="fas fa-envelope"></i>
-                            <span>HR Letters</span>
-                        </a>
-                        <a href="upcoming-events.html" class="nav-item">
-                            <i class="fas fa-calendar-alt"></i>
-                            <span>Events</span>
-                        </a>
-                        <a href="cost-analyzer.html" class="nav-item">
-                            <i class="fas fa-chart-line"></i>
-                            <span>Cost Analyzer</span>
-                        </a>
-                        <a href="financial-hub.html" class="nav-item">
-                            <i class="fas fa-star"></i>
-                            <span>Financial Hub</span>
-                        </a>
-                        <a href="employees.html" class="nav-item">
-                            <i class="fas fa-users"></i>
-                            <span>Employees</span>
-                        </a>
-                        <a href="settings.html" class="nav-item">
-                            <i class="fas fa-cog"></i>
-                            <span>Settings</span>
-                        </a>
+                    <div class="nav-single">
+                        <a href="dashboard.html" class="nav-item"><i class="fas fa-home"></i> Home Dashboard</a>
                     </div>
                 </div>
             </div>
+            <div class="notifications" id="notifBtn"><i class="fas fa-bell"></i><span class="badge" id="notificationBadge">0</span></div>
+            <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i><span>Logout</span></button>
         </div>
     </header>
 
-    <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <h3><i class="fas fa-file-contract"></i> Contracts Menu</h3>
-        </div>
+        <div class="sidebar-header"><h3><i class="fas fa-file-contract"></i> Contracts Menu</h3></div>
         <ul class="sidebar-menu">
-            <li><a href="index.html"><i class="fas fa-home"></i> Dashboard</a></li>
-            <li><a href="task-centre.html"><i class="fas fa-tasks"></i> Task Centre</a></li>
-            <li><a href="training.html"><i class="fas fa-graduation-cap"></i> Training</a></li>
+            <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
             <li><a href="vendor-contracts.html" class="active"><i class="fas fa-file-contract"></i> Contracts</a></li>
-            <li><a href="hr-letters.html"><i class="fas fa-envelope"></i> HR Letters</a></li>
-            <li><a href="upcoming-events.html"><i class="fas fa-calendar-alt"></i> Events</a></li>
-            <li><a href="cost-analyzer.html"><i class="fas fa-chart-line"></i> Cost Analyzer</a></li>
-            <li><a href="financial-hub.html"><i class="fas fa-star"></i> Financial Hub</a></li>
             <li><a href="employees.html"><i class="fas fa-users"></i> Employees</a></li>
             <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
         </ul>
-        <div class="sidebar-footer">
-            <img src="https://ui-avatars.com/api/?name=Admin+User&background=1e40af&color=fff" alt="User">
-            <div>
-                <h4>Admin User</h4>
-                <p>HR Manager</p>
-            </div>
-        </div>
+        <div class="sidebar-footer"><img src="https://ui-avatars.com/api/?name=Admin&background=1e40af&color=fff"><div><h4>Admin User</h4><p>HR Manager</p></div></div>
     </div>
-
-    <!-- Overlay -->
     <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 
-    <!-- Main Content -->
     <main class="main-content">
-        <!-- Page Header -->
         <div class="page-header">
-            <div class="header-content">
-                <h1>Vendor Contracts</h1>
-                <p>Manage all vendor agreements, renewals, and documentation</p>
-            </div>
+            <div><h1>Vendor Contracts</h1><p>Manage agreements, renewals & documentation</p></div>
             <div class="header-actions">
-                <button class="btn btn-primary" id="showContractModalBtn">
-                    <i class="fas fa-plus"></i> Add New Contract
-                </button>
-                <button class="btn btn-secondary" id="showRenewalModalBtn">
-                    <i class="fas fa-bell"></i> Renewal Alerts
-                </button>
+                <button class="btn btn-primary" id="showContractModalBtn"><i class="fas fa-plus"></i> Add Contract</button>
+                <button class="btn btn-secondary" id="showRenewalModalBtn"><i class="fas fa-bell"></i> Renewals</button>
+                <button class="btn btn-outline" id="downloadReportBtn"><i class="fas fa-download"></i> Report CSV</button>
             </div>
         </div>
 
-        <!-- Stats Cards -->
         <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-icon blue"><i class="fas fa-file-contract"></i></div>
-                <div class="stat-info">
-                    <h3>Total Contracts</h3>
-                    <div class="stat-value" id="totalContracts">24</div>
-                    <div class="stat-trend trend-up">+3 this quarter</div>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon green"><i class="fas fa-check-circle"></i></div>
-                <div class="stat-info">
-                    <h3>Active Contracts</h3>
-                    <div class="stat-value" id="activeContracts">18</div>
-                    <div class="stat-trend">76% of total</div>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon yellow"><i class="fas fa-exclamation-triangle"></i></div>
-                <div class="stat-info">
-                    <h3>Expiring Soon</h3>
-                    <div class="stat-value" id="expiringContracts">5</div>
-                    <div class="stat-trend">Within 30 days</div>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon red"><i class="fas fa-ban"></i></div>
-                <div class="stat-info">
-                    <h3>Terminated</h3>
-                    <div class="stat-value" id="terminatedContracts">2</div>
-                    <div class="stat-trend">Requires review</div>
-                </div>
-            </div>
+            <div class="stat-card"><div class="stat-icon blue"><i class="fas fa-file-contract"></i></div><div class="stat-info"><h3>Total Contracts</h3><div class="stat-value" id="totalContracts">0</div></div></div>
+            <div class="stat-card"><div class="stat-icon green"><i class="fas fa-check-circle"></i></div><div class="stat-info"><h3>Active</h3><div class="stat-value" id="activeContracts">0</div></div></div>
+            <div class="stat-card"><div class="stat-icon yellow"><i class="fas fa-exclamation-triangle"></i></div><div class="stat-info"><h3>Expiring Soon</h3><div class="stat-value" id="expiringContracts">0</div></div></div>
+            <div class="stat-card"><div class="stat-icon red"><i class="fas fa-ban"></i></div><div class="stat-info"><h3>Terminated</h3><div class="stat-value" id="terminatedContracts">0</div></div></div>
         </div>
 
-        <!-- Contracts Table -->
         <div class="content-card">
-            <div class="card-header">
-                <h3><i class="fas fa-file-alt"></i> All Contracts</h3>
-                <div class="search-box">
-                    <i class="fas fa-search"></i>
-                    <input type="text" id="searchContracts" placeholder="Search contracts..." onkeyup="searchContracts()">
-                </div>
-            </div>
-            
+            <div class="card-header"><h3><i class="fas fa-file-alt"></i> All Contracts</h3><div class="search-box"><i class="fas fa-search"></i><input type="text" id="searchContracts" placeholder="Search..."></div></div>
             <div class="filter-tabs">
-                <button class="filter-btn active" onclick="filterByStatus('all')">All Contracts</button>
-                <button class="filter-btn" onclick="filterByStatus('active')">Active</button>
-                <button class="filter-btn" onclick="filterByStatus('pending')">Pending</button>
-                <button class="filter-btn" onclick="filterByStatus('expiring')">Expiring Soon</button>
-                <button class="filter-btn" onclick="filterByStatus('terminated')">Terminated</button>
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="active">Active</button>
+                <button class="filter-btn" data-filter="pending">Pending</button>
+                <button class="filter-btn" data-filter="expiring">Expiring</button>
+                <button class="filter-btn" data-filter="terminated">Terminated</button>
             </div>
-            
             <div style="overflow-x: auto;">
-                <table class="data-table" id="contractsTable">
-                    <thead>
-                        <tr>
-                            <th>Contract ID</th>
-                            <th>Vendor Name</th>
-                            <th>Contract Type</th>
-                            <th>Value (Ksh)</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="contractsTableBody">
-                        <!-- Contracts will be populated here -->
-                    </tbody>
-                </table>
+                <table class="data-table"><thead><tr><th>ID</th><th>Vendor</th><th>Type</th><th>Value (Ksh)</th><th>Start</th><th>End</th><th>Status</th><th>Actions</th></tr></thead><tbody id="contractsTableBody"></tbody></table>
             </div>
         </div>
 
-        <!-- Recent Activity -->
-        <div class="content-card">
-            <div class="card-header">
-                <h3><i class="fas fa-history"></i> Recent Contract Activity</h3>
-                <button class="btn btn-outline btn-sm" onclick="refreshActivity()">
-                    <i class="fas fa-sync-alt"></i> Refresh
-                </button>
-            </div>
-            <div class="activity-list" id="activityList">
-                <!-- Activities will be populated here -->
-            </div>
-        </div>
+        <div class="content-card"><div class="card-header"><h3><i class="fas fa-history"></i> Recent Activity</h3><button class="btn btn-outline btn-sm" id="refreshActivityBtn"><i class="fas fa-sync-alt"></i> Refresh</button></div><div class="activity-list" id="activityList"></div></div>
     </main>
 
-    <!-- Add Contract Modal -->
-    <div class="modal" id="contractModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-plus-circle"></i> New Vendor Contract</h3>
-                <button class="modal-close" id="closeContractModal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form id="newContractForm">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Contract Name</label>
-                            <input type="text" id="contractName" class="form-control" placeholder="e.g., Office Supply Agreement" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Vendor Name</label>
-                            <input type="text" id="vendorName" class="form-control" placeholder="e.g., ABC Supplies Inc." required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Contract Value (Ksh)</label>
-                            <input type="number" id="contractValue" class="form-control" placeholder="e.g., 50000" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Contract Type</label>
-                            <select id="contractType" class="form-control" required>
-                                <option value="">Select Type</option>
-                                <option value="service">Service Agreement</option>
-                                <option value="supply">Supply Contract</option>
-                                <option value="consulting">Consulting</option>
-                                <option value="software">Software License</option>
-                                <option value="maintenance">Maintenance</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Start Date</label>
-                            <input type="date" id="startDate" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label>End Date</label>
-                            <input type="date" id="endDate" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Description</label>
-                        <textarea id="contractDescription" class="form-control" rows="3" placeholder="Brief description of the contract terms..."></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Contract Document</label>
-                        <div class="file-upload" onclick="document.getElementById('contractFile').click()">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <p>Click to upload contract document</p>
-                            <small>PDF, DOC, DOCX (Max 10MB)</small>
-                        </div>
-                        <input type="file" id="contractFile" style="display: none;" accept=".pdf,.doc,.docx">
-                        <div id="filePreview" class="file-preview"></div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-outline" id="cancelContractBtn">Cancel</button>
-                <button class="btn btn-primary" id="saveContractBtn">Save Contract</button>
-            </div>
-        </div>
-    </div>
+    <!-- Contract Modal -->
+    <div class="modal" id="contractModal"><div class="modal-content"><div class="modal-header"><h3 id="modalTitle"><i class="fas fa-plus-circle"></i> New Contract</h3><button class="modal-close" id="closeContractModal">&times;</button></div>
+    <div class="modal-body"><form id="contractForm"><div class="form-row"><div class="form-group"><label>Contract Name</label><input type="text" id="contractName" class="form-control" required></div><div class="form-group"><label>Vendor Name</label><input type="text" id="vendorName" class="form-control" required></div></div>
+    <div class="form-row"><div class="form-group"><label>Value (Ksh)</label><input type="number" id="contractValue" class="form-control" required></div><div class="form-group"><label>Type</label><select id="contractType" class="form-control"><option value="Service">Service</option><option value="Supply">Supply</option><option value="Consulting">Consulting</option><option value="Software">Software</option></select></div></div>
+    <div class="form-row"><div class="form-group"><label>Start Date</label><input type="date" id="startDate" class="form-control" required></div><div class="form-group"><label>End Date</label><input type="date" id="endDate" class="form-control" required></div></div>
+    <div class="form-group"><label>Description</label><textarea id="contractDesc" class="form-control" rows="2"></textarea></div>
+    <div class="file-upload" onclick="document.getElementById('contractFile').click()"><i class="fas fa-cloud-upload-alt"></i><p>Upload document (demo)</p><input type="file" id="contractFile" style="display:none"></div>
+    <div id="filePreview"></div></form></div>
+    <div class="modal-footer" style="padding:1rem; display:flex; justify-content:flex-end; gap:0.5rem;"><button class="btn btn-outline" id="cancelContractBtn">Cancel</button><button class="btn btn-primary" id="saveContractBtn">Save Contract</button></div></div></div>
 
-    <!-- Renewal Alerts Modal -->
-    <div class="modal" id="renewalModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-bell"></i> Contract Renewal Alerts</h3>
-                <button class="modal-close" id="closeRenewalModal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="alert-list" id="alertList">
-                    <!-- Alerts will be populated here -->
-                </div>
-                <div style="margin-top: 1.5rem; padding: 1rem; background: var(--light-blue); border-radius: 12px;">
-                    <h4 style="margin-bottom: 1rem; font-size: 0.9rem;">
-                        <i class="fas fa-envelope"></i> Notification Settings
-                    </h4>
-                    <div class="form-group">
-                        <label><input type="checkbox" id="emailAlerts" checked> Send renewal alerts via email</label>
-                    </div>
-                    <div class="form-group">
-                        <label><input type="checkbox" id="dailyDigest" checked> Send daily digest email</label>
-                    </div>
-                    <button class="btn btn-primary btn-sm" onclick="saveEmailSettings()">Save Settings</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Toast Container -->
+    <!-- Renewal Modal -->
+    <div class="modal" id="renewalModal"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-bell"></i> Renewal Alerts</h3><button class="modal-close" id="closeRenewalModal">&times;</button></div><div class="modal-body"><div id="alertListModal" class="alert-list"></div></div></div></div>
     <div id="toastContainer"></div>
 
     <script>
-        // Sample Data
-        const contractsData = [
-            { id: 1, contractId: "CON-2024-001", vendorName: "ABC Supplies Inc.", contractType: "Supply Contract", value: 50000, startDate: "2024-01-15", endDate: "2024-12-31", status: "active", description: "Office supplies and stationery" },
-            { id: 2, contractId: "CON-2023-045", vendorName: "Tech Solutions Ltd.", contractType: "Software License", value: 25000, startDate: "2023-07-01", endDate: "2024-06-30", status: "expiring", description: "Annual software license renewal" },
-            { id: 3, contractId: "CON-2024-056", vendorName: "CleanPro Services", contractType: "Service Agreement", value: 15000, startDate: "2024-03-01", endDate: "2025-02-28", status: "pending", description: "Office cleaning and maintenance" },
-            { id: 4, contractId: "CON-2024-012", vendorName: "Office Furniture Co.", contractType: "Supply Contract", value: 35000, startDate: "2024-02-01", endDate: "2024-12-31", status: "active", description: "Office furniture supply" },
-            { id: 5, contractId: "CON-2023-028", vendorName: "Security Systems Inc.", contractType: "Maintenance", value: 12000, startDate: "2023-04-01", endDate: "2024-03-31", status: "terminated", description: "Security system maintenance" }
-        ];
+        // ---------- STORAGE KEYS ----------
+        const STORAGE_CONTRACTS = "vendor_contracts";
+        const STORAGE_ACTIVITIES = "contract_activities";
 
-        const activitiesData = [
-            { title: "New contract added", description: "Contract CON-2024-078 for XYZ Technologies", time: "2 hours ago", user: "John Doe" },
-            { title: "Contract expiring soon", description: "Contract CON-2023-045 expires in 15 days", time: "Yesterday", user: "System" },
-            { title: "Contract renewal approved", description: "Contract CON-2024-012 renewed successfully", time: "Dec 5, 2024", user: "Jane Smith" }
-        ];
+        let currentFilter = "all";
+        let searchTerm = "";
+        let editingId = null;
 
-        const alertsData = [
-            { type: "warning", title: "Contract Expiring Soon", description: "CON-2023-045 - Tech Solutions Ltd. expires in 15 days", action: "Renew Now" },
-            { type: "info", title: "Review Required", description: "CON-2024-056 - CleanPro Services pending review", action: "Review" },
-            { type: "warning", title: "Renewal Due", description: "CON-2024-001 - ABC Supplies Inc. renewal due in 30 days", action: "Schedule" }
-        ];
-
-        let activeModal = null;
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            setCurrentDates();
-            loadContracts();
-            loadActivities();
-            loadAlerts();
-            updateStats();
-            setupEventListeners();
-        });
-
-        function setCurrentDates() {
+        // Helper: get today, compute status
+        function computeStatus(startDate, endDate) {
             const today = new Date();
-            const nextMonth = new Date();
-            nextMonth.setMonth(today.getMonth() + 1);
-            document.getElementById('startDate').valueAsDate = today;
-            document.getElementById('endDate').valueAsDate = nextMonth;
+            today.setHours(0,0,0,0);
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+            if (end < today) return "terminated";
+            if (start > today) return "pending";
+            const daysDiff = Math.ceil((end - today) / (1000*60*60*24));
+            if (daysDiff <= 30 && daysDiff >= 0) return "expiring";
+            return "active";
         }
 
-        function loadContracts() {
-            const tbody = document.getElementById('contractsTableBody');
-            tbody.innerHTML = '';
-            
-            contractsData.forEach(contract => {
-                const row = document.createElement('tr');
-                row.dataset.status = contract.status;
-                
-                row.innerHTML = `
-                    <td><strong>${contract.contractId}</strong></td>
-                    <td>${contract.vendorName}</td>
-                    <td>${contract.contractType}</td>
-                    <td>Ksh ${contract.value.toLocaleString()}</td>
-                    <td>${formatDate(contract.startDate)}</td>
-                    <td>${formatDate(contract.endDate)}</td>
-                    <td><span class="status-badge status-${contract.status}">${getStatusText(contract.status)}</span></td>
-                    <td>
-                        <div class="table-actions">
-                            <button class="btn btn-sm btn-primary" onclick="viewContract(${contract.id})"><i class="fas fa-eye"></i></button>
-                            <button class="btn btn-sm btn-outline" onclick="editContract(${contract.id})"><i class="fas fa-edit"></i></button>
-                            <button class="btn btn-sm btn-outline" onclick="deleteContract(${contract.id})"><i class="fas fa-trash"></i></button>
-                        </div>
-                    </td>
-                `;
-                tbody.appendChild(row);
-            });
+        // Load contracts from localStorage or init sample
+        function loadContractsFromStorage() {
+            let contracts = localStorage.getItem(STORAGE_CONTRACTS);
+            if (!contracts) {
+                const sample = [
+                    { id: 1, contractId: "CON-2024-001", vendorName: "ABC Supplies Inc.", contractType: "Supply", value: 50000, startDate: "2024-01-15", endDate: "2024-12-31", description: "Office supplies" },
+                    { id: 2, contractId: "CON-2023-045", vendorName: "Tech Solutions Ltd.", contractType: "Software", value: 25000, startDate: "2023-07-01", endDate: "2024-06-30", description: "License" },
+                    { id: 3, contractId: "CON-2024-056", vendorName: "CleanPro Services", contractType: "Service", value: 15000, startDate: "2024-03-01", endDate: "2025-02-28", description: "Cleaning" },
+                    { id: 4, contractId: "CON-2024-012", vendorName: "Office Furniture Co.", contractType: "Supply", value: 35000, startDate: "2024-02-01", endDate: "2024-12-31", description: "Furniture" },
+                    { id: 5, contractId: "CON-2023-028", vendorName: "Security Systems Inc.", contractType: "Service", value: 12000, startDate: "2023-04-01", endDate: "2024-03-31", description: "Security" }
+                ];
+                sample.forEach(c => { c.status = computeStatus(c.startDate, c.endDate); });
+                localStorage.setItem(STORAGE_CONTRACTS, JSON.stringify(sample));
+                return sample;
+            }
+            let parsed = JSON.parse(contracts);
+            parsed = parsed.map(c => ({ ...c, status: computeStatus(c.startDate, c.endDate) }));
+            localStorage.setItem(STORAGE_CONTRACTS, JSON.stringify(parsed));
+            return parsed;
         }
 
-        function loadActivities() {
+        function saveContracts(contracts) {
+            localStorage.setItem(STORAGE_CONTRACTS, JSON.stringify(contracts));
+        }
+
+        function getActivities() {
+            let acts = localStorage.getItem(STORAGE_ACTIVITIES);
+            if (!acts) return [];
+            return JSON.parse(acts);
+        }
+
+        function addActivity(message) {
+            let acts = getActivities();
+            acts.unshift({ text: message, time: new Date().toLocaleString(), id: Date.now() });
+            if (acts.length > 20) acts.pop();
+            localStorage.setItem(STORAGE_ACTIVITIES, JSON.stringify(acts));
+            renderActivities();
+        }
+
+        function renderActivities() {
             const container = document.getElementById('activityList');
-            container.innerHTML = activitiesData.map(activity => `
-                <div class="activity-item">
-                    <div class="activity-icon"><i class="fas fa-file-contract" style="color: var(--primary-blue);"></i></div>
-                    <div class="activity-content">
-                        <p><strong>${activity.title}</strong> - ${activity.description}</p>
-                        <small>${activity.time} by ${activity.user}</small>
-                    </div>
-                </div>
-            `).join('');
+            const acts = getActivities();
+            if (acts.length === 0) { container.innerHTML = '<div class="activity-item">No recent activity</div>'; return; }
+            container.innerHTML = acts.map(a => `<div class="activity-item"><i class="fas fa-file-contract" style="color:var(--primary-blue)"></i><div><strong>${a.text}</strong><br><small>${a.time}</small></div></div>`).join('');
         }
 
-        function loadAlerts() {
-            const container = document.getElementById('alertList');
-            container.innerHTML = alertsData.map(alert => `
-                <div class="alert-item alert-${alert.type === 'warning' ? 'warning' : 'info'}">
-                    <i class="fas fa-${alert.type === 'warning' ? 'exclamation-triangle' : 'info-circle'}" style="color: ${alert.type === 'warning' ? 'var(--warning)' : 'var(--primary-blue)'};"></i>
-                    <div style="flex: 1;">
-                        <h4 style="font-size: 0.9rem; margin-bottom: 0.2rem;">${alert.title}</h4>
-                        <p style="font-size: 0.8rem; color: var(--text-secondary);">${alert.description}</p>
-                    </div>
-                    <button class="btn btn-sm btn-primary" onclick="handleAlert('${alert.action}')">${alert.action}</button>
-                </div>
-            `).join('');
+        function generateContractId() {
+            const contracts = loadContractsFromStorage();
+            const maxId = contracts.reduce((max, c) => Math.max(max, c.id), 0);
+            return maxId + 1;
         }
 
-        function updateStats() {
-            const total = contractsData.length;
-            const active = contractsData.filter(c => c.status === 'active').length;
-            const expiring = contractsData.filter(c => c.status === 'expiring').length;
-            const terminated = contractsData.filter(c => c.status === 'terminated').length;
-            
-            document.getElementById('totalContracts').textContent = total;
-            document.getElementById('activeContracts').textContent = active;
-            document.getElementById('expiringContracts').textContent = expiring;
-            document.getElementById('terminatedContracts').textContent = terminated;
-            document.getElementById('notificationBadge').textContent = expiring;
-        }
-
-        function setupEventListeners() {
-            document.getElementById('showContractModalBtn').onclick = () => showModal('contractModal');
-            document.getElementById('closeContractModal').onclick = () => closeModal('contractModal');
-            document.getElementById('cancelContractBtn').onclick = () => closeModal('contractModal');
-            document.getElementById('showRenewalModalBtn').onclick = () => showModal('renewalModal');
-            document.getElementById('closeRenewalModal').onclick = () => closeModal('renewalModal');
-            document.getElementById('saveContractBtn').onclick = saveContract;
-            document.getElementById('contractFile').onchange = handleFileUpload;
-            
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && activeModal) closeModal(activeModal);
+        function renderContractsTable() {
+            let contracts = loadContractsFromStorage();
+            const filtered = contracts.filter(c => {
+                const matchStatus = currentFilter === "all" ? true : c.status === currentFilter;
+                const matchSearch = c.vendorName.toLowerCase().includes(searchTerm) || c.contractId.toLowerCase().includes(searchTerm) || c.contractType.toLowerCase().includes(searchTerm);
+                return matchStatus && matchSearch;
             });
-            
-            document.addEventListener('click', function(e) {
-                const hamburgerBtn = document.getElementById('hamburgerBtn');
-                const navDropdown = document.getElementById('navDropdown');
-                if (hamburgerBtn && navDropdown && !hamburgerBtn.contains(e.target) && !navDropdown.contains(e.target)) {
-                    hamburgerBtn.classList.remove('active');
-                    navDropdown.classList.remove('active');
+            const tbody = document.getElementById('contractsTableBody');
+            tbody.innerHTML = filtered.map(c => `
+                <tr data-status="${c.status}">
+                    <td><strong>${c.contractId}</strong></td>
+                    <td>${c.vendorName}</td>
+                    <td>${c.contractType}</td>
+                    <td>Ksh ${c.value.toLocaleString()}</td>
+                    <td>${c.startDate}</td>
+                    <td>${c.endDate}</td>
+                    <td><span class="status-badge status-${c.status}">${c.status.toUpperCase()}</span></td>
+                    <td class="table-actions">
+                        <button class="btn btn-sm btn-primary" onclick="viewContract(${c.id})"><i class="fas fa-eye"></i></button>
+                        <button class="btn btn-sm btn-outline" onclick="editContract(${c.id})"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-sm btn-outline" onclick="deleteContract(${c.id})"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+            updateStats(contracts);
+        }
+
+        function updateStats(contracts) {
+            const total = contracts.length;
+            const active = contracts.filter(c => c.status === 'active').length;
+            const expiring = contracts.filter(c => c.status === 'expiring').length;
+            const terminated = contracts.filter(c => c.status === 'terminated').length;
+            document.getElementById('totalContracts').innerText = total;
+            document.getElementById('activeContracts').innerText = active;
+            document.getElementById('expiringContracts').innerText = expiring;
+            document.getElementById('terminatedContracts').innerText = terminated;
+            document.getElementById('notificationBadge').innerText = expiring;
+        }
+
+        function saveContractFromModal() {
+            const name = document.getElementById('contractName').value.trim();
+            const vendor = document.getElementById('vendorName').value.trim();
+            const value = parseFloat(document.getElementById('contractValue').value);
+            const type = document.getElementById('contractType').value;
+            const start = document.getElementById('startDate').value;
+            const end = document.getElementById('endDate').value;
+            const desc = document.getElementById('contractDesc').value;
+            if (!name || !vendor || !value || !start || !end) { showToast("Please fill required fields", "error"); return; }
+            let contracts = loadContractsFromStorage();
+            if (editingId) {
+                const index = contracts.findIndex(c => c.id === editingId);
+                if (index !== -1) {
+                    contracts[index] = { ...contracts[index], vendorName: vendor, contractType: type, value, startDate: start, endDate: end, description: desc, contractName: name };
+                    contracts[index].status = computeStatus(start, end);
+                    addActivity(`Updated contract ${contracts[index].contractId} (${vendor})`);
                 }
-            });
-        }
-
-        function showModal(modalId) {
-            if (activeModal) closeModal(activeModal);
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                modal.classList.add('active');
-                activeModal = modalId;
-                document.body.style.overflow = 'hidden';
-                closeSidebar();
+                editingId = null;
+            } else {
+                const newId = generateContractId();
+                const newContract = {
+                    id: newId,
+                    contractId: `CON-${new Date().getFullYear()}-${String(newId).padStart(3,'0')}`,
+                    vendorName: vendor,
+                    contractType: type,
+                    value: value,
+                    startDate: start,
+                    endDate: end,
+                    description: desc,
+                    contractName: name,
+                    status: computeStatus(start, end)
+                };
+                contracts.push(newContract);
+                addActivity(`Added new contract ${newContract.contractId} (${vendor})`);
             }
-        }
-
-        function closeModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                modal.classList.remove('active');
-                activeModal = null;
-                document.body.style.overflow = 'auto';
-            }
-        }
-
-        function saveContract() {
-            const contractName = document.getElementById('contractName').value;
-            const vendorName = document.getElementById('vendorName').value;
-            
-            if (!contractName || !vendorName) {
-                showToast('Please fill all required fields', 'error');
-                return;
-            }
-            
-            showToast(`Contract "${contractName}" saved successfully!`, 'success');
+            saveContracts(contracts);
             closeModal('contractModal');
-            document.getElementById('newContractForm').reset();
-            document.getElementById('filePreview').innerHTML = '';
-            setCurrentDates();
+            resetContractForm();
+            renderContractsTable();
+            showToast(editingId ? "Contract updated" : "Contract added", "success");
         }
 
-        function handleFileUpload(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const preview = document.getElementById('filePreview');
-                preview.innerHTML = `
-                    <div class="file-item">
-                        <i class="fas fa-file-pdf"></i>
-                        <div style="flex: 1;">
-                            <p style="font-weight: 500;">${file.name}</p>
-                            <small>${(file.size/1024/1024).toFixed(2)} MB</small>
-                        </div>
-                        <button onclick="this.parentElement.remove()" class="btn btn-sm btn-outline"><i class="fas fa-times"></i></button>
-                    </div>
-                `;
-            }
+        function resetContractForm() {
+            document.getElementById('contractForm').reset();
+            editingId = null;
+            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-plus-circle"></i> New Contract';
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('startDate').value = today;
+            const nextMonth = new Date(); nextMonth.setMonth(nextMonth.getMonth()+1);
+            document.getElementById('endDate').value = nextMonth.toISOString().split('T')[0];
         }
 
-        function viewContract(id) {
-            const contract = contractsData.find(c => c.id === id);
+        window.editContract = (id) => {
+            const contracts = loadContractsFromStorage();
+            const contract = contracts.find(c => c.id === id);
             if (contract) {
-                showToast(`Viewing contract: ${contract.contractId}`, 'info');
-            }
-        }
-
-        function editContract(id) {
-            const contract = contractsData.find(c => c.id === id);
-            if (contract) {
-                showModal('contractModal');
-                document.getElementById('contractName').value = contract.description;
+                editingId = id;
+                document.getElementById('modalTitle').innerHTML = '<i class="fas fa-edit"></i> Edit Contract';
+                document.getElementById('contractName').value = contract.contractName || '';
                 document.getElementById('vendorName').value = contract.vendorName;
                 document.getElementById('contractValue').value = contract.value;
-                showToast(`Editing contract: ${contract.contractId}`, 'info');
+                document.getElementById('contractType').value = contract.contractType;
+                document.getElementById('startDate').value = contract.startDate;
+                document.getElementById('endDate').value = contract.endDate;
+                document.getElementById('contractDesc').value = contract.description || '';
+                showModal('contractModal');
+            }
+        };
+
+        window.deleteContract = (id) => {
+            if (confirm("Permanently delete this contract?")) {
+                let contracts = loadContractsFromStorage();
+                const deleted = contracts.find(c => c.id === id);
+                contracts = contracts.filter(c => c.id !== id);
+                saveContracts(contracts);
+                addActivity(`Deleted contract ${deleted?.contractId} (${deleted?.vendorName})`);
+                renderContractsTable();
+                showToast("Contract deleted", "success");
+            }
+        };
+
+        window.viewContract = (id) => {
+            const contract = loadContractsFromStorage().find(c => c.id === id);
+            if (contract) showToast(`${contract.contractId} | ${contract.vendorName} | Value: Ksh ${contract.value}`, "info");
+        };
+
+        function handleRenewAction(contractId) {
+            let contracts = loadContractsFromStorage();
+            const idx = contracts.findIndex(c => c.id === contractId);
+            if (idx !== -1) {
+                let oldEnd = new Date(contracts[idx].endDate);
+                oldEnd.setFullYear(oldEnd.getFullYear() + 1);
+                contracts[idx].endDate = oldEnd.toISOString().split('T')[0];
+                contracts[idx].status = computeStatus(contracts[idx].startDate, contracts[idx].endDate);
+                saveContracts(contracts);
+                addActivity(`Renewed contract ${contracts[idx].contractId} until ${contracts[idx].endDate}`);
+                renderContractsTable();
+                if (document.getElementById('renewalModal').classList.contains('active')) loadRenewalAlertsModal();
+                showToast("Contract renewed +1 year", "success");
             }
         }
 
-        function deleteContract(id) {
-            if (confirm('Delete this contract?')) {
-                showToast('Contract deleted', 'success');
-            }
+        function loadRenewalAlertsModal() {
+            const contracts = loadContractsFromStorage();
+            const expiring = contracts.filter(c => c.status === 'expiring');
+            const container = document.getElementById('alertListModal');
+            if (expiring.length === 0) { container.innerHTML = '<div class="alert-item">No contracts expiring soon 🎉</div>'; return; }
+            container.innerHTML = expiring.map(c => `
+                <div class="alert-item" style="background:var(--off-white); border-left:3px solid var(--warning); padding:0.6rem; margin-bottom:0.5rem; border-radius:8px;">
+                    <div><strong>${c.contractId}</strong> - ${c.vendorName}<br><small>Expires: ${c.endDate}</small></div>
+                    <button class="btn btn-sm btn-primary" onclick="handleRenewAction(${c.id})">Renew Now</button>
+                </div>
+            `).join('');
         }
 
-        function handleAlert(action) {
-            showToast(`Processing: ${action}`, 'info');
+        function exportCSV() {
+            const contracts = loadContractsFromStorage();
+            const headers = ["Contract ID", "Vendor", "Type", "Value (Ksh)", "Start Date", "End Date", "Status", "Description"];
+            const rows = contracts.map(c => [c.contractId, c.vendorName, c.contractType, c.value, c.startDate, c.endDate, c.status, c.description || ""]);
+            let csvContent = headers.join(",") + "\n" + rows.map(row => row.map(field => `"${String(field).replace(/"/g, '""')}"`).join(",")).join("\n");
+            const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+            const link = document.createElement("a");
+            const url = URL.createObjectURL(blob);
+            link.href = url;
+            link.setAttribute("download", "contracts_report.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            showToast("Report downloaded", "success");
         }
 
-        function saveEmailSettings() {
-            showToast('Email settings saved!', 'success');
-        }
+        // UI helpers
+        function showModal(id) { document.getElementById(id).classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); document.body.style.overflow = ''; editingId = null; resetContractForm(); }
+        function showToast(msg, type) { const toast = document.createElement('div'); toast.className = `toast ${type}`; toast.innerHTML = `<i class="fas fa-${type==='success'?'check-circle':'info-circle'}"></i><span>${msg}</span>`; document.getElementById('toastContainer').appendChild(toast); setTimeout(()=>toast.remove(),2800); }
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); document.getElementById('overlay').classList.toggle('active'); document.querySelector('#menuToggle')?.classList.toggle('active'); }
+        function closeSidebar() { document.getElementById('sidebar').classList.remove('active'); document.getElementById('overlay').classList.remove('active'); }
+        function logout() { if(confirm("Logout?")){ showToast("Logging out...","info"); setTimeout(()=>window.location.href="login.html",600); } }
 
-        function searchContracts() {
-            const searchTerm = document.getElementById('searchContracts').value.toLowerCase();
-            const rows = document.querySelectorAll('#contractsTableBody tr');
-            rows.forEach(row => {
-                const text = row.textContent.toLowerCase();
-                row.style.display = text.includes(searchTerm) ? '' : 'none';
-            });
-        }
-
-        function filterByStatus(status) {
-            const rows = document.querySelectorAll('#contractsTableBody tr');
-            const btns = document.querySelectorAll('.filter-btn');
-            btns.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            rows.forEach(row => {
-                if (status === 'all') {
-                    row.style.display = '';
-                } else {
-                    row.style.display = row.dataset.status === status ? '' : 'none';
-                }
-            });
-        }
-
-        function refreshActivity() {
-            const btn = event.target;
-            btn.innerHTML = '<div class="loading"></div>';
-            setTimeout(() => {
-                loadActivities();
-                btn.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh';
-                showToast('Activity refreshed!', 'success');
-            }, 800);
-        }
-
-        // Sidebar Functions
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('active');
-            document.getElementById('overlay').classList.toggle('active');
-            document.getElementById('menuToggle').classList.toggle('active');
-        }
-
-        function closeSidebar() {
-            document.getElementById('sidebar').classList.remove('active');
-            document.getElementById('overlay').classList.remove('active');
-            document.getElementById('menuToggle').classList.remove('active');
-        }
-
-        function toggleHamburger() {
-            const btn = document.getElementById('hamburgerBtn');
-            const dropdown = document.getElementById('navDropdown');
-            btn.classList.toggle('active');
-            dropdown.classList.toggle('active');
-        }
-
-        function logout() {
-            if (confirm('Are you sure you want to logout?')) {
-                showToast('Logging out...', 'info');
-                setTimeout(() => window.location.href = 'login.html', 1000);
-            }
-        }
-
-        // Utility Functions
-        function formatDate(dateString) {
-            return new Date(dateString).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-        }
-
-        function getStatusText(status) {
-            const map = { active: 'Active', pending: 'Pending', expiring: 'Expiring Soon', terminated: 'Terminated' };
-            return map[status] || status;
-        }
-
-        function showToast(message, type = 'info') {
-            const container = document.getElementById('toastContainer');
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i><span>${message}</span>`;
-            container.appendChild(toast);
-            setTimeout(() => toast.remove(), 3000);
-        }
-
-        // Make functions global
-        window.toggleSidebar = toggleSidebar;
-        window.closeSidebar = closeSidebar;
-        window.toggleHamburger = toggleHamburger;
-        window.logout = logout;
-        window.viewContract = viewContract;
-        window.editContract = editContract;
-        window.deleteContract = deleteContract;
-        window.handleAlert = handleAlert;
-        window.filterByStatus = filterByStatus;
-        window.searchContracts = searchContracts;
-        window.refreshActivity = refreshActivity;
-        window.saveEmailSettings = saveEmailSettings;
-        window.showToast = showToast;
+        // event binding
+        document.addEventListener('DOMContentLoaded', () => {
+            renderContractsTable();
+            renderActivities();
+            document.getElementById('showContractModalBtn').onclick = () => { resetContractForm(); showModal('contractModal'); };
+            document.getElementById('showRenewalModalBtn').onclick = () => { loadRenewalAlertsModal(); showModal('renewalModal'); };
+            document.getElementById('downloadReportBtn').onclick = exportCSV;
+            document.getElementById('saveContractBtn').onclick = saveContractFromModal;
+            document.getElementById('cancelContractBtn').onclick = () => closeModal('contractModal');
+            document.getElementById('closeContractModal').onclick = () => closeModal('contractModal');
+            document.getElementById('closeRenewalModal').onclick = () => closeModal('renewalModal');
+            document.getElementById('refreshActivityBtn').onclick = () => { renderActivities(); showToast("Activity refreshed","info"); };
+            document.getElementById('searchContracts').addEventListener('input', (e) => { searchTerm = e.target.value.toLowerCase(); renderContractsTable(); });
+            document.querySelectorAll('.filter-btn').forEach(btn => { btn.addEventListener('click', (e) => { document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); currentFilter = btn.dataset.filter; renderContractsTable(); }); });
+            document.getElementById('hamburgerBtn').addEventListener('click', (e) => { e.stopPropagation(); document.getElementById('navDropdown').classList.toggle('active'); });
+            document.addEventListener('click', (e) => { if(!e.target.closest('.hamburger-menu')) document.getElementById('navDropdown')?.classList.remove('active'); });
+            document.getElementById('notifBtn').onclick = () => { showToast(`Expiring: ${document.getElementById('expiringContracts').innerText} contracts`, "info"); };
+            window.handleRenewAction = handleRenewAction;
+            window.toggleSidebar = toggleSidebar; window.closeSidebar = closeSidebar;
+        });
     </script>
 </body>
 </html>
