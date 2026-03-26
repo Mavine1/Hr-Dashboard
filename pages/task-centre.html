@@ -575,26 +575,89 @@
         </div>
     </main>
 
-    <div class="modal" id="taskModal"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-plus-circle"></i> <span id="modalTitle">Assign New Task</span></h3><button class="modal-close" id="closeModalBtn">&times;</button></div><div class="modal-body"><form id="assignTaskForm"><div class="form-row"><div class="form-group"><label>Assign To</label><select id="employeeSelect" class="form-control" required><option value="">Select Employee</option><option value="John Doe">John Doe (IT)</option><option value="Jane Smith">Jane Smith (HR)</option><option value="Mike Johnson">Mike Johnson (Sales)</option><option value="Sarah Williams">Sarah Williams (Marketing)</option></select></div><div class="form-group"><label>Task Title</label><input type="text" id="taskTitle" class="form-control" required></div></div><div class="form-row"><div class="form-group"><label>Category</label><select id="taskCategory" class="form-control"><option value="hr">HR</option><option value="admin">Admin</option><option value="it">IT</option><option value="finance">Finance</option></select></div><div class="form-group"><label>Priority</label><select id="taskPriority" class="form-control"><option value="low">Low</option><option value="medium">Medium</option><option value="high">High</option><option value="urgent">Urgent</option></select></div></div><div class="form-row"><div class="form-group"><label>Due Date</label><input type="datetime-local" id="dueDate" class="form-control" required></div><div class="form-group"><label>Est. Hours</label><input type="number" id="estimatedHours" class="form-control" placeholder="e.g., 4"></div></div><div class="form-group"><label>Description</label><textarea id="taskDescription" class="form-control" rows="3"></textarea></div></form></div><div class="modal-footer"><button class="btn btn-outline" id="cancelTaskBtn">Cancel</button><button class="btn btn-primary" id="submitTaskBtn">Assign Task</button></div></div></div>
+    <div class="modal" id="taskModal"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-plus-circle"></i> <span id="modalTitle">Assign New Task</span></h3><button class="modal-close" id="closeModalBtn">&times;</button></div><div class="modal-body"><form id="assignTaskForm"><div class="form-row"><div class="form-group"><label>Assign To</label><select id="employeeSelect" class="form-control" required><option value="">Select Employee</option></select></div><div class="form-group"><label>Task Title</label><input type="text" id="taskTitle" class="form-control" required></div></div><div class="form-row"><div class="form-group"><label>Category</label><select id="taskCategory" class="form-control"><option value="hr">HR</option><option value="admin">Admin</option><option value="it">IT</option><option value="finance">Finance</option></select></div><div class="form-group"><label>Priority</label><select id="taskPriority" class="form-control"><option value="low">Low</option><option value="medium">Medium</option><option value="high">High</option><option value="urgent">Urgent</option></select></div></div><div class="form-row"><div class="form-group"><label>Due Date</label><input type="datetime-local" id="dueDate" class="form-control" required></div><div class="form-group"><label>Est. Hours</label><input type="number" id="estimatedHours" class="form-control" placeholder="e.g., 4"></div></div><div class="form-group"><label>Description</label><textarea id="taskDescription" class="form-control" rows="3"></textarea></div></form></div><div class="modal-footer"><button class="btn btn-outline" id="cancelTaskBtn">Cancel</button><button class="btn btn-primary" id="submitTaskBtn">Assign Task</button></div></div></div>
 
     <div id="toastContainer"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // ----- EMPLOYEE DATA (static rankings)
-        const employees = [
-            { id: 1, name: "John Doe", department: "IT", avatar: "JD", performance: 94 },
-            { id: 2, name: "Jane Smith", department: "HR", avatar: "JS", performance: 89 },
-            { id: 3, name: "Mike Johnson", department: "Sales", avatar: "MJ", performance: 91 },
-            { id: 4, name: "Sarah Williams", department: "Marketing", avatar: "SW", performance: 86 }
-        ];
-        
+        // ----- EMPLOYEE DATA FROM EMPLOYEES.HTML (localStorage)
+        let employeesList = [];
+
+        // Function to load employees from localStorage (same as employees.html)
+        function loadEmployeesFromStorage() {
+            const stored = localStorage.getItem('hr_employees');
+            if (stored) {
+                employeesList = JSON.parse(stored);
+            } else {
+                // Default employees if none exist (matches original data)
+                employeesList = [
+                    { id: 1, name: "John Doe", department: "IT", avatar: "JD", performance: 94 },
+                    { id: 2, name: "Jane Smith", department: "HR", avatar: "JS", performance: 89 },
+                    { id: 3, name: "Mike Johnson", department: "Sales", avatar: "MJ", performance: 91 },
+                    { id: 4, name: "Sarah Williams", department: "Marketing", avatar: "SW", performance: 86 }
+                ];
+                // Save defaults to localStorage so employees.html can also read them
+                localStorage.setItem('hr_employees', JSON.stringify(employeesList));
+            }
+        }
+
+        // Populate employee dropdown in the task modal
+        function populateEmployeeSelect() {
+            const select = document.getElementById('employeeSelect');
+            select.innerHTML = '<option value="">Select Employee</option>';
+            employeesList.forEach(emp => {
+                const option = document.createElement('option');
+                option.value = emp.name;
+                option.textContent = `${emp.name} (${emp.department})`;
+                select.appendChild(option);
+            });
+        }
+
+        // Also refresh rankings from the employee list (dynamic)
+        function loadRankings() {
+            const container = document.getElementById('rankingsList');
+            // Sort by performance (descending)
+            const sorted = [...employeesList].sort((a,b) => (b.performance || 0) - (a.performance || 0));
+            container.innerHTML = sorted.map((emp, idx) => `
+                <div class="ranking-item">
+                    <div class="rank-number">${idx+1}</div>
+                    <div class="employee-avatar">${emp.avatar || emp.name.charAt(0)}</div>
+                    <div class="ranking-info">
+                        <h4>${emp.name}</h4>
+                        <p>${emp.department}</p>
+                    </div>
+                    <div class="rank-badge ${idx===0?'superstar':idx===1?'top-performer':'average'}">
+                        ${idx===0?'Superstar':idx===1?'Top Performer':'Star'}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Initialize chart with employee performance data
+        let performanceChart = null;
+        function initPerformanceChart() {
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            if (performanceChart) performanceChart.destroy();
+            performanceChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: employeesList.map(e => e.name.split(' ')[0]),
+                    datasets: [{ label: 'Performance', data: employeesList.map(e => e.performance || 80), backgroundColor: '#1e40af', borderRadius: 6 }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true, max: 100 } }
+                }
+            });
+        }
+
+        // ----- TASKS DATA (unchanged, but uses employees from list)
         let tasks = [];
         let currentFilter = "all";
         let editModeId = null;
-        let performanceChart = null;
-
-        // localStorage keys
         const STORAGE_KEY = "hr_tasks_centre";
 
         function saveTasksToLocal() {
@@ -606,7 +669,7 @@
             if(stored) {
                 tasks = JSON.parse(stored);
             } else {
-                // default tasks
+                // default tasks with employee names that match default employees
                 tasks = [
                     { id: 101, title: "Update Employee Handbook", assignedTo: "John Doe", category: "hr", priority: "high", status: "in-progress", dueDate: new Date(Date.now() + 2*86400000).toISOString().slice(0,16), progress: 65, description: "Revise policies", estimatedHours: 5 },
                     { id: 102, title: "System Security Audit", assignedTo: "Jane Smith", category: "it", priority: "urgent", status: "pending", dueDate: new Date(Date.now() + 5*86400000).toISOString().slice(0,16), progress: 0, description: "Audit servers", estimatedHours: 8 },
@@ -661,7 +724,7 @@
                 saveTasksToLocal();
                 renderTasks();
                 updateStatsAndBadge();
-                loadRankings(); showToast(`✅ "${task.title}" completed`, 'success');
+                showToast(`✅ "${task.title}" completed`, 'success');
             }
         }
 
@@ -671,7 +734,6 @@
                 saveTasksToLocal();
                 renderTasks();
                 updateStatsAndBadge();
-                loadRankings();
                 showToast('Task deleted', 'info');
             }
         }
@@ -722,24 +784,9 @@
             closeModal('taskModal');
             renderTasks();
             updateStatsAndBadge();
-            loadRankings();
         }
 
-        function loadRankings() {
-            const container = document.getElementById('rankingsList');
-            const sorted = [...employees].sort((a,b) => b.performance - a.performance);
-            container.innerHTML = sorted.map((emp, idx) => `<div class="ranking-item"><div class="rank-number">${idx+1}</div><div class="employee-avatar">${emp.avatar}</div><div class="ranking-info"><h4>${emp.name}</h4><p>${emp.department}</p></div><div class="rank-badge ${idx===0?'superstar':idx===1?'top-performer':'average'}">${idx===0?'Superstar':idx===1?'Top Performer':'Star'}</div></div>`).join('');
-        }
-
-        function initChart() {
-            const ctx = document.getElementById('performanceChart').getContext('2d');
-            if(performanceChart) performanceChart.destroy();
-            performanceChart = new Chart(ctx, { type: 'bar', data: { labels: employees.map(e=>e.name.split(' ')[0]), datasets: [{ label: 'Performance', data: employees.map(e=>e.performance), backgroundColor: '#1e40af', borderRadius: 6 }] }, options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, max: 100 } } } });
-        }
-
-        function refreshAll() { renderTasks(); updateStatsAndBadge(); loadRankings(); initChart(); }
-
-        // helpers
+        // Helper functions
         function formatDate(dt) { if(!dt) return 'No date'; const d = new Date(dt); const today = new Date(); const diff = Math.ceil((d-today)/86400000); if(diff===0) return 'Today'; if(diff===1) return 'Tomorrow'; if(diff>1 && diff<7) return `${diff}d`; return d.toLocaleDateString(); }
         function getPriorityColor(p) { return { high:'#ef4444', medium:'#f59e0b', low:'#10b981', urgent:'#b91c1c' }[p] || '#6c757d'; }
         function getProgressClass(p) { if(p>=80) return 'progress-high'; if(p>=50) return 'progress-medium'; return 'progress-low'; }
@@ -750,8 +797,13 @@
         function filterDueToday() { const today = new Date().toISOString().slice(0,10); const dueToday = tasks.filter(t=>t.dueDate?.startsWith(today)); document.getElementById('taskList').innerHTML = dueToday.map(t=>`<div class="task-item"><div class="task-info"><h4>${t.title}</h4></div></div>`).join('')||'<div class="empty-state">No tasks due today</div>'; }
         function resetFilter() { currentFilter='all'; renderTasks(); }
         
+        function setDefaultDate() { const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate()+1); document.getElementById('dueDate').value = tomorrow.toISOString().slice(0,16); }
+        function showModal(id) { document.getElementById(id).classList.add('active'); document.body.style.overflow='hidden'; }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); document.body.style.overflow='auto'; }
+        function logout() { if(confirm('Logout?')) showToast('Goodbye!','info'); }
+
         function setupEventListeners() {
-            document.getElementById('showTaskModalBtn').onclick = () => { editModeId=null; document.getElementById('modalTitle').innerText='Assign New Task'; document.getElementById('submitTaskBtn').innerHTML='Assign Task'; document.getElementById('assignTaskForm').reset(); setDefaultDate(); showModal('taskModal'); };
+            document.getElementById('showTaskModalBtn').onclick = () => { editModeId=null; document.getElementById('modalTitle').innerText='Assign New Task'; document.getElementById('submitTaskBtn').innerHTML='Assign Task'; document.getElementById('assignTaskForm').reset(); setDefaultDate(); populateEmployeeSelect(); showModal('taskModal'); };
             document.getElementById('closeModalBtn').onclick = () => closeModal('taskModal');
             document.getElementById('cancelTaskBtn').onclick = () => closeModal('taskModal');
             document.getElementById('submitTaskBtn').onclick = addOrUpdateTask;
@@ -768,17 +820,29 @@
             hamburger.onclick = (e) => { e.stopPropagation(); drop.classList.toggle('active'); };
             document.addEventListener('click', (e) => { if(!hamburger.contains(e.target) && !drop.contains(e.target)) drop.classList.remove('active'); });
         }
-        function setDefaultDate() { const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate()+1); document.getElementById('dueDate').value = tomorrow.toISOString().slice(0,16); }
-        function showModal(id) { document.getElementById(id).classList.add('active'); document.body.style.overflow='hidden'; }
-        function closeModal(id) { document.getElementById(id).classList.remove('active'); document.body.style.overflow='auto'; }
-        function logout() { if(confirm('Logout?')) showToast('Goodbye!','info'); setTimeout(()=>{},200); }
-        
-        // initial load
+
+        function refreshAll() {
+            loadEmployeesFromStorage();   // refresh employee list
+            populateEmployeeSelect();
+            loadTasksFromLocal();
+            renderTasks();
+            updateStatsAndBadge();
+            loadRankings();
+            initPerformanceChart();
+        }
+
+        // Initialization
+        loadEmployeesFromStorage();
         loadTasksFromLocal();
-        refreshAll();
+        refreshAll();   // this will populate selects, rankings, chart
         setupEventListeners();
-        window.completeTask = completeTask; window.deleteTaskById = deleteTaskById; window.editTaskById = editTaskById;
-        window.logout = logout; window.showToast = showToast;
+
+        // Expose functions globally for onclick handlers
+        window.completeTask = completeTask;
+        window.deleteTaskById = deleteTaskById;
+        window.editTaskById = editTaskById;
+        window.logout = logout;
+        window.showToast = showToast;
     </script>
 </body>
 </html>
