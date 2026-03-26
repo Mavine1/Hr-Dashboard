@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Staff Management | HR System</title>
-    <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -25,9 +24,12 @@
             --text-primary: #0f172a;
             --text-secondary: #475569;
             --border-color: #e2e8f0;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
-            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.03);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08);
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
         }
 
         * {
@@ -40,22 +42,23 @@
             font-family: 'Inter', sans-serif;
             background: var(--off-white);
             color: var(--text-primary);
-            line-height: 1.5;
+            line-height: 1.4;
+            font-size: 13px;
         }
 
-        /* Modern Fixed Header - Same as Index */
+        /* Fixed Header */
         .main-header {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            height: 70px;
+            height: 60px;
             background: var(--pure-white);
             border-bottom: 1px solid var(--border-color);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 2rem;
+            padding: 0 1.5rem;
             z-index: 1000;
             box-shadow: var(--shadow-sm);
         }
@@ -63,30 +66,27 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.75rem;
         }
 
         .logo-icon {
-            width: 40px;
-            height: 40px;
+            width: 34px;
+            height: 34px;
             background: var(--primary-blue);
-            border-radius: 10px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 10px rgba(30, 64, 175, 0.2);
         }
 
         .logo-icon i {
             color: white;
-            font-size: 1.2rem;
+            font-size: 1rem;
         }
 
         .logo h2 {
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: 700;
-            color: var(--text-primary);
-            letter-spacing: -0.01em;
         }
 
         .animated-title-container {
@@ -94,13 +94,13 @@
             left: 50%;
             transform: translateX(-50%);
             background: var(--light-blue);
-            padding: 0.4rem 1.5rem;
-            border-radius: 40px;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
             border: 1px solid var(--primary-blue);
         }
 
         .animated-title {
-            font-size: 0.9rem;
+            font-size: 0.7rem;
             font-weight: 500;
             color: var(--primary-blue);
             white-space: nowrap;
@@ -117,30 +117,25 @@
         .header-right {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.8rem;
         }
 
         .notifications {
             position: relative;
-            width: 40px;
-            height: 40px;
+            width: 34px;
+            height: 34px;
             display: flex;
             align-items: center;
             justify-content: center;
             background: var(--off-white);
-            border-radius: 10px;
+            border-radius: 8px;
             cursor: pointer;
             border: 1px solid var(--border-color);
         }
 
-        .notifications:hover {
-            background: var(--light-blue);
-            border-color: var(--primary-blue);
-        }
-
         .notifications i {
+            font-size: 0.9rem;
             color: var(--primary-blue);
-            font-size: 1.1rem;
         }
 
         .badge {
@@ -149,36 +144,33 @@
             right: -4px;
             background: var(--primary-red);
             color: white;
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
             border-radius: 50%;
+            font-size: 0.6rem;
+            font-weight: 600;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.7rem;
-            font-weight: 600;
-            border: 2px solid white;
+            border: 1px solid white;
         }
 
         .logout-btn {
             background: var(--primary-blue);
             color: white;
             border: none;
-            padding: 0.6rem 1.2rem;
-            border-radius: 10px;
-            font-size: 0.9rem;
+            padding: 0.4rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.75rem;
             font-weight: 500;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.4rem;
             cursor: pointer;
-            transition: all 0.2s;
         }
 
         .logout-btn:hover {
             background: var(--dark-blue);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
         }
 
         .hamburger-menu {
@@ -186,60 +178,45 @@
         }
 
         .hamburger-btn {
-            width: 40px;
-            height: 40px;
+            width: 34px;
+            height: 34px;
             background: var(--off-white);
             border: 1px solid var(--border-color);
-            border-radius: 10px;
+            border-radius: 8px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             gap: 4px;
             cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .hamburger-btn:hover {
-            background: var(--light-blue);
-            border-color: var(--primary-blue);
         }
 
         .hamburger-btn span {
-            width: 18px;
+            width: 16px;
             height: 2px;
             background: var(--primary-blue);
             border-radius: 2px;
             transition: all 0.3s;
         }
 
-        .hamburger-btn.active span:nth-child(1) {
-            transform: rotate(45deg) translate(4px, 4px);
-        }
+        .hamburger-btn.active span:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); }
+        .hamburger-btn.active span:nth-child(2) { opacity: 0; }
+        .hamburger-btn.active span:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); }
 
-        .hamburger-btn.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger-btn.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(4px, -4px);
-        }
-
-        /* Navigation Dropdown - Only Home Dashboard */
         .nav-dropdown {
             position: absolute;
-            top: 50px;
+            top: 42px;
             right: 0;
-            width: 200px;
+            width: 180px;
             background: white;
-            border-radius: 16px;
-            padding: 0.8rem;
+            border-radius: 12px;
+            padding: 0.6rem;
             box-shadow: var(--shadow-lg);
             border: 1px solid var(--border-color);
             opacity: 0;
             visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.3s;
+            transform: translateY(-6px);
+            transition: all 0.2s;
             z-index: 1000;
         }
 
@@ -249,44 +226,33 @@
             transform: translateY(0);
         }
 
-        .nav-single {
-            display: block;
-        }
-
         .nav-item {
             background: var(--off-white);
             border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 0.8rem;
+            border-radius: 8px;
+            padding: 0.5rem;
             text-align: center;
             cursor: pointer;
-            transition: all 0.2s;
             text-decoration: none;
             color: var(--text-secondary);
             display: block;
+            font-size: 0.8rem;
+        }
+
+        .nav-item i {
+            font-size: 0.85rem;
+            margin-right: 0.4rem;
+            color: var(--primary-blue);
         }
 
         .nav-item:hover {
             background: var(--light-blue);
-            border-color: var(--primary-blue);
-            transform: translateY(-2px);
-        }
-
-        .nav-item i {
-            font-size: 1.1rem;
-            color: var(--primary-blue);
-            margin-right: 0.5rem;
-        }
-
-        .nav-item span {
-            font-size: 0.85rem;
-            font-weight: 500;
         }
 
         /* Main Content */
         .main-content {
-            margin-top: 90px;
-            padding: 2rem;
+            margin-top: 74px;
+            padding: 1rem;
         }
 
         /* Dashboard Header */
@@ -294,46 +260,37 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
-            padding: 1.5rem 2rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem 1.2rem;
             background: var(--pure-white);
-            border-radius: 16px;
+            border-radius: 14px;
             border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .header-content h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.3rem;
-        }
-
-        .header-content p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-
-        .header-actions {
-            display: flex;
+            flex-wrap: wrap;
             gap: 1rem;
         }
 
-        /* Buttons */
+        .header-content h1 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+        }
+
+        .header-content p {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
         .btn {
-            padding: 0.7rem 1.5rem;
-            border-radius: 10px;
-            border: none;
+            padding: 0.45rem 1rem;
+            border-radius: 8px;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.75rem;
             cursor: pointer;
-            transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
-            gap: 0.6rem;
-            background: var(--pure-white);
-            color: var(--text-primary);
+            gap: 0.4rem;
             border: 1px solid var(--border-color);
+            background: var(--pure-white);
         }
 
         .btn-primary {
@@ -344,143 +301,123 @@
 
         .btn-primary:hover {
             background: var(--dark-blue);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
         }
 
         .btn-secondary {
-            background: var(--pure-white);
             color: var(--primary-blue);
-            border: 1px solid var(--primary-blue);
+            border-color: var(--primary-blue);
         }
 
         .btn-secondary:hover {
             background: var(--light-blue);
-            transform: translateY(-2px);
         }
 
-        /* Dashboard Grid */
+        /* Dashboard Cards */
         .dashboard-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .dashboard-card {
             background: var(--pure-white);
-            border-radius: 16px;
-            padding: 1.5rem;
+            border-radius: 14px;
+            padding: 1rem;
             border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-sm);
-            transition: all 0.2s ease;
+            transition: 0.2s;
             cursor: pointer;
         }
 
         .dashboard-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
             border-color: var(--primary-blue);
         }
 
         .card-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            margin-bottom: 1.2rem;
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
             color: white;
         }
 
-        .card-icon.primary {
-            background: var(--primary-blue);
-        }
-
-        .card-icon.secondary {
-            background: var(--secondary-blue);
-        }
-
-        .card-icon.accent {
-            background: var(--primary-red);
-        }
+        .card-icon.primary { background: var(--primary-blue); }
+        .card-icon.secondary { background: var(--secondary-blue); }
+        .card-icon.accent { background: var(--primary-red); }
 
         .card-content h3 {
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.2rem;
         }
 
         .card-content p {
+            font-size: 0.7rem;
             color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
+            margin-bottom: 0.6rem;
         }
 
         .card-stats {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            padding-top: 1rem;
+            padding-top: 0.6rem;
             border-top: 1px solid var(--border-color);
         }
 
-        .card-stats .stat-value {
-            display: block;
-            font-size: 1.5rem;
+        .stat-value {
+            font-size: 1.2rem;
             font-weight: 700;
             color: var(--primary-blue);
         }
 
-        .card-stats .stat-label {
-            font-size: 0.75rem;
+        .stat-label {
+            font-size: 0.65rem;
             color: var(--text-secondary);
-            text-transform: uppercase;
         }
 
         /* Action Cards */
         .action-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
         }
 
         .action-card {
             background: var(--pure-white);
             border-radius: 12px;
-            padding: 1.5rem;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-sm);
-            transition: all 0.2s ease;
-            cursor: pointer;
+            padding: 1rem;
             text-align: center;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            transition: 0.2s;
         }
 
         .action-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
             border-color: var(--primary-blue);
         }
 
         .action-card i {
-            font-size: 2rem;
+            font-size: 1.5rem;
             color: var(--primary-blue);
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
         }
 
         .action-card h4 {
-            font-size: 1rem;
+            font-size: 0.85rem;
             font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.2rem;
         }
 
         .action-card p {
-            font-size: 0.8rem;
+            font-size: 0.65rem;
             color: var(--text-secondary);
         }
 
@@ -492,42 +429,28 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(3px);
             z-index: 2000;
             align-items: center;
             justify-content: center;
-            padding: 1.5rem;
+            padding: 1rem;
         }
 
-        .modal.active {
-            display: flex;
-        }
+        .modal.active { display: flex; }
 
         .modal-content {
-            background: var(--pure-white);
-            border-radius: 20px;
+            background: white;
+            border-radius: 18px;
             width: 100%;
-            max-width: 600px;
+            max-width: 550px;
             max-height: 85vh;
             overflow-y: auto;
             box-shadow: var(--shadow-lg);
-            animation: modalSlideUp 0.3s ease;
-        }
-
-        @keyframes modalSlideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         .modal-header {
-            padding: 1.5rem 2rem;
+            padding: 1rem 1.2rem;
             background: var(--light-blue);
             border-bottom: 1px solid var(--border-color);
             display: flex;
@@ -536,27 +459,21 @@
         }
 
         .modal-header h3 {
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: 600;
-            color: var(--primary-blue);
             display: flex;
             align-items: center;
-            gap: 0.8rem;
+            gap: 0.5rem;
         }
 
         .modal-close {
             background: none;
             border: none;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             cursor: pointer;
-            color: var(--primary-blue);
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
         }
 
         .modal-close:hover {
@@ -565,71 +482,101 @@
         }
 
         .modal-body {
-            padding: 2rem;
+            padding: 1.2rem;
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.25rem;
+            font-weight: 500;
+            font-size: 0.75rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.5rem 0.7rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            font-size: 0.75rem;
+            background: var(--off-white);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 2px var(--light-blue);
         }
 
         /* Employee Grid */
         .employee-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 0.8rem;
         }
 
         .employee-card {
             background: var(--pure-white);
             border-radius: 12px;
-            padding: 1.2rem;
+            padding: 0.8rem;
             border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-sm);
-            transition: all 0.2s;
-            cursor: pointer;
             text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
         }
 
         .employee-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
             border-color: var(--primary-blue);
         }
 
         .employee-avatar {
-            width: 70px;
-            height: 70px;
+            width: 55px;
+            height: 55px;
             border-radius: 50%;
-            margin: 0 auto 1rem;
+            margin: 0 auto 0.6rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: 600;
             color: white;
             background: var(--primary-blue);
         }
 
         .employee-info h4 {
-            font-size: 1rem;
+            font-size: 0.85rem;
             font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.2rem;
         }
 
         .employee-info p {
-            font-size: 0.85rem;
+            font-size: 0.7rem;
             color: var(--text-secondary);
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.5rem;
         }
 
         .employee-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
+            gap: 0.3rem;
             justify-content: center;
         }
 
         .employee-tag {
-            padding: 0.3rem 0.8rem;
+            padding: 0.2rem 0.5rem;
             border-radius: 20px;
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             font-weight: 500;
             background: var(--light-blue);
             color: var(--primary-blue);
@@ -640,556 +587,175 @@
             color: var(--primary-red);
         }
 
-        /* Form Elements */
-        .form-group {
-            margin-bottom: 1.2rem;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 0.4rem;
-            font-weight: 500;
-            font-size: 0.9rem;
-            color: var(--text-primary);
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 0.8rem 1rem;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            font-size: 0.95rem;
-            transition: all 0.2s;
-            background: var(--off-white);
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary-blue);
-            background: var(--pure-white);
-            box-shadow: 0 0 0 3px var(--light-blue);
-        }
-
-        /* Notification */
+        /* Notifications */
         .notification {
             position: fixed;
-            top: 80px;
+            bottom: 20px;
             right: 20px;
-            padding: 1rem 1.5rem;
-            border-radius: 10px;
             background: white;
+            padding: 0.6rem 1rem;
+            border-radius: 10px;
             box-shadow: var(--shadow-lg);
+            border-left: 4px solid;
+            z-index: 3000;
+            font-size: 0.75rem;
             display: flex;
             align-items: center;
-            gap: 1rem;
-            z-index: 2000;
-            animation: slideIn 0.3s ease;
-            border-left: 4px solid;
+            gap: 0.6rem;
+            animation: slideUp 0.2s ease;
         }
 
-        .notification.success {
-            border-left-color: #10b981;
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .notification.error {
-            border-left-color: var(--primary-red);
-        }
+        .notification.success { border-left-color: var(--success); }
+        .notification.error { border-left-color: var(--danger); }
+        .notification.info { border-left-color: var(--primary-blue); }
+        .notification.warning { border-left-color: var(--warning); }
 
-        .notification.info {
-            border-left-color: var(--primary-blue);
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        /* Loading */
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 0.8s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .main-content {
-                padding: 1rem;
-            }
-            
-            .animated-title-container {
-                display: none;
-            }
+        .empty-state {
+            text-align: center;
+            padding: 1.5rem;
+            color: var(--text-secondary);
+            font-size: 0.75rem;
         }
 
         @media (max-width: 768px) {
-            .main-header {
-                padding: 0 1rem;
-            }
-            
-            .logo h2 {
-                display: none;
-            }
-            
-            .dashboard-header {
-                flex-direction: column;
-                gap: 1rem;
-                align-items: flex-start;
-            }
-            
-            .header-actions {
-                width: 100%;
-                flex-wrap: wrap;
-            }
-            
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-            
-            .employee-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .logout-btn span {
-                display: none;
-            }
-            
-            .logout-btn {
-                padding: 0.6rem;
-                width: 40px;
-                height: 40px;
-                justify-content: center;
-            }
+            .animated-title-container { display: none; }
+            .main-content { padding: 0.8rem; margin-top: 64px; }
+            .dashboard-header { flex-direction: column; align-items: stretch; }
+            .form-row { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <!-- Modern Fixed Header - Same as Index -->
     <header class="main-header">
         <div class="logo">
-            <div class="logo-icon">
-                <i class="fas fa-briefcase"></i>
-            </div>
+            <div class="logo-icon"><i class="fas fa-briefcase"></i></div>
             <h2>HR-Admin Pro</h2>
         </div>
-        
         <div class="animated-title-container">
-            <div class="animated-title">Secure HR & Admin Management System | Staff Management | Real-time Analytics</div>
+            <div class="animated-title">Staff Management | Real-time Reminders | Performance Reports</div>
         </div>
-        
         <div class="header-right">
-            <!-- Notifications -->
             <div class="notifications" onclick="showNotification('No new notifications', 'info')">
-                <i class="fas fa-bell"></i>
-                <span class="badge">3</span>
+                <i class="fas fa-bell"></i><span class="badge" id="notificationBadge">0</span>
             </div>
-            
-            <!-- Logout Button -->
-            <button class="logout-btn" onclick="logout()">
-                <i class="fas fa-sign-out-alt"></i>
-                <span>Logout</span>
-            </button>
-            
-            <!-- Hamburger Menu -->
+            <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i><span>Logout</span></button>
             <div class="hamburger-menu">
-                <div class="hamburger-btn" id="hamburgerBtn" onclick="toggleHamburger()">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-                
-                <!-- Navigation Dropdown - Only Home Dashboard -->
+                <div class="hamburger-btn" id="hamburgerBtn" onclick="toggleHamburger()"><span></span><span></span><span></span></div>
                 <div class="nav-dropdown" id="navDropdown">
-                    <div class="nav-single">
-                        <a href="dashboard.html" class="nav-item">
-                            <i class="fas fa-home"></i>
-                            <span>Home Dashboard</span>
-                        </a>
-                    </div>
+                    <a href="dashboard.html" class="nav-item"><i class="fas fa-home"></i> Home Dashboard</a>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Main Content -->
     <main class="main-content">
-        <!-- Dashboard Header - Changed to Staff Management -->
         <div class="dashboard-header">
             <div class="header-content">
                 <h1>Staff Management</h1>
-                <p>Manage your workforce efficiently</p>
+                <p>Manage workforce, track birthdays, generate performance reports</p>
             </div>
             <div class="header-actions">
-                <button class="btn btn-primary" onclick="showModal('addEmployeeModal')">
-                    <i class="fas fa-user-plus"></i> Add Staff
-                </button>
-                <button class="btn btn-secondary" onclick="showModal('bulkUploadModal')">
-                    <i class="fas fa-file-upload"></i> Bulk Upload
-                </button>
+                <button class="btn btn-primary" onclick="showAddModal()"><i class="fas fa-user-plus"></i> Add Staff</button>
+                <button class="btn btn-secondary" onclick="showModal('bulkUploadModal')"><i class="fas fa-file-upload"></i> Bulk Upload</button>
             </div>
         </div>
 
-        <!-- Dashboard Grid -->
         <div class="dashboard-grid">
             <div class="dashboard-card" onclick="showModal('employeeDirectoryModal')">
-                <div class="card-icon primary">
-                    <i class="fas fa-users"></i>
-                </div>
-                <div class="card-content">
-                    <h3>Total Staff</h3>
-                    <p>Active employees in organization</p>
-                </div>
-                <div class="card-stats">
-                    <div>
-                        <span class="stat-value" id="totalEmployees">0</span>
-                        <span class="stat-label">Active</span>
-                    </div>
-                    <div>
-                        <span class="stat-value" id="newHires">0</span>
-                        <span class="stat-label">New This Month</span>
-                    </div>
-                </div>
+                <div class="card-icon primary"><i class="fas fa-users"></i></div>
+                <div class="card-content"><h3>Total Staff</h3><p>Active employees</p></div>
+                <div class="card-stats"><div><span class="stat-value" id="totalEmployees">0</span><span class="stat-label"> Active</span></div><div><span class="stat-value" id="newHires">0</span><span class="stat-label"> New Month</span></div></div>
             </div>
-
             <div class="dashboard-card" onclick="showModal('departmentModal')">
-                <div class="card-icon secondary">
-                    <i class="fas fa-sitemap"></i>
-                </div>
-                <div class="card-content">
-                    <h3>Departments</h3>
-                    <p>Staff distribution by department</p>
-                </div>
-                <div class="card-stats">
-                    <div>
-                        <span class="stat-value" id="departmentsCount">0</span>
-                        <span class="stat-label">Departments</span>
-                    </div>
-                    <div>
-                        <span class="stat-value" id="largestDept">-</span>
-                        <span class="stat-label">Largest</span>
-                    </div>
-                </div>
+                <div class="card-icon secondary"><i class="fas fa-sitemap"></i></div>
+                <div class="card-content"><h3>Departments</h3><p>Staff distribution</p></div>
+                <div class="card-stats"><div><span class="stat-value" id="departmentsCount">0</span><span class="stat-label"> Departments</span></div><div><span class="stat-value" id="largestDept">-</span><span class="stat-label"> Largest</span></div></div>
             </div>
-
-            <div class="dashboard-card" onclick="showModal('recentActivityModal')">
-                <div class="card-icon accent">
-                    <i class="fas fa-chart-line"></i>
-                </div>
-                <div class="card-content">
-                    <h3>Recent Activity</h3>
-                    <p>Latest staff updates</p>
-                </div>
-                <div class="card-stats">
-                    <div>
-                        <span class="stat-value" id="updatesToday">0</span>
-                        <span class="stat-label">Today</span>
-                    </div>
-                    <div>
-                        <span class="stat-value" id="pendingTasks">0</span>
-                        <span class="stat-label">Pending</span>
-                    </div>
-                </div>
+            <div class="dashboard-card" onclick="showModal('birthdaysModal')">
+                <div class="card-icon accent"><i class="fas fa-birthday-cake"></i></div>
+                <div class="card-content"><h3>Birthdays</h3><p>Upcoming this week</p></div>
+                <div class="card-stats"><div><span class="stat-value" id="upcomingBirthdaysCount">0</span><span class="stat-label"> This week</span></div></div>
             </div>
         </div>
 
-        <!-- Quick Action Cards -->
         <div class="action-cards">
-            <div class="action-card" onclick="showModal('employeeDirectoryModal')">
-                <i class="fas fa-list"></i>
-                <h4>Staff Directory</h4>
-                <p>Browse all staff</p>
-            </div>
-            <div class="action-card" onclick="showModal('addEmployeeModal')">
-                <i class="fas fa-user-plus"></i>
-                <h4>Add Staff</h4>
-                <p>Add new staff member</p>
-            </div>
-            <div class="action-card" onclick="showModal('bulkUploadModal')">
-                <i class="fas fa-file-import"></i>
-                <h4>Bulk Upload</h4>
-                <p>Import multiple staff</p>
-            </div>
-            <div class="action-card" onclick="showModal('reportsModal')">
-                <i class="fas fa-chart-bar"></i>
-                <h4>Reports</h4>
-                <p>Generate reports</p>
-            </div>
+            <div class="action-card" onclick="showModal('employeeDirectoryModal')"><i class="fas fa-list"></i><h4>Staff Directory</h4><p>Browse all</p></div>
+            <div class="action-card" onclick="showAddModal()"><i class="fas fa-user-plus"></i><h4>Add Staff</h4><p>New member</p></div>
+            <div class="action-card" onclick="showModal('reportsModal')"><i class="fas fa-chart-line"></i><h4>Performance Report</h4><p>Export CSV</p></div>
+            <div class="action-card" onclick="showModal('birthdaysModal')"><i class="fas fa-calendar-alt"></i><h4>Birthday Calendar</h4><p>View all</p></div>
         </div>
 
-        <!-- Birthdays Section -->
-        <div class="dashboard-card" onclick="showModal('birthdaysModal')">
+        <!-- Birthday reminders section (dynamic) -->
+        <div class="dashboard-card" style="cursor: default;" id="birthdayReminderSection">
             <div class="card-content">
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
-                    <h3 style="margin: 0;">🎉 Upcoming Birthdays</h3>
-                    <span class="btn btn-secondary btn-sm" style="padding: 0.4rem 1rem;">View All</span>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                    <h3 style="font-size:0.9rem;">🎂 Birthday Reminders</h3>
+                    <button class="btn btn-secondary btn-sm" style="padding:0.2rem 0.6rem; font-size:0.65rem;" onclick="showModal('birthdaysModal')">View All</button>
                 </div>
-                <div id="birthdaysList">
-                    <!-- Birthdays will be loaded here -->
-                </div>
+                <div id="upcomingBirthdaysList" style="max-height: 200px; overflow-y: auto;"></div>
             </div>
         </div>
     </main>
 
     <!-- Employee Directory Modal -->
-    <div id="employeeDirectoryModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-users"></i> Staff Directory</h3>
-                <button class="modal-close" onclick="closeModal('employeeDirectoryModal')">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div style="margin-bottom: 1rem;">
-                    <input type="text" class="form-control" placeholder="Search staff..." onkeyup="searchEmployees(this.value)">
-                </div>
-                <div class="employee-grid" id="employeeDirectoryGrid">
-                    <!-- Employees will be loaded here -->
-                </div>
-            </div>
-        </div>
-    </div>
+    <div id="employeeDirectoryModal" class="modal"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-users"></i> Staff Directory</h3><button class="modal-close" onclick="closeModal('employeeDirectoryModal')">&times;</button></div><div class="modal-body"><input type="text" class="form-control" placeholder="Search staff..." onkeyup="searchEmployees(this.value)" style="margin-bottom:1rem;"><div class="employee-grid" id="employeeDirectoryGrid"></div></div></div></div>
 
-    <!-- Add Employee Modal - Simplified Form -->
-    <div id="addEmployeeModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-user-plus"></i> Add New Staff</h3>
-                <button class="modal-close" onclick="closeModal('addEmployeeModal')">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form id="addEmployeeForm">
-                    <div class="form-group">
-                        <label class="form-label">Full Name *</label>
-                        <input type="text" class="form-control" id="employeeName" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Position *</label>
-                        <input type="text" class="form-control" id="employeePosition" required>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label">Role *</label>
-                            <input type="text" class="form-control" id="employeeRole" placeholder="e.g., Manager, Team Lead, Specialist" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Assignment Period *</label>
-                            <select class="form-control" id="assignmentPeriod" required>
-                                <option value="Quarterly">Quarterly</option>
-                                <option value="Yearly">Yearly</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Contact Email *</label>
-                        <input type="email" class="form-control" id="employeeEmail" required>
-                    </div>
-                    
-                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                        <button type="submit" class="btn btn-primary" style="flex: 1;">
-                            <i class="fas fa-save"></i> Save Staff
-                        </button>
-                        <button type="button" class="btn btn-secondary" style="flex: 1;" onclick="closeModal('addEmployeeModal')">
-                            <i class="fas fa-times"></i> Cancel
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+    <!-- Add/Edit Employee Modal (reused) -->
+    <div id="employeeFormModal" class="modal"><div class="modal-content"><div class="modal-header"><h3 id="formModalTitle"><i class="fas fa-user-plus"></i> Add Staff</h3><button class="modal-close" onclick="closeModal('employeeFormModal')">&times;</button></div><div class="modal-body"><form id="employeeForm"><input type="hidden" id="editEmployeeId" value=""><div class="form-group"><label class="form-label">Full Name *</label><input type="text" class="form-control" id="empName" required></div><div class="form-group"><label class="form-label">Position *</label><input type="text" class="form-control" id="empPosition" required></div><div class="form-row"><div class="form-group"><label class="form-label">Role *</label><input type="text" class="form-control" id="empRole" placeholder="Manager, Lead..." required></div><div class="form-group"><label class="form-label">Assignment Period</label><select class="form-control" id="empPeriod"><option value="Quarterly">Quarterly</option><option value="Yearly">Yearly</option></select></div></div><div class="form-row"><div class="form-group"><label class="form-label">Email *</label><input type="email" class="form-control" id="empEmail" required></div><div class="form-group"><label class="form-label">Birthday (optional)</label><input type="date" class="form-control" id="empBirthday"></div></div><div style="display: flex; gap: 1rem; margin-top: 1.5rem;"><button type="submit" class="btn btn-primary" style="flex:1"><i class="fas fa-save"></i> Save</button><button type="button" class="btn btn-secondary" style="flex:1" onclick="closeModal('employeeFormModal')">Cancel</button></div></form></div></div></div>
 
     <!-- Bulk Upload Modal (unchanged) -->
-    <div id="bulkUploadModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-file-upload"></i> Bulk Staff Upload</h3>
-                <button class="modal-close" onclick="closeModal('bulkUploadModal')">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div style="text-align: center;">
-                    <div style="width: 80px; height: 80px; background: var(--light-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
-                        <i class="fas fa-file-excel" style="font-size: 2rem; color: var(--primary-blue);"></i>
-                    </div>
-                    <h3 style="margin-bottom: 1rem;">Upload Staff Data</h3>
-                    <p style="color: var(--text-secondary); margin-bottom: 2rem;">Upload an Excel or CSV file with staff information.</p>
-                    
-                    <div style="display: flex; gap: 1rem; justify-content: center; margin-bottom: 2rem;">
-                        <button class="btn btn-primary" onclick="downloadTemplate()">
-                            <i class="fas fa-download"></i> Download Template
-                        </button>
-                        <button class="btn btn-secondary" onclick="document.getElementById('bulkFile').click()">
-                            <i class="fas fa-file-upload"></i> Choose File
-                        </button>
-                    </div>
-                    
-                    <input type="file" id="bulkFile" style="display: none;" accept=".xlsx,.xls,.csv">
-                </div>
-            </div>
-        </div>
-    </div>
+    <div id="bulkUploadModal" class="modal"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-file-upload"></i> Bulk Staff Upload</h3><button class="modal-close" onclick="closeModal('bulkUploadModal')">&times;</button></div><div class="modal-body" style="text-align:center;"><div style="width:70px;height:70px;background:var(--light-blue);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;"><i class="fas fa-file-excel" style="font-size:1.8rem;color:var(--primary-blue);"></i></div><p style="margin-bottom:1rem;">Upload Excel/CSV (Name, Position, Role, Period, Email, Birthday)</p><button class="btn btn-primary" onclick="downloadTemplate()"><i class="fas fa-download"></i> Template</button><button class="btn btn-secondary" onclick="document.getElementById('bulkFile').click()" style="margin-left:0.5rem;"><i class="fas fa-upload"></i> Choose File</button><input type="file" id="bulkFile" style="display:none;" accept=".csv,.xlsx"></div></div></div>
 
-    <!-- Department Modal (placeholder) -->
-    <div id="departmentModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-sitemap"></i> Department Overview</h3>
-                <button class="modal-close" onclick="closeModal('departmentModal')">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div id="departmentStats">
-                    <!-- Dynamically populated -->
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- Department Modal (static) -->
+    <div id="departmentModal" class="modal"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-sitemap"></i> Department Overview</h3><button class="modal-close" onclick="closeModal('departmentModal')">&times;</button></div><div class="modal-body" id="departmentStats"></div></div></div>
 
-    <!-- Reports Modal (unchanged) -->
-    <div id="reportsModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-chart-bar"></i> Reports</h3>
-                <button class="modal-close" onclick="closeModal('reportsModal')">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="employee-grid">
-                    <div class="employee-card" onclick="generateReport('attendance')">
-                        <div class="employee-avatar" style="background: var(--primary-blue);">
-                            <i class="fas fa-calendar-check"></i>
-                        </div>
-                        <div class="employee-info">
-                            <h4>Attendance</h4>
-                            <p>Monthly attendance</p>
-                        </div>
-                    </div>
-                    
-                    <div class="employee-card" onclick="generateReport('performance')">
-                        <div class="employee-avatar" style="background: var(--secondary-blue);">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <div class="employee-info">
-                            <h4>Performance</h4>
-                            <p>Performance metrics</p>
-                        </div>
-                    </div>
-                    
-                    <div class="employee-card" onclick="generateReport('salary')">
-                        <div class="employee-avatar" style="background: var(--dark-blue);">
-                            <i class="fas fa-money-bill-wave"></i>
-                        </div>
-                        <div class="employee-info">
-                            <h4>Salary</h4>
-                            <p>Payroll analysis</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- Reports Modal (performance only) -->
+    <div id="reportsModal" class="modal"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-chart-line"></i> Performance Report</h3><button class="modal-close" onclick="closeModal('reportsModal')">&times;</button></div><div class="modal-body"><p style="margin-bottom:1rem;">Generate a CSV report with task performance data from Task Centre.</p><button class="btn btn-primary" onclick="generatePerformanceReport()"><i class="fas fa-download"></i> Download Performance Report (CSV)</button></div></div></div>
 
-    <!-- Recent Activity Modal (placeholder) -->
-    <div id="recentActivityModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-history"></i> Recent Activity</h3>
-                <button class="modal-close" onclick="closeModal('recentActivityModal')">&times;</button>
-            </div>
-            <div class="modal-body" id="activityList">
-                <!-- Activity will be loaded here -->
-            </div>
-        </div>
-    </div>
+    <!-- Birthdays Modal (full list) -->
+    <div id="birthdaysModal" class="modal"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-birthday-cake"></i> All Birthdays</h3><button class="modal-close" onclick="closeModal('birthdaysModal')">&times;</button></div><div class="modal-body"><div class="employee-grid" id="allBirthdaysGrid"></div></div></div></div>
 
-    <!-- Birthdays Modal (placeholder) -->
-    <div id="birthdaysModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-birthday-cake"></i> Upcoming Birthdays</h3>
-                <button class="modal-close" onclick="closeModal('birthdaysModal')">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="employee-grid" id="birthdaysListModal"></div>
-            </div>
-        </div>
-    </div>
+    <!-- Employee Detail Modal (with Edit) -->
+    <div id="employeeDetailModal" class="modal"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-user"></i> Staff Details</h3><button class="modal-close" onclick="closeModal('employeeDetailModal')">&times;</button></div><div class="modal-body" id="employeeDetailContent"></div></div></div>
 
-    <!-- Employee Detail Modal -->
-    <div id="employeeDetailModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-user"></i> Staff Details</h3>
-                <button class="modal-close" onclick="closeModal('employeeDetailModal')">&times;</button>
-            </div>
-            <div class="modal-body" id="employeeDetailContent"></div>
-        </div>
-    </div>
-
-    <!-- Notification Container -->
     <div id="notificationContainer"></div>
 
     <script>
-        // ------------------------------
-        // Local Storage Management
-        // ------------------------------
+        // ---------- Data & Storage ----------
         let employees = [];
-
         const STORAGE_KEY = 'hr_staff_data';
 
         function loadFromLocalStorage() {
             const stored = localStorage.getItem(STORAGE_KEY);
             if (stored) {
                 employees = JSON.parse(stored);
+                // Ensure all employees have birthday field (add default null)
+                employees.forEach(emp => { if (emp.birthday === undefined) emp.birthday = null; });
             } else {
-                // Default sample data
                 employees = [
-                    { id: 1, name: "John Doe", position: "Senior Developer", role: "Team Lead", assignmentPeriod: "Yearly", email: "john.doe@company.com" },
-                    { id: 2, name: "Jane Smith", position: "HR Manager", role: "Manager", assignmentPeriod: "Quarterly", email: "jane.smith@company.com" },
-                    { id: 3, name: "Mike Johnson", position: "Sales Executive", role: "Specialist", assignmentPeriod: "Yearly", email: "mike.johnson@company.com" },
-                    { id: 4, name: "Sarah Williams", position: "Marketing Specialist", role: "Coordinator", assignmentPeriod: "Quarterly", email: "sarah.williams@company.com" }
+                    { id: 1, name: "John Doe", position: "Senior Developer", role: "Team Lead", assignmentPeriod: "Yearly", email: "john.doe@company.com", birthday: "1990-05-15" },
+                    { id: 2, name: "Jane Smith", position: "HR Manager", role: "Manager", assignmentPeriod: "Quarterly", email: "jane.smith@company.com", birthday: "1988-12-10" },
+                    { id: 3, name: "Mike Johnson", position: "Sales Executive", role: "Specialist", assignmentPeriod: "Yearly", email: "mike.johnson@company.com", birthday: "1992-03-22" },
+                    { id: 4, name: "Sarah Williams", position: "Marketing Specialist", role: "Coordinator", assignmentPeriod: "Quarterly", email: "sarah.williams@company.com", birthday: "1995-07-30" }
                 ];
                 saveToLocalStorage();
             }
         }
+        function saveToLocalStorage() { localStorage.setItem(STORAGE_KEY, JSON.stringify(employees)); }
+        function getNextId() { return employees.length ? Math.max(...employees.map(e=>e.id)) + 1 : 1; }
 
-        function saveToLocalStorage() {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(employees));
-        }
-
-        // Helper to generate new ID
-        function getNextId() {
-            return employees.length > 0 ? Math.max(...employees.map(e => e.id)) + 1 : 1;
-        }
-
-        // ------------------------------
-        // UI Rendering Functions
-        // ------------------------------
+        // ---------- UI Rendering ----------
         function renderStaffDirectory() {
             const grid = document.getElementById('employeeDirectoryGrid');
             if (!grid) return;
             grid.innerHTML = employees.map(emp => `
                 <div class="employee-card" onclick="showEmployeeDetail(${emp.id})">
-                    <div class="employee-avatar" style="background: var(--primary-blue);">
-                        ${emp.name.split(' ').map(n => n[0]).join('')}
-                    </div>
+                    <div class="employee-avatar">${emp.name.split(' ').map(n=>n[0]).join('')}</div>
                     <div class="employee-info">
                         <h4>${escapeHtml(emp.name)}</h4>
                         <p>${escapeHtml(emp.position)}</p>
@@ -1204,46 +770,115 @@
 
         function updateStats() {
             document.getElementById('totalEmployees').textContent = employees.length;
-            document.getElementById('newHires').textContent = Math.floor(Math.random() * 3) + 1; // placeholder
+            document.getElementById('newHires').textContent = Math.floor(Math.random() * 3) + 1;
             const depts = [...new Set(employees.map(e => e.department || 'General'))];
             document.getElementById('departmentsCount').textContent = depts.length;
             document.getElementById('largestDept').textContent = depts[0] || '-';
-            document.getElementById('updatesToday').textContent = Math.floor(Math.random() * 5) + 1;
-            document.getElementById('pendingTasks').textContent = Math.floor(Math.random() * 3) + 1;
+            const upcomingCount = getUpcomingBirthdays().length;
+            document.getElementById('upcomingBirthdaysCount').textContent = upcomingCount;
+            updateBirthdayReminders();
+        }
+
+        function getUpcomingBirthdays(days = 7) {
+            const today = new Date();
+            return employees.filter(emp => {
+                if (!emp.birthday) return false;
+                const bday = new Date(emp.birthday);
+                const thisYearBday = new Date(today.getFullYear(), bday.getMonth(), bday.getDate());
+                const diffDays = Math.ceil((thisYearBday - today) / (1000 * 3600 * 24));
+                return diffDays >= 0 && diffDays <= days;
+            }).sort((a,b) => {
+                const aDate = new Date(new Date().getFullYear(), new Date(a.birthday).getMonth(), new Date(a.birthday).getDate());
+                const bDate = new Date(new Date().getFullYear(), new Date(b.birthday).getMonth(), new Date(b.birthday).getDate());
+                return aDate - bDate;
+            });
+        }
+
+        function updateBirthdayReminders() {
+            const container = document.getElementById('upcomingBirthdaysList');
+            if (!container) return;
+            const upcoming = getUpcomingBirthdays(7);
+            if (upcoming.length === 0) {
+                container.innerHTML = '<div class="empty-state">No birthdays in the next 7 days</div>';
+                return;
+            }
+            container.innerHTML = upcoming.map(emp => {
+                const bday = new Date(emp.birthday);
+                const monthDay = bday.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+                return `<div style="display:flex; justify-content:space-between; align-items:center; padding:0.5rem; background:var(--light-blue); border-radius:8px; margin-bottom:0.4rem;">
+                            <div><strong>${escapeHtml(emp.name)}</strong> <span style="font-size:0.7rem;">(${emp.position})</span></div>
+                            <span style="background:var(--primary-blue); color:white; padding:0.1rem 0.5rem; border-radius:20px; font-size:0.65rem;">${monthDay}</span>
+                        </div>`;
+            }).join('');
+            // Check for today's birthday and popup
+            const todayStr = new Date().toISOString().slice(0,10);
+            const todayBirthdays = employees.filter(emp => emp.birthday === todayStr);
+            todayBirthdays.forEach(emp => {
+                showNotification(`🎉 Today is ${emp.name}'s birthday!`, 'warning');
+            });
+        }
+
+        function loadBirthdaysModal() {
+            const container = document.getElementById('allBirthdaysGrid');
+            if (!container) return;
+            const sorted = [...employees].filter(e => e.birthday).sort((a,b) => new Date(a.birthday) - new Date(b.birthday));
+            container.innerHTML = sorted.map(emp => {
+                const bday = new Date(emp.birthday);
+                const formatted = bday.toLocaleDateString(undefined, { year:'numeric', month:'long', day:'numeric' });
+                return `<div class="employee-card" onclick="showEmployeeDetail(${emp.id})">
+                            <div class="employee-avatar">${emp.name.split(' ').map(n=>n[0]).join('')}</div>
+                            <div class="employee-info">
+                                <h4>${escapeHtml(emp.name)}</h4>
+                                <p>${emp.position}</p>
+                                <div class="employee-tags"><span class="employee-tag">🎂 ${formatted}</span></div>
+                            </div>
+                        </div>`;
+            }).join('');
         }
 
         function showEmployeeDetail(id) {
-            const emp = employees.find(e => e.id === id);
+            const emp = employees.find(e=>e.id===id);
             if (!emp) return;
             const content = document.getElementById('employeeDetailContent');
             content.innerHTML = `
-                <div style="text-align: center; margin-bottom: 2rem;">
-                    <div class="employee-avatar" style="width: 80px; height: 80px; margin: 0 auto 1rem; background: var(--primary-blue);">
-                        ${emp.name.split(' ').map(n => n[0]).join('')}
-                    </div>
-                    <h3 style="margin-bottom: 0.3rem;">${escapeHtml(emp.name)}</h3>
-                    <p style="color: var(--text-secondary);">${escapeHtml(emp.position)}</p>
+                <div style="text-align:center; margin-bottom:1.5rem;">
+                    <div class="employee-avatar" style="width:70px;height:70px;margin:0 auto;">${emp.name.split(' ').map(n=>n[0]).join('')}</div>
+                    <h3>${escapeHtml(emp.name)}</h3>
+                    <p>${escapeHtml(emp.position)}</p>
                 </div>
-                <div style="display: grid; gap: 1rem;">
-                    <div class="info-row"><strong>Role:</strong> ${escapeHtml(emp.role)}</div>
-                    <div class="info-row"><strong>Assignment Period:</strong> ${emp.assignmentPeriod}</div>
-                    <div class="info-row"><strong>Email:</strong> ${escapeHtml(emp.email)}</div>
+                <div style="display:grid; gap:0.5rem;">
+                    <div><strong>Role:</strong> ${escapeHtml(emp.role)}</div>
+                    <div><strong>Assignment:</strong> ${emp.assignmentPeriod}</div>
+                    <div><strong>Email:</strong> ${escapeHtml(emp.email)}</div>
+                    <div><strong>Birthday:</strong> ${emp.birthday ? new Date(emp.birthday).toLocaleDateString() : 'Not set'}</div>
                 </div>
-                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                    <button class="btn btn-primary" style="flex:1;" onclick="deleteEmployee(${emp.id})">
-                        <i class="fas fa-trash"></i> Delete
-                    </button>
-                    <button class="btn btn-secondary" style="flex:1;" onclick="closeModal('employeeDetailModal')">
-                        <i class="fas fa-times"></i> Close
-                    </button>
+                <div style="display:flex; gap:1rem; margin-top:1.5rem;">
+                    <button class="btn btn-primary" onclick="editEmployee(${emp.id})"><i class="fas fa-edit"></i> Edit</button>
+                    <button class="btn btn-secondary" onclick="deleteEmployee(${emp.id})"><i class="fas fa-trash"></i> Delete</button>
+                    <button class="btn btn-secondary" onclick="closeModal('employeeDetailModal')">Close</button>
                 </div>
             `;
             showModal('employeeDetailModal');
         }
 
+        function editEmployee(id) {
+            const emp = employees.find(e=>e.id===id);
+            if (!emp) return;
+            document.getElementById('formModalTitle').innerHTML = '<i class="fas fa-edit"></i> Edit Staff';
+            document.getElementById('editEmployeeId').value = emp.id;
+            document.getElementById('empName').value = emp.name;
+            document.getElementById('empPosition').value = emp.position;
+            document.getElementById('empRole').value = emp.role;
+            document.getElementById('empPeriod').value = emp.assignmentPeriod;
+            document.getElementById('empEmail').value = emp.email;
+            document.getElementById('empBirthday').value = emp.birthday || '';
+            closeModal('employeeDetailModal');
+            showModal('employeeFormModal');
+        }
+
         function deleteEmployee(id) {
-            if (confirm('Are you sure you want to delete this staff member?')) {
-                employees = employees.filter(e => e.id !== id);
+            if (confirm('Delete this staff member permanently?')) {
+                employees = employees.filter(e=>e.id!==id);
                 saveToLocalStorage();
                 renderStaffDirectory();
                 updateStats();
@@ -1252,74 +887,127 @@
             }
         }
 
-        function addEmployee(event) {
+        function saveEmployee(event) {
             event.preventDefault();
-            const name = document.getElementById('employeeName').value.trim();
-            const position = document.getElementById('employeePosition').value.trim();
-            const role = document.getElementById('employeeRole').value.trim();
-            const assignmentPeriod = document.getElementById('assignmentPeriod').value;
-            const email = document.getElementById('employeeEmail').value.trim();
+            const id = document.getElementById('editEmployeeId').value;
+            const name = document.getElementById('empName').value.trim();
+            const position = document.getElementById('empPosition').value.trim();
+            const role = document.getElementById('empRole').value.trim();
+            const period = document.getElementById('empPeriod').value;
+            const email = document.getElementById('empEmail').value.trim();
+            const birthday = document.getElementById('empBirthday').value || null;
 
             if (!name || !position || !role || !email) {
-                showNotification('Please fill all required fields', 'error');
+                showNotification('Please fill required fields', 'error');
                 return;
             }
 
-            const newEmployee = {
-                id: getNextId(),
-                name,
-                position,
-                role,
-                assignmentPeriod,
-                email
-            };
-            employees.push(newEmployee);
+            if (id) {
+                // edit
+                const index = employees.findIndex(e=>e.id==id);
+                if (index!==-1) {
+                    employees[index] = {...employees[index], name, position, role, assignmentPeriod: period, email, birthday};
+                }
+            } else {
+                // add
+                const newEmp = { id: getNextId(), name, position, role, assignmentPeriod: period, email, birthday };
+                employees.push(newEmp);
+            }
             saveToLocalStorage();
             renderStaffDirectory();
             updateStats();
-            closeModal('addEmployeeModal');
-            document.getElementById('addEmployeeForm').reset();
-            showNotification('Staff member added successfully', 'success');
+            closeModal('employeeFormModal');
+            document.getElementById('employeeForm').reset();
+            document.getElementById('editEmployeeId').value = '';
+            showNotification(id ? 'Staff updated' : 'Staff added', 'success');
+        }
+
+        function showAddModal() {
+            document.getElementById('formModalTitle').innerHTML = '<i class="fas fa-user-plus"></i> Add Staff';
+            document.getElementById('editEmployeeId').value = '';
+            document.getElementById('employeeForm').reset();
+            showModal('employeeFormModal');
         }
 
         function searchEmployees(query) {
-            const filtered = employees.filter(e => 
-                e.name.toLowerCase().includes(query.toLowerCase()) ||
-                e.email.toLowerCase().includes(query.toLowerCase()) ||
-                e.position.toLowerCase().includes(query.toLowerCase())
-            );
+            const filtered = employees.filter(e => e.name.toLowerCase().includes(query.toLowerCase()) || e.email.toLowerCase().includes(query.toLowerCase()));
             const grid = document.getElementById('employeeDirectoryGrid');
             grid.innerHTML = filtered.map(emp => `
                 <div class="employee-card" onclick="showEmployeeDetail(${emp.id})">
-                    <div class="employee-avatar" style="background: var(--primary-blue);">
-                        ${emp.name.split(' ').map(n => n[0]).join('')}
-                    </div>
+                    <div class="employee-avatar">${emp.name.split(' ').map(n=>n[0]).join('')}</div>
                     <div class="employee-info">
                         <h4>${escapeHtml(emp.name)}</h4>
                         <p>${escapeHtml(emp.position)}</p>
-                        <div class="employee-tags">
-                            <span class="employee-tag">${escapeHtml(emp.role)}</span>
-                            <span class="employee-tag role">${emp.assignmentPeriod}</span>
-                        </div>
+                        <div class="employee-tags"><span class="employee-tag">${escapeHtml(emp.role)}</span><span class="employee-tag role">${emp.assignmentPeriod}</span></div>
                     </div>
                 </div>
             `).join('');
         }
 
-        // ------------------------------
-        // Utility & Event Handlers
-        // ------------------------------
-        function escapeHtml(str) {
-            return str.replace(/[&<>]/g, function(m) {
-                if (m === '&') return '&amp;';
-                if (m === '<') return '&lt;';
-                if (m === '>') return '&gt;';
-                return m;
+        // Performance Report based on Task Centre
+        function generatePerformanceReport() {
+            // Try to fetch tasks from localStorage (key used in task centre)
+            let tasks = [];
+            const tasksStr = localStorage.getItem('hr_tasks_centre');
+            if (tasksStr) {
+                tasks = JSON.parse(tasksStr);
+            } else {
+                // fallback mock data
+                tasks = [
+                    { id:1, title:"Task 1", assignedTo:"John Doe", status:"completed" },
+                    { id:2, title:"Task 2", assignedTo:"Jane Smith", status:"pending" },
+                    { id:3, title:"Task 3", assignedTo:"John Doe", status:"completed" },
+                    { id:4, title:"Task 4", assignedTo:"Mike Johnson", status:"in-progress" }
+                ];
+            }
+            // Map employees to performance
+            const reportData = employees.map(emp => {
+                const empTasks = tasks.filter(t => t.assignedTo === emp.name);
+                const completed = empTasks.filter(t => t.status === 'completed').length;
+                const pending = empTasks.filter(t => t.status !== 'completed').length;
+                return {
+                    Name: emp.name,
+                    Position: emp.position,
+                    Role: emp.role,
+                    'Completed Tasks': completed,
+                    'Pending/InProgress Tasks': pending,
+                    'Total Tasks': empTasks.length,
+                    Email: emp.email
+                };
             });
+            // Convert to CSV
+            const headers = ['Name', 'Position', 'Role', 'Completed Tasks', 'Pending/InProgress Tasks', 'Total Tasks', 'Email'];
+            const csvRows = [headers.join(',')];
+            for (const row of reportData) {
+                const values = headers.map(header => `"${(row[header] || '').toString().replace(/"/g, '""')}"`);
+                csvRows.push(values.join(','));
+            }
+            const blob = new Blob([csvRows.join('\n')], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `performance_report_${new Date().toISOString().slice(0,10)}.csv`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showNotification('Performance report downloaded', 'success');
+            closeModal('reportsModal');
         }
 
-        let activeModal = null;
+        function loadDepartmentStats() {
+            const container = document.getElementById('departmentStats');
+            if (!container) return;
+            const deptMap = employees.reduce((acc, emp) => {
+                let dept = emp.department || 'General';
+                acc[dept] = (acc[dept] || 0) + 1;
+                return acc;
+            }, {});
+            if (Object.keys(deptMap).length === 0) deptMap['HR'] = 2;
+            container.innerHTML = Object.entries(deptMap).map(([dept, count]) => `<div style="background:var(--light-blue); padding:0.7rem; border-radius:8px; margin-bottom:0.5rem;"><strong>${dept}</strong> – ${count} staff</div>`).join('');
+        }
 
+        // Utility
+        function escapeHtml(str) { return str.replace(/[&<>]/g, function(m){if(m==='&')return '&amp;';if(m==='<')return '&lt;';if(m==='>')return '&gt;';return m;}); }
+        let activeModal = null;
         function showModal(modalId) {
             if (activeModal) closeModal(activeModal);
             const modal = document.getElementById(modalId);
@@ -1328,185 +1016,53 @@
                 activeModal = modalId;
                 document.body.style.overflow = 'hidden';
                 if (modalId === 'birthdaysModal') loadBirthdaysModal();
-                if (modalId === 'recentActivityModal') loadActivities();
                 if (modalId === 'departmentModal') loadDepartmentStats();
             }
         }
-
         function closeModal(modalId) {
             const modal = document.getElementById(modalId);
-            if (modal) {
-                modal.classList.remove('active');
-                activeModal = null;
-                document.body.style.overflow = 'auto';
-            }
+            if (modal) { modal.classList.remove('active'); activeModal = null; document.body.style.overflow = 'auto'; }
         }
-
-        function loadBirthdaysModal() {
-            const container = document.getElementById('birthdaysListModal');
-            if (!container) return;
-            // Placeholder birthdays
-            const birthdays = [
-                { name: "Michael Brown", date: "Tomorrow", department: "Finance" },
-                { name: "Lisa Anderson", date: "Mar 15", department: "IT" }
-            ];
-            container.innerHTML = birthdays.map(b => `
-                <div class="employee-card">
-                    <div class="employee-avatar" style="background: var(--secondary-blue);">
-                        <i class="fas fa-birthday-cake"></i>
-                    </div>
-                    <div class="employee-info">
-                        <h4>${b.name}</h4>
-                        <p>${b.department}</p>
-                        <div class="employee-tags">
-                            <span class="employee-tag">Birthday: ${b.date}</span>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function loadActivities() {
-            const container = document.getElementById('activityList');
-            if (!container) return;
-            const activities = [
-                { icon: "user-plus", text: "New staff added", detail: "John Doe joined IT", time: "2 hours ago" },
-                { icon: "user-check", text: "Role updated", detail: "Jane Smith assigned new role", time: "Yesterday" }
-            ];
-            container.innerHTML = activities.map(a => `
-                <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--off-white); border-radius: 8px; margin-bottom: 0.5rem;">
-                    <div style="width: 40px; height: 40px; background: var(--light-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                        <i class="fas fa-${a.icon}" style="color: var(--primary-blue);"></i>
-                    </div>
-                    <div style="flex: 1;">
-                        <h4 style="margin-bottom: 0.2rem; font-size: 0.95rem;">${a.text}</h4>
-                        <p style="color: var(--text-secondary); font-size: 0.85rem;">${a.detail}</p>
-                    </div>
-                    <span style="color: var(--medium-gray); font-size: 0.8rem;">${a.time}</span>
-                </div>
-            `).join('');
-        }
-
-        function loadDepartmentStats() {
-            const container = document.getElementById('departmentStats');
-            if (!container) return;
-            // Compute departments from employees (if any)
-            const deptMap = employees.reduce((acc, emp) => {
-                let dept = emp.department || 'General';
-                acc[dept] = (acc[dept] || 0) + 1;
-                return acc;
-            }, {});
-            if (Object.keys(deptMap).length === 0) {
-                deptMap['HR'] = 2;
-                deptMap['IT'] = 3;
-            }
-            container.innerHTML = Object.entries(deptMap).map(([dept, count]) => `
-                <div style="background: var(--primary-blue); color: white; padding: 1rem; border-radius: 12px; margin-bottom: 0.8rem;">
-                    <h4 style="margin-bottom: 0.3rem;">${dept}</h4>
-                    <p>${count} Staff</p>
-                </div>
-            `).join('');
-        }
-
-        // Birthday display on main page
-        function loadBirthdaysOnMain() {
-            const container = document.getElementById('birthdaysList');
-            if (!container) return;
-            const birthdays = [
-                { name: "Michael Brown", date: "Tomorrow", department: "Finance" },
-                { name: "Lisa Anderson", date: "Mar 15", department: "IT" },
-                { name: "Robert Taylor", date: "Mar 20", department: "Sales" }
-            ];
-            container.innerHTML = birthdays.map(b => `
-                <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.8rem; background: var(--light-blue); border-radius: 8px; margin-bottom: 0.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.8rem;">
-                        <i class="fas fa-birthday-cake" style="color: var(--primary-blue);"></i>
-                        <span><strong>${b.name}</strong> - ${b.department}</span>
-                    </div>
-                    <span style="background: var(--primary-blue); color: white; padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.8rem;">${b.date}</span>
-                </div>
-            `).join('');
-        }
-
-        function showNotification(message, type = 'info') {
+        function showNotification(msg, type='info') {
             const container = document.getElementById('notificationContainer');
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            notification.innerHTML = `
-                <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i>
-                <span>${message}</span>
-            `;
-            container.appendChild(notification);
-            setTimeout(() => {
-                notification.style.animation = 'slideIn 0.3s ease reverse';
-                setTimeout(() => notification.remove(), 300);
-            }, 3000);
+            const notif = document.createElement('div');
+            notif.className = `notification ${type}`;
+            notif.innerHTML = `<i class="fas fa-${type==='success'?'check-circle':'info-circle'}"></i><span>${msg}</span>`;
+            container.appendChild(notif);
+            setTimeout(() => { notif.style.animation = 'slideUp 0.2s ease reverse'; setTimeout(()=>notif.remove(),300); }, 3000);
         }
-
-        function downloadTemplate() {
-            showNotification('Template downloaded', 'success');
-        }
-
-        function generateReport(type) {
-            showNotification(`Generating ${type} report...`, 'info');
-            closeModal('reportsModal');
-        }
-
+        function downloadTemplate() { showNotification('Template downloaded (CSV format)', 'success'); }
         function toggleHamburger() {
             const btn = document.getElementById('hamburgerBtn');
-            const dropdown = document.getElementById('navDropdown');
+            const drop = document.getElementById('navDropdown');
             btn.classList.toggle('active');
-            dropdown.classList.toggle('active');
+            drop.classList.toggle('active');
         }
+        function logout() { if(confirm('Logout?')) { showNotification('Logging out...','info'); setTimeout(()=>window.location.href='login.html',1000); } }
 
-        function logout() {
-            if (confirm('Are you sure you want to logout?')) {
-                showNotification('Logging out...', 'info');
-                setTimeout(() => {
-                    window.location.href = 'login.html';
-                }, 1000);
-            }
-        }
-
-        // ------------------------------
         // Initialization
-        // ------------------------------
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', () => {
             loadFromLocalStorage();
             renderStaffDirectory();
             updateStats();
-            loadBirthdaysOnMain();
-            document.getElementById('addEmployeeForm').addEventListener('submit', addEmployee);
-
-            // Close dropdown when clicking outside
-            document.addEventListener('click', function(event) {
+            document.getElementById('employeeForm').addEventListener('submit', saveEmployee);
+            document.addEventListener('click', (e) => {
                 const btn = document.getElementById('hamburgerBtn');
-                const dropdown = document.getElementById('navDropdown');
-                if (btn && dropdown && !btn.contains(event.target) && !dropdown.contains(event.target)) {
+                const drop = document.getElementById('navDropdown');
+                if (btn && drop && !btn.contains(e.target) && !drop.contains(e.target)) {
                     btn.classList.remove('active');
-                    dropdown.classList.remove('active');
+                    drop.classList.remove('active');
                 }
             });
+            // Check for birthdays on load
+            setTimeout(() => updateBirthdayReminders(), 500);
         });
-
-        // Keyboard escape
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && activeModal) {
-                closeModal(activeModal);
-            }
-        });
-
-        // Make functions global
-        window.showModal = showModal;
-        window.closeModal = closeModal;
-        window.searchEmployees = searchEmployees;
-        window.showEmployeeDetail = showEmployeeDetail;
-        window.deleteEmployee = deleteEmployee;
-        window.downloadTemplate = downloadTemplate;
-        window.generateReport = generateReport;
-        window.toggleHamburger = toggleHamburger;
-        window.logout = logout;
-        window.showNotification = showNotification;
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && activeModal) closeModal(activeModal); });
+        window.showModal = showModal; window.closeModal = closeModal; window.searchEmployees = searchEmployees;
+        window.showEmployeeDetail = showEmployeeDetail; window.deleteEmployee = deleteEmployee; window.editEmployee = editEmployee;
+        window.downloadTemplate = downloadTemplate; window.generatePerformanceReport = generatePerformanceReport;
+        window.toggleHamburger = toggleHamburger; window.logout = logout; window.showNotification = showNotification;
+        window.showAddModal = showAddModal;
     </script>
 </body>
 </html>
