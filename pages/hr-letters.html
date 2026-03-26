@@ -7,12 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --primary-blue: #1e40af;
             --secondary-blue: #3b82f6;
@@ -21,12 +16,10 @@
             --dark-blue: #1e3a8a;
             --primary-red: #b91c1c;
             --light-red: #fee2e2;
-            --soft-red: #fef2f2;
             --pure-white: #ffffff;
             --off-white: #f8fafc;
             --light-gray: #e2e8f0;
             --medium-gray: #94a3b8;
-            --dark-gray: #334155;
             --text-primary: #0f172a;
             --text-secondary: #475569;
             --border-color: #e2e8f0;
@@ -34,446 +27,216 @@
             --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.08);
             --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08);
         }
-
         body {
             font-family: 'Inter', sans-serif;
             background: var(--off-white);
             color: var(--text-primary);
             line-height: 1.4;
-            overflow-x: hidden;
             font-size: 0.85rem;
+            overflow-x: hidden;
         }
-
-        /* Modern Fixed Header */
+        /* Header */
         .main-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 64px;
-            background: var(--pure-white);
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 1.5rem;
-            z-index: 1000;
-            box-shadow: var(--shadow-sm);
+            position: fixed; top: 0; left: 0; right: 0; height: 64px;
+            background: var(--pure-white); border-bottom: 1px solid var(--border-color);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 1.5rem; z-index: 1000; box-shadow: var(--shadow-sm);
         }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-
-        .logo-icon {
-            width: 34px;
-            height: 34px;
-            background: var(--primary-blue);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .logo-icon i {
-            color: white;
-            font-size: 1rem;
-        }
-
-        .logo h2 {
-            font-size: 1rem;
-            font-weight: 700;
-        }
-
+        .logo { display: flex; align-items: center; gap: 0.8rem; }
+        .logo-icon { width: 34px; height: 34px; background: var(--primary-blue); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+        .logo-icon i { color: white; font-size: 1rem; }
+        .logo h2 { font-size: 1rem; font-weight: 700; }
         .animated-title-container {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--light-blue);
-            padding: 0.3rem 1rem;
-            border-radius: 30px;
+            position: absolute; left: 50%; transform: translateX(-50%);
+            background: var(--light-blue); padding: 0.3rem 1rem; border-radius: 30px;
             border: 1px solid var(--primary-blue);
         }
-
-        .animated-title {
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: var(--primary-blue);
-            white-space: nowrap;
-            animation: slideText 20s linear infinite;
-        }
-
+        .animated-title { font-size: 0.75rem; font-weight: 500; color: var(--primary-blue); white-space: nowrap; animation: slideText 20s linear infinite; }
         @keyframes slideText {
             0% { transform: translateX(100%); opacity: 0; }
             5% { transform: translateX(0); opacity: 1; }
             95% { transform: translateX(0); opacity: 1; }
             100% { transform: translateX(-100%); opacity: 0; }
         }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-
-        .notifications {
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--off-white);
-            border-radius: 10px;
-            cursor: pointer;
-            border: 1px solid var(--border-color);
-        }
-
-        .badge {
-            position: absolute;
-            top: -4px;
-            right: -4px;
-            background: var(--primary-red);
-            color: white;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            font-size: 0.6rem;
-            font-weight: 600;
-        }
-
-        .logout-btn {
-            background: var(--primary-blue);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 10px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            cursor: pointer;
-        }
-
-        .hamburger-menu {
-            position: relative;
-        }
-
-        .hamburger-btn {
-            width: 36px;
-            height: 36px;
-            background: var(--off-white);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-            cursor: pointer;
-        }
-
-        .hamburger-btn span {
-            width: 16px;
-            height: 2px;
-            background: var(--primary-blue);
-        }
-
-        /* Navigation Dropdown - simplified */
+        .header-right { display: flex; align-items: center; gap: 0.8rem; }
+        .notifications { position: relative; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: var(--off-white); border-radius: 10px; cursor: pointer; border: 1px solid var(--border-color); }
+        .badge { position: absolute; top: -4px; right: -4px; background: var(--primary-red); color: white; width: 16px; height: 16px; border-radius: 50%; font-size: 0.6rem; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+        .logout-btn { background: var(--primary-blue); color: white; border: none; padding: 0.5rem 1rem; border-radius: 10px; font-size: 0.8rem; font-weight: 500; display: flex; align-items: center; gap: 0.4rem; cursor: pointer; transition: 0.2s; }
+        .logout-btn:hover { background: var(--dark-blue); transform: translateY(-1px); }
+        .hamburger-menu { position: relative; }
+        .hamburger-btn { width: 36px; height: 36px; background: var(--off-white); border: 1px solid var(--border-color); border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer; }
+        .hamburger-btn span { width: 16px; height: 2px; background: var(--primary-blue); }
         .nav-dropdown {
-            position: absolute;
-            top: 45px;
-            right: 0;
-            width: 200px;
-            background: white;
-            border-radius: 14px;
-            padding: 0.8rem;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--border-color);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-8px);
-            transition: all 0.2s;
-            z-index: 1000;
+            position: absolute; top: 45px; right: 0; width: 200px; background: white;
+            border-radius: 14px; padding: 0.8rem; box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color); opacity: 0; visibility: hidden;
+            transform: translateY(-8px); transition: all 0.2s; z-index: 1000;
         }
-
-        .nav-dropdown.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .nav-single {
-            display: block;
-        }
-
+        .nav-dropdown.active { opacity: 1; visibility: visible; transform: translateY(0); }
         .nav-item-single {
-            background: var(--off-white);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 0.7rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.6rem;
-            font-weight: 500;
+            background: var(--off-white); border: 1px solid var(--border-color);
+            border-radius: 10px; padding: 0.7rem; text-align: center;
+            text-decoration: none; color: var(--text-primary); display: flex;
+            align-items: center; justify-content: center; gap: 0.6rem; font-weight: 500;
+            transition: 0.2s;
         }
-
-        .nav-item-single:hover {
-            background: var(--light-blue);
-            border-color: var(--primary-blue);
-        }
-
-        /* Sidebar (unchanged structure) */
+        .nav-item-single:hover { background: var(--light-blue); border-color: var(--primary-blue); }
+        /* Sidebar */
         .sidebar {
-            position: fixed;
-            top: 64px;
-            left: -280px;
-            width: 260px;
-            height: calc(100vh - 64px);
-            background: var(--pure-white);
-            border-right: 1px solid var(--border-color);
-            transition: left 0.3s ease;
-            z-index: 999;
-            overflow-y: auto;
+            position: fixed; top: 64px; left: -280px; width: 260px;
+            height: calc(100vh - 64px); background: var(--pure-white);
+            border-right: 1px solid var(--border-color); transition: left 0.3s ease;
+            z-index: 999; overflow-y: auto;
         }
-
-        .sidebar.active {
-            left: 0;
-        }
-
-        .sidebar-header {
-            padding: 1rem;
-            border-bottom: 1px solid var(--border-color);
-            background: var(--light-blue);
-        }
-
-        .sidebar-menu {
-            list-style: none;
-            padding: 0.8rem;
-        }
-
+        .sidebar.active { left: 0; }
+        .sidebar-header { padding: 1rem; border-bottom: 1px solid var(--border-color); background: var(--light-blue); }
+        .sidebar-menu { list-style: none; padding: 0.8rem; }
         .sidebar-menu li a {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            padding: 0.6rem 0.8rem;
-            color: var(--text-secondary);
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 500;
-            font-size: 0.8rem;
+            display: flex; align-items: center; gap: 0.8rem; padding: 0.6rem 0.8rem;
+            color: var(--text-secondary); text-decoration: none; border-radius: 8px;
+            font-weight: 500; font-size: 0.8rem; transition: 0.2s;
         }
-
-        .sidebar-menu li a.active {
-            background: var(--primary-blue);
-            color: white;
-        }
-
+        .sidebar-menu li a:hover { background: var(--light-blue); color: var(--primary-blue); }
+        .sidebar-menu li a.active { background: var(--primary-blue); color: white; }
         .sidebar-footer {
-            padding: 1rem;
-            background: var(--light-blue);
-            border-radius: 10px;
-            margin: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
+            padding: 1rem; background: var(--light-blue); border-radius: 10px;
+            margin: 1rem; display: flex; align-items: center; gap: 0.8rem;
         }
-
         .overlay {
-            display: none;
-            position: fixed;
-            top: 64px;
-            left: 0;
-            width: 100%;
-            height: calc(100vh - 64px);
-            background: rgba(0, 0, 0, 0.4);
+            display: none; position: fixed; top: 64px; left: 0;
+            width: 100%; height: calc(100vh - 64px); background: rgba(0,0,0,0.4);
             z-index: 998;
         }
-
-        .overlay.active {
-            display: block;
-        }
-
-        .main-content {
-            margin-top: 80px;
-            padding: 1.2rem;
-        }
-
-        /* Cards & tables - reduced font */
+        .overlay.active { display: block; }
+        .main-content { margin-top: 80px; padding: 1.2rem; }
+        /* Cards */
         .page-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            padding: 1rem 1.2rem;
-            background: white;
-            border-radius: 16px;
-            border: 1px solid var(--border-color);
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 1.5rem; padding: 1rem 1.2rem; background: white;
+            border-radius: 16px; border: 1px solid var(--border-color);
+            flex-wrap: wrap; gap: 1rem;
         }
-
-        .header-content h1 {
-            font-size: 1.3rem;
-            font-weight: 700;
-        }
-
+        .header-content h1 { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.2rem; }
+        .header-content p { font-size: 0.8rem; color: var(--text-secondary); }
         .btn {
-            padding: 0.5rem 1rem;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 0.8rem;
-            gap: 0.4rem;
+            padding: 0.5rem 1rem; border-radius: 10px; font-weight: 600;
+            font-size: 0.8rem; display: inline-flex; align-items: center;
+            gap: 0.5rem; cursor: pointer; transition: all 0.2s; border: none;
         }
-
-        .btn-sm {
-            padding: 0.3rem 0.7rem;
-            font-size: 0.7rem;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
+        .btn-primary { background: var(--primary-blue); color: white; }
+        .btn-primary:hover { background: var(--dark-blue); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+        .btn-secondary { background: var(--pure-white); color: var(--primary-blue); border: 1px solid var(--primary-blue); }
+        .btn-secondary:hover { background: var(--light-blue); }
+        .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-secondary); }
+        .btn-outline:hover { background: var(--off-white); }
+        .btn-sm { padding: 0.3rem 0.7rem; font-size: 0.7rem; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
         .stat-card {
-            background: white;
-            border-radius: 14px;
-            padding: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            cursor: pointer;
+            background: white; border-radius: 14px; padding: 1rem;
+            display: flex; align-items: center; gap: 0.8rem;
+            cursor: pointer; transition: 0.2s; border: 1px solid var(--border-color);
         }
-
-        .stat-icon {
-            width: 45px;
-            height: 45px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.3rem;
-            color: white;
-        }
-
-        .stat-info h3 {
-            font-size: 0.75rem;
-        }
-
-        .stat-info .stat-value {
-            font-size: 1.4rem;
-            font-weight: 700;
-        }
-
+        .stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--primary-blue); }
+        .stat-icon { width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; color: white; }
+        .stat-icon.blue { background: var(--primary-blue); }
+        .stat-icon.green { background: #10b981; }
+        .stat-icon.yellow { background: #f59e0b; }
+        .stat-icon.red { background: var(--primary-red); }
+        .stat-info h3 { font-size: 0.75rem; font-weight: 500; color: var(--text-secondary); }
+        .stat-info .stat-value { font-size: 1.4rem; font-weight: 700; color: var(--text-primary); line-height: 1.2; }
         .content-card {
-            background: white;
-            border-radius: 16px;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
+            background: white; border-radius: 16px; padding: 1rem;
+            margin-bottom: 1.5rem; border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+        .card-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 1rem; flex-wrap: wrap; gap: 0.8rem;
+        }
+        .card-header h3 { font-size: 1rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
+        .search-box {
+            display: flex; align-items: center; gap: 0.5rem;
+            background: var(--off-white); border: 1px solid var(--border-color);
+            border-radius: 10px; padding: 0.3rem 0.7rem;
+        }
+        .search-box input { border: none; background: transparent; outline: none; font-size: 0.8rem; min-width: 160px; }
+        select { padding: 0.3rem 0.7rem; border-radius: 10px; border: 1px solid var(--border-color); background: var(--off-white); font-size: 0.8rem; }
+        .data-table { width: 100%; border-collapse: collapse; }
+        .data-table th { text-align: left; padding: 0.7rem; background: var(--light-blue); color: var(--primary-blue); font-weight: 600; border-bottom: 2px solid var(--primary-blue); font-size: 0.75rem; }
+        .data-table td { padding: 0.7rem; border-bottom: 1px solid var(--border-color); color: var(--text-secondary); font-size: 0.8rem; }
+        .data-table tbody tr:hover { background: var(--off-white); }
+        .status-badge { padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.7rem; font-weight: 600; display: inline-block; }
+        .status-sent { background: var(--light-blue); color: var(--primary-blue); }
+        .status-draft { background: #fff3cd; color: #856404; }
+        .status-pending { background: var(--light-red); color: var(--primary-red); }
+        .table-actions { display: flex; gap: 0.4rem; }
+        .categories-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+        .category-item {
+            background: var(--off-white); border-radius: 12px; padding: 1rem;
+            text-align: center; cursor: pointer; transition: 0.2s;
             border: 1px solid var(--border-color);
         }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-            gap: 0.8rem;
+        .category-item:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--primary-blue); }
+        .category-count { font-size: 1.3rem; font-weight: 700; color: var(--primary-blue); }
+        /* Modal */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 2000;
+            align-items: center; justify-content: center; padding: 1rem;
         }
-
-        .data-table th {
-            padding: 0.7rem;
-            font-size: 0.75rem;
-        }
-
-        .data-table td {
-            padding: 0.7rem;
-            font-size: 0.8rem;
-        }
-
-        .categories-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1rem;
-        }
-
-        .category-item {
-            background: var(--off-white);
-            border-radius: 12px;
-            padding: 1rem;
-            text-align: center;
-            cursor: pointer;
-        }
-
-        .category-count {
-            font-size: 1.3rem;
-            font-weight: 700;
-        }
-
-        /* Modal responsive */
+        .modal.active { display: flex; }
         .modal-content {
-            max-width: 800px;
+            background: white; border-radius: 20px; width: 100%; max-width: 800px;
+            max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg);
         }
-
-        .form-control, select, .tool-btn {
-            font-size: 0.8rem;
-            padding: 0.5rem 0.8rem;
+        .modal-header { padding: 1rem 1.5rem; background: var(--light-blue); border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+        .modal-header h3 { font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem; color: var(--primary-blue); }
+        .modal-close { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--primary-blue); width: 32px; height: 32px; border-radius: 8px; }
+        .modal-close:hover { background: var(--primary-red); color: white; }
+        .modal-body { padding: 1.5rem; }
+        .modal-footer { padding: 1rem 1.5rem; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end; gap: 1rem; background: var(--off-white); }
+        .form-group { margin-bottom: 1rem; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        label { display: block; margin-bottom: 0.3rem; font-weight: 500; font-size: 0.8rem; }
+        .form-control { width: 100%; padding: 0.5rem 0.8rem; border-radius: 10px; border: 1px solid var(--border-color); font-size: 0.85rem; background: var(--off-white); }
+        .form-control:focus { outline: none; border-color: var(--primary-blue); background: white; box-shadow: 0 0 0 2px var(--light-blue); }
+        textarea.form-control { resize: vertical; min-height: 120px; }
+        .editor-toolbar { display: flex; gap: 0.5rem; margin-bottom: 0.8rem; flex-wrap: wrap; }
+        .tool-btn { background: var(--off-white); border: 1px solid var(--border-color); padding: 0.3rem 0.7rem; border-radius: 8px; cursor: pointer; font-size: 0.75rem; display: inline-flex; align-items: center; gap: 0.3rem; }
+        .tool-btn:hover { background: var(--light-blue); }
+        .toast {
+            position: fixed; top: 80px; right: 20px; padding: 0.8rem 1.2rem;
+            border-radius: 12px; background: white; box-shadow: var(--shadow-lg);
+            display: flex; align-items: center; gap: 0.8rem; z-index: 3000;
+            border-left: 4px solid; animation: slideIn 0.2s ease;
         }
-
+        .toast.success { border-left-color: #10b981; }
+        .toast.error { border-left-color: var(--primary-red); }
+        .toast.info { border-left-color: var(--primary-blue); }
+        .toast.warning { border-left-color: #f59e0b; }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         @media (max-width: 768px) {
-            .stats-grid, .categories-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            .animated-title-container {
-                display: none;
-            }
+            .stats-grid, .categories-grid { grid-template-columns: 1fr 1fr; }
+            .animated-title-container { display: none; }
+            .form-row { grid-template-columns: 1fr; }
         }
         @media (max-width: 576px) {
-            .stats-grid, .categories-grid {
-                grid-template-columns: 1fr;
-            }
+            .stats-grid, .categories-grid { grid-template-columns: 1fr; }
+            .main-content { padding: 1rem; }
         }
     </style>
 </head>
 <body>
     <header class="main-header">
-        <div class="logo">
-            <div class="logo-icon"><i class="fas fa-briefcase"></i></div>
-            <h2>HR-Admin Pro</h2>
-        </div>
-        <div class="animated-title-container">
-            <div class="animated-title">HR Letters Management | Templates | Employee Communications</div>
-        </div>
+        <div class="logo"><div class="logo-icon"><i class="fas fa-briefcase"></i></div><h2>HR-Admin Pro</h2></div>
+        <div class="animated-title-container"><div class="animated-title">HR Letters Management | Templates | Employee Communications</div></div>
         <div class="header-right">
-            <div class="hamburger-menu" style="margin-right: 0.2rem;">
-                <div class="hamburger-btn" id="menuToggle" onclick="toggleSidebar()">
-                    <span></span><span></span><span></span>
-                </div>
-            </div>
-            <div class="notifications" onclick="showToast('No new notifications', 'info')">
-                <i class="fas fa-bell"></i>
-                <span class="badge">3</span>
-            </div>
+            <div class="hamburger-menu" style="margin-right:0.2rem;"><div class="hamburger-btn" id="menuToggle" onclick="toggleSidebar()"><span></span><span></span><span></span></div></div>
+            <div class="notifications" onclick="showToast('No new notifications', 'info')"><i class="fas fa-bell"></i><span class="badge">3</span></div>
             <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i><span>Logout</span></button>
             <div class="hamburger-menu">
-                <div class="hamburger-btn" id="hamburgerBtn" onclick="toggleHamburger()">
-                    <span></span><span></span><span></span>
-                </div>
-                <div class="nav-dropdown" id="navDropdown">
-                    <div class="nav-single">
-                        <a href="dashboard.html" class="nav-item-single"><i class="fas fa-home"></i> Home Dashboard</a>
-                    </div>
-                </div>
+                <div class="hamburger-btn" id="hamburgerBtn" onclick="toggleHamburger()"><span></span><span></span><span></span></div>
+                <div class="nav-dropdown" id="navDropdown"><div class="nav-single"><a href="dashboard.html" class="nav-item-single"><i class="fas fa-home"></i> Home Dashboard</a></div></div>
             </div>
         </div>
     </header>
@@ -486,23 +249,17 @@
             <li><a href="employees.html"><i class="fas fa-users"></i> Employees</a></li>
             <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
         </ul>
-        <div class="sidebar-footer">
-            <img src="https://ui-avatars.com/api/?name=Admin+User&background=1e40af&color=fff" width="32" height="32" style="border-radius: 50%;">
-            <div><h4>Admin User</h4><p>HR Manager</p></div>
-        </div>
+        <div class="sidebar-footer"><img src="https://ui-avatars.com/api/?name=Admin+User&background=1e40af&color=fff" width="32" height="32" style="border-radius:50%;"><div><h4>Admin User</h4><p>HR Manager</p></div></div>
     </div>
     <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 
     <main class="main-content">
         <div class="page-header">
             <div class="header-content"><h1>HR Letters & Templates</h1><p>Manage letters, templates, employee communications</p></div>
-            <div class="header-actions">
-                <button class="btn btn-primary" onclick="showModal('letterModal')"><i class="fas fa-plus"></i> Create Letter</button>
-                <button class="btn btn-secondary" onclick="showModal('templateModal')"><i class="fas fa-layer-group"></i> Templates</button>
-            </div>
+            <div class="header-actions"><button class="btn btn-primary" onclick="openCreateLetter()"><i class="fas fa-plus"></i> Create Letter</button><button class="btn btn-secondary" onclick="showModal('templateModal')"><i class="fas fa-layer-group"></i> Templates</button></div>
         </div>
 
-        <div class="stats-grid" id="statsGrid">
+        <div class="stats-grid">
             <div class="stat-card" onclick="filterLetters('sent')"><div class="stat-icon blue"><i class="fas fa-envelope"></i></div><div class="stat-info"><h3>Letters Sent</h3><div class="stat-value" id="sentCount">0</div></div></div>
             <div class="stat-card" onclick="filterLetters('delivered')"><div class="stat-icon green"><i class="fas fa-check-circle"></i></div><div class="stat-info"><h3>Delivered</h3><div class="stat-value" id="deliveredCount">0</div></div></div>
             <div class="stat-card" onclick="filterLetters('pending')"><div class="stat-icon yellow"><i class="fas fa-clock"></i></div><div class="stat-info"><h3>Pending</h3><div class="stat-value" id="pendingCount">0</div></div></div>
@@ -512,7 +269,7 @@
         <div class="content-card">
             <div class="card-header">
                 <h3><i class="fas fa-envelope-open-text"></i> Recent HR Letters</h3>
-                <div class="chart-actions" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                     <div class="search-box"><i class="fas fa-search"></i><input type="text" placeholder="Search..." id="searchInput" onkeyup="searchLetters()"></div>
                     <select id="statusFilter" onchange="filterLetters(this.value)"><option value="all">All</option><option value="sent">Sent</option><option value="draft">Draft</option><option value="pending">Pending</option></select>
                     <button class="btn btn-outline btn-sm" onclick="exportLettersCSV()"><i class="fas fa-download"></i> Export CSV</button>
@@ -534,22 +291,23 @@
         </div>
     </main>
 
-    <!-- Modals: letter, template, preview, add-template -->
-    <div id="letterModal" class="modal"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-plus-circle"></i> Create Letter</h3><button class="modal-close" onclick="closeModal('letterModal')">&times;</button></div><div class="modal-body"><form id="letterForm"><div class="form-row"><div class="form-group"><label>Letter Type</label><select class="form-control" id="letterType" required></select></div><div class="form-group"><label>Employee</label><input type="text" class="form-control" id="employeeName" placeholder="Employee name" required></div></div><div class="form-row"><div class="form-group"><label>Date</label><input type="date" class="form-control" id="letterDate" required></div><div class="form-group"><label>Ref Number</label><input type="text" class="form-control" id="refNumber" placeholder="HR/LTR/2024/xxx"></div></div><div class="form-group"><label>Subject</label><input type="text" class="form-control" id="letterSubject" required></div><div class="form-group"><label>Content</label><div class="editor-toolbar"><button type="button" class="tool-btn" onclick="insertVariable('{employee_name}')"><i class="fas fa-user"></i> Name</button><button type="button" class="tool-btn" onclick="insertVariable('{date}')"><i class="fas fa-calendar"></i> Date</button></div><textarea class="form-control" id="letterContent" rows="8" required></textarea></div></form></div><div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('letterModal')">Cancel</button><button class="btn btn-secondary" onclick="saveAsDraft()">Save Draft</button><button class="btn btn-primary" onclick="previewLetter()">Preview & Send</button></div></div></div>
+    <!-- Modals -->
+    <div id="letterModal" class="modal"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-plus-circle"></i> Create Letter</h3><button class="modal-close" onclick="closeModal('letterModal')">&times;</button></div><div class="modal-body"><form id="letterForm"><div class="form-row"><div class="form-group"><label>Letter Type</label><select class="form-control" id="letterType" required></select></div><div class="form-group"><label>Employee</label><input type="text" class="form-control" id="employeeName" placeholder="Employee name" required></div></div><div class="form-row"><div class="form-group"><label>Date</label><input type="date" class="form-control" id="letterDate" required></div><div class="form-group"><label>Ref Number</label><input type="text" class="form-control" id="refNumber" placeholder="Auto-generated"></div></div><div class="form-group"><label>Subject</label><input type="text" class="form-control" id="letterSubject" required></div><div class="form-group"><label>Content</label><div class="editor-toolbar"><button type="button" class="tool-btn" onclick="insertVariable('{employee_name}')"><i class="fas fa-user"></i> Name</button><button type="button" class="tool-btn" onclick="insertVariable('{date}')"><i class="fas fa-calendar"></i> Date</button></div><textarea class="form-control" id="letterContent" rows="8" required></textarea></div></form></div><div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('letterModal')">Cancel</button><button class="btn btn-secondary" onclick="saveAsDraft()">Save Draft</button><button class="btn btn-primary" onclick="previewAndSend()">Preview & Send</button></div></div></div>
 
     <div id="templateModal" class="modal"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-layer-group"></i> Template Gallery</h3><button class="modal-close" onclick="closeModal('templateModal')">&times;</button></div><div class="modal-body"><div class="search-box" style="margin-bottom:1rem"><i class="fas fa-search"></i><input type="text" id="templateSearch" placeholder="Search templates..." onkeyup="searchTemplates()"></div><div style="text-align:right; margin-bottom:0.8rem"><button class="btn btn-primary btn-sm" onclick="showAddTemplateModal()"><i class="fas fa-plus"></i> New Template</button></div><div class="categories-grid" id="templatesContainer"></div></div></div></div>
 
-    <div id="previewModal" class="modal"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-eye"></i> Preview</h3><button class="modal-close" onclick="closeModal('previewModal')">&times;</button></div><div class="modal-body"><div id="previewContent" style="white-space: pre-line;"></div></div><div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('previewModal')">Close</button><button class="btn btn-primary" id="confirmSendBtn" onclick="confirmSendLetter()">Send Letter</button></div></div></div>
+    <div id="previewModal" class="modal"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-eye"></i> Preview Letter</h3><button class="modal-close" onclick="closeModal('previewModal')">&times;</button></div><div class="modal-body"><div id="previewContent" style="white-space: pre-line;"></div></div><div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('previewModal')">Close</button><button class="btn btn-primary" id="confirmSendBtn" onclick="finalizeSend()">Send Letter</button></div></div></div>
 
-    <div id="addTemplateModal" class="modal"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-plus"></i> Add Custom Template</h3><button class="modal-close" onclick="closeModal('addTemplateModal')">&times;</button></div><div class="modal-body"><div class="form-group"><label>Template Name</label><input type="text" id="newTemplateName" class="form-control" placeholder="e.g., Internship Letter"></div><div class="form-group"><label>Icon Class (FontAwesome)</label><input type="text" id="newTemplateIcon" class="form-control" value="fas fa-file-alt"></div><div class="form-group"><label>Color (hex)</label><input type="color" id="newTemplateColor" class="form-control" value="#3b82f6"></div><div class="form-group"><label>Content</label><textarea id="newTemplateContent" rows="6" class="form-control" placeholder="Write letter template with variables like {employee_name}, {date}, {position}"></textarea></div></div><div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('addTemplateModal')">Cancel</button><button class="btn btn-primary" onclick="saveNewTemplate()">Add Template</button></div></div></div>
+    <div id="addTemplateModal" class="modal"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-plus"></i> Add Custom Template</h3><button class="modal-close" onclick="closeModal('addTemplateModal')">&times;</button></div><div class="modal-body"><div class="form-group"><label>Template Name</label><input type="text" id="newTemplateName" class="form-control" placeholder="e.g., Internship Letter"></div><div class="form-group"><label>Icon Class</label><input type="text" id="newTemplateIcon" class="form-control" value="fas fa-file-alt"></div><div class="form-group"><label>Color (hex)</label><input type="color" id="newTemplateColor" class="form-control" value="#3b82f6"></div><div class="form-group"><label>Content</label><textarea id="newTemplateContent" rows="6" class="form-control" placeholder="Write template with variables like {employee_name}, {date}"></textarea></div></div><div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('addTemplateModal')">Cancel</button><button class="btn btn-primary" onclick="saveNewTemplate()">Add Template</button></div></div></div>
 
     <div id="toastContainer"></div>
 
     <script>
-        // ---------- DATA & LOCALSTORAGE ----------
+        // Data & LocalStorage
         let letters = [];
         let templates = [];
-        let currentPreviewLetter = null;
+        let editingId = null;          // if editing, store id
+        let pendingLetter = null;       // for preview
 
         const defaultTemplates = [
             { id: 'appointment', name: 'Appointment Letter', icon: 'fas fa-user-plus', color: '#1e40af', content: 'Dear {employee_name},\n\nWe are pleased to offer you the position of {position} at our company, effective {date}.\n\nSincerely,\nHR Department' },
@@ -562,20 +320,27 @@
 
         function loadData() {
             const storedLetters = localStorage.getItem('hr_letters');
-            if(storedLetters) letters = JSON.parse(storedLetters);
+            if (storedLetters) letters = JSON.parse(storedLetters);
             else {
                 letters = [
-                    { id: 1, ref: 'HR/LTR/2024/156', employee: 'John Doe', type: 'Promotion Letter', subject: 'Promotion to Senior Manager', date: '2024-12-01', status: 'sent', content: 'Sample content' },
-                    { id: 2, ref: 'HR/LTR/2024/157', employee: 'Jane Smith', type: 'Appointment Letter', subject: 'Appointment as Lead', date: '2024-12-03', status: 'draft', content: 'Draft' },
-                    { id: 3, ref: 'HR/LTR/2024/158', employee: 'Mike Johnson', type: 'Warning Letter', subject: 'Attendance Warning', date: '2024-12-04', status: 'pending', content: 'Pending content' },
-                    { id: 4, ref: 'HR/LTR/2024/159', employee: 'Sarah Williams', type: 'Experience Letter', subject: 'Experience Certificate', date: '2024-11-28', status: 'sent', content: 'Experience details' }
+                    { id: 1, ref: 'HR/LTR/2024/156', employee: 'John Doe', type: 'Promotion Letter', subject: 'Promotion to Senior Manager', date: '2024-12-01', status: 'sent', content: 'Congratulations on your promotion...' },
+                    { id: 2, ref: 'HR/LTR/2024/157', employee: 'Jane Smith', type: 'Appointment Letter', subject: 'Appointment as Lead', date: '2024-12-03', status: 'draft', content: 'We are pleased to appoint you...' },
+                    { id: 3, ref: 'HR/LTR/2024/158', employee: 'Mike Johnson', type: 'Warning Letter', subject: 'Attendance Warning', date: '2024-12-04', status: 'pending', content: 'This is a warning regarding attendance...' },
+                    { id: 4, ref: 'HR/LTR/2024/159', employee: 'Sarah Williams', type: 'Experience Letter', subject: 'Experience Certificate', date: '2024-11-28', status: 'sent', content: 'Work experience certificate...' }
                 ];
                 saveLetters();
             }
             const storedTemplates = localStorage.getItem('hr_templates');
-            if(storedTemplates) templates = JSON.parse(storedTemplates);
+            if (storedTemplates) templates = JSON.parse(storedTemplates);
             else templates = [...defaultTemplates];
             saveTemplates();
+            refreshUI();
+        }
+
+        function saveLetters() { localStorage.setItem('hr_letters', JSON.stringify(letters)); }
+        function saveTemplates() { localStorage.setItem('hr_templates', JSON.stringify(templates)); }
+
+        function refreshUI() {
             renderStats();
             renderLettersTable();
             renderTemplatesGallery();
@@ -583,37 +348,44 @@
             populateLetterTypeSelect();
         }
 
-        function saveLetters() { localStorage.setItem('hr_letters', JSON.stringify(letters)); }
-        function saveTemplates() { localStorage.setItem('hr_templates', JSON.stringify(templates)); }
-
         function renderStats() {
-            const sent = letters.filter(l=>l.status==='sent').length;
-            const delivered = letters.filter(l=>l.status==='delivered').length;
-            const pending = letters.filter(l=>l.status==='pending').length;
-            const draft = letters.filter(l=>l.status==='draft').length;
+            const sent = letters.filter(l => l.status === 'sent').length;
+            const delivered = letters.filter(l => l.status === 'sent').length; // treat sent as delivered
+            const pending = letters.filter(l => l.status === 'pending').length;
+            const draft = letters.filter(l => l.status === 'draft').length;
             document.getElementById('sentCount').innerText = sent;
             document.getElementById('deliveredCount').innerText = delivered;
             document.getElementById('pendingCount').innerText = pending;
             document.getElementById('draftCount').innerText = draft;
         }
 
-        function renderLettersTable(filterStatus = 'all', search='') {
+        function renderLettersTable(filterStatus = 'all', search = '') {
             const tbody = document.getElementById('lettersTableBody');
             tbody.innerHTML = '';
             let filtered = letters.filter(l => {
-                if(filterStatus !== 'all' && l.status !== filterStatus) return false;
-                if(search && !l.employee.toLowerCase().includes(search) && !l.subject.toLowerCase().includes(search) && !l.ref.toLowerCase().includes(search)) return false;
+                if (filterStatus !== 'all' && l.status !== filterStatus) return false;
+                if (search && !l.employee.toLowerCase().includes(search) && !l.subject.toLowerCase().includes(search) && !l.ref.toLowerCase().includes(search)) return false;
                 return true;
             });
             filtered.forEach(letter => {
                 const row = tbody.insertRow();
-                row.dataset.status = letter.status;
-                row.innerHTML = `<td>${letter.ref}</td><td>${letter.employee}</td><td>${letter.type}</td><td>${letter.subject}</td><td>${letter.date}</td><td><span class="status-badge status-${letter.status}">${letter.status}</span></td>
-                <td><div class="table-actions"><button class="btn btn-sm btn-primary" onclick="viewLetter(${letter.id})"><i class="fas fa-eye"></i></button>
-                <button class="btn btn-sm btn-outline" onclick="editLetter(${letter.id})"><i class="fas fa-edit"></i></button>
-                <button class="btn btn-sm btn-outline" onclick="deleteLetter(${letter.id})"><i class="fas fa-trash"></i></button></div></td>`;
+                row.innerHTML = `
+                    <td>${escapeHtml(letter.ref)}</td>
+                    <td>${escapeHtml(letter.employee)}</td>
+                    <td>${escapeHtml(letter.type)}</td>
+                    <td>${escapeHtml(letter.subject)}</td>
+                    <td>${letter.date}</td>
+                    <td><span class="status-badge status-${letter.status}">${letter.status}</span></td>
+                    <td><div class="table-actions">
+                        <button class="btn btn-sm btn-primary" onclick="viewLetter(${letter.id})"><i class="fas fa-eye"></i></button>
+                        <button class="btn btn-sm btn-outline" onclick="editLetter(${letter.id})"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-sm btn-outline" onclick="deleteLetter(${letter.id})"><i class="fas fa-trash"></i></button>
+                    </div></td>
+                `;
             });
         }
+
+        function escapeHtml(str) { return str.replace(/[&<>]/g, function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
 
         function renderTemplatesGallery() {
             const container = document.getElementById('templatesContainer');
@@ -622,8 +394,7 @@
                 const card = document.createElement('div');
                 card.className = 'category-item';
                 card.onclick = () => useTemplate(tpl.id);
-                card.innerHTML = `<div style="width:45px;height:45px;background:${tpl.color}20;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 0.5rem;"><i class="${tpl.icon}" style="color:${tpl.color};font-size:1.3rem;"></i></div>
-                <h4>${tpl.name}</h4><small style="color:var(--medium-gray)">Click to use</small>`;
+                card.innerHTML = `<div style="width:45px;height:45px;background:${tpl.color}20;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 0.5rem;"><i class="${tpl.icon}" style="color:${tpl.color};font-size:1.3rem;"></i></div><h4>${escapeHtml(tpl.name)}</h4><small>Click to use</small>`;
                 container.appendChild(card);
             });
         }
@@ -631,13 +402,13 @@
         function renderCategoryPreview() {
             const container = document.getElementById('categoriesPreview');
             container.innerHTML = '';
-            const topTypes = [...new Map(templates.map(t=>[t.id, t])).values()].slice(0,4);
-            topTypes.forEach(t => {
-                const count = letters.filter(l=>l.type.toLowerCase().includes(t.name.toLowerCase())).length;
+            const topTemplates = templates.slice(0,4);
+            topTemplates.forEach(t => {
+                const count = letters.filter(l => l.type.toLowerCase().includes(t.name.toLowerCase())).length;
                 const div = document.createElement('div');
                 div.className = 'category-item';
                 div.onclick = () => useTemplate(t.id);
-                div.innerHTML = `<div class="category-count">${count}</div><h4>${t.name}</h4><p>Quick use</p>`;
+                div.innerHTML = `<div class="category-count">${count}</div><h4>${escapeHtml(t.name)}</h4><p>Quick use</p>`;
                 container.appendChild(div);
             });
         }
@@ -645,12 +416,12 @@
         function populateLetterTypeSelect() {
             const select = document.getElementById('letterType');
             select.innerHTML = '<option value="">Select Type</option>';
-            templates.forEach(t => { select.innerHTML += `<option value="${t.id}">${t.name}</option>`; });
+            templates.forEach(t => { select.innerHTML += `<option value="${t.id}">${escapeHtml(t.name)}</option>`; });
         }
 
         function useTemplate(templateId) {
-            const tpl = templates.find(t=>t.id===templateId);
-            if(tpl){
+            const tpl = templates.find(t => t.id === templateId);
+            if (tpl) {
                 document.getElementById('letterType').value = tpl.id;
                 document.getElementById('letterSubject').value = tpl.name;
                 document.getElementById('letterContent').value = tpl.content;
@@ -665,160 +436,151 @@
             const icon = document.getElementById('newTemplateIcon').value.trim();
             const color = document.getElementById('newTemplateColor').value;
             const content = document.getElementById('newTemplateContent').value;
-            if(!name) { showToast('Template name required','warning'); return; }
+            if (!name) { showToast('Template name required', 'warning'); return; }
             const newId = 'custom_' + Date.now();
             templates.push({ id: newId, name, icon: icon || 'fas fa-file-alt', color, content });
             saveTemplates();
-            renderTemplatesGallery();
-            populateLetterTypeSelect();
+            refreshUI();
             closeModal('addTemplateModal');
-            showToast('Template added!','success');
+            showToast('Template added!', 'success');
         }
 
-        function showAddTemplateModal() { showModal('addTemplateModal'); }
-
-        function saveAsDraft() {
-            const newLetter = buildLetterFromForm('draft');
-            if(newLetter) { letters.push(newLetter); saveLetters(); renderLettersTable(); renderStats(); closeModal('letterModal'); document.getElementById('letterForm').reset(); showToast('Draft saved','info'); }
+        function openCreateLetter() { editingId = null; resetLetterForm(); showModal('letterModal'); }
+        function resetLetterForm() {
+            document.getElementById('letterForm').reset();
+            setCurrentDate();
+            document.getElementById('employeeName').value = '';
+            document.getElementById('letterSubject').value = '';
+            document.getElementById('letterContent').value = '';
+            document.getElementById('letterType').value = '';
         }
 
         function buildLetterFromForm(status) {
             const typeId = document.getElementById('letterType').value;
-            const tpl = templates.find(t=>t.id===typeId);
+            const tpl = templates.find(t => t.id === typeId);
             const typeName = tpl ? tpl.name : 'General';
             const employee = document.getElementById('employeeName').value.trim();
             const subject = document.getElementById('letterSubject').value.trim();
             const content = document.getElementById('letterContent').value;
             const date = document.getElementById('letterDate').value;
             let ref = document.getElementById('refNumber').value.trim();
-            if(!ref) ref = `HR/LTR/${new Date().getFullYear()}/${Math.floor(Math.random()*1000)}`;
-            if(!employee || !subject || !content) { showToast('Please fill employee, subject, content','warning'); return null; }
-            return { id: Date.now(), ref, employee, type: typeName, subject, date, status, content };
+            if (!ref) ref = `HR/LTR/${new Date().getFullYear()}/${Math.floor(Math.random()*900+100)}`;
+            if (!employee || !subject || !content) { showToast('Please fill employee, subject, content', 'warning'); return null; }
+            return { id: editingId || Date.now(), ref, employee, type: typeName, subject, date, status, content };
         }
 
-        let pendingSendLetter = null;
-        function previewLetter() {
+        function saveAsDraft() {
+            const letter = buildLetterFromForm('draft');
+            if (!letter) return;
+            if (editingId) {
+                const index = letters.findIndex(l => l.id === editingId);
+                if (index !== -1) letters[index] = { ...letter, id: editingId };
+            } else {
+                letters.push(letter);
+            }
+            saveLetters();
+            refreshUI();
+            closeModal('letterModal');
+            editingId = null;
+            showToast('Draft saved', 'info');
+        }
+
+        function previewAndSend() {
             const letter = buildLetterFromForm('pending');
-            if(!letter) return;
-            pendingSendLetter = letter;
-            document.getElementById('previewContent').innerHTML = `<h3 style="color:var(--primary-blue)">${letter.subject}</h3><hr><div style="white-space:pre-line;">${letter.content.replace(/\n/g,'<br>')}</div><p><strong>To:</strong> ${letter.employee}<br><strong>Ref:</strong> ${letter.ref}<br><strong>Date:</strong> ${letter.date}</p>`;
+            if (!letter) return;
+            pendingLetter = letter;
+            document.getElementById('previewContent').innerHTML = `<h3 style="color:var(--primary-blue)">${escapeHtml(letter.subject)}</h3><hr><div style="white-space:pre-line;">${escapeHtml(letter.content).replace(/\n/g,'<br>')}</div><p><strong>To:</strong> ${escapeHtml(letter.employee)}<br><strong>Ref:</strong> ${escapeHtml(letter.ref)}<br><strong>Date:</strong> ${letter.date}</p>`;
             closeModal('letterModal');
             showModal('previewModal');
         }
 
-        function confirmSendLetter() {
-            if(pendingSendLetter){
-                pendingSendLetter.status = 'sent';
-                letters.push(pendingSendLetter);
-                saveLetters();
-                renderLettersTable();
-                renderStats();
-                closeModal('previewModal');
-                showToast('Letter sent successfully','success');
-                pendingSendLetter = null;
-                document.getElementById('letterForm').reset();
-                setCurrentDate();
+        function finalizeSend() {
+            if (!pendingLetter) return;
+            if (editingId) {
+                const index = letters.findIndex(l => l.id === editingId);
+                if (index !== -1) letters[index] = { ...pendingLetter, status: 'sent', id: editingId };
+            } else {
+                letters.push({ ...pendingLetter, status: 'sent' });
             }
+            saveLetters();
+            refreshUI();
+            closeModal('previewModal');
+            editingId = null;
+            pendingLetter = null;
+            showToast('Letter sent successfully', 'success');
         }
 
         function deleteLetter(id) {
-            if(confirm('Delete this letter?')){
-                letters = letters.filter(l=>l.id !== id);
+            if (confirm('Delete this letter permanently?')) {
+                letters = letters.filter(l => l.id !== id);
                 saveLetters();
-                renderLettersTable();
-                renderStats();
-                showToast('Deleted','info');
+                refreshUI();
+                showToast('Deleted', 'info');
             }
         }
 
-        function editLetter(id){
-            const letter = letters.find(l=>l.id===id);
-            if(letter){
-                showModal('letterModal');
-                document.getElementById('employeeName').value = letter.employee;
-                document.getElementById('letterSubject').value = letter.subject;
-                document.getElementById('letterContent').value = letter.content;
-                document.getElementById('letterDate').value = letter.date;
-                document.getElementById('refNumber').value = letter.ref;
-                const tpl = templates.find(t=>t.name === letter.type);
-                if(tpl) document.getElementById('letterType').value = tpl.id;
-                document.getElementById('letterForm').dataset.editId = letter.id;
-                const originalSend = window.confirmSendLetter;
-                window.confirmSendLetter = function(){
-                    const updated = buildLetterFromForm('sent');
-                    if(updated){
-                        updated.id = letter.id;
-                        const index = letters.findIndex(l=>l.id===letter.id);
-                        letters[index] = updated;
-                        saveLetters();
-                        renderLettersTable();
-                        renderStats();
-                        closeModal('previewModal');
-                        closeModal('letterModal');
-                        showToast('Letter updated','success');
-                        window.confirmSendLetter = originalSend;
-                        pendingSendLetter = null;
-                    }
-                };
-                window.previewLetter = function(){
-                    const updated = buildLetterFromForm('pending');
-                    if(updated){
-                        pendingSendLetter = updated;
-                        document.getElementById('previewContent').innerHTML = `<h3>${updated.subject}</h3><div>${updated.content.replace(/\n/g,'<br>')}</div>`;
-                        closeModal('letterModal');
-                        showModal('previewModal');
-                    }
-                };
-            }
+        function editLetter(id) {
+            const letter = letters.find(l => l.id === id);
+            if (!letter) return;
+            editingId = id;
+            document.getElementById('employeeName').value = letter.employee;
+            document.getElementById('letterSubject').value = letter.subject;
+            document.getElementById('letterContent').value = letter.content;
+            document.getElementById('letterDate').value = letter.date;
+            document.getElementById('refNumber').value = letter.ref;
+            const tpl = templates.find(t => t.name === letter.type);
+            if (tpl) document.getElementById('letterType').value = tpl.id;
+            else document.getElementById('letterType').value = '';
+            showModal('letterModal');
         }
 
-        function viewLetter(id){
-            const letter = letters.find(l=>l.id===id);
-            if(letter){
-                document.getElementById('previewContent').innerHTML = `<h3>${letter.subject}</h3><hr><div>${letter.content.replace(/\n/g,'<br>')}</div><p><strong>Status:</strong> ${letter.status}</p>`;
+        function viewLetter(id) {
+            const letter = letters.find(l => l.id === id);
+            if (letter) {
+                document.getElementById('previewContent').innerHTML = `<h3>${escapeHtml(letter.subject)}</h3><hr><div style="white-space:pre-line;">${escapeHtml(letter.content).replace(/\n/g,'<br>')}</div><p><strong>Status:</strong> ${letter.status}</p>`;
                 showModal('previewModal');
+                document.getElementById('confirmSendBtn').style.display = 'none'; // hide send button on view
+                const originalSend = document.getElementById('confirmSendBtn').onclick;
+                document.getElementById('confirmSendBtn').onclick = () => closeModal('previewModal');
+                setTimeout(() => { document.getElementById('confirmSendBtn').onclick = finalizeSend; }, 100);
             }
         }
 
-        function searchLetters(){ const search = document.getElementById('searchInput').value.toLowerCase(); renderLettersTable(document.getElementById('statusFilter').value, search); }
-        function filterLetters(status){ renderLettersTable(status, document.getElementById('searchInput').value.toLowerCase()); }
-        function searchTemplates(){ const term = document.getElementById('templateSearch').value.toLowerCase(); document.querySelectorAll('#templatesContainer .category-item').forEach(card=>{ card.style.display = card.innerText.toLowerCase().includes(term) ? '' : 'none'; }); }
-
-        function exportLettersCSV(){
-            let filtered = letters;
-            const rows = [['Ref','Employee','Type','Subject','Date','Status']];
-            filtered.forEach(l=>rows.push([l.ref,l.employee,l.type,l.subject,l.date,l.status]));
-            const csv = rows.map(r=>r.join(',')).join('\n');
-            const blob = new Blob([csv],{type:'text/csv'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='hr_letters.csv'; a.click();
-            showToast('Exported CSV','success');
+        // Filters & helpers
+        function searchLetters() { const search = document.getElementById('searchInput').value.toLowerCase(); renderLettersTable(document.getElementById('statusFilter').value, search); }
+        function filterLetters(status) { 
+            if (status === 'delivered') status = 'sent';
+            renderLettersTable(status, document.getElementById('searchInput').value.toLowerCase()); 
         }
-
-        function generateFullReport(){
-            const total = letters.length;
-            const sent = letters.filter(l=>l.status==='sent').length;
-            const draft = letters.filter(l=>l.status==='draft').length;
-            let reportText = `HR LETTERS REPORT\nTotal: ${total}\nSent: ${sent}\nDraft: ${draft}\nPending: ${letters.filter(l=>l.status==='pending').length}\n\nDetails:\n`;
-            letters.forEach(l=>{ reportText += `${l.ref} | ${l.employee} | ${l.type} | ${l.status}\n`; });
-            const blob = new Blob([reportText],{type:'text/plain'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='hr_report.txt'; a.click();
-            showToast('Report downloaded','success');
+        function searchTemplates() { const term = document.getElementById('templateSearch').value.toLowerCase(); document.querySelectorAll('#templatesContainer .category-item').forEach(card => { card.style.display = card.innerText.toLowerCase().includes(term) ? '' : 'none'; }); }
+        function exportLettersCSV() {
+            let csvRows = [['Ref','Employee','Type','Subject','Date','Status']];
+            letters.forEach(l => csvRows.push([l.ref, l.employee, l.type, l.subject, l.date, l.status]));
+            const csv = csvRows.map(r => r.join(',')).join('\n');
+            const blob = new Blob([csv], {type:'text/csv'}); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'hr_letters.csv'; a.click();
+            showToast('Exported CSV', 'success');
         }
-
-        function showArchivedLetters(){ showToast('Archive feature: filter by old letters (demo)','info'); }
-
-        function insertVariable(v){ const ta = document.getElementById('letterContent'); const start=ta.selectionStart, end=ta.selectionEnd; ta.value = ta.value.substring(0,start)+v+ta.value.substring(end); ta.focus(); }
-        function setCurrentDate(){ document.getElementById('letterDate').valueAsDate = new Date(); document.getElementById('refNumber').value = `HR/LTR/${new Date().getFullYear()}/${Math.floor(Math.random()*900+100)}`; }
-
+        function generateFullReport() {
+            const report = letters.map(l => `${l.ref} | ${l.employee} | ${l.type} | ${l.status}`).join('\n');
+            const blob = new Blob([`HR LETTERS REPORT\nTotal: ${letters.length}\n\n${report}`], {type:'text/plain'});
+            const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'hr_report.txt'; a.click();
+            showToast('Report downloaded', 'success');
+        }
+        function showArchivedLetters() { showToast('Archive feature: all letters are shown. Use filters.', 'info'); }
+        function insertVariable(v) { const ta = document.getElementById('letterContent'); const start = ta.selectionStart, end = ta.selectionEnd; ta.value = ta.value.substring(0,start) + v + ta.value.substring(end); ta.focus(); }
+        function setCurrentDate() { document.getElementById('letterDate').valueAsDate = new Date(); document.getElementById('refNumber').value = `HR/LTR/${new Date().getFullYear()}/${Math.floor(Math.random()*900+100)}`; }
+        
         // UI Helpers
-        function showModal(id){ document.getElementById(id).classList.add('active'); document.body.style.overflow='hidden'; }
-        function closeModal(id){ document.getElementById(id).classList.remove('active'); document.body.style.overflow='auto'; if(id==='previewModal') pendingSendLetter=null; }
-        function toggleSidebar(){ document.getElementById('sidebar').classList.toggle('active'); document.getElementById('overlay').classList.toggle('active'); }
-        function closeSidebar(){ document.getElementById('sidebar').classList.remove('active'); document.getElementById('overlay').classList.remove('active'); }
-        function toggleHamburger(){ const btn=document.getElementById('hamburgerBtn'); const drop=document.getElementById('navDropdown'); btn.classList.toggle('active'); drop.classList.toggle('active'); }
-        function logout(){ if(confirm('Logout?')){ showToast('Logging out','info'); setTimeout(()=>{ window.location.href='login.html'; },500); } }
-        function showToast(msg,type){ const container=document.getElementById('toastContainer'); const toast=document.createElement('div'); toast.className=`toast ${type}`; toast.innerHTML=`<i class="fas fa-${type==='success'?'check-circle':type==='warning'?'exclamation-triangle':'info-circle'}"></i><span>${msg}</span>`; container.appendChild(toast); setTimeout(()=>toast.remove(),3000); }
+        function showModal(id) { document.getElementById(id).classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); document.body.style.overflow = 'auto'; if (id === 'previewModal') { pendingLetter = null; document.getElementById('confirmSendBtn').style.display = 'inline-flex'; } }
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); document.getElementById('overlay').classList.toggle('active'); }
+        function closeSidebar() { document.getElementById('sidebar').classList.remove('active'); document.getElementById('overlay').classList.remove('active'); }
+        function toggleHamburger() { const btn = document.getElementById('hamburgerBtn'); const drop = document.getElementById('navDropdown'); btn.classList.toggle('active'); drop.classList.toggle('active'); }
+        function logout() { if (confirm('Logout?')) { showToast('Logging out', 'info'); setTimeout(() => { window.location.href = 'login.html'; }, 500); } }
+        function showToast(msg, type) { const container = document.getElementById('toastContainer'); const toast = document.createElement('div'); toast.className = `toast ${type}`; const icon = type === 'success' ? 'check-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'; toast.innerHTML = `<i class="fas fa-${icon}"></i><span>${msg}</span>`; container.appendChild(toast); setTimeout(() => toast.remove(), 3000); }
 
-        document.addEventListener('DOMContentLoaded',()=>{ loadData(); setCurrentDate(); document.querySelectorAll('.modal').forEach(m=>{ m.addEventListener('click',e=>{ if(e.target===m) closeModal(m.id); }); }); document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ document.querySelectorAll('.modal.active').forEach(m=>closeModal(m.id)); closeSidebar(); } }); });
-        window.showModal=showModal; window.closeModal=closeModal; window.toggleSidebar=toggleSidebar; window.closeSidebar=closeSidebar; window.toggleHamburger=toggleHamburger; window.logout=logout; window.filterLetters=filterLetters; window.searchLetters=searchLetters; window.searchTemplates=searchTemplates; window.useTemplate=useTemplate; window.insertVariable=insertVariable; window.previewLetter=previewLetter; window.confirmSendLetter=confirmSendLetter; window.saveAsDraft=saveAsDraft; window.viewLetter=viewLetter; window.editLetter=editLetter; window.deleteLetter=deleteLetter; window.showArchivedLetters=showArchivedLetters; window.generateFullReport=generateFullReport; window.exportLettersCSV=exportLettersCSV; window.showToast=showToast; window.showAddTemplateModal=showAddTemplateModal; window.saveNewTemplate=saveNewTemplate;
+        document.addEventListener('DOMContentLoaded', () => { loadData(); setCurrentDate(); document.querySelectorAll('.modal').forEach(m => { m.addEventListener('click', e => { if (e.target === m) closeModal(m.id); }); }); document.addEventListener('keydown', e => { if (e.key === 'Escape') { document.querySelectorAll('.modal.active').forEach(m => closeModal(m.id)); closeSidebar(); } }); });
+        window.showModal = showModal; window.closeModal = closeModal; window.toggleSidebar = toggleSidebar; window.closeSidebar = closeSidebar; window.toggleHamburger = toggleHamburger; window.logout = logout; window.filterLetters = filterLetters; window.searchLetters = searchLetters; window.searchTemplates = searchTemplates; window.useTemplate = useTemplate; window.insertVariable = insertVariable; window.previewAndSend = previewAndSend; window.finalizeSend = finalizeSend; window.saveAsDraft = saveAsDraft; window.viewLetter = viewLetter; window.editLetter = editLetter; window.deleteLetter = deleteLetter; window.showArchivedLetters = showArchivedLetters; window.generateFullReport = generateFullReport; window.exportLettersCSV = exportLettersCSV; window.showToast = showToast; window.showAddTemplateModal = () => showModal('addTemplateModal'); window.saveNewTemplate = saveNewTemplate; window.openCreateLetter = openCreateLetter;
     </script>
 </body>
 </html>
